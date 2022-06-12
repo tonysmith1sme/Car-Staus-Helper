@@ -6,7 +6,7 @@
     tools:context=".activity.AboutActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
@@ -27,15 +27,29 @@
                 android:id="@+id/version_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="v1.0.0" />
+                android:text="V1.0.0" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
             android:layout_marginTop="16dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/about_us" />
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/about_us" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/about_us_douyin" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

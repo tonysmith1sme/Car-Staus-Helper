@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="#80f0"
+        android:background="@drawable/bg_simple_1"
         android:orientation="vertical"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工作模式：" />
+                android:text="能耗模式：" />
 
             <TextView
                 android:id="@+id/energy_mode_tv"
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="运行模式：" />
+                android:text="驾驶模式：" />
 
             <TextView
                 android:id="@+id/operation_mode_tv"
@@ -246,7 +246,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="最近50公里电耗：" />
+                android:text="最近50km电耗：" />
 
             <TextView
                 android:id="@+id/last_elec_con_phm_tv"
@@ -263,7 +263,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="最近50公里油耗：" />
+                android:text="最近50km油耗：" />
 
             <TextView
                 android:id="@+id/last_fuel_con_phm_tv"
@@ -274,8 +274,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -292,11 +293,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" KWH/100KM" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -313,24 +316,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" L/100KM" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/test_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="测试"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
         <LinearLayout
-            android:id="@+id/total_fuel_elec_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -345,7 +340,7 @@
                 <ProgressBar
                     android:id="@+id/fuel_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
@@ -374,7 +369,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -385,7 +380,7 @@
                 <ProgressBar
                     android:id="@+id/elec_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
@@ -413,29 +408,115 @@
             </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="空调"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度:" />
+
+            <TextView
+                android:id="@+id/current_temperature_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="℃" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/temperature_plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/temperature_sub_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="风量:" />
+
+            <TextView
+                android:id="@+id/current_wind_level_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/wind_level_plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/wind_level_sub_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="24sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="#80f0"
-        android:orientation="vertical">
+        android:background="@drawable/bg_simple_1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <com.huawei.carstatushelper.view.CarSpeedView
             android:id="@+id/car_speed_csv"
-            android:layout_width="320dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content" />
 
         <com.huawei.carstatushelper.view.EnginePowerView
             android:id="@+id/engine_power_epv"
-            android:layout_width="320dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
         <com.huawei.carstatushelper.view.EngineSpeedView
             android:id="@+id/engine_speed_esv"
-            android:layout_width="320dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
