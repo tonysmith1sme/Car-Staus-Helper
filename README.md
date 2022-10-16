@@ -1,4 +1,4 @@
-# Car Staus Helper
+# Car Staus Helper(项目迁移至https://github.com/l376571926/car-staus-helper,此仓库不再更新)
 
 #### 介绍
 车况助手
