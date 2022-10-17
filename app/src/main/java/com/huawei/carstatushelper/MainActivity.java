@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
@@ -26,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
@@ -864,7 +866,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case BYDAutoEnergyDevice.ENERGY_MODE_EV://有效
                 modeName = "EV";
                 break;
-            case BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV:
+            case BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV://有效
                 modeName = "FORCE EV";
                 break;
             case BYDAutoEnergyDevice.ENERGY_MODE_HEV://有效
@@ -899,6 +901,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return modeName;
     }
 
+    private boolean isLandLayoutShow() {
+        Resources resources = getResources();
+        if (resources == null) {
+            return false;
+        }
+        Configuration configuration = resources.getConfiguration();
+        if (configuration == null) {
+            return false;
+        }
+        return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
     @Override
     public void onClick(View v) {
         int vId = v.getId();
@@ -914,6 +928,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY,
                         BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC
                 );
+                if (isLandLayoutShow()) {
+                    Toast.makeText(this, "当前温度：" + (temprature + 1), Toast.LENGTH_SHORT).show();
+                }
             } else if (vId == R.id.temperature_sub_btn) {
                 int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
@@ -925,20 +942,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY,
                         BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC
                 );
+                if (isLandLayoutShow()) {
+                    Toast.makeText(this, "当前温度：" + (temprature - 1), Toast.LENGTH_SHORT).show();
+                }
             } else if (vId == R.id.wind_level_plus_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_7) {
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
+                if (isLandLayoutShow()) {
+                    Toast.makeText(this, "当前风量：" + (acWindLevel + 1), Toast.LENGTH_SHORT).show();
+                }
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
+                if (isLandLayoutShow()) {
+                    Toast.makeText(this, "当前风量：" + (acWindLevel - 1), Toast.LENGTH_SHORT).show();
+                }
             }
         }
-
     }
 }
