@@ -27,28 +27,87 @@
                 android:id="@+id/version_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="V1.0.0" />
+                tools:text="V1.0.0" />
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/about_us" />
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/about_us_douyin" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/about_us_douyin" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="应用简介"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:text="车况助手是一款可以实时显示车辆运行状况的app，在这里你可以实时以仿真汽车仪表的方查看车辆运行速度、整车输出功率以及发动机\n转速等信息，还可以显示最近油耗、电耗等能耗信息，还有其他一些车辆运行信息，更多功能等你去发现"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:text="赏个鸡腿"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:text="如果你觉得车况助手有带给你一些便利，你可以赏作者一只鸡腿，或者你囊中羞涩，也可以去抖音帮车况助手点个赞。"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/qrcode_zfb" />
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/qrcode_wx" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 

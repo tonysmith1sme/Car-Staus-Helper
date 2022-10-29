@@ -14,7 +14,10 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.R;
+
+import java.util.Locale;
 
 /**
  * DashboardView style 4，仿汽车速度仪表盘
@@ -63,6 +66,10 @@ public class DashboardView4 extends View {
         mPortion = setPortion();
         mHeaderText = setHeaderText();
         init();
+
+//        if (BuildConfig.DEBUG) {
+//            setVelocity(70);
+//        }
     }
 
     protected int setMin() {
@@ -84,6 +91,26 @@ public class DashboardView4 extends View {
     protected String setHeaderText() {
         return "km/h";
     }
+
+    protected int setUnit() {
+        return 1;
+    }
+
+//    boolean showCircleNum = true;
+//
+//    public void setShowCircleNum(boolean show) {
+//        showCircleNum = show;
+//        if (show) {
+//            text_size = 24;
+//            header_text_size = 24;
+//        }else {
+//            text_size = 16;
+//            header_text_size = 16;
+//        }
+//        invalidate();
+//        postInvalidate();
+//        invalidateOutline();
+//    }
 
     private void init() {
         mStrokeWidth = dp2px(3);
@@ -123,13 +150,13 @@ public class DashboardView4 extends View {
         mRadius = (width - mPadding * 2 - mStrokeWidth * 2) / 2;
 
         // 由起始角度确定的高度
-        float[] point1 = getCoordinatePoint(mRadius, mStartAngle);
+//        float[] point1 = getCoordinatePoint(mRadius, mStartAngle);
         // 由结束角度确定的高度
-        float[] point2 = getCoordinatePoint(mRadius, mStartAngle + mSweepAngle);
+//        float[] point2 = getCoordinatePoint(mRadius, mStartAngle + mSweepAngle);
 //        int height = (int) Math.max(point1[1] + mRadius + mStrokeWidth * 2,
 //                point2[1] + mRadius + mStrokeWidth * 2);
         int height = width;
-        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom());
+        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 80);
 
         mCenterX = mCenterY = getMeasuredWidth() / 2f;
         mRectFArc.set(
@@ -152,8 +179,9 @@ public class DashboardView4 extends View {
         mPSRadius = dp2px(25);
     }
 
-    private int text_size = 16;
-    private int header_text_size = 16;
+    //    private int text_size = 16;
+    private int text_size = 24;
+    private int header_text_size = 24;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -210,6 +238,7 @@ public class DashboardView4 extends View {
         /**
          * 画长刻度读数
          */
+//        if (showCircleNum) {
         mPaint.setTextSize(sp2px(text_size));
         mPaint.setStyle(Paint.Style.FILL);
         float α;
@@ -225,18 +254,29 @@ public class DashboardView4 extends View {
             } else {
                 mPaint.setTextAlign(Paint.Align.CENTER);
             }
-            mPaint.getTextBounds(mHeaderText, 0, mTexts[i].length(), mRectText);
+            //圆弧上的数字
+            String text;
+            if (setUnit() == 1) {
+                text = mTexts[i];
+            } else {
+                double value = Integer.parseInt(mTexts[i]) * 1.0f / setUnit();
+                text = String.format(Locale.getDefault(), "%.1f", value);
+            }
+            mPaint.getTextBounds(mHeaderText, 0, text.length(), mRectText);
             int txtH = mRectText.height();
             if (i <= 1 || i >= mSection - 1) {
-                canvas.drawText(mTexts[i], p[0], p[1] + txtH / 2, mPaint);
+                canvas.drawText(text, p[0], p[1] + txtH / 2, mPaint);
             } else if (i == 3) {
-                canvas.drawText(mTexts[i], p[0] + txtH / 2, p[1] + txtH, mPaint);
+                canvas.drawText(text, p[0] + txtH / 2, p[1] + txtH, mPaint);
             } else if (i == mSection - 3) {
-                canvas.drawText(mTexts[i], p[0] - txtH / 2, p[1] + txtH, mPaint);
+                canvas.drawText(text, p[0] - txtH / 2, p[1] + txtH, mPaint);
             } else {
-                canvas.drawText(mTexts[i], p[0], p[1] + txtH, mPaint);
+                canvas.drawText(text, p[0], p[1] + txtH, mPaint);
             }
         }
+//        } else {
+//
+//        }
 
         mPaint.setStrokeCap(Paint.Cap.SQUARE);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -408,6 +448,8 @@ public class DashboardView4 extends View {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
                 Resources.getSystem().getDisplayMetrics());
     }
+
+    private int needle_offset = 40;
 
     public float[] getCoordinatePoint(int radius, float angle) {
         float[] point = new float[2];

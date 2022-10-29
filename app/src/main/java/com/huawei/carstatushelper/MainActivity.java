@@ -27,10 +27,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
+import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
+import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
+import com.huawei.carstatushelper.view.CarSpeedView;
+import com.huawei.carstatushelper.view.EnginePowerView;
+import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.socks.library.KLog;
 
 import java.text.DecimalFormat;
@@ -51,12 +58,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean initSuccess;
 
     //    private OliCostHelper oliCostHelper;
-    private ActivityMainBinding binding;
+//    private ActivityMainBinding binding;
 
     private int totalMileageValue;//总里程
 
     private double totalElecConPHM;//累计平均电耗
     private double totalFuelConPHM;//累计平均油耗
+
+    private EngineSpeedView engineSpeedEsv;
+    private EnginePowerView enginePowerEpv;
+    private CarSpeedView carSpeedCsv;
+
+    private View temperaturePlusBtn;
+    private View temperatureSubBtn;
+    private View windLevelPlusBtn;
+    private View windLevelSubBtn;
+
+    private TextView currentGearboxLevelTv;
+    private TextView currentWindLevelTv;
+    private TextView currentTemperatureTv;
+
+    private TextView energyModeTv;
+    private TextView operationModeTv;
+
+    private TextView totalMileageTv;
+    private TextView totalHevMileageTv;
+    private TextView totalFuelCostTv;
+    private TextView totalElecCostTv;
+    private TextView drivingTimeTv;
+    private TextView lastFuelConPhmTv;
+    private TextView lastElecConPhmTv;
+
+    private TextView powerMileageTv;
+    private TextView fuelMileageTv;
+    private ProgressBar fuelPercentPb;
+    private TextView fuelPbTv;
+    private ProgressBar elecPercentPb;
+    private TextView elecPbTv;
+    private TextView enginePowerTv;
+    private TextView totalElecConPhmTv;
+    private TextView totalFuelConPhmTv;
+    private TextView textTv;
+
+    private TextView totalEvMileageTv;
+    private TextView carSpeedTv;
+    private TextView engineSpeedTv;
+
+    private ProgressBar youMengPb;
+    private TextView youMengTv;
+    private ProgressBar shaChePb;
+    private TextView shaCheTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +115,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setTitle(getString(R.string.app_name) + BuildConfig.VERSION_NAME);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        loadContentView();
 
-        if (binding.temperaturePlusBtn != null) {
-            binding.temperaturePlusBtn.setOnClickListener(this);
+//        binding = ActivityMainBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+
+        if (temperaturePlusBtn != null) {
+            temperaturePlusBtn.setOnClickListener(this);
         }
-        if (binding.temperatureSubBtn != null) {
-            binding.temperatureSubBtn.setOnClickListener(this);
+        if (temperatureSubBtn != null) {
+            temperatureSubBtn.setOnClickListener(this);
         }
-        if (binding.windLevelPlusBtn != null) {
-            binding.windLevelPlusBtn.setOnClickListener(this);
+        if (windLevelPlusBtn != null) {
+            windLevelPlusBtn.setOnClickListener(this);
         }
-        if (binding.windLevelSubBtn != null) {
-            binding.windLevelSubBtn.setOnClickListener(this);
+        if (windLevelSubBtn != null) {
+            windLevelSubBtn.setOnClickListener(this);
         }
 
         String[] permissions = {
@@ -97,6 +150,132 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         initDevice();
+    }
+
+    private void loadContentView() {
+        int orientation = getResources().getConfiguration().orientation;
+        View rootView;
+        if (isInMultiWindowMode()) {
+            ActivityMainLandMultiBinding binding = ActivityMainLandMultiBinding.inflate(getLayoutInflater());
+            rootView = binding.getRoot();
+            initMainLandMultiView(binding);
+        } else {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                ActivityMainLandBinding binding = ActivityMainLandBinding.inflate(getLayoutInflater());
+                rootView = binding.getRoot();
+                initMainLandView(binding);
+            } else {
+                ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+                rootView = binding.getRoot();
+                initMainView(binding);
+            }
+        }
+        setContentView(rootView);
+    }
+
+    private void initMainView(ActivityMainBinding binding) {
+        engineSpeedEsv = binding.engineSpeedEsv;
+        enginePowerEpv = binding.enginePowerEpv;
+        carSpeedCsv = binding.carSpeedCsv;
+
+        temperaturePlusBtn = binding.temperaturePlusBtn;
+        temperatureSubBtn = binding.temperatureSubBtn;
+        windLevelPlusBtn = binding.windLevelPlusBtn;
+        windLevelSubBtn = binding.windLevelSubBtn;
+
+        currentGearboxLevelTv = binding.currentGearboxLevelTv;
+        currentTemperatureTv = binding.currentTemperatureTv;
+        currentWindLevelTv = binding.currentWindLevelTv;
+
+        energyModeTv = binding.energyModeTv;
+        operationModeTv = binding.operationModeTv;
+        totalMileageTv = binding.totalMileageTv;
+        totalHevMileageTv = binding.totalHevMileageTv;
+        totalFuelCostTv = binding.totalFuelCostTv;
+        totalElecCostTv = binding.totalElecCostTv;
+        drivingTimeTv = binding.drivingTimeTv;
+        lastFuelConPhmTv = binding.lastFuelConPhmTv;
+        lastElecConPhmTv = binding.lastElecConPhmTv;
+
+        totalEvMileageTv = binding.totalEvMileageTv;
+        carSpeedTv = binding.carSpeedTv;
+        engineSpeedTv = binding.engineSpeedTv;
+
+        textTv = binding.textTv;
+        powerMileageTv = binding.powerMileageTv;
+        fuelMileageTv = binding.fuelMileageTv;
+        fuelPercentPb = binding.fuelPercentPb;
+        fuelPbTv = binding.fuelPbTv;
+        elecPercentPb = binding.elecPercentPb;
+        elecPbTv = binding.elecPbTv;
+        enginePowerTv = binding.enginePowerTv;
+        totalElecConPhmTv = binding.totalElecConPhmTv;
+        totalFuelConPhmTv = binding.totalFuelConPhmTv;
+    }
+
+    private void initMainLandView(ActivityMainLandBinding binding) {
+        engineSpeedEsv = binding.engineSpeedEsv;
+        enginePowerEpv = binding.enginePowerEpv;
+        carSpeedCsv = binding.carSpeedCsv;
+
+        temperaturePlusBtn = binding.temperaturePlusBtn;
+        temperatureSubBtn = binding.temperatureSubBtn;
+        windLevelPlusBtn = binding.windLevelPlusBtn;
+        windLevelSubBtn = binding.windLevelSubBtn;
+
+        currentGearboxLevelTv = binding.currentGearboxLevelTv;
+//        currentTemperatureTv = binding.currentTemperatureTv;
+//        currentWindLevelTv = binding.currentWindLevelTv;
+
+        energyModeTv = binding.energyModeTv;
+        operationModeTv = binding.operationModeTv;
+        totalMileageTv = binding.totalMileageTv;
+        totalHevMileageTv = binding.totalHevMileageTv;
+        totalFuelCostTv = binding.totalFuelCostTv;
+        totalElecCostTv = binding.totalElecCostTv;
+        drivingTimeTv = binding.drivingTimeTv;
+        lastFuelConPhmTv = binding.lastFuelConPhmTv;
+        lastElecConPhmTv = binding.lastElecConPhmTv;
+
+        totalEvMileageTv = binding.totalEvMileageTv;
+        carSpeedTv = binding.carSpeedTv;
+        engineSpeedTv = binding.engineSpeedTv;
+
+        textTv = binding.textTv;
+        powerMileageTv = binding.powerMileageTv;
+        fuelMileageTv = binding.fuelMileageTv;
+        fuelPercentPb = binding.fuelPercentPb;
+        fuelPbTv = binding.fuelPbTv;
+        elecPercentPb = binding.elecPercentPb;
+        elecPbTv = binding.elecPbTv;
+        enginePowerTv = binding.enginePowerTv;
+        totalElecConPhmTv = binding.totalElecConPhmTv;
+        totalFuelConPhmTv = binding.totalFuelConPhmTv;
+
+
+        youMengPb = binding.youMengPb;
+        youMengTv = binding.youMengTv;
+        shaChePb = binding.shaChePb;
+        shaCheTv = binding.shaCheTv;
+    }
+
+
+    private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
+        engineSpeedEsv = binding.engineSpeedEsv;
+        enginePowerEpv = binding.enginePowerEpv;
+        carSpeedCsv = binding.carSpeedCsv;
+
+//        temperaturePlusBtn = binding.temperaturePlusBtn;
+//        temperatureSubBtn = binding.temperatureSubBtn;
+//        windLevelPlusBtn = binding.windLevelPlusBtn;
+//        windLevelSubBtn = binding.windLevelSubBtn;
+
+//        currentGearboxLevelTv = binding.currentGearboxLevelTv;
+
+        youMengPb = binding.youMengPb;
+        youMengTv = binding.youMengTv;
+        shaChePb = binding.shaChePb;
+        shaCheTv = binding.shaCheTv;
     }
 
     @Override
@@ -126,12 +305,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         super.onMultiWindowModeChanged(isInMultiWindowMode);
+        KLog.e("当前分屏模式：" + isInMultiWindowMode);
         //分屏模式
-        if (isInMultiWindowMode) {
-
-        } else {
-
-        }
+//        if (engineSpeedEsv != null) {
+//            engineSpeedEsv.setShowCircleNum(!isInMultiWindowMode);
+//
+//        }
+//        if (carSpeedCsv != null) {
+//            carSpeedCsv.setShowCircleNum(!isInMultiWindowMode);
+//
+//        }
+//        if (enginePowerEpv != null) {
+//            enginePowerEpv.setShowCircleNum(!isInMultiWindowMode);
+//
+//        }
     }
 
     @Override
@@ -155,14 +342,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initDevice() {
+        if (BuildConfig.DEBUG) {
+            return;
+        }
         statisticDevice = BYDAutoStatisticDevice.getInstance(this);
         speedDevice = BYDAutoSpeedDevice.getInstance(this);
         energyDevice = BYDAutoEnergyDevice.getInstance(this);
         engineDevice = BYDAutoEngineDevice.getInstance(this);
         bydAutoAcDevice = BYDAutoAcDevice.getInstance(this);
         gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
-//        oliCostHelper = new OliCostHelper(this);
-//        oliCostHelper.setListener(onRealEnergyCostListener);
         initSuccess = true;
         initData();
     }
@@ -219,7 +407,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onGearboxAutoModeTypeChanged(level);
             String gearboxLevelName = getGearboxLevelName(level);
             KLog.e("当前档位：" + level + " " + gearboxLevelName);
-            binding.currentGearboxLevelTv.setText(gearboxLevelName);
+            if (currentGearboxLevelTv == null) {
+                return;
+            }
+            currentGearboxLevelTv.setText(gearboxLevelName);
         }
     };
 
@@ -368,10 +559,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAcWindLevelChanged(int level) {
             super.onAcWindLevelChanged(level);
-            if (binding.currentWindLevelTv == null) {
+            if (currentWindLevelTv == null) {
                 return;
             }
-            binding.currentWindLevelTv.setText("" + level);
+            currentWindLevelTv.setText("" + level);
         }
 
         /**
@@ -392,8 +583,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onTemperatureChanged(int area, int value) {
             super.onTemperatureChanged(area, value);
             KLog.e("各区域温度：" + area + " " + value);
-            if (binding.currentTemperatureTv != null) {
-                binding.currentTemperatureTv.setText("区域" + area + "，" + value);
+            if (currentTemperatureTv != null) {
+                currentTemperatureTv.setText("区域" + area + "，" + value);
             }
             if (area == BYDAutoAcDevice.AC_DEFROST_AREA_FRONT) {//前排空调
 
@@ -422,7 +613,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onEnergyModeChanged(energyMode);
             String energyModeName = getEnergyModeName(energyMode);
             KLog.e("当前能耗模式：" + energyMode + " " + energyModeName);
-            binding.energyModeTv.setText(energyModeName);
+            if (energyModeTv == null) {
+                return;
+            }
+            energyModeTv.setText(energyModeName);
         }
 
         /**
@@ -434,7 +628,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onOperationModeChanged(operationMode);
             String operationModeName = getOperationModeName(operationMode);
             KLog.e("当前行车模式：" + operationMode + " " + operationModeName);
-            binding.operationModeTv.setText(operationModeName);
+            if (operationModeTv == null) {
+                return;
+            }
+            operationModeTv.setText(operationModeName);
         }
 
         /**
@@ -476,8 +673,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onTotalMileageValueChanged(totalMileageValue);
             KLog.e("总行驶里程：" + totalMileageValue + " km");
             MainActivity.this.totalMileageValue = totalMileageValue;
-            binding.totalMileageTv.setText(totalMileageValue + " km");
-            binding.totalHevMileageTv.setText((totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
+            if (totalMileageTv != null) {
+                totalMileageTv.setText(totalMileageValue + " km");
+            }
+            totalHevMileageTv.setText((totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
         }
 
         /**
@@ -488,7 +687,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onTotalFuelConChanged(double value) {
             super.onTotalFuelConChanged(value);
             KLog.e("总燃油消耗：" + value + " L");
-            binding.totalFuelCostTv.setText(format.format(value) + "L");
+            if (totalFuelCostTv == null) {
+                return;
+            }
+            totalFuelCostTv.setText(format.format(value) + "L");
         }
 
         /**
@@ -499,7 +701,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onTotalElecConChanged(double value) {
             super.onTotalElecConChanged(value);
             KLog.e("总电量消耗：" + value + "KW•H");
-            binding.totalElecCostTv.setText(format.format(value) + "KW•H");
+            if (totalElecCostTv == null) {
+                return;
+            }
+            totalElecCostTv.setText(format.format(value) + "KW•H");
         }
 
         /**
@@ -509,7 +714,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onDrivingTimeChanged(double value) {
             super.onDrivingTimeChanged(value);
-            binding.drivingTimeTv.setText(format.format(value) + " h");
+            if (drivingTimeTv == null) {
+                return;
+            }
+            drivingTimeTv.setText(format.format(value) + " h");
         }
 
         /**
@@ -519,7 +727,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onLastFuelConPHMChanged(double value) {
             super.onLastFuelConPHMChanged(value);
-            binding.lastFuelConPhmTv.setText(format.format(value) + "L/100KM");
+            if (lastFuelConPhmTv == null) {
+                return;
+            }
+            lastFuelConPhmTv.setText(format.format(value) + "L/100KM");
         }
 
         /**
@@ -542,7 +753,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onLastElecConPHMChanged(double value) {
             super.onLastElecConPHMChanged(value);
-            binding.lastElecConPhmTv.setText(format.format(value) + "KWH/100KM");
+            if (totalElecConPhmTv == null) {
+                return;
+            }
+            lastElecConPhmTv.setText(format.format(value) + "KWH/100KM");
         }
 
         /**
@@ -617,9 +831,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEVMileageValueChanged(int value) {
             super.onEVMileageValueChanged(value);
-            binding.totalEvMileageTv.setText(value + "km");
+            if (totalEvMileageTv == null) {
+                return;
+            }
+            totalEvMileageTv.setText(value + "km");
         }
     };
+
 
     private final AbsBYDAutoSpeedListener absBYDAutoSpeedListener = new AbsBYDAutoSpeedListener() {
         /**
@@ -630,8 +848,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onSpeedChanged(double currentSpeed) {
             super.onSpeedChanged(currentSpeed);
 //            KLog.e("当前车速：" + currentSpeed);
-            binding.carSpeedTv.setText(format.format(currentSpeed) + "km/h");
-            binding.carSpeedCsv.setVelocity(((int) currentSpeed));
+            if (carSpeedTv != null) {
+                carSpeedTv.setText(format.format(currentSpeed) + "km/h");
+            }
+            carSpeedCsv.setVelocity(((int) currentSpeed));
 
             //行车模式
             updateEnginePower();
@@ -644,6 +864,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAccelerateDeepnessChanged(int value) {
             super.onAccelerateDeepnessChanged(value);
+            if (youMengPb == null || youMengTv == null) {
+                return;
+            }
+            youMengPb.setProgress(value);
+            youMengTv.setText(value + "%");
         }
 
         /**
@@ -653,6 +878,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onBrakeDeepnessChanged(int value) {
             super.onBrakeDeepnessChanged(value);
+            if (shaChePb == null || shaCheTv == null) {
+                return;
+            }
+            shaChePb.setProgress(value);
+            shaCheTv.setText(value + "%");
         }
 
     };
@@ -668,8 +898,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (engineSpeed == 8191) {
                 engineSpeed = 0;
             }
-            binding.engineSpeedTv.setText(engineSpeed + " rpm");
-            binding.engineSpeedEsv.setVelocity(engineSpeed);
+            if (engineSpeedTv != null) {
+                engineSpeedTv.setText(engineSpeed + " rpm");
+            }
+            engineSpeedEsv.setVelocity(engineSpeed);
         }
 
         /**
@@ -697,11 +929,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (item.getItemId() == R.id.about_us) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (item.getItemId() == R.id.version_update) {
-            Uri uri = Uri.parse("https://gitee.com/liyiwei1032/car-staus-helper/apks");
+            Uri uri = Uri.parse("https://gitee.com/liyiwei1032/car-staus-helper");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        } else if (item.getItemId() == R.id.test_btn) {
-            initData();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -710,10 +940,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化界面数据
      */
     private void initData() {
+        if (statisticDevice == null) {
+            return;
+        }
         //6.1.2 车架号
         BYDAutoBodyworkDevice bodyworkDevice = BYDAutoBodyworkDevice.getInstance(MainActivity.this);
         //LGXC76C44N0131100,LGXC76C44N0131101
-        binding.textTv.setText(bodyworkDevice.getAutoVIN());
+        textTv.setText(bodyworkDevice.getAutoVIN());
 
         //总里程
         int totalMileageValue = statisticDevice.getTotalMileageValue();
@@ -791,7 +1024,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param value
      */
     private void updateElecDrivingRange(int value) {
-        binding.powerMileageTv.setText(value + "km");
+        if (powerMileageTv == null) {
+            return;
+        }
+        powerMileageTv.setText(value + "km");
     }
 
     /**
@@ -800,7 +1036,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param value
      */
     private void updateFuelDrivingRange(int value) {
-        binding.fuelMileageTv.setText(value + "km");
+        if (fuelMileageTv == null) {
+            return;
+        }
+        fuelMileageTv.setText(value + "km");
     }
 
     /**
@@ -809,9 +1048,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param fuelPercentageValue
      */
     private void updateFuelPercent(int fuelPercentageValue) {
-        binding.fuelPercentPb.setMax(100);
-        binding.fuelPercentPb.setProgress(fuelPercentageValue);
-        binding.fuelPbTv.setText(fuelPercentageValue + "%");
+        fuelPercentPb.setMax(100);
+        fuelPercentPb.setProgress(fuelPercentageValue);
+        fuelPbTv.setText(fuelPercentageValue + "%");
     }
 
     /**
@@ -827,21 +1066,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ret = value;
         }
         KLog.e("电量续航百分比：" + ret);
-        binding.elecPercentPb.setMax(100);
-        binding.elecPercentPb.setProgress(((int) ret));
-        binding.elecPbTv.setText(format.format(ret) + "%");
+        elecPercentPb.setMax(100);
+        elecPercentPb.setProgress(((int) ret));
+        elecPbTv.setText(format.format(ret) + "%");
     }
+
 
     private void updateEnginePower() {
         int enginePower = engineDevice.getEnginePower();
         KLog.e("当前功率：" + enginePower + " kw");
-        binding.enginePowerTv.setText(enginePower + " kw");
-        binding.enginePowerEpv.setVelocity(enginePower);
+        if (enginePowerTv != null) {
+            enginePowerTv.setText(enginePower + " kw");
+        }
+        enginePowerEpv.setVelocity(enginePower);
 
         updateEnergyCost();
     }
 
     private void updateEnergyCost() {
+        if (statisticDevice == null) {
+            return;
+        }
         double totalElecConPHMValue = statisticDevice.getTotalElecConPHMValue();
         double totalFuelConPHMValue = statisticDevice.getTotalFuelConPHMValue();
 
@@ -853,8 +1098,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String elec_listener_and_cacu = format.format(totalElecConPHM == 0 ? totalElecConPHMValue : totalElecConPHM);
         String fuel_listener_and_cacu = format.format(totalFuelConPHM == 0 ? totalFuelConPHMValue : totalFuelConPHM);
 
-        binding.totalElecConPhmTv.setText(elec_listener_and_cacu);
-        binding.totalFuelConPhmTv.setText(fuel_listener_and_cacu);
+        if (totalElecConPhmTv != null) {
+            totalElecConPhmTv.setText(elec_listener_and_cacu);
+        }
+        if (totalFuelConPhmTv != null) {
+            totalFuelConPhmTv.setText(fuel_listener_and_cacu);
+        }
     }
 
     private String getEnergyModeName(int energyMode) {
@@ -957,6 +1206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
+                    bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);

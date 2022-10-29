@@ -19,10 +19,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.huawei.carstatushelper.view.CarSpeedView
-                android:id="@+id/car_speed_csv"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/you_meng_pb"
+                    android:layout_width="20dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:indeterminateOnly="false"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="油门" />
+
+                <TextView
+                    android:id="@+id/you_meng_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/sha_che_pb"
+                    android:layout_width="20dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:indeterminateOnly="false"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="刹车" />
+
+                <TextView
+                    android:id="@+id/sha_che_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%" />
+            </LinearLayout>
+
+            <com.huawei.carstatushelper.view.EngineSpeedView
+                android:id="@+id/engine_speed_esv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1" />
 
             <com.huawei.carstatushelper.view.EnginePowerView
@@ -32,12 +89,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1" />
 
-            <com.huawei.carstatushelper.view.EngineSpeedView
-                android:id="@+id/engine_speed_esv"
+            <com.huawei.carstatushelper.view.CarSpeedView
+                android:id="@+id/car_speed_csv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +172,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:gravity="end"
                         android:orientation="vertical">
 
                         <TextView
@@ -154,7 +211,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:gravity="end"
                         android:orientation="vertical">
 
                         <TextView
@@ -288,7 +344,7 @@
                         android:id="@+id/energy_mode_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="EV" />
+                        android:text="EV" />
 
                 </LinearLayout>
 
@@ -305,7 +361,7 @@
                         android:id="@+id/operation_mode_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="ECO" />
+                        android:text="ECO" />
 
                 </LinearLayout>
 

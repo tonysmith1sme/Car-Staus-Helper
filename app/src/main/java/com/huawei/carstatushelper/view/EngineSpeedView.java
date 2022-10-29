@@ -3,6 +3,7 @@ package com.huawei.carstatushelper.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.huawei.carstatushelper.BuildConfig;
 import com.xw.sample.dashboardviewdemo.DashboardView4;
 
 public class EngineSpeedView extends DashboardView4 {
@@ -16,6 +17,9 @@ public class EngineSpeedView extends DashboardView4 {
 
     public EngineSpeedView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+//        if (BuildConfig.DEBUG) {
+//            setVelocity(4300);
+//        }
     }
 
     @Override
@@ -35,6 +39,11 @@ public class EngineSpeedView extends DashboardView4 {
 
     @Override
     protected String setHeaderText() {
-        return " rpm";
+        return " x1000 rpm";
+    }
+
+    @Override
+    protected int setUnit() {
+        return 1000;
     }
 }

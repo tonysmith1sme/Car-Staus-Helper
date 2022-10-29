@@ -116,7 +116,7 @@
                 android:id="@+id/energy_mode_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="EV" />
+                android:text="EV" />
 
         </LinearLayout>
 
@@ -133,7 +133,7 @@
                 android:id="@+id/operation_mode_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="ECO" />
+                android:text="ECO" />
 
         </LinearLayout>
 
@@ -503,10 +503,11 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <com.huawei.carstatushelper.view.CarSpeedView
-            android:id="@+id/car_speed_csv"
+        <com.huawei.carstatushelper.view.EngineSpeedView
+            android:id="@+id/engine_speed_esv"
             android:layout_width="350dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
 
         <com.huawei.carstatushelper.view.EnginePowerView
             android:id="@+id/engine_power_epv"
@@ -514,8 +515,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
-        <com.huawei.carstatushelper.view.EngineSpeedView
-            android:id="@+id/engine_speed_esv"
+        <com.huawei.carstatushelper.view.CarSpeedView
+            android:id="@+id/car_speed_csv"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />

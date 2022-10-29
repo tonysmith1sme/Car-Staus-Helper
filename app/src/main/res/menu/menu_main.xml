@@ -8,7 +8,4 @@
         android:id="@+id/version_update"
         android:title="版本更新" />
 
-    <item
-        android:id="@+id/test_btn"
-        android:title="测试" />
 </menu>
