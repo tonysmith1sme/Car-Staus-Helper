@@ -8,4 +8,7 @@
         android:id="@+id/version_update"
         android:title="版本更新" />
 
+    <item
+        android:id="@+id/float_show"
+        android:title="开启浮窗" />
 </menu>

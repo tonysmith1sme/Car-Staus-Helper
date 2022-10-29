@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
+import android.hardware.bydauto.charging.AbsBYDAutoChargingListener;
+import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
@@ -20,6 +22,7 @@ import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +42,7 @@ import com.huawei.carstatushelper.view.CarSpeedView;
 import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.socks.library.KLog;
+import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
 import java.text.DecimalFormat;
 
@@ -108,6 +112,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView youMengTv;
     private ProgressBar shaChePb;
     private TextView shaCheTv;
+    private BYDAutoChargingDevice chargingDevice;
+    private TextView chargingPowerTv;
+    private TextView chargingRestTimeTv;
+    private TextView autoModelNameTv;
+    private TextView engineCodeTv;
+    private TextView gearboxCodeTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +212,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         engineSpeedTv = binding.engineSpeedTv;
 
         textTv = binding.textTv;
+        autoModelNameTv = binding.autoModelNameTv;
+        engineCodeTv = binding.engineCodeTv;
+        gearboxCodeTv = binding.gearboxCodeTv;
+
         powerMileageTv = binding.powerMileageTv;
         fuelMileageTv = binding.fuelMileageTv;
         fuelPercentPb = binding.fuelPercentPb;
@@ -211,6 +225,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePowerTv = binding.enginePowerTv;
         totalElecConPhmTv = binding.totalElecConPhmTv;
         totalFuelConPhmTv = binding.totalFuelConPhmTv;
+
+        chargingPowerTv = binding.chargingPowerTv;
+        chargingRestTimeTv = binding.chargingRestTimeTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -351,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         engineDevice = BYDAutoEngineDevice.getInstance(this);
         bydAutoAcDevice = BYDAutoAcDevice.getInstance(this);
         gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
+        chargingDevice = BYDAutoChargingDevice.getInstance(this);
         initSuccess = true;
         initData();
     }
@@ -365,6 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         energyDevice.registerListener(absBYDAutoEnergyListener);
         bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
+        chargingDevice.registerListener(absBYDAutoChargingListener);
 //        oliCostHelper.start();
     }
 
@@ -378,6 +397,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         energyDevice.unregisterListener(absBYDAutoEnergyListener);
         bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
         gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
+        chargingDevice.unregisterListener(absBYDAutoChargingListener);
 //        oliCostHelper.stop();
     }
 
@@ -411,6 +431,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             currentGearboxLevelTv.setText(gearboxLevelName);
+        }
+    };
+
+    private final AbsBYDAutoChargingListener absBYDAutoChargingListener = new AbsBYDAutoChargingListener() {
+        /**
+         * 充电功率变化监听
+         *
+         * @param value
+         */
+        @Override
+        public void onChargingPowerChanged(double value) {
+            super.onChargingPowerChanged(value);
+            if (chargingPowerTv == null) {
+                return;
+            }
+            chargingPowerTv.setText(value + "");
+        }
+
+        /**
+         * 获取充满电剩余时间
+         *
+         * @param hour
+         * @param min
+         */
+        @Override
+        public void onChargingRestTimeChanged(int hour, int min) {
+            super.onChargingRestTimeChanged(hour, min);
+            if (chargingRestTimeTv == null) {
+                return;
+            }
+            chargingRestTimeTv.setText(hour + "h " + min + "分");
         }
     };
 
@@ -932,6 +983,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Uri uri = Uri.parse("https://gitee.com/liyiwei1032/car-staus-helper");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.float_show) {
+            if (Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(this, FloatingWindowService.class);
+                startService(intent);
+
+                finish();
+            } else {
+                Toast.makeText(this, "请授予浮窗权限", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -947,6 +1011,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BYDAutoBodyworkDevice bodyworkDevice = BYDAutoBodyworkDevice.getInstance(MainActivity.this);
         //LGXC76C44N0131100,LGXC76C44N0131101
         textTv.setText(bodyworkDevice.getAutoVIN());
+        if (autoModelNameTv != null) {
+            autoModelNameTv.setText(bodyworkDevice.getAutoModelName());
+        }
+        if (engineCodeTv != null) {
+            engineCodeTv.setText(engineDevice.getEngineCode());
+        }
+        if (gearboxCodeTv != null) {
+            gearboxCodeTv.setText(gearboxDevice.getGearboxCode());
+        }
+
 
         //总里程
         int totalMileageValue = statisticDevice.getTotalMileageValue();
