@@ -48,7 +48,7 @@
                 android:id="@+id/auto_model_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="比亚迪 秦 plus DM-i" />
+                android:text="null" />
         </LinearLayout>
 
         <LinearLayout

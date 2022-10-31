@@ -1,0 +1,123 @@
+--------- beginning of system
+10-31 18:41:52.996 20965 20965 D ActivityThread: Won't deliver top position change in state=5
+10-31 18:41:53.043 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:41:53.162 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:43:13.492 20965 20965 I ActivityThread: Handle window ActivityRecord{720de7f token=android.os.BinderProxy@748ebbb {com.termux/com.termux.app.TermuxActivity}} visibility: false
+10-31 18:56:13.733 20965 20965 D ActivityThread: Won't deliver top position change in state=5
+10-31 18:56:13.791 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:56:13.932 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:56:47.288 20965 20965 W HwApsManager: HwApsManagerService, registerCallback, start !
+10-31 18:57:50.238 20965 20965 I ActivityThread: Handle window ActivityRecord{720de7f token=android.os.BinderProxy@748ebbb {com.termux/com.termux.app.TermuxActivity}} visibility: false
+10-31 18:58:51.509 20965 20965 D ActivityThread: Won't deliver top position change in state=5
+10-31 18:58:51.535 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:58:51.931 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 18:59:10.961 20965 20965 I ActivityThread: Handle window ActivityRecord{720de7f token=android.os.BinderProxy@748ebbb {com.termux/com.termux.app.TermuxActivity}} visibility: false
+10-31 19:00:03.354 20965 20965 D ActivityThread: Won't deliver top position change in state=5
+10-31 19:00:03.404 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 19:00:03.832 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+--------- beginning of main
+10-31 19:02:10.353 22827 22827 W adb     : type=1400 audit(0.0:62431): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:10.356 20965 20965 W DisplayEventDispatcher: dispatcher 0x7bd79a02a0 ~ ignoring unknown event type 0x736f6674
+10-31 19:02:10.356 20965 20965 I chatty  : uid=10228(com.termux) identical 3 lines
+10-31 19:02:10.356 20965 20965 W DisplayEventDispatcher: dispatcher 0x7bd79a02a0 ~ ignoring unknown event type 0x736f6674
+10-31 19:02:10.368 20965 20965 D ActivityThread: Won't deliver top position change in state=5
+10-31 19:02:10.388 20965 20965 D SoundPool: SoundPool constructor: maxChannels=1, attr.usage=13, attr.flags=0x800, attr.tags=
+10-31 19:02:10.388 20965 20988 D ZrHung.AppEyeUiProbe: restart watching
+10-31 19:02:10.394 20965 20965 I RmeSchedManager: init Rme, version is: v1.0
+10-31 19:02:10.394 20965 20965 I RtgSchedEvent: current pid:20965 AppType:-1
+10-31 19:02:10.404 20965 20992 D mali_winsys: EGLint new_window_surface(egl_winsys_display *, void *, EGLSurface, EGLConfig, egl_winsys_surface **, EGLBoolean) returns 0x3000
+10-31 19:02:10.422 20965 20965 I HwViewRootImpl: removeInvalidNode all the node in jank list is out of time
+10-31 19:02:10.424 20965 20965 D DecorView: showOrHideHighlightView: hasFocus=true; winMode=1; isMrgNull=true
+10-31 19:02:10.425 20965 20965 W SoundPoolThread: type=1400 audit(0.0:62432): avc: denied { read } for pid=20965 name="u:object_r:product_platform_prop:s0" dev="tmpfs" ino=14925 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:product_platform_prop:s0 tclass=file permissive=0
+10-31 19:02:10.425 20965 20965 W InputMethodManager: startInputReason = 1
+10-31 19:02:10.428 20965 29880 E libc    : Access denied finding property "ro.kirin.product.platform"
+10-31 19:02:10.428 20965 29880 W HwExtendedCodec: The mime is not in hisi extended mime.
+10-31 19:02:10.429 20965 20965 W HwRemoteInputMethodManager: isCasting false because IHwDistributedWindowManager is invalid.
+10-31 19:02:10.430 20965 29900 D CCodec  : allocate(c2.android.vorbis.decoder)
+10-31 19:02:10.434 20965 29900 I CCodec  : Created component [c2.android.vorbis.decoder]
+10-31 19:02:10.434 20965 29900 D CCodecConfig: read media type: audio/vorbis
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.max-count.values
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: output.subscribed-indices.values
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: input.buffers.allocator-ids.values
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.allocator-ids.values
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.allocator-ids.values
+10-31 19:02:10.436 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.pool-ids.values
+10-31 19:02:10.437 20965 29900 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.pool-ids.values
+10-31 19:02:10.438 20965 29900 I CCodecConfig: query failed after returning 7 values (BAD_INDEX)
+10-31 19:02:10.438 20965 29900 D CCodecConfig: c2 config is Dict {
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 32768
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   string input.media-type.value = "audio/vorbis"
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   string output.media-type.value = "audio/raw"
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   c2::u32 raw.channel-count.value = 1
+10-31 19:02:10.438 20965 29900 D CCodecConfig:   c2::u32 raw.sample-rate.value = 48000
+10-31 19:02:10.438 20965 29900 D CCodecConfig: }
+10-31 19:02:10.439 20965 29900 D CCodecConfig: no c2 equivalents for durationUs
+10-31 19:02:10.439 20965 29900 D CCodecConfig: no c2 equivalents for csd-1
+10-31 19:02:10.439 20965 29900 D CCodecConfig: no c2 equivalents for track-id
+10-31 19:02:10.439 20965 29900 D CCodecConfig: no c2 equivalents for channel-mask
+10-31 19:02:10.441 20965 29900 D CCodecConfig: c2 config is Dict {
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 32768
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   string input.media-type.value = "audio/vorbis"
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   string output.media-type.value = "audio/raw"
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   c2::u32 raw.channel-count.value = 1
+10-31 19:02:10.441 20965 29900 D CCodecConfig:   c2::u32 raw.sample-rate.value = 44100
+10-31 19:02:10.441 20965 29900 D CCodecConfig: }
+10-31 19:02:10.443 20965 29900 W Codec2Client: query -- param skipped: index = 1107298332.
+10-31 19:02:10.443 20965 29900 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t channel-count = 1
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t max-input-size = 32768
+10-31 19:02:10.443 20965 29900 D CCodec  :   string mime = "audio/vorbis"
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t sample-rate = 44100
+10-31 19:02:10.443 20965 29900 D CCodec  : } and output: AMessage(what = 0x00000000) = {
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t channel-count = 1
+10-31 19:02:10.443 20965 29900 D CCodec  :   string mime = "audio/raw"
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t sample-rate = 44100
+10-31 19:02:10.443 20965 29900 D CCodec  :   int32_t channel-mask = 1
+10-31 19:02:10.443 20965 29900 D CCodec  : }
+10-31 19:02:10.445 20965 29900 W Codec2Client: query -- param skipped: index = 1342179345.
+10-31 19:02:10.446 20965 29900 W Codec2Client: query -- param skipped: index = 2415921170.
+10-31 19:02:10.449 20965 29900 D BufferPoolManager: # of cleaned connections: 1
+10-31 19:02:10.449 20965 29900 D BufferPoolManager: create new connection 90045656572592
+10-31 19:02:10.449 20965 29900 D CCodecBufferChannel: [c2.android.vorbis.decoder#373] Created input block pool with allocatorID 16 => poolID 22 - OK (0)
+10-31 19:02:10.450 20965 21006 D BufferPoolAccessor: bufferpool2 0x7b7f568220 : 0(0 size) total buffers - 0(0 size) used buffers - 3/9 (recycle/alloc) - 6/24 (fetch/transfer)
+10-31 19:02:10.451 20965 29900 I CCodecBufferChannel: [c2.android.vorbis.decoder#373] Created output block pool with allocatorID 16 => poolID 122 - OK
+10-31 19:02:10.451 20965 21006 D BufferPoolAccessor: Destruction - bufferpool2 0x7b7f568220 cached: 0/0M, 0/0% in use; allocs: 9, 33% recycled; transfers: 24, 75% unfetced
+10-31 19:02:10.451 20965 29900 D CCodecBufferChannel: [c2.android.vorbis.decoder#373] Configured output block pool ids 122 => OK
+10-31 19:02:10.453 20965 29900 D BufferPoolManager: client death recipient registered 90045656572593
+10-31 19:02:10.461 20965 21006 D BufferPoolManager: register new connection 4571512379834
+10-31 19:02:10.480 20965 29900 I MediaCodec: start process kWhatStopCompleted
+10-31 19:02:10.486 20965 29880 D BufferPoolAccessor: buffer invalidation added bp:5 1
+10-31 19:02:10.486 20965 21005 D BufferPoolAccessor: buffer invalidation deleted bp:5
+10-31 19:02:10.692 20965 20965 I InputMethodManager: showSoftInput
+10-31 19:02:11.357 22827 22827 W adb     : type=1400 audit(0.0:62436): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:12.357 22827 22827 W adb     : type=1400 audit(0.0:62438): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:13.357 22827 22827 W adb     : type=1400 audit(0.0:62439): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:13.377 20965 20965 W DisplayEventDispatcher: dispatcher 0x7bd79a02a0 ~ ignoring unknown event type 0x736f6674
+10-31 19:02:14.357 22827 22827 W adb     : type=1400 audit(0.0:62440): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:16.357 22827 22827 W adb     : type=1400 audit(0.0:62446): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:17.357 22827 22827 W adb     : type=1400 audit(0.0:62447): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:18.361 22827 22827 W adb     : type=1400 audit(0.0:62448): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:19.361 22827 22827 W adb     : type=1400 audit(0.0:62449): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:20.361 22827 22827 W adb     : type=1400 audit(0.0:62454): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:21.361 22827 22827 W adb     : type=1400 audit(0.0:62461): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:22.361 22827 22827 W adb     : type=1400 audit(0.0:62462): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:23.361 22827 22827 W adb     : type=1400 audit(0.0:62467): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:24.361 22827 22827 W adb     : type=1400 audit(0.0:62468): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:25.261 29961 29961 W bash    : type=1400 audit(0.0:62469): avc: granted { execute } for pid=29961 name="logcat" dev="sdd71" ino=555873 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c228,c256,c512,c768 tclass=file
+10-31 19:02:25.261 29961 29961 W bash    : type=1400 audit(0.0:62470): avc: granted { execute } for pid=29961 name="logcat" dev="sdd71" ino=555873 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c228,c256,c512,c768 tclass=file
+10-31 19:02:25.261 29961 29961 W bash    : type=1400 audit(0.0:62471): avc: granted { execute_no_trans } for pid=29961 path="/data/data/com.termux/files/usr/bin/logcat" dev="sdd71" ino=555873 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c228,c256,c512,c768 tclass=file
+10-31 19:02:25.261 29961 29961 W bash    : type=1400 audit(0.0:62472): avc: granted { execute } for pid=29961 name="dash" dev="sdd71" ino=320677 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c228,c256,c512,c768 tclass=file
+10-31 19:02:25.261 29961 29961 W logcat  : type=1400 audit(0.0:62473): avc: granted { execute } for pid=29961 path="/data/data/com.termux/files/usr/bin/dash" dev="sdd71" ino=320677 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c228,c256,c512,c768 tclass=file
+10-31 19:02:26.365 22827 22827 W adb     : type=1400 audit(0.0:62476): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:27.365 22827 22827 W adb     : type=1400 audit(0.0:62480): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:28.365 22827 22827 W adb     : type=1400 audit(0.0:62481): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:29.365 22827 22827 W adb     : type=1400 audit(0.0:62482): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:30.365 22827 22827 W adb     : type=1400 audit(0.0:62486): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:31.365 22827 22827 W adb     : type=1400 audit(0.0:62487): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:32.369 22827 22827 W adb     : type=1400 audit(0.0:62490): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0
+10-31 19:02:33.036 20965 20965 V AudioManager: querySoundEffectsEnabled...
+10-31 19:02:33.369 22827 22827 W adb     : type=1400 audit(0.0:62493): avc: denied { read } for pid=22827 comm=64657669636520706F6C6C name="usb" dev="tmpfs" ino=16490 scontext=u:r:untrusted_app_27:s0:c228,c256,c512,c768 tcontext=u:object_r:usb_device:s0 tclass=dir permissive=0

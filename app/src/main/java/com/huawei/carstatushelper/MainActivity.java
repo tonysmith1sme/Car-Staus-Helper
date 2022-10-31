@@ -45,6 +45,8 @@ import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -1000,6 +1002,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    private static String getAutoModelName(BYDAutoBodyworkDevice device) {
+        int code = device.getAutoModelName();
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "秦 HEV");
+        map.put(2, "秦 EV");
+        map.put(3, "秦 燃油款");
+        map.put(4, "唐 HEV");
+        map.put(5, "唐 燃油款");
+        map.put(6, "唐 EV");
+        map.put(7, "宋 2018 燃油款");
+        map.put(8, "宋 2018 HEV");
+        map.put(9, "宋 2018 EV");
+        map.put(10, "宋 MAX HEV");
+        map.put(11, "NULL");
+        if (map.containsKey(code)) {
+            return map.get(code);
+        }
+        return "code:" + code;
+    }
+
     /**
      * 初始化界面数据
      */
@@ -1012,13 +1034,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //LGXC76C44N0131100,LGXC76C44N0131101
         textTv.setText(bodyworkDevice.getAutoVIN());
         if (autoModelNameTv != null) {
-            autoModelNameTv.setText(bodyworkDevice.getAutoModelName());
+            String autoModelName = getAutoModelName(bodyworkDevice);
+            int modelName = bodyworkDevice.getAutoModelName();
+            autoModelNameTv.setText(modelName);
         }
         if (engineCodeTv != null) {
-            engineCodeTv.setText(engineDevice.getEngineCode());
+            engineCodeTv.setText(engineDevice.getEngineCode() + "");
         }
         if (gearboxCodeTv != null) {
-            gearboxCodeTv.setText(gearboxDevice.getGearboxCode());
+            gearboxCodeTv.setText(gearboxDevice.getGearboxCode() + "");
         }
 
 
