@@ -1036,7 +1036,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (autoModelNameTv != null) {
             String autoModelName = getAutoModelName(bodyworkDevice);
             int modelName = bodyworkDevice.getAutoModelName();
-            autoModelNameTv.setText(modelName);
+            autoModelNameTv.setText(autoModelName);
         }
         if (engineCodeTv != null) {
             engineCodeTv.setText(engineDevice.getEngineCode() + "");
