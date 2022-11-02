@@ -729,7 +729,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (totalMileageTv != null) {
                 totalMileageTv.setText(totalMileageValue + " km");
             }
-            totalHevMileageTv.setText((totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
+            safeSetText(totalHevMileageTv,(totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
         }
 
         /**
@@ -806,7 +806,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onLastElecConPHMChanged(double value) {
             super.onLastElecConPHMChanged(value);
-            if (totalElecConPhmTv == null) {
+            if (lastElecConPhmTv == null) {
                 return;
             }
             lastElecConPhmTv.setText(format.format(value) + "KWH/100KM");
@@ -1032,7 +1032,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //6.1.2 车架号
         BYDAutoBodyworkDevice bodyworkDevice = BYDAutoBodyworkDevice.getInstance(MainActivity.this);
         //LGXC76C44N0131100,LGXC76C44N0131101
-        textTv.setText(bodyworkDevice.getAutoVIN());
+        safeSetText(textTv, bodyworkDevice.getAutoVIN());
         if (autoModelNameTv != null) {
             String autoModelName = getAutoModelName(bodyworkDevice);
             int modelName = bodyworkDevice.getAutoModelName();
@@ -1146,9 +1146,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param fuelPercentageValue
      */
     private void updateFuelPercent(int fuelPercentageValue) {
-        fuelPercentPb.setMax(100);
-        fuelPercentPb.setProgress(fuelPercentageValue);
-        fuelPbTv.setText(fuelPercentageValue + "%");
+        if (fuelPercentPb != null) {
+            fuelPercentPb.setMax(100);
+            fuelPercentPb.setProgress(fuelPercentageValue);
+        }
+        if (fuelPbTv != null) {
+            fuelPbTv.setText(fuelPercentageValue + "%");
+        }
     }
 
     /**
@@ -1164,9 +1168,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ret = value;
         }
         KLog.e("电量续航百分比：" + ret);
-        elecPercentPb.setMax(100);
-        elecPercentPb.setProgress(((int) ret));
-        elecPbTv.setText(format.format(ret) + "%");
+        if (elecPercentPb != null) {
+            elecPercentPb.setMax(100);
+            elecPercentPb.setProgress(((int) ret));
+        }
+        safeSetText(elecPbTv, format.format(ret) + "%");
     }
 
 
@@ -1176,7 +1182,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (enginePowerTv != null) {
             enginePowerTv.setText(enginePower + " kw");
         }
-        enginePowerEpv.setVelocity(enginePower);
+        if (enginePowerEpv != null) {
+            enginePowerEpv.setVelocity(enginePower);
+        }
 
         updateEnergyCost();
     }
@@ -1313,5 +1321,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+    }
+
+    private void safeSetText(TextView target, CharSequence text) {
+        if (target == null) {
+            return;
+        }
+        target.setText(text);
     }
 }
