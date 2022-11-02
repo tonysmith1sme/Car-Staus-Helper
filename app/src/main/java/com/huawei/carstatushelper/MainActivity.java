@@ -1019,6 +1019,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (map.containsKey(code)) {
             return map.get(code);
         }
+        if (code == -2147482645) {
+            return "INVALID_VALUE";
+        }
         return "code:" + code;
     }
 
@@ -1312,7 +1315,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
-                    bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                    int ret = bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                    Toast.makeText(this, getCommandRet(ret), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
@@ -1328,5 +1332,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         target.setText(text);
+    }
+
+    private static String getCommandRet(int ret) {
+        if (ret == 0) {
+            return "success";
+        }
+        return "failed";
     }
 }

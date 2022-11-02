@@ -42,8 +42,9 @@
 
                 <TextView
                     android:id="@+id/you_meng_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="0%" />
             </LinearLayout>
 
@@ -70,8 +71,9 @@
 
                 <TextView
                     android:id="@+id/sha_che_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="0%" />
             </LinearLayout>
 
