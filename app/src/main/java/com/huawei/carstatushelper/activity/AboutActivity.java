@@ -1,15 +1,19 @@
 package com.huawei.carstatushelper.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.R;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BackEnableBaseActivity {
 
     private TextView mVersionTv;
+
+    @Override
+    public CharSequence setPageTitle() {
+        return "关于";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

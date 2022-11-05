@@ -2,10 +2,12 @@ package com.ziwenl.floatingwindowdemo;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +90,28 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         mWindSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
         mExampleViewC.findViewById(R.id.close_btn).setOnClickListener(this);
         mExampleViewC.findViewById(R.id.back_btn).setOnClickListener(this);
+
+        View ac_layout_container = mExampleViewC.findViewById(R.id.ac_layout_container);
+        View ac_layout_seekbar = mExampleViewC.findViewById(R.id.ac_layout1);
+        View ac_layout_button = mExampleViewC.findViewById(R.id.ac_layout2);
+
+        mExampleViewC.findViewById(R.id.temperature_plus_btn).setOnClickListener(this);
+        mExampleViewC.findViewById(R.id.wind_level_plus_btn).setOnClickListener(this);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean show_ac_layout = preferences.getBoolean("show_ac_layout", false);
+        String ac_control_style = preferences.getString("ac_control_style", "null");
+        ac_layout_container.setVisibility(show_ac_layout ? View.VISIBLE : View.GONE);
+        if ("null".equals(ac_control_style)) {
+            ac_layout_seekbar.setVisibility(View.GONE);
+            ac_layout_button.setVisibility(View.GONE);
+        } else if ("seekbar".equals(ac_control_style)) {
+            ac_layout_seekbar.setVisibility(View.VISIBLE);
+            ac_layout_button.setVisibility(View.GONE);
+        } else if ("button".equals(ac_control_style)) {
+            ac_layout_seekbar.setVisibility(View.GONE);
+            ac_layout_button.setVisibility(View.VISIBLE);
+        }
     }
 
     void initData() {
@@ -106,6 +130,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mFloatingWindowHelper.destroy();
         if (mBydAutoEngineDevice == null) {
             return;
         }
@@ -135,13 +160,36 @@ public class FloatingWindowService extends Service implements View.OnClickListen
             mFloatingWindowHelper.clear();
             stopSelf();
             Log.e(TAG, "onClick: 停止浮窗服务");
+        } else if (vId == R.id.temperature_plus_btn) {
+            if (currentTempValue == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
+                currentTempValue = BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN;
+            } else {
+                currentTempValue += 1;
+            }
+            if (mBydAutoAcDevice == null) {
+                return;
+            }
+            mBydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, currentTempValue, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+        } else if (vId == R.id.wind_level_plus_btn) {
+            if (mBydAutoAcDevice == null) {
+                return;
+            }
+            if (currentWindLevelValue >= BYDAutoAcDevice.AC_WINDLEVEL_7) {
+                mBydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                mBydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                currentWindLevelValue = -1;
+            } else {
+                currentWindLevelValue += 1;
+                mBydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, currentWindLevelValue);
+            }
         }
     }
 
-    private final SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        int currentTempValue;
+    int currentTempValue;
 
-        int currentWindLevelValue;
+    int currentWindLevelValue;
+
+    private final SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -167,12 +215,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
                 return;
             }
             if (seekBarId == R.id.temprature_seekbar) {
-                mBydAutoAcDevice.setAcTemperature(
-                        BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY,
-                        currentTempValue,
-                        BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY,
-                        BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC
-                );
+                mBydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, currentTempValue, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
                 mCurrentTempTv.setText(String.valueOf(currentTempValue));
             } else if (seekBarId == R.id.wind_level_seekbar) {
                 mCurrentWindLevelTv.setText(String.valueOf(currentWindLevelValue));

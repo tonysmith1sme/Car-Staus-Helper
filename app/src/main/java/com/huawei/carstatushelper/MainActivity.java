@@ -30,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView autoModelNameTv;
     private TextView engineCodeTv;
     private TextView gearboxCodeTv;
+    private Button defrostModeBtn;
+    private Button ventilateModeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +148,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (windLevelSubBtn != null) {
             windLevelSubBtn.setOnClickListener(this);
         }
+        if (defrostModeBtn != null) {
+            defrostModeBtn.setOnClickListener(this);
+        }
+        if (ventilateModeBtn != null) {
+            ventilateModeBtn.setOnClickListener(this);
+        }
 
-        String[] permissions = {
-                Manifest.permission.BYDAUTO_BODYWORK_COMMON,
-                Manifest.permission.BYDAUTO_AC_COMMON
-        };
+        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON};
         boolean need = false;
         for (String p : permissions) {
             if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
@@ -231,6 +237,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         chargingPowerTv = binding.chargingPowerTv;
         chargingRestTimeTv = binding.chargingRestTimeTv;
+
+        defrostModeBtn = binding.defrostModeBtn;
+        ventilateModeBtn = binding.ventilateModeBtn;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -319,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        initData();
+        initAutoData();
     }
 
     @Override
@@ -373,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
         chargingDevice = BYDAutoChargingDevice.getInstance(this);
         initSuccess = true;
-        initData();
+        initAutoData();
     }
 
     private void register() {
@@ -990,8 +999,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (Settings.canDrawOverlays(this)) {
                 Intent intent = new Intent(this, FloatingWindowService.class);
                 startService(intent);
-
-                finish();
             } else {
                 Toast.makeText(this, "请授予浮窗权限", Toast.LENGTH_SHORT).show();
 
@@ -999,8 +1006,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.setData(Uri.parse("package:" + getPackageName()));
                 startActivity(intent);
             }
-        } else if (item.getItemId() == R.id.test_btn) {
+        } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+        } else if (item.getItemId() == R.id.test_btn) {
+            Toast.makeText(this, "未实现: ", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1031,7 +1040,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 初始化界面数据
      */
-    private void initData() {
+    private void initAutoData() {
         if (statisticDevice == null) {
             return;
         }
@@ -1041,7 +1050,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         safeSetText(textTv, bodyworkDevice.getAutoVIN());
         if (autoModelNameTv != null) {
             String autoModelName = getAutoModelName(bodyworkDevice);
-            int modelName = bodyworkDevice.getAutoModelName();
             autoModelNameTv.setText(autoModelName);
         }
         if (engineCodeTv != null) {
@@ -1120,6 +1128,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //当前风量
         int acWindLevel = bydAutoAcDevice.getAcWindLevel();
         absBYDAutoAcListener.onAcWindLevelChanged(acWindLevel);
+
+        if (chargingPowerTv != null) {
+            chargingPowerTv.setText(format.format(chargingDevice.getChargingPower()) + "");
+        }
+        if (chargingRestTimeTv != null) {
+            int[] time = chargingDevice.getChargingRestTime();
+            if (time.length == 2) {
+                chargingRestTimeTv.setText(time[0] + "h" + time[1] + "min");
+            }
+        }
     }
 
     /**
@@ -1283,12 +1301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
                     return;
                 }
-                bydAutoAcDevice.setAcTemperature(
-                        BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY,
-                        temprature + 1,
-                        BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY,
-                        BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC
-                );
+                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
                 if (isLandLayoutShow()) {
                     Toast.makeText(this, "当前温度：" + (temprature + 1), Toast.LENGTH_SHORT).show();
                 }
@@ -1297,12 +1310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
                     return;
                 }
-                bydAutoAcDevice.setAcTemperature(
-                        BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY,
-                        temprature - 1,
-                        BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY,
-                        BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC
-                );
+                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
                 if (isLandLayoutShow()) {
                     Toast.makeText(this, "当前温度：" + (temprature - 1), Toast.LENGTH_SHORT).show();
                 }
@@ -1326,6 +1334,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
                 if (isLandLayoutShow()) {
                     Toast.makeText(this, "当前风量：" + (acWindLevel - 1), Toast.LENGTH_SHORT).show();
+                }
+            } else if (vId == R.id.defrost_mode_btn) {
+                int state = bydAutoAcDevice.getAcDefrostState(BYDAutoAcDevice.AC_DEFROST_AREA_FRONT);
+                if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
+                    bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_ON);
+                } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
+                    bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_OFF);
+                } else {
+
+                }
+            } else if (vId == R.id.ventilate_mode_btn) {
+                int state = bydAutoAcDevice.getAcVentilationState();
+                if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
+                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
+                    bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_ON);
+                } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
+                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
+                    bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
+                } else {
+
                 }
             }
         }

@@ -581,17 +581,22 @@
                 android:textSize="24sp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/defrost_mode_btn"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="除霜" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/ventilate_mode_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="通风" />
+            <Button
+                android:id="@+id/defrost_mode_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="除霜" />
+
+            <Button
+                android:id="@+id/ventilate_mode_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="通风" />
+        </LinearLayout>
 
     </LinearLayout>
 

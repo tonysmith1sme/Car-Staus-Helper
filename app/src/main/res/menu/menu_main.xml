@@ -15,4 +15,8 @@
     <item
         android:id="@+id/test_btn"
         android:title="测试专用" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="设置" />
 </menu>

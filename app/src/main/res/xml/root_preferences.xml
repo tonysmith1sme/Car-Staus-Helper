@@ -1,0 +1,60 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+    调试的时候用 PreferenceCategory，
+    正式发布的时候用 SimplePreferenceCategory（预览不显示）
+    -->
+
+    <PreferenceCategory android:title="浮窗">
+
+        <!--
+        <SwitchPreference
+            android:key="auto_show_floating"
+            android:title="切换到后台自动显示" />
+        -->
+
+        <SwitchPreference
+            android:key="show_ac_layout"
+            android:title="显示空调按钮" />
+
+        <ListPreference
+            android:defaultValue="seekbar"
+            android:dependency="show_ac_layout"
+            android:entries="@array/ac_button_style_entries"
+            android:entryValues="@array/ac_button_style_values"
+            android:key="ac_control_style"
+            android:title="空调按钮样式" />
+    </PreferenceCategory>
+
+    <!--
+    <SimplePreferenceCategory android:title="@string/messages_header">
+        <EditTextPreference
+            android:key="signature"
+            android:title="@string/signature_title" />
+
+        <ListPreference
+            android:defaultValue="reply"
+            android:entries="@array/reply_entries"
+            android:entryValues="@array/reply_values"
+            android:key="reply"
+            android:title="@string/reply_title" />
+    </SimplePreferenceCategory>
+
+    <SimplePreferenceCategory android:title="@string/sync_header">
+
+        <SwitchPreference
+            android:key="sync"
+            android:title="@string/sync_title" />
+
+        <SwitchPreference
+            android:dependency="sync"
+            android:key="attachment"
+            android:summaryOff="@string/attachment_summary_off"
+            android:summaryOn="@string/attachment_summary_on"
+            android:title="@string/attachment_title" />
+
+    </SimplePreferenceCategory>
+    -->
+
+
+</PreferenceScreen>
