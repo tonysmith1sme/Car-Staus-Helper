@@ -159,8 +159,22 @@ public class DashboardView4 extends View {
 //        int height = (int) Math.max(point1[1] + mRadius + mStrokeWidth * 2,
 //                point2[1] + mRadius + mStrokeWidth * 2);
         int height = width;
-//        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 130);
-        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - (height > 280 ? 130 : 80));
+        //279
+        //439
+        //525
+        if (height <= 280) {//浮窗模式
+            setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 80);
+            text_size = 12;
+            header_text_size = 12;
+        } else if (height <= 440) {//分屏模式
+            setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 100);
+            text_size = 18;
+            header_text_size = 18;
+        } else {//普通模式
+            setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 130);
+            text_size = 24;
+            header_text_size = 24;
+        }
 
         mCenterX = mCenterY = getMeasuredWidth() / 2f;
         mRectFArc.set(

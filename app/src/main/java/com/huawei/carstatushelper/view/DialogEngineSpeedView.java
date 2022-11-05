@@ -50,10 +50,4 @@ public class DialogEngineSpeedView extends DashboardView4 {
         return false;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        text_size = 12;
-        header_text_size = 12;
-        super.onDraw(canvas);
-    }
 }

@@ -125,16 +125,17 @@
                     android:layout_height="wrap_content">
 
                     <Button
+                        android:id="@+id/temperature_sub_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="温度-" />
+
+                    <Button
                         android:id="@+id/temperature_plus_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="温度+" />
 
-                    <Button
-                        android:id="@+id/temperature_sub_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="温度-" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,16 +143,17 @@
                     android:layout_height="wrap_content">
 
                     <Button
+                        android:id="@+id/wind_level_sub_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="风量-" />
+
+                    <Button
                         android:id="@+id/wind_level_plus_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="风量+" />
 
-                    <Button
-                        android:id="@+id/wind_level_sub_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="风量-" />
                 </LinearLayout>
 
             </LinearLayout>

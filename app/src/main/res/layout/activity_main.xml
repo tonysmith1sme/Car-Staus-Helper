@@ -531,17 +531,17 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/temperature_plus_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:textSize="24sp" />
-
-            <Button
                 android:id="@+id/temperature_sub_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/temperature_plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -567,19 +567,31 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/wind_level_plus_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:textSize="24sp" />
-
-            <Button
                 android:id="@+id/wind_level_sub_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/wind_level_plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textSize="24sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/defrost_mode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="除霜" />
+
+        <Button
+            android:id="@+id/ventilate_mode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通风" />
 
     </LinearLayout>
 
@@ -594,21 +606,29 @@
 
         <com.huawei.carstatushelper.view.EngineSpeedView
             android:id="@+id/engine_speed_esv"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp" />
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp" />
 
         <com.huawei.carstatushelper.view.EnginePowerView
             android:id="@+id/engine_power_epv"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp" />
 
         <com.huawei.carstatushelper.view.CarSpeedView
             android:id="@+id/car_speed_csv"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp" />
 
     </LinearLayout>
 
