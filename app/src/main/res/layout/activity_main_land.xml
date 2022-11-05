@@ -82,21 +82,30 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp" />
 
             <com.huawei.carstatushelper.view.EnginePowerView
                 android:id="@+id/engine_power_epv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp" />
 
             <com.huawei.carstatushelper.view.CarSpeedView
                 android:id="@+id/car_speed_csv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp" />
 
         </LinearLayout>
 

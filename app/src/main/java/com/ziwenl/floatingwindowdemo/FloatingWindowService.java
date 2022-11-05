@@ -128,6 +128,8 @@ public class FloatingWindowService extends Service implements View.OnClickListen
             Intent intent = new Intent(FloatingWindowService.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            mFloatingWindowHelper.destroy();
+
             stopSelf();
         } else if (vId == R.id.close_btn) {
             mFloatingWindowHelper.clear();
@@ -161,6 +163,9 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             int seekBarId = seekBar.getId();
+            if (mBydAutoAcDevice == null) {
+                return;
+            }
             if (seekBarId == R.id.temprature_seekbar) {
                 mBydAutoAcDevice.setAcTemperature(
                         BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY,
@@ -172,6 +177,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
             } else if (seekBarId == R.id.wind_level_seekbar) {
                 mCurrentWindLevelTv.setText(String.valueOf(currentWindLevelValue));
                 if (currentWindLevelValue == 0) {
+                    mBydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                     mBydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                 } else {
                     mBydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, currentWindLevelValue);

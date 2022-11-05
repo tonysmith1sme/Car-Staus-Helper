@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="#00f"
     android:orientation="vertical"
     tools:padding="16dp">
@@ -45,8 +45,9 @@
 
         <com.huawei.carstatushelper.view.DialogEngineSpeedView
             android:id="@+id/engine_speed_esv"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="186dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,8 +65,9 @@
                 android:id="@+id/engine_speed_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1460"
-                android:textColor="@color/white" />
+                android:text="0"
+                android:textColor="@color/white"
+                tools:text="1460" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +103,7 @@
                     android:id="@+id/current_temperature_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="26"
+                    android:text="17"
                     android:textColor="@color/white" />
 
                 <TextView

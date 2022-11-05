@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
+import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
@@ -729,7 +730,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (totalMileageTv != null) {
                 totalMileageTv.setText(totalMileageValue + " km");
             }
-            safeSetText(totalHevMileageTv,(totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
+            safeSetText(totalHevMileageTv, (totalMileageValue - statisticDevice.getEVMileageValue()) + "km");
         }
 
         /**
@@ -998,6 +999,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.setData(Uri.parse("package:" + getPackageName()));
                 startActivity(intent);
             }
+        } else if (item.getItemId() == R.id.test_btn) {
+            startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1315,6 +1318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
+                    bydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                     int ret = bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                     Toast.makeText(this, getCommandRet(ret), Toast.LENGTH_SHORT).show();
                     return;

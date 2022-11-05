@@ -3,6 +3,7 @@ package com.ziwenl.floatingwindowdemo.utils;
 import static android.content.Context.WINDOW_SERVICE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -36,14 +37,21 @@ public class FloatingWindowHelper {
     /**
      * 创建模板 WindowManager.LayoutParams 对象
      */
+    @SuppressLint("WrongConstant")
     private WindowManager.LayoutParams createLayoutParams() {
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        //下面这行代码模拟器可以跑，实车会崩，猜测是签名问题
-        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        if (Build.VERSION.SDK_INT >= 26) {
+            //比亚迪sdk在api25中没有TYPE_APPLICATION_OVERLAY，所以只能从其他版本获取值手动赋值数值。
+            layoutParams.type = 2038;
+        } else {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
         layoutParams.format = PixelFormat.RGBA_8888;
         layoutParams.gravity = Gravity.START | Gravity.TOP;
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        //此处设置为WRAP_CONTENT，布局中rootView的宽高参数才会生效
         layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
         layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         return layoutParams;

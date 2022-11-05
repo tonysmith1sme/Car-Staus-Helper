@@ -1,6 +1,7 @@
 package com.huawei.carstatushelper.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 
 import com.xw.sample.dashboardviewdemo.DashboardView4;
@@ -30,16 +31,29 @@ public class DialogEngineSpeedView extends DashboardView4 {
 
     @Override
     protected int setPortion() {
-        return 10;
+        return 1;
     }
 
     @Override
     protected String setHeaderText() {
-        return " ...";
+//        return " x1000 rpm";
+        return null;
     }
 
     @Override
     protected int setUnit() {
         return 1000;
+    }
+
+    @Override
+    protected boolean showDigitalTube() {
+        return false;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        text_size = 12;
+        header_text_size = 12;
+        super.onDraw(canvas);
     }
 }

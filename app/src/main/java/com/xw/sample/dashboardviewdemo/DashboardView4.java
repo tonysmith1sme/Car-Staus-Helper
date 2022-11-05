@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.R;
 
 import java.util.Locale;
@@ -96,6 +95,10 @@ public class DashboardView4 extends View {
         return 1;
     }
 
+    protected boolean showDigitalTube() {
+        return true;
+    }
+
 //    boolean showCircleNum = true;
 //
 //    public void setShowCircleNum(boolean show) {
@@ -156,7 +159,8 @@ public class DashboardView4 extends View {
 //        int height = (int) Math.max(point1[1] + mRadius + mStrokeWidth * 2,
 //                point2[1] + mRadius + mStrokeWidth * 2);
         int height = width;
-        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 80);
+//        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - 130);
+        setMeasuredDimension(width, height + getPaddingTop() + getPaddingBottom() - (height > 280 ? 130 : 80));
 
         mCenterX = mCenterY = getMeasuredWidth() / 2f;
         mRectFArc.set(
@@ -180,8 +184,8 @@ public class DashboardView4 extends View {
     }
 
     //    private int text_size = 16;
-    private int text_size = 24;
-    private int header_text_size = 24;
+    protected int text_size = 24;
+    protected int header_text_size = 24;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -262,14 +266,14 @@ public class DashboardView4 extends View {
                 double value = Integer.parseInt(mTexts[i]) * 1.0f / setUnit();
                 text = String.format(Locale.getDefault(), "%.1f", value);
             }
-            mPaint.getTextBounds(mHeaderText, 0, text.length(), mRectText);
+            mPaint.getTextBounds(text, 0, text.length(), mRectText);
             int txtH = mRectText.height();
             if (i <= 1 || i >= mSection - 1) {
-                canvas.drawText(text, p[0], p[1] + txtH / 2, mPaint);
+                canvas.drawText(text, p[0], p[1] + txtH * 1.0f / 2, mPaint);
             } else if (i == 3) {
-                canvas.drawText(text, p[0] + txtH / 2, p[1] + txtH, mPaint);
+                canvas.drawText(text, p[0] + txtH * 1.0f / 2, p[1] + txtH, mPaint);
             } else if (i == mSection - 3) {
-                canvas.drawText(text, p[0] - txtH / 2, p[1] + txtH, mPaint);
+                canvas.drawText(text, p[0] - txtH * 1.0f / 2, p[1] + txtH, mPaint);
             } else {
                 canvas.drawText(text, p[0], p[1] + txtH, mPaint);
             }
@@ -296,7 +300,7 @@ public class DashboardView4 extends View {
             mPaint.setTextSize(sp2px(header_text_size));
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.getTextBounds(mHeaderText, 0, mHeaderText.length(), mRectText);
-            canvas.drawText(mHeaderText, mCenterX, mRadius / 2, mPaint);
+            canvas.drawText(mHeaderText, mCenterX, mCenterY / 2 + mRectText.height(), mPaint);
         }
 
         /**
@@ -314,8 +318,11 @@ public class DashboardView4 extends View {
         canvas.drawLine(mCenterX, mCenterY, p2[0], p2[1], mPaint);
 
         /**
-         * 画实时度数值
+         * 画实时度数值（画8段晶体管）
          */
+        if (!showDigitalTube()) {
+            return;
+        }
         mPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         mPaint.setStrokeWidth(dp2px(2));
         int xOffset = dp2px(22);

@@ -11,6 +11,7 @@ android {
             keyPassword 'android'
         }
     }
+    //noinspection GradleCompatible
     compileSdk 25
 
     defaultConfig {
@@ -40,6 +41,16 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+    flavorDimensions 'type'
+    productFlavors {
+        master {
+            dimension 'type'
+        }
+        dev {
+            dimension 'type'
+            applicationId 'com.huawei.carstatushelper.dev'
+        }
     }
 }
 

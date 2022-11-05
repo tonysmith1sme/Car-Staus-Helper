@@ -46,4 +46,5 @@ public class EngineSpeedView extends DashboardView4 {
     protected int setUnit() {
         return 1000;
     }
+
 }
