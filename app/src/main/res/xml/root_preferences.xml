@@ -9,8 +9,12 @@
 
         <!--
         <SwitchPreference
+            android:key="enable_floating"
+            android:title="启用浮窗" />
+        <SwitchPreference
+            android:dependency="enable_floating"
             android:key="auto_show_floating"
-            android:title="切换到后台自动显示" />
+            android:title="后台自动显示" />
         -->
 
         <SwitchPreference
@@ -19,7 +23,6 @@
 
         <ListPreference
             android:defaultValue="seekbar"
-            android:dependency="show_ac_layout"
             android:entries="@array/ac_button_style_entries"
             android:entryValues="@array/ac_button_style_values"
             android:key="ac_control_style"

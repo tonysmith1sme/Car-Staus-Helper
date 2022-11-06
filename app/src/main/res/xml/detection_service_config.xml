@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 根据的 Service 的不同功能需要，你可能需要不同的配置 -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagIncludeNotImportantViews"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/accessibility_service_description"
+    android:notificationTimeout="100"
+    android:settingsActivity="com.example.android.accessibility.ServiceSettingsActivity" />
+    <!--
+    android:packageNames="com.example.android.apis"
+
+-->
