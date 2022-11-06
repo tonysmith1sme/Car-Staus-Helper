@@ -151,15 +151,14 @@
                                 android:id="@+id/fuel_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="100%" />
+                                android:text="0%" />
 
                             <TextView
                                 android:id="@+id/fuel_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:minWidth="50dp"
-                                android:text="1000 km" />
+                                android:text="0km" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -191,16 +190,14 @@
                                 android:id="@+id/elec_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="24%" />
+                                android:text="0%" />
 
                             <TextView
                                 android:id="@+id/power_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:minWidth="50dp"
-                                android:text="1230 km"
-                                tools:text="999 km" />
+                                android:text="0km" />
                         </LinearLayout>
 
                     </LinearLayout>
