@@ -23,6 +23,7 @@
 
         <ListPreference
             android:defaultValue="seekbar"
+            android:dependency="show_ac_layout"
             android:entries="@array/ac_button_style_entries"
             android:entryValues="@array/ac_button_style_values"
             android:key="ac_control_style"
