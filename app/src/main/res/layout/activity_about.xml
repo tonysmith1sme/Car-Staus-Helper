@@ -41,6 +41,7 @@
                 android:layout_marginTop="16dp">
 
                 <ImageView
+                    android:id="@+id/icon_iv"
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"

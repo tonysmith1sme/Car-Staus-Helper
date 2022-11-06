@@ -1,14 +1,14 @@
 package com.huawei.carstatushelper.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
 
 import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.R;
+import com.huawei.carstatushelper.databinding.ActivityAboutBinding;
 
 public class AboutActivity extends BackEnableBaseActivity {
-
-    private TextView mVersionTv;
 
     @Override
     public CharSequence setPageTitle() {
@@ -18,9 +18,16 @@ public class AboutActivity extends BackEnableBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        ActivityAboutBinding binding = ActivityAboutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mVersionTv = (TextView) findViewById(R.id.version_tv);
-        mVersionTv.setText(BuildConfig.VERSION_NAME);
+        binding.versionTv.setText(BuildConfig.VERSION_NAME);
+        binding.iconIv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(v.getContext(), ReflectBydActivity.class));
+                return true;
+            }
+        });
     }
 }

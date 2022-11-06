@@ -1008,8 +1008,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-        } else if (item.getItemId() == R.id.test_btn) {
-            Toast.makeText(this, "未实现: ", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
