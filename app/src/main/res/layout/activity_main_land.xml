@@ -20,68 +20,77 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/sha_che_group_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-                <ProgressBar
-                    android:id="@+id/sha_che_pb"
-                    android:layout_width="20dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:indeterminateOnly="false"
-                    android:max="100"
-                    android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="刹车" />
-
-                <TextView
-                    android:id="@+id/sha_che_tv"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
-                    android:text="0%" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                    <ProgressBar
+                        android:id="@+id/sha_che_pb"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:indeterminateOnly="false"
+                        android:max="100"
+                        android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
 
-                <ProgressBar
-                    android:id="@+id/you_meng_pb"
-                    android:layout_width="20dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:indeterminateOnly="false"
-                    android:max="100"
-                    android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="刹车" />
 
-                <TextView
+                    <TextView
+                        android:id="@+id/sha_che_tv"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="油门" />
-
-                <TextView
-                    android:id="@+id/you_meng_tv"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
-                    android:text="0%" />
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/you_meng_pb"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:indeterminateOnly="false"
+                        android:max="100"
+                        android:progressDrawable="@drawable/progress_vertical_gradient_simple_shape" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="油门" />
+
+                    <TextView
+                        android:id="@+id/you_meng_tv"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+                </LinearLayout>
             </LinearLayout>
 
             <com.huawei.carstatushelper.view.EngineSpeedView
                 android:id="@+id/engine_speed_esv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"

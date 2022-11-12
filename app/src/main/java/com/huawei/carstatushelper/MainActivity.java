@@ -18,7 +18,6 @@ import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
-import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,15 +30,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.huawei.byd_sdk_29.AbsBYDAutoStatisticApi29Listener;
+import com.huawei.byd_sdk_29.Api29Helper;
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
+import com.huawei.carstatushelper.service.RadarFloatingService;
 import com.huawei.carstatushelper.view.CarSpeedView;
 import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
@@ -124,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView gearboxCodeTv;
     private Button defrostModeBtn;
     private Button ventilateModeBtn;
+    private TextView waterTemperatureTv;
+    private TextView instantElecConTv;
+    private TextView instantFuelConTv;
+    private LinearLayout shaCheGroupLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +143,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        binding = ActivityMainBinding.inflate(getLayoutInflater());
 //        setContentView(binding.getRoot());
 
+        initBtnListener();
+
+        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_CHARGING_COMMON, Manifest.permission.BYDAUTO_RADAR_COMMON, Manifest.permission.BYDAUTO_SPEED_COMMON, Manifest.permission.BYDAUTO_AUDIO_COMMON, Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON, Manifest.permission.BYDAUTO_ENERGY_COMMON, Manifest.permission.BYDAUTO_ENGINE_COMMON, Manifest.permission.BYDAUTO_GEARBOX_COMMON, Manifest.permission.BYDAUTO_INSTRUMENT_COMMON};
+        boolean need = false;
+        for (String p : permissions) {
+            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
+                need = true;
+                break;
+            }
+        }
+        if (need) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSION);
+            return;
+        }
+
+        initDevice();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_COMMON) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_COMMON) == PackageManager.PERMISSION_GRANTED) {
+                startService(new Intent(this, RadarFloatingService.class));
+            }
+        }
+    }
+
+    private void initBtnListener() {
         if (temperaturePlusBtn != null) {
             temperaturePlusBtn.setOnClickListener(this);
         }
@@ -154,21 +186,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (ventilateModeBtn != null) {
             ventilateModeBtn.setOnClickListener(this);
         }
-
-        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON};
-        boolean need = false;
-        for (String p : permissions) {
-            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
-                need = true;
-                break;
-            }
-        }
-        if (need) {
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSION);
-            return;
-        }
-
-        initDevice();
     }
 
     private void loadContentView() {
@@ -240,6 +257,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         defrostModeBtn = binding.defrostModeBtn;
         ventilateModeBtn = binding.ventilateModeBtn;
+
+        waterTemperatureTv = binding.waterTemperatureTv;
+        instantElecConTv = binding.instantElecConTv;
+        instantFuelConTv = binding.instantFuelConTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -281,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         totalElecConPhmTv = binding.totalElecConPhmTv;
         totalFuelConPhmTv = binding.totalFuelConPhmTv;
 
-
+        shaCheGroupLayout = binding.shaCheGroupLayout;
         youMengPb = binding.youMengPb;
         youMengTv = binding.youMengTv;
         shaChePb = binding.shaChePb;
@@ -726,7 +747,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     };
 
-    private final AbsBYDAutoStatisticListener absBYDAutoStatisticListener = new AbsBYDAutoStatisticListener() {
+    private final AbsBYDAutoStatisticApi29Listener absBYDAutoStatisticListener = new AbsBYDAutoStatisticApi29Listener() {
+        /**
+         * 水温
+         *
+         * @param value
+         */
+        @Override
+        public void onWaterTemperatureChanged(int value) {
+            if (waterTemperatureTv != null) {
+                waterTemperatureTv.setText(String.valueOf(value));
+            }
+        }
+
+        /**
+         * 瞬时电耗
+         *
+         * @param value
+         */
+        @Override
+        public void onInstantElecConChanged(double value) {
+            if (instantElecConTv != null) {
+                instantElecConTv.setText(String.valueOf(format.format(value)));
+            }
+        }
+
+        /**
+         * 瞬时油耗
+         *
+         * @param value
+         */
+        @Override
+        public void onInstantFuelConChanged(double value) {
+            if (instantFuelConTv != null) {
+                instantFuelConTv.setText(String.valueOf(format.format(value)));
+            }
+        }
+
         /**
          * 监听总里程变化
          * @param totalMileageValue
@@ -949,6 +1006,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     };
+
+    //    private SimpleBYDAutoEngineListener absBYDAutoEngineListener = new SimpleBYDAutoEngineListener() {
+//        @Override
+//        public void onDataEventChanged(int i, BYDAutoEventValue arg) {
+//
+//        }
+//
+//        @Override
+//        public void onError(int i, String arg) {
+//
+//        }
+//    };
     private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
         /**
          * 监听发动机转速变化
@@ -1122,6 +1191,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateFuelPercent(statisticDevice.getFuelPercentageValue());
         //剩余燃油续航里程
         updateFuelDrivingRange(statisticDevice.getFuelDrivingRangeValue());
+
+        //水温
+        if (waterTemperatureTv != null) {
+            waterTemperatureTv.setText(String.valueOf(Api29Helper.getWaterTemperature(statisticDevice)));
+        }
+        //瞬时电耗
+        if (instantElecConTv != null) {
+            instantElecConTv.setText(String.valueOf(Api29Helper.getInstantElecConValue(statisticDevice)));
+        }
+        //瞬时油耗
+        if (instantFuelConTv != null) {
+            instantFuelConTv.setText(String.valueOf(Api29Helper.getInstantFuelConValue(statisticDevice)));
+        }
 
         //当前风量
         int acWindLevel = bydAutoAcDevice.getAcWindLevel();

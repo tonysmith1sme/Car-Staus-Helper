@@ -2,7 +2,7 @@ package android.hardware.bydauto.bigdata;
 
 public class BYDAutoBigDataDevice {
 
-    public static synchronized android.hardware.bydauto.bigdata.BYDAutoBigDataDevice getInstance(android.content.Context ctx) {
+    public static synchronized BYDAutoBigDataDevice getInstance(android.content.Context ctx) {
         throw new RuntimeException("Stub!");
     }
 
