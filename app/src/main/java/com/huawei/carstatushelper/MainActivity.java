@@ -2,9 +2,12 @@ package com.huawei.carstatushelper;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.bydauto.BYDAutoConstants;
+import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
@@ -21,10 +24,10 @@ import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,11 +41,14 @@ import android.widget.Toast;
 import com.huawei.byd_sdk_29.AbsBYDAutoStatisticApi29Listener;
 import com.huawei.byd_sdk_29.Api29Helper;
 import com.huawei.carstatushelper.activity.AboutActivity;
+import com.huawei.carstatushelper.activity.RadarFloatingSettingActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
+import com.huawei.carstatushelper.service.RadarDataProviderService;
 import com.huawei.carstatushelper.service.RadarFloatingService;
+import com.huawei.carstatushelper.util.PermissionUtils;
 import com.huawei.carstatushelper.view.CarSpeedView;
 import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
@@ -131,39 +137,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView instantElecConTv;
     private TextView instantFuelConTv;
     private LinearLayout shaCheGroupLayout;
+    private TextView gearboxTypeTv;
+    private TextView engineSpeedGbTv;
+    private TextView engineSpeedWarningTv;
+    private TextView frontMotorSpeedTv;
+    private TextView rearMotorSpeedTv;
+    private TextView frontMotorTorqueTv;
+    private TextView rearMotorTorqueTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setTitle(getString(R.string.app_name) + BuildConfig.VERSION_NAME);
+
+        startService(new Intent(this, RadarFloatingService.class));
 
         loadContentView();
 
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
-
         initBtnListener();
 
-        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_CHARGING_COMMON, Manifest.permission.BYDAUTO_RADAR_COMMON, Manifest.permission.BYDAUTO_SPEED_COMMON, Manifest.permission.BYDAUTO_AUDIO_COMMON, Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON, Manifest.permission.BYDAUTO_ENERGY_COMMON, Manifest.permission.BYDAUTO_ENGINE_COMMON, Manifest.permission.BYDAUTO_GEARBOX_COMMON, Manifest.permission.BYDAUTO_INSTRUMENT_COMMON};
-        boolean need = false;
-        for (String p : permissions) {
-            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
-                need = true;
-                break;
-            }
-        }
+        String[] permissions = {
+                Manifest.permission.BYDAUTO_BODYWORK_COMMON,
+                Manifest.permission.BYDAUTO_AC_COMMON,
+                Manifest.permission.BYDAUTO_RADAR_GET,
+                Manifest.permission.BYDAUTO_GEARBOX_GET,
+                Manifest.permission.BYDAUTO_ENGINE_GET,
+                Manifest.permission.BYDAUTO_CHARGING_GET
+//                Manifest.permission.BYDAUTO_CHARGING_COMMON,
+//                Manifest.permission.BYDAUTO_RADAR_COMMON,
+//                Manifest.permission.BYDAUTO_SPEED_COMMON,
+//                Manifest.permission.BYDAUTO_AUDIO_COMMON,
+//                Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
+//                Manifest.permission.BYDAUTO_ENERGY_COMMON,
+//                Manifest.permission.BYDAUTO_ENGINE_COMMON,
+//                Manifest.permission.BYDAUTO_GEARBOX_COMMON,
+//                Manifest.permission.BYDAUTO_INSTRUMENT_COMMON
+        };
+//        boolean need = false;
+//        for (String p : permissions) {
+//            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
+//                need = true;
+//                break;
+//            }
+//        }
+        boolean need = PermissionUtils.needRequestPermission(this, permissions);
         if (need) {
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSION);
             return;
         }
-
+//
+        initService();
         initDevice();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_COMMON) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_COMMON) == PackageManager.PERMISSION_GRANTED) {
-                startService(new Intent(this, RadarFloatingService.class));
-            }
+//        if (Settings.canDrawOverlays(this)) {
+//            startService(new Intent(this, RadarFloatingService.class));
+//        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_COMMON) == PackageManager.PERMISSION_GRANTED) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_COMMON) == PackageManager.PERMISSION_GRANTED) {
+//                startService(new Intent(this, RadarDataProviderService.class));
+//            }
+//        }
+    }
+
+    private void initService() {
+        if (!PermissionUtils.needRequestPermission(this, new String[]{Manifest.permission.BYDAUTO_RADAR_GET, Manifest.permission.BYDAUTO_GEARBOX_GET})) {
+            startService(new Intent(this, RadarDataProviderService.class));
+        }
+        if (Settings.canDrawOverlays(this)) {
+            startService(new Intent(this, RadarFloatingService.class));
         }
     }
 
@@ -236,11 +277,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         totalEvMileageTv = binding.totalEvMileageTv;
         carSpeedTv = binding.carSpeedTv;
         engineSpeedTv = binding.engineSpeedTv;
+        engineSpeedGbTv = binding.engineSpeedGbTv;
+        engineSpeedWarningTv = binding.engineSpeedWarningTv;
+        frontMotorSpeedTv = binding.frontMotorSpeedTv;
+        frontMotorTorqueTv = binding.frontMotorTorqueTv;
+        rearMotorSpeedTv = binding.rearMotorSpeedTv;
+        rearMotorTorqueTv = binding.rearMotorTorqueTv;
 
         textTv = binding.textTv;
         autoModelNameTv = binding.autoModelNameTv;
         engineCodeTv = binding.engineCodeTv;
         gearboxCodeTv = binding.gearboxCodeTv;
+        gearboxTypeTv = binding.gearboxTypeTv;
 
         powerMileageTv = binding.powerMileageTv;
         fuelMileageTv = binding.fuelMileageTv;
@@ -307,6 +355,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         youMengTv = binding.youMengTv;
         shaChePb = binding.shaChePb;
         shaCheTv = binding.shaCheTv;
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean enable = preferences.getBoolean("show_sha_che_group_layout", false);
+        shaCheGroupLayout.setVisibility(enable ? View.VISIBLE : View.GONE);
     }
 
 
@@ -383,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             if (ret) {
+                initService();
                 initDevice();
                 register();
             } else {
@@ -975,6 +1028,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //行车模式
             updateEnginePower();
+
+            try {
+                int engine_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED);
+                int engine_speed_gb = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+                int engine_speed_warning = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
+
+                int front_motor_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
+                int front_motor_torque = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_TORQUE);
+
+                int rear_motor_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_SPEED);
+                int rear_motor_torque = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_TORQUE);
+
+                if (engineSpeedGbTv != null) {
+                    engineSpeedGbTv.setText(engine_speed_gb + "rpm");
+                }
+                if (engineSpeedWarningTv != null) {
+                    engineSpeedWarningTv.setText(engine_speed_warning + "rpm");
+                }
+                if (frontMotorSpeedTv != null) {
+                    frontMotorSpeedTv.setText(front_motor_speed + "rpm");
+                }
+                if (frontMotorTorqueTv != null) {
+                    frontMotorTorqueTv.setText(front_motor_torque + "Nm");
+                }
+                if (rearMotorSpeedTv != null) {
+                    rearMotorSpeedTv.setText(rear_motor_speed + "rpm");
+                }
+                if (rearMotorTorqueTv != null) {
+                    rearMotorTorqueTv.setText(rear_motor_torque + "Nm");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         /**
@@ -1077,6 +1163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+        } else if (item.getItemId() == R.id.radar_distance) {
+            startActivity(new Intent(this, RadarFloatingSettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1119,11 +1207,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String autoModelName = getAutoModelName(bodyworkDevice);
             autoModelNameTv.setText(autoModelName);
         }
+        //发动机名称
         if (engineCodeTv != null) {
             engineCodeTv.setText(engineDevice.getEngineCode() + "");
         }
+        //变速箱名称
         if (gearboxCodeTv != null) {
             gearboxCodeTv.setText(gearboxDevice.getGearboxCode() + "");
+        }
+        //变速箱类型
+        int gearboxType = gearboxDevice.getGearboxType();
+        Map<Integer, String> gearboxTypeNameMap = new HashMap<>();
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_MT, "MT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_AMT, "AMT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_AT, "AT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_CVT, "CVT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_DCT, "DCT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_INVALID1, "ECVT");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_INVALID2, "INVALID2");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_NONE, "NONE");
+        gearboxTypeNameMap.put(BYDAutoGearboxDevice.GEARBOX_TYPE_INVALID, "INVALID");
+        String gearboxTypeName = "INVALID";
+        if (gearboxTypeNameMap.containsKey(gearboxType)) {
+            gearboxTypeName = gearboxTypeNameMap.get(gearboxType);
+        }
+        if (gearboxTypeTv != null) {
+            gearboxTypeTv.setText(gearboxTypeName);
         }
 
 

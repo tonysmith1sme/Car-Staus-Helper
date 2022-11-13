@@ -30,6 +30,52 @@
             android:title="空调按钮样式" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="横屏">
+        <SwitchPreference
+            android:key="show_sha_che_group_layout"
+            android:title="显示油门、刹车状态条" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="雷达测距">
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="radar_floating_x"
+            android:title="左边距" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="radar_floating_y"
+            android:title="上边距" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="radar_floating_width"
+            android:title="宽" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="radar_floating_height"
+            android:title="高" />
+        <EditTextPreference
+            android:defaultValue="#440000ff"
+            android:key="radar_floating_bg_color"
+            android:title="背景色" />
+        <EditTextPreference
+            android:defaultValue="12"
+            android:inputType="number"
+            android:key="radar_floating_text_size"
+            android:title="文本大小" />
+        <EditTextPreference
+            android:defaultValue="#ffffffff"
+            android:key="radar_floating_text_color"
+            android:title="文本颜色" />
+        <EditTextPreference
+            android:defaultValue="#ff000000"
+            android:key="radar_floating_text_bg_color"
+            android:title="文本背景颜色" />
+    </PreferenceCategory>
+
     <!--
     <SimplePreferenceCategory android:title="@string/messages_header">
         <EditTextPreference

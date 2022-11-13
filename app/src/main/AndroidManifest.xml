@@ -3,11 +3,16 @@
     package="com.huawei.carstatushelper">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BYDAUTO_BODYWORK_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_BODYWORK_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_STATISTIC_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_SPEED_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_SPEED_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_ENERGY_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_ENERGY_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_ENGINE_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_ENGINE_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_GEARBOX_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_AC_COMMON" />
@@ -16,12 +21,15 @@
     <uses-permission android:name="android.permission.BYDAUTO_CHARGING_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_CHARGING_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_CHARGING_SET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.BYDAUTO_POWER_GET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BYDAUTO_BIGDATA_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_RADAR_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_RADAR_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_AUDIO_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_DOOR_LOCK_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_INSTRUMENT_COMMON" />
 
-    <uses-permission android:name="android.permission.BYDAUTO_RADAR_GET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -30,9 +38,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
+            android:name=".service.BootCompleteTestService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".receiver.BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.RadarDataProviderService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".activity.RadarFloatingSettingActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <service
             android:name=".service.RadarFloatingService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".activity.ReflectBydActivity"

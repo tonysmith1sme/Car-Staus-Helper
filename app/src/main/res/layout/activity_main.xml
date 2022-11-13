@@ -74,10 +74,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="变速箱型号：" />
+                android:text="变速箱名称：" />
 
             <TextView
                 android:id="@+id/gearbox_code_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="null" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="变速箱类型：" />
+
+            <TextView
+                android:id="@+id/gearbox_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="null" />
@@ -216,6 +231,107 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 rpm" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发动机转速(GB)：" />
+
+            <TextView
+                android:id="@+id/engine_speed_gb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 rpm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发动机转速(WARNING)：" />
+
+            <TextView
+                android:id="@+id/engine_speed_warning_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 rpm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="前电机转速：" />
+
+            <TextView
+                android:id="@+id/front_motor_speed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 rpm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="前电机扭矩：" />
+
+            <TextView
+                android:id="@+id/front_motor_torque_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 Nm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="后电机转速：" />
+
+            <TextView
+                android:id="@+id/rear_motor_speed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 rpm" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="后电机扭矩：" />
+
+            <TextView
+                android:id="@+id/rear_motor_torque_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 Nm" />
 
         </LinearLayout>
 

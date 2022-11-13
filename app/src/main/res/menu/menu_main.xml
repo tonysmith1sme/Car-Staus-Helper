@@ -10,9 +10,13 @@
 
     <item
         android:id="@+id/float_show"
-        android:title="开启浮窗" />
+        android:title="转速浮窗" />
 
     <item
         android:id="@+id/settings"
         android:title="设置" />
+
+    <item
+        android:id="@+id/radar_distance"
+        android:title="雷达测距" />
 </menu>
