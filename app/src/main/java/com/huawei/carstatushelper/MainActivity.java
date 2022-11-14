@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initBtnListener();
 
-        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, "android.permission.BYDAUTO_REAR_VIEW_MIRROR_COMMON", Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_RADAR_GET, Manifest.permission.BYDAUTO_GEARBOX_GET, Manifest.permission.BYDAUTO_ENGINE_GET, Manifest.permission.BYDAUTO_CHARGING_GET, Manifest.permission.BYDAUTO_TYRE_GET
+        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_RADAR_GET, Manifest.permission.BYDAUTO_GEARBOX_GET, Manifest.permission.BYDAUTO_ENGINE_GET, Manifest.permission.BYDAUTO_CHARGING_GET, Manifest.permission.BYDAUTO_TYRE_GET
 //                Manifest.permission.BYDAUTO_CHARGING_COMMON,
 //                Manifest.permission.BYDAUTO_RADAR_COMMON,
 //                Manifest.permission.BYDAUTO_SPEED_COMMON,

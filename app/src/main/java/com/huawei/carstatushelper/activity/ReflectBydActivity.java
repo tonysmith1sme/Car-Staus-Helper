@@ -91,6 +91,10 @@ public class ReflectBydActivity extends BackEnableBaseActivity {
 
             @Override
             public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(ReflectBydActivity.this, "android.permission.BYDAUTO_REAR_VIEW_MIRROR_COMMON") != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ReflectBydActivity.this, new String[]{"android.permission.BYDAUTO_REAR_VIEW_MIRROR_COMMON"}, 0);
+                    return;
+                }
                 try {
                     Class<?> clz = Class.forName("android.hardware.bydauto.doormirror.BYDAutoRearViewMirrorDevice");
                     Method getInstance = clz.getMethod("getInstance", Context.class);
@@ -317,8 +321,8 @@ public class ReflectBydActivity extends BackEnableBaseActivity {
                     Method method = clz.getMethod("getInstance", Context.class);
                     Object instance = method.invoke(null, getApplicationContext());
 
-                    Method getCurrentSpeed = clz.getMethod("getCurrentSpeed", null);
-                    Object speed = getCurrentSpeed.invoke(instance, null);
+                    Method getCurrentSpeed = clz.getMethod("getCurrentSpeed");
+                    Object speed = getCurrentSpeed.invoke(instance);
                     System.out.println();
                     KLog.e("speed =  " + speed);
 
