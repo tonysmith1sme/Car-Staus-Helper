@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
@@ -22,6 +21,8 @@ import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
+import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
+import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -144,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView rearMotorSpeedTv;
     private TextView frontMotorTorqueTv;
     private TextView rearMotorTorqueTv;
+    private BYDAutoTyreDevice tyreDevice;
+    private TextView tyrePreLeftFrontTv;
+    private TextView tyrePreRightFrontTv;
+    private TextView tyrePreLeftRearTv;
+    private TextView tyrePreRightRearTv;
+    private TextView autoTypeTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,13 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initBtnListener();
 
-        String[] permissions = {
-                Manifest.permission.BYDAUTO_BODYWORK_COMMON,
-                Manifest.permission.BYDAUTO_AC_COMMON,
-                Manifest.permission.BYDAUTO_RADAR_GET,
-                Manifest.permission.BYDAUTO_GEARBOX_GET,
-                Manifest.permission.BYDAUTO_ENGINE_GET,
-                Manifest.permission.BYDAUTO_CHARGING_GET
+        String[] permissions = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_RADAR_GET, Manifest.permission.BYDAUTO_GEARBOX_GET, Manifest.permission.BYDAUTO_ENGINE_GET, Manifest.permission.BYDAUTO_CHARGING_GET, Manifest.permission.BYDAUTO_TYRE_GET
 //                Manifest.permission.BYDAUTO_CHARGING_COMMON,
 //                Manifest.permission.BYDAUTO_RADAR_COMMON,
 //                Manifest.permission.BYDAUTO_SPEED_COMMON,
@@ -309,6 +310,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         waterTemperatureTv = binding.waterTemperatureTv;
         instantElecConTv = binding.instantElecConTv;
         instantFuelConTv = binding.instantFuelConTv;
+
+        tyrePreLeftFrontTv = binding.tyrePreLeftFrontTv;
+        tyrePreRightFrontTv = binding.tyrePreRightFrontTv;
+        tyrePreLeftRearTv = binding.tyrePreLeftRearTv;
+        tyrePreRightRearTv = binding.tyrePreRightRearTv;
+
+        autoTypeTv = binding.autoTypeTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -378,6 +386,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         youMengTv = binding.youMengTv;
         shaChePb = binding.shaChePb;
         shaCheTv = binding.shaCheTv;
+
+        fuelPbTv = binding.fuelPbTv;//油量百分比
+        fuelMileageTv = binding.fuelMileageTv;//油续航
+
+        elecPbTv = binding.elecPbTv;//电百分比
+        powerMileageTv = binding.powerMileageTv;//电续航
     }
 
     @Override
@@ -445,9 +459,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initDevice() {
-        if (BuildConfig.DEBUG) {
-            return;
-        }
+//        if (BuildConfig.DEBUG) {
+//            return;
+//        }
         statisticDevice = BYDAutoStatisticDevice.getInstance(this);
         speedDevice = BYDAutoSpeedDevice.getInstance(this);
         energyDevice = BYDAutoEnergyDevice.getInstance(this);
@@ -455,6 +469,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bydAutoAcDevice = BYDAutoAcDevice.getInstance(this);
         gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
         chargingDevice = BYDAutoChargingDevice.getInstance(this);
+        tyreDevice = BYDAutoTyreDevice.getInstance(this);
         initSuccess = true;
         initAutoData();
     }
@@ -470,6 +485,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
         chargingDevice.registerListener(absBYDAutoChargingListener);
+        tyreDevice.registerListener(absBYDAutoTyreListener);
 //        oliCostHelper.start();
     }
 
@@ -484,8 +500,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
         gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
         chargingDevice.unregisterListener(absBYDAutoChargingListener);
+        tyreDevice.unregisterListener(absBYDAutoTyreListener);
 //        oliCostHelper.stop();
     }
+
+    private AbsBYDAutoTyreListener absBYDAutoTyreListener = new AbsBYDAutoTyreListener() {
+        /**
+         * 胎压变化
+         * @param area
+         * @param value
+         */
+        @Override
+        public void onTyrePressureValueChanged(int area, int value) {
+            super.onTyrePressureValueChanged(area, value);
+//            KLog.e("TyrePressure area = " + area + " ,value = " + value);
+            if (tyrePreLeftFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) {
+                tyrePreLeftFrontTv.setText(value + "kPa");
+            }
+            if (tyrePreRightFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT) {
+                tyrePreRightFrontTv.setText(value + "kPa");
+            }
+            if (tyrePreLeftRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR) {
+                tyrePreLeftRearTv.setText(value + "kPa");
+            }
+            if (tyrePreRightRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR) {
+                tyrePreRightRearTv.setText(value + "kPa");
+            }
+        }
+    };
 
 //    private final OliCostHelper.OnRealEnergyCostListener onRealEnergyCostListener = new OliCostHelper.OnRealEnergyCostListener() {
 //        @Override
@@ -1029,37 +1071,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //行车模式
             updateEnginePower();
 
-            try {
-                int engine_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED);
-                int engine_speed_gb = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-                int engine_speed_warning = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
+            if (engineDevice == null) {
+                return;
+            }
+//            int engine_speed = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
+            int engine_speed_gb = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
 
-                int front_motor_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
-                int front_motor_torque = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_TORQUE);
+            int engine_speed_warning = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
 
-                int rear_motor_speed = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_SPEED);
-                int rear_motor_torque = engineDevice.get(BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_TORQUE);
+            int front_motor_speed = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
+            int front_motor_torque = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_TORQUE);
 
-                if (engineSpeedGbTv != null) {
-                    engineSpeedGbTv.setText(engine_speed_gb + "rpm");
-                }
-                if (engineSpeedWarningTv != null) {
-                    engineSpeedWarningTv.setText(engine_speed_warning + "rpm");
-                }
-                if (frontMotorSpeedTv != null) {
-                    frontMotorSpeedTv.setText(front_motor_speed + "rpm");
-                }
-                if (frontMotorTorqueTv != null) {
-                    frontMotorTorqueTv.setText(front_motor_torque + "Nm");
-                }
-                if (rearMotorSpeedTv != null) {
-                    rearMotorSpeedTv.setText(rear_motor_speed + "rpm");
-                }
-                if (rearMotorTorqueTv != null) {
-                    rearMotorTorqueTv.setText(rear_motor_torque + "Nm");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            int rear_motor_speed = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_SPEED);
+            int rear_motor_torque = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_TORQUE);
+
+            if (engineSpeedGbTv != null) {
+                engineSpeedGbTv.setText(engine_speed_gb + "rpm");
+            }
+            if (engineSpeedWarningTv != null) {
+                engineSpeedWarningTv.setText(engine_speed_warning + "rpm");
+            }
+            if (frontMotorSpeedTv != null) {
+                frontMotorSpeedTv.setText(front_motor_speed + "rpm");
+            }
+            if (frontMotorTorqueTv != null) {
+                frontMotorTorqueTv.setText(front_motor_torque + "Nm");
+            }
+            if (rearMotorSpeedTv != null) {
+                rearMotorSpeedTv.setText(rear_motor_speed + "rpm");
+            }
+            if (rearMotorTorqueTv != null) {
+                rearMotorTorqueTv.setText(rear_motor_torque + "Nm");
             }
         }
 
@@ -1207,6 +1249,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String autoModelName = getAutoModelName(bodyworkDevice);
             autoModelNameTv.setText(autoModelName);
         }
+        if (autoTypeTv != null) {
+            autoTypeTv.setText(Api29Helper.getAutoType(bodyworkDevice) + "");
+        }
+
         //发动机名称
         if (engineCodeTv != null) {
             engineCodeTv.setText(engineDevice.getEngineCode() + "");
@@ -1318,6 +1364,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int acWindLevel = bydAutoAcDevice.getAcWindLevel();
         absBYDAutoAcListener.onAcWindLevelChanged(acWindLevel);
 
+        //充电功率与剩余时长
         if (chargingPowerTv != null) {
             chargingPowerTv.setText(format.format(chargingDevice.getChargingPower()) + "");
         }
@@ -1326,6 +1373,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (time.length == 2) {
                 chargingRestTimeTv.setText(time[0] + "h" + time[1] + "min");
             }
+        }
+        //胎压
+        if (tyrePreLeftFrontTv != null) {
+            int value = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT);
+            tyrePreLeftFrontTv.setText(value + "kPa");
+        }
+        if (tyrePreRightFrontTv != null) {
+            int value = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT);
+            tyrePreRightFrontTv.setText(value + "kPa");
+        }
+        if (tyrePreLeftRearTv != null) {
+            int value = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR);
+            tyrePreLeftRearTv.setText(value + "kPa");
+        }
+        if (tyrePreRightRearTv != null) {
+            int value = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR);
+            tyrePreRightRearTv.setText(value + "kPa");
         }
     }
 
@@ -1391,7 +1455,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateEnginePower() {
         int enginePower = engineDevice.getEnginePower();
-        KLog.e("当前功率：" + enginePower + " kw");
+//        KLog.e("当前功率：" + enginePower + " kw");
         if (enginePowerTv != null) {
             enginePowerTv.setText(enginePower + " kw");
         }

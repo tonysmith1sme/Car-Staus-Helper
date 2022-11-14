@@ -28,6 +28,8 @@
     <uses-permission android:name="android.permission.BYDAUTO_AUDIO_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_DOOR_LOCK_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_INSTRUMENT_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_TYRE_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_TYRE_GET" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 

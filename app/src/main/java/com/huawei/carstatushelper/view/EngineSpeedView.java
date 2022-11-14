@@ -3,7 +3,6 @@ package com.huawei.carstatushelper.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.huawei.carstatushelper.BuildConfig;
 import com.xw.sample.dashboardviewdemo.DashboardView4;
 
 public class EngineSpeedView extends DashboardView4 {
@@ -17,9 +16,6 @@ public class EngineSpeedView extends DashboardView4 {
 
     public EngineSpeedView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        if (BuildConfig.DEBUG) {
-//            setVelocity(4300);
-//        }
     }
 
     @Override
@@ -29,12 +25,12 @@ public class EngineSpeedView extends DashboardView4 {
 
     @Override
     protected int setSection() {
-        return 12;
+        return 6;
     }
 
     @Override
     protected int setPortion() {
-        return 5;
+        return 1;
     }
 
     @Override

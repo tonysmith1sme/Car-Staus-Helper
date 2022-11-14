@@ -280,6 +280,9 @@ public class DashboardView4 extends View {
                 double value = Integer.parseInt(mTexts[i]) * 1.0f / setUnit();
                 text = String.format(Locale.getDefault(), "%.1f", value);
             }
+            if (text.endsWith(".0")) {
+                text = text.replace(".0", "");
+            }
             mPaint.getTextBounds(text, 0, text.length(), mRectText);
             int txtH = mRectText.height();
             if (i <= 1 || i >= mSection - 1) {
