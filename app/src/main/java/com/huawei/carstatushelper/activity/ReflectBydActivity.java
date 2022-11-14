@@ -3,21 +3,21 @@ package com.huawei.carstatushelper.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoEventValue;
+import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.bigdata.AbsBYDAutoBigDataListener;
 import android.hardware.bydauto.bigdata.BYDAutoBigDataDevice;
-import android.hardware.bydauto.power.AbsBYDAutoPowerListener;
+import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.databinding.ActivityReflectBydBinding;
@@ -44,7 +44,7 @@ public class ReflectBydActivity extends BackEnableBaseActivity {
     public static final String BYDAUTO_POWER_GET = "android.permission.BYDAUTO_POWER_GET";
 
     private BYDAutoBigDataDevice autoBigDataDevice;
-//    private TextView respBigdataTv;
+    //    private TextView respBigdataTv;
     private List<DataBean> mDataBeanList;
     private ItemAdapter itemAdapter;
     private RecyclerView recyclerView;
@@ -68,6 +68,45 @@ public class ReflectBydActivity extends BackEnableBaseActivity {
         mDataBeanList = new ArrayList<>();
         itemAdapter = new ItemAdapter(mDataBeanList);
         recyclerView.setAdapter(itemAdapter);
+
+        binding.powerOkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    BYDAutoBodyworkDevice bodyworkDevice = BYDAutoBodyworkDevice.getInstance(ReflectBydActivity.this);
+                    Class<?> clz = Class.forName("android.hardware.bydauto.AbsBYDAutoDevice");
+                    Method set = clz.getDeclaredMethod("set", int.class, int.class, int.class);
+                    set.setAccessible(true);
+                    set.invoke(bodyworkDevice, BYDAutoConstants.BYDAUTO_DEVICE_BODYWORK, BYDAutoFeatureIds.BODYWORK_POWER_LEVEL, BYDAutoBodyworkDevice.BODYWORK_POWER_LEVEL_ACC);
+                    Toast.makeText(ReflectBydActivity.this, "Acc执行成功", Toast.LENGTH_SHORT).show();
+                } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    Toast.makeText(ReflectBydActivity.this, "error:" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        binding.rearMirrorBtn.setOnClickListener(new View.OnClickListener() {
+            public static final int REAR_VIEW_MIRROR_FOLD = 1;
+            public static final int REAR_VIEW_MIRROR_UNFOLD = 2;
+
+            @Override
+            public void onClick(View view) {
+                try {
+                    Class<?> clz = Class.forName("android.hardware.bydauto.doormirror.BYDAutoRearViewMirrorDevice");
+                    Method getInstance = clz.getMethod("getInstance", Context.class);
+                    Object obj = getInstance.invoke(clz, ReflectBydActivity.this);
+
+                    Class<?> aClass = Class.forName("android.hardware.bydauto.AbsBYDAutoDevice");
+                    Method set = aClass.getDeclaredMethod("set", int.class, int.class, int.class);
+                    set.setAccessible(true);
+                    set.invoke(obj, 1047, REAR_VIEW_MIRROR_FOLD, REAR_VIEW_MIRROR_FOLD);
+                    Toast.makeText(ReflectBydActivity.this, "success", Toast.LENGTH_SHORT).show();
+                } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    Toast.makeText(ReflectBydActivity.this, "error:" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         binding.testBtn.setOnClickListener(new View.OnClickListener() {
             @Override
