@@ -88,3 +88,4 @@ lint/tmp/
 *.hprof
 /app/release/output-metadata.json
 /byd_api/framework.jar.cache/
+/release/car-staus-helper-copy_right.jpg

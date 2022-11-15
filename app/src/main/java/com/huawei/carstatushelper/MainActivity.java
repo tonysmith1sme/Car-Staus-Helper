@@ -453,7 +453,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 initDevice();
                 register();
             } else {
-                finish();
+//                finish();
+                Toast.makeText(this, "请手动授予权限", Toast.LENGTH_SHORT).show();
             }
         }
     }
