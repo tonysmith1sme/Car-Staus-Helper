@@ -16,16 +16,11 @@ public class Api29Helper {
         int autoType = 0;
         try {
             Class<?> clz = Class.forName("android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice");
-            Method getAutoType = clz.getMethod("getAutoType");
+            Method getAutoType = clz.getDeclaredMethod("getAutoType");
+            getAutoType.setAccessible(true);
             Object ret = getAutoType.invoke(device);
             autoType = (int) ret;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return autoType;
@@ -35,7 +30,8 @@ public class Api29Helper {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getMethod("getWaterTemperature");
+                Method method = clz.getDeclaredMethod("getWaterTemperature");
+                method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 return (int) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
@@ -50,7 +46,8 @@ public class Api29Helper {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getMethod("getInstantElecConValue");
+                Method method = clz.getDeclaredMethod("getInstantElecConValue");
+                method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 return (double) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
@@ -65,7 +62,8 @@ public class Api29Helper {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getMethod("getInstantFuelConValue");
+                Method method = clz.getDeclaredMethod("getInstantFuelConValue");
+                method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 return (double) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
@@ -80,7 +78,8 @@ public class Api29Helper {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.radar.BYDAutoRadarDevice");
-                Method method = clz.getMethod("getAllRadarDistance");
+                Method method = clz.getDeclaredMethod("getAllRadarDistance");
+                method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 return (int[]) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
@@ -114,7 +113,7 @@ public class Api29Helper {
 
             Class<?> clzParent = Class.forName("com.huawei.byd_sdk_29.TestParentBean");
             Method get = clzParent.getDeclaredMethod("get", int.class, int.class);
-
+            get.setAccessible(true);
             Object ret = get.invoke(obj, 1, 2);
             KLog.e();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {

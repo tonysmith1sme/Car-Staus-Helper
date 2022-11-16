@@ -20,6 +20,7 @@ import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
+import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
 import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
@@ -39,7 +40,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huawei.byd_sdk_29.AbsBYDAutoStatisticApi29Listener;
 import com.huawei.byd_sdk_29.Api29Helper;
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.RadarFloatingSettingActivity;
@@ -198,6 +198,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                startService(new Intent(this, RadarDataProviderService.class));
 //            }
 //        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (shaCheGroupLayout != null) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean show_sha_che_group_layout = preferences.getBoolean("show_sha_che_group_layout", false);
+            shaCheGroupLayout.setVisibility(show_sha_che_group_layout ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void initService() {
@@ -843,13 +853,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     };
 
-    private final AbsBYDAutoStatisticApi29Listener absBYDAutoStatisticListener = new AbsBYDAutoStatisticApi29Listener() {
+    private final AbsBYDAutoStatisticListener absBYDAutoStatisticListener = new AbsBYDAutoStatisticListener() {
         /**
          * 水温
          *
          * @param value
          */
-        @Override
+//        @Override
         public void onWaterTemperatureChanged(int value) {
             if (waterTemperatureTv != null) {
                 waterTemperatureTv.setText(String.valueOf(value));
@@ -861,7 +871,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
-        @Override
+//        @Override
         public void onInstantElecConChanged(double value) {
             if (instantElecConTv != null) {
                 instantElecConTv.setText(String.valueOf(format.format(value)));
@@ -873,7 +883,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
-        @Override
+//        @Override
         public void onInstantFuelConChanged(double value) {
             if (instantFuelConTv != null) {
                 instantFuelConTv.setText(String.valueOf(format.format(value)));
@@ -1075,7 +1085,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (engineDevice == null) {
                 return;
             }
-//            int engine_speed = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
+            int engine_speed = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
             int engine_speed_gb = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
 
             int engine_speed_warning = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
@@ -1088,6 +1098,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (engineSpeedGbTv != null) {
                 engineSpeedGbTv.setText(engine_speed_gb + "rpm");
+            }
+            if (engineSpeedEsv != null) {
+                if (engine_speed != 0) {
+//                    engineSpeedEsv.setVelocity(engine_speed_gb);
+                } else if (engine_speed_gb != 0) {
+                    engineSpeedEsv.setVelocity(engine_speed_gb);
+                }
             }
             if (engineSpeedWarningTv != null) {
                 engineSpeedWarningTv.setText(engine_speed_warning + "rpm");
@@ -1164,6 +1181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             engineSpeedEsv.setVelocity(engineSpeed);
         }
+
+        public void onEngineSpeedWarningChanged(int arg) {
+            throw new RuntimeException("Stub!");
+        }
+
+//        public void onDataEventChanged(int i, android.hardware.bydauto.BYDAutoEventValue arg) {
+//            if (i == BYDAutoFeatureIds.ENGINE_SPEED_GB) {
+//                int intValue = arg.intValue;
+//            }
+//        }
 
         /**
          * 监听冷却液位变化（过低，正常）

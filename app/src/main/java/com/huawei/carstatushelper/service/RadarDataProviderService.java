@@ -4,12 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
+import android.hardware.bydauto.radar.AbsBYDAutoRadarListener;
 import android.hardware.bydauto.radar.BYDAutoRadarDevice;
 import android.os.IBinder;
 
-import com.huawei.byd_sdk_29.AbsBYDAutoRadarApi29Listener;
 import com.huawei.byd_sdk_29.Api29Helper;
-import com.socks.library.KLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class RadarDataProviderService extends Service {
         radarDevice.unregisterListener(absBYDAutoRadarApi29Listener);
     }
 
-    private final AbsBYDAutoRadarApi29Listener absBYDAutoRadarApi29Listener = new AbsBYDAutoRadarApi29Listener() {
+    private final AbsBYDAutoRadarListener absBYDAutoRadarApi29Listener = new AbsBYDAutoRadarListener() {
         /**
          * 监听各位置探头状态
          * @param area
@@ -89,7 +88,7 @@ public class RadarDataProviderService extends Service {
 //            KLog.e("state = " + state);
         }
 
-        @Override
+//        @Override
         public void onRadarObstacleDistanceChanged(int area, int value) {
 //            KLog.e("area" + area + ",value = " + value);
             if (radarDevice != null) {

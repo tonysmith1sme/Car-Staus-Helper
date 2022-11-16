@@ -616,25 +616,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余\n油量：" />
+
+                <ProgressBar
+                    android:id="@+id/fuel_percent_pb"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="剩余油量：" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/fuel_pb_tv"
@@ -651,37 +652,33 @@
                         android:text="0 km" />
                 </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/fuel_percent_pb"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余\n电量：" />
+
+                <ProgressBar
+                    android:id="@+id/elec_percent_pb"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="剩余电量：" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/elec_pb_tv"
@@ -699,11 +696,7 @@
                         android:text="0 km" />
                 </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/elec_percent_pb"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -731,8 +724,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="25dp"
+                android:layout_marginEnd="20dp"
                 android:text="240kPa" />
 
             <TextView
