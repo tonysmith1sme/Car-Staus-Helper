@@ -565,7 +565,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onGearboxAutoModeTypeChanged(int level) {
             super.onGearboxAutoModeTypeChanged(level);
             String gearboxLevelName = getGearboxLevelName(level);
-            KLog.e("当前档位：" + level + " " + gearboxLevelName);
+//            KLog.e("当前档位：" + level + " " + gearboxLevelName);
             if (currentGearboxLevelTv == null) {
                 return;
             }
@@ -802,7 +802,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onEnergyModeChanged(int energyMode) {
             super.onEnergyModeChanged(energyMode);
             String energyModeName = getEnergyModeName(energyMode);
-            KLog.e("当前能耗模式：" + energyMode + " " + energyModeName);
+//            KLog.e("当前能耗模式：" + energyMode + " " + energyModeName);
             if (energyModeTv == null) {
                 return;
             }
@@ -817,7 +817,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onOperationModeChanged(int operationMode) {
             super.onOperationModeChanged(operationMode);
             String operationModeName = getOperationModeName(operationMode);
-            KLog.e("当前行车模式：" + operationMode + " " + operationModeName);
+//            KLog.e("当前行车模式：" + operationMode + " " + operationModeName);
             if (operationModeTv == null) {
                 return;
             }
@@ -897,7 +897,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalMileageValueChanged(int totalMileageValue) {
             super.onTotalMileageValueChanged(totalMileageValue);
-            KLog.e("总行驶里程：" + totalMileageValue + " km");
+//            KLog.e("总行驶里程：" + totalMileageValue + " km");
             MainActivity.this.totalMileageValue = totalMileageValue;
             if (totalMileageTv != null) {
                 totalMileageTv.setText(totalMileageValue + " km");
@@ -912,7 +912,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalFuelConChanged(double value) {
             super.onTotalFuelConChanged(value);
-            KLog.e("总燃油消耗：" + value + " L");
+//            KLog.e("总燃油消耗：" + value + " L");
             if (totalFuelCostTv == null) {
                 return;
             }
@@ -926,11 +926,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalElecConChanged(double value) {
             super.onTotalElecConChanged(value);
-            KLog.e("总电量消耗：" + value + "KW•H");
+//            KLog.e("总电量消耗：" + value + "KWH");
             if (totalElecCostTv == null) {
                 return;
             }
-            totalElecCostTv.setText(format.format(value) + "KW•H");
+            totalElecCostTv.setText(format.format(value) + "KWH");
         }
 
         /**
@@ -1472,7 +1472,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             ret = value;
         }
-        KLog.e("电量续航百分比：" + ret);
+//        KLog.e("电量续航百分比：" + ret);
         if (elecPercentPb != null) {
             elecPercentPb.setMax(100);
             elecPercentPb.setProgress(((int) ret));

@@ -219,6 +219,9 @@ public class RadarFloatingService extends Service {
             return;
         }
         helper.removeView(rootView);
+        //解决浮窗exception: not attached to window manager
+        //复现方法show一次，hide两次
+        rootView = null;
     }
 
     @Override
