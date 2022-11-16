@@ -1,0 +1,61 @@
+--------- beginning of system
+--------- beginning of crash
+2022-11-16 17:38:59.875 21471-21471 AndroidRuntime          pid-21471                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.huawei.carstatushelper, PID: 21471
+                                                                                                    java.lang.RuntimeException: Error receiving broadcast Intent { act=android.intent.action.HIDE_RADAR_FLOATING flg=0x10 } in com.huawei.carstatushelper.service.RadarFloatingService$1@56cec3e
+                                                                                                    	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0$LoadedApk$ReceiverDispatcher$Args(LoadedApk.java:1560)
+                                                                                                    	at android.app.-$$Lambda$LoadedApk$ReceiverDispatcher$Args$_BumDX2UKsnxLVrE6UJsJZkotuA.run(Unknown Source:2)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100)
+                                                                                                    	at android.os.Looper.loop(Looper.java:214)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7478)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:935)
+                                                                                                    Caused by: java.lang.IllegalArgumentException: View=android.widget.LinearLayout{ddd9091 V.E...... ......ID 0,0-405,675 #7f09007e app:id/layout0} not attached to window manager
+                                                                                                    	at android.view.WindowManagerGlobal.findViewLocked(WindowManagerGlobal.java:519)
+                                                                                                    	at android.view.WindowManagerGlobal.removeView(WindowManagerGlobal.java:428)
+                                                                                                    	at android.view.WindowManagerImpl.removeView(WindowManagerImpl.java:123)
+                                                                                                    	at com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper.removeView(FloatingWindowHelper.java:188)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService.hideRadarFloating(RadarFloatingService.java:221)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService.access$100(RadarFloatingService.java:42)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService$1.onReceive(RadarFloatingService.java:81)
+                                                                                                    	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0$LoadedApk$ReceiverDispatcher$Args(LoadedApk.java:1550)
+                                                                                                    	at android.app.-$$Lambda$LoadedApk$ReceiverDispatcher$Args$_BumDX2UKsnxLVrE6UJsJZkotuA.run(Unknown Source:2) 
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:214) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7478) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:935) 
+2022-11-16 19:12:22.094 18275-18275 AndroidRuntime          pid-18275                            E  FATAL EXCEPTION: main
+                                                                                                    Process: com.huawei.carstatushelper, PID: 18275
+                                                                                                    java.lang.RuntimeException: Error receiving broadcast Intent { act=android.intent.action.HIDE_RADAR_FLOATING flg=0x10 } in com.huawei.carstatushelper.service.RadarFloatingService$1@56cec3e
+                                                                                                    	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0$LoadedApk$ReceiverDispatcher$Args(LoadedApk.java:1560)
+                                                                                                    	at android.app.-$$Lambda$LoadedApk$ReceiverDispatcher$Args$_BumDX2UKsnxLVrE6UJsJZkotuA.run(Unknown Source:2)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100)
+                                                                                                    	at android.os.Looper.loop(Looper.java:214)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7478)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:935)
+                                                                                                    Caused by: java.lang.IllegalArgumentException: View=android.widget.LinearLayout{f8954ba V.E...... .......D 0,0-405,675 #7f09007e app:id/layout0} not attached to window manager
+                                                                                                    	at android.view.WindowManagerGlobal.findViewLocked(WindowManagerGlobal.java:519)
+                                                                                                    	at android.view.WindowManagerGlobal.removeView(WindowManagerGlobal.java:428)
+                                                                                                    	at android.view.WindowManagerImpl.removeView(WindowManagerImpl.java:123)
+                                                                                                    	at com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper.removeView(FloatingWindowHelper.java:188)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService.hideRadarFloating(RadarFloatingService.java:221)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService.access$100(RadarFloatingService.java:42)
+                                                                                                    	at com.huawei.carstatushelper.service.RadarFloatingService$1.onReceive(RadarFloatingService.java:81)
+                                                                                                    	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0$LoadedApk$ReceiverDispatcher$Args(LoadedApk.java:1550)
+                                                                                                    	at android.app.-$$Lambda$LoadedApk$ReceiverDispatcher$Args$_BumDX2UKsnxLVrE6UJsJZkotuA.run(Unknown Source:2) 
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:214) 
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7478) 
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method) 
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492) 
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:935) 
+--------- beginning of main

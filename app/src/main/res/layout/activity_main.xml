@@ -608,14 +608,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
@@ -627,9 +625,8 @@
                 <ProgressBar
                     android:id="@+id/fuel_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -641,14 +638,12 @@
                         android:id="@+id/fuel_pb_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:text="0%" />
 
                     <TextView
                         android:id="@+id/fuel_mileage_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:text="0 km" />
                 </LinearLayout>
 
@@ -658,7 +653,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
@@ -670,9 +665,8 @@
                 <ProgressBar
                     android:id="@+id/elec_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -684,7 +678,6 @@
                         android:id="@+id/elec_pb_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:gravity="end"
                         android:text="0%" />
 
@@ -692,7 +685,6 @@
                         android:id="@+id/power_mileage_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:text="0 km" />
                 </LinearLayout>
 
@@ -715,7 +707,7 @@
                 android:id="@+id/tyre_pre_left_front_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="25dp"
                 android:text="240kPa" />
 
@@ -725,7 +717,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="40dp"
                 android:text="240kPa" />
 
             <TextView
@@ -733,7 +725,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
                 android:text="240kPa" />
 
@@ -742,7 +734,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="20dp"
                 android:text="240kPa" />
         </FrameLayout>

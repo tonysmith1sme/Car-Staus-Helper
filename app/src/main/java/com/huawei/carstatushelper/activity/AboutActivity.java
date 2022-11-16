@@ -7,6 +7,7 @@ import android.view.View;
 import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityAboutBinding;
+import com.huawei.carstatushelper.test.ReflectTestActivity;
 
 public class AboutActivity extends BackEnableBaseActivity {
 
@@ -26,6 +27,13 @@ public class AboutActivity extends BackEnableBaseActivity {
             @Override
             public boolean onLongClick(View v) {
                 startActivity(new Intent(v.getContext(), ReflectBydActivity.class));
+                return true;
+            }
+        });
+        binding.zfbIv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startActivity(new Intent(view.getContext(), ReflectTestActivity.class));
                 return true;
             }
         });
