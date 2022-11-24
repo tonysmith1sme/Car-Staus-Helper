@@ -12,6 +12,43 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Api29Helper {
+
+    public static int getHEVMileageValue(BYDAutoStatisticDevice statisticDevice) {
+        int result = 0;
+        try {
+            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
+            Method getHEVMileageValue = clz.getDeclaredMethod("getHEVMileageValue");
+            getHEVMileageValue.setAccessible(true);
+            result = (int) getHEVMileageValue.invoke(statisticDevice);
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 1,BYDAutoFeatureIds.STATISTIC_DRIVING_TIME
+     * 2,BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
+     * 3,
+     * 4,BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
+     *
+     * @param target
+     * @return
+     */
+    public static double getTravelTime(BYDAutoStatisticDevice statisticDevice, int target) {
+        double result = 0;
+        try {
+            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
+            Method getTravelTime = clz.getDeclaredMethod("getTravelTime", int.class);
+            getTravelTime.setAccessible(true);
+            result = (double) getTravelTime.invoke(statisticDevice, target);
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public static int getAutoType(BYDAutoBodyworkDevice device) {
         int autoType = 0;
         try {
@@ -33,7 +70,8 @@ public class Api29Helper {
                 Method method = clz.getDeclaredMethod("getWaterTemperature");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                return (int) invoke;
+                int ret = (int) invoke;
+                return ret > 0 ? ret : 0;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
@@ -49,7 +87,8 @@ public class Api29Helper {
                 Method method = clz.getDeclaredMethod("getInstantElecConValue");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                return (double) invoke;
+                double ret = (double) invoke;
+                return ret > 0 ? ret : 0;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();

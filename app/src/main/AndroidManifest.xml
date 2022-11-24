@@ -5,15 +5,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-permission android:name="android.permission.BYDAUTO_POWER_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_BIGDATA_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_REAR_VIEW_MIRROR_GET" />
-
     <uses-permission android:name="android.permission.BYDAUTO_BODYWORK_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_AC_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_PANORAMA_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_SETTING_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_INSTRUMENT_COMMON"/>
+    <uses-permission android:name="android.permission.BYDAUTO_DOOR_LOCK_COMMON"/>
     <uses-permission android:name="android.permission.BYDAUTO_AC_SET" />
-
     <uses-permission android:name="android.permission.BYDAUTO_AC_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_AUDIO_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_BODYWORK_GET" />
@@ -32,12 +35,11 @@
     <uses-permission android:name="android.permission.BYDAUTO_SAFETY_BELT_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_SENSOR_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_SETTING_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_SETTING_SET" />
     <uses-permission android:name="android.permission.BYDAUTO_SPEED_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_STATISTIC_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_TIME_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_TYRE_GET" />
-
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".App"
@@ -46,6 +48,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".receiver.BootCompleteService"
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity
             android:name=".test.ReflectTestActivity"
             android:exported="false">
@@ -53,11 +60,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <service
-            android:name=".service.BootCompleteTestService"
-            android:enabled="true"
-            android:exported="true" />
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"
@@ -116,12 +118,6 @@
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.AboutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -129,6 +125,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"></activity>
 
         <service
             android:name="com.ziwenl.floatingwindowdemo.FloatingWindowService"

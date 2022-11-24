@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.util.DpUtil;
-import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
 
 import java.util.ArrayList;
@@ -46,6 +46,9 @@ public class RadarFloatingService extends Service {
     private FloatingWindowHelper helper;
     private View rootView;
     private List<TextView> textViewList;
+    private TextToSpeech textToSpeech;
+    private SharedPreferences preferences;
+    private boolean speak_radar_distance_enable;
 
     public RadarFloatingService() {
     }
@@ -66,6 +69,16 @@ public class RadarFloatingService extends Service {
         registerReceiver(receiver, filter);
 
         helper = new FloatingWindowHelper(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        speak_radar_distance_enable = preferences.getBoolean("speak_radar_distance_enable", false);
+        if (speak_radar_distance_enable) {
+            textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+
+                }
+            });
+        }
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -81,14 +94,18 @@ public class RadarFloatingService extends Service {
                 hideRadarFloating();
             } else if (ACTION_UPDATE_RADAR_DATA.equals(action)) {
                 int[] data = intent.getIntArrayExtra("data");
-
-//                if (data.length >= 9) {
                 if (textViewList != null) {
                     for (int i = 0; i < Math.min(data.length, textViewList.size()); i++) {
                         textViewList.get(i).setText(data[i] + "cm");
                     }
                 }
-//                }
+                if (speak_radar_distance_enable) {
+                    int min = Integer.MAX_VALUE;
+                    for (int item : data) {
+                        min = Math.min(min, item);
+                    }
+                    textToSpeech.speak(String.valueOf(min), TextToSpeech.QUEUE_FLUSH, null, null);
+                }
             }
         }
     };
@@ -113,9 +130,7 @@ public class RadarFloatingService extends Service {
         rootView.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helper != null && rootView != null) {
-                    helper.removeView(rootView);
-                }
+                hideRadarFloating();
             }
         });
 
@@ -228,5 +243,9 @@ public class RadarFloatingService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        if (speak_radar_distance_enable) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
     }
 }

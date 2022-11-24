@@ -1,0 +1,242 @@
+--------- beginning of system
+--------- beginning of main
+2022-11-17 22:21:22.414  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 6 status: 1
+2022-11-17 22:21:24.804  2027-2027  CruiseListener          pid-2027                             D  isPanoramicImageOrAMapAuto, top activity ----PkgName = com.android.launcher3
+2022-11-17 22:21:24.804  2027-2027  CruiseListener          pid-2027                             D  onGearboxAutoModeTypeChanged level: 2 ,mVehicleState: 3 ,isCurrentPanoramicImage: false
+2022-11-17 22:21:24.853  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 8 status: 1
+2022-11-17 22:21:24.890  3535-3535  AVC_AutoVideoActivity   pid-3535                             D  PANORAMA_STATE_PVC
+2022-11-17 22:21:24.894  3535-9124  BMMCam_BmmCameraInfo    pid-3535                             D  printCameraTag: camera is pano_h
+2022-11-17 22:21:24.911  1037-10731 BMMCamProp              pid-1037                             I  getCameraId: E, camera tag[pano_h]
+2022-11-17 22:21:24.911  1037-10731 BMMCamProp              pid-1037                             I  getCameraId: X, camera id[1] of  [pano_h]
+2022-11-17 22:21:24.913  1037-10731 BMMCamProp              pid-1037                             I  getCameraId: E, camera tag[pano_h]
+2022-11-17 22:21:24.913  1037-10731 BMMCamProp              pid-1037                             I  getCameraId: X, camera id[1] of  [pano_h]
+2022-11-17 22:21:24.923  3535-3535  AVC_PVCStatusBarNewUI   pid-3535                             D  PVCSettingUI.getSettingsState() != PVCSettingUI.DISPLAY_SETTING_PANO
+2022-11-17 22:21:24.952  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 2 status: 1
+2022-11-17 22:21:24.953  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 0 status: 1
+2022-11-17 22:21:24.954  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 1 status: 0
+2022-11-17 22:21:24.954  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 4 status: 0
+2022-11-17 22:21:24.955  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 5 status: 0
+2022-11-17 22:21:24.956  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 3 status: 0
+2022-11-17 22:21:24.956  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 9 status: 0
+2022-11-17 22:21:24.957  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 6 status: 1
+2022-11-17 22:21:24.958  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 2 status: 0
+2022-11-17 22:21:24.959  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 10 status: 0
+2022-11-17 22:21:24.960  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 8 status: 1
+2022-11-17 22:21:24.972  1230-9069  ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.pano from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16165)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+                                                                                                    	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:3015)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1021)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:994)
+2022-11-17 22:21:24.996  1230-9069  ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.pano from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16259)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+                                                                                                    	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:3015)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1021)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:994)
+2022-11-17 22:21:25.016  3349-3349  RecorderPresenterImpl   pid-3349                             D  PanoSwitchOnReceiver intent =1----action=byd.intent.action.pano
+2022-11-17 22:21:25.016  1230-1322  BroadcastQueue          pid-1230                             D  ssc_skip reciever for uid 1000 name = com.byd.btsetting, broadcast=byd.intent.action.pano
+2022-11-17 22:21:25.016  1230-1322  BroadcastQueue          pid-1230                             W  Background execution not allowed: receiving Intent { act=byd.intent.action.pano flg=0x10 (has extras) } to com.byd.btsetting/.bluetooth.BluetoothPairingRequest
+2022-11-17 22:21:25.017  2027-2027  CruiseListener          pid-2027                             D  onReceive: byd.intent.action.pano, panoState :1
+2022-11-17 22:21:25.018  2894-2894  XCallService            pid-2894                             D  Pano state : 1
+2022-11-17 22:21:25.022  2828-2828  ReminderService         com.android.voicereminder            D  onReceive: byd.intent.action.pano, panoState :1
+2022-11-17 22:21:25.022  3247-3247  OTA_UPGRAD...APresenter pid-3247                             I  onActionPano reason: 1
+2022-11-17 22:21:25.022  3247-3247  OTA_UPGRAD...APresenter pid-3247                             I  onActionPano mPanoStarted: true
+2022-11-17 22:21:25.059  2027-2027  Custom.Air...ngListener pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :1panoramaStatus : 1
+2022-11-17 22:21:25.059  2027-2027  AirCleanerListener      pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :1panoramaStatus : 1
+2022-11-17 22:21:25.059  2027-2027  CruiseListener          pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :1
+2022-11-17 22:21:25.060  3461-3461  ProfileService          pid-3461                             D  Pano state : 1
+2022-11-17 22:21:25.061  2828-2828  ReminderService         com.android.voicereminder            D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :1
+2022-11-17 22:21:25.086  3535-3535  VehiclePano             pid-3535                             I  setViewpoint: 4609
+2022-11-17 22:21:25.086  3535-3535  AVC_BYDAutoPanoService  pid-3535                             D  onIntValueChanged Callbacks size is 7; type = 5; value = 10
+2022-11-17 22:21:25.086  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  postEvent device_type: 1031, event_type =5, value = 10
+2022-11-17 22:21:25.087  2828-2865  BYDAutoPanoramaDevice   com.android.voicereminder            D  postEvent device_type: 1031, event_type =5, value = 10
+2022-11-17 22:21:25.087  3535-3535  System.err              pid-3535                             W  	at android.hardware.bydauto.panorama.IBYDAutoPanoListener$Stub$Proxy.onIntValueChanged(IBYDAutoPanoListener.java:144)
+2022-11-17 22:21:25.087  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.BYDAutoPanoService.onIntValueChanged(BYDAutoPanoService.java:121)
+2022-11-17 22:21:25.087  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.PanoramaDevices.setPanoOutput(PanoramaDevices.java:153)
+2022-11-17 22:21:25.104  3349-3349  RecorderPresenterImpl   pid-3349                             D  PanoSwitchOnReceiver intent =1----action=byd.intent.action.AUTO_VIDEO_ON
+2022-11-17 22:21:25.110  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  getPanoTransparence is: 0
+2022-11-17 22:21:25.110  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setPanoramaTransparence state is 1
+2022-11-17 22:21:25.112  3535-3535  VehiclePanoAPI          pid-3535                             D  initDisplay start
+2022-11-17 22:21:25.112  3535-3535  VehiclePanoAPI          pid-3535                             D  initDisplay end
+2022-11-17 22:21:25.112  3535-3535  VehiclePanoAPI          pid-3535                             D  getCameraSurfaceTexture
+2022-11-17 22:21:25.112  3535-3852  VehiclePanoAPI          pid-3535                             D  MSG_PIPANO_SET_PREVIEW_SURFACE
+2022-11-17 22:21:25.112  3535-3852  VehiclePano             pid-3535                             D  createWindowSurface surface:0x7c5f930010
+2022-11-17 22:21:25.113  3535-3852  VehiclePano             pid-3535                             I  setPreviewSurface mNativeWindow 0x7cb72f86a8 width: 1080 height: 1548
+2022-11-17 22:21:25.113  3535-3852  VehiclePano             pid-3535                             I  load 1080pUI
+2022-11-17 22:21:25.178  3535-9124  AVC_BYDAutoPanoService  pid-3535                             D  onIntValueChanged Callbacks size is 7; type = 1329598488; value = 1
+2022-11-17 22:21:25.178  3535-9124  BYDAutoPanoramaDevice   pid-3535                             D  postEvent device_type: 1031, event_type =4f401018, value = 1
+2022-11-17 22:21:25.179  2828-2865  BYDAutoPanoramaDevice   com.android.voicereminder            D  postEvent device_type: 1031, event_type =4f401018, value = 1
+2022-11-17 22:21:25.180  3535-9124  System.err              pid-3535                             W  	at android.hardware.bydauto.panorama.IBYDAutoPanoListener$Stub$Proxy.onIntValueChanged(IBYDAutoPanoListener.java:144)
+2022-11-17 22:21:25.180  3535-9124  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.BYDAutoPanoService.onIntValueChanged(BYDAutoPanoService.java:121)
+2022-11-17 22:21:25.180  3535-9124  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.PanoramaDevices.setPanoramaWork(PanoramaDevices.java:73)
+2022-11-17 22:21:25.209  1014-9126  mm-camera               pid-1014                             I  <IFACE >< INFO> 4360: iface_setds90us954_vfe: iface_setds90us954_vfe: prop: rear:0;pano_h:1;  tmp: pano_h:1
+2022-11-17 22:21:25.209  1014-9126  mm-camera               pid-1014                             I  <IFACE >< INFO> 4360: iface_setds90us954_vfe: iface_setds90us954_vfe: prop: rear:0;pano_h:1;  tmp: pano_h:1
+2022-11-17 22:21:25.415  3535-9124  AVC_AVMCameraPVC        pid-3535                             D  startPreview: end set panorama device pano focus state. ...
+2022-11-17 22:21:25.416  3535-9124  AVC_AVMCameraPVC        pid-3535                             D  startPreview: will set panorama device pano focus state. ...
+2022-11-17 22:21:25.417  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setRFCameraSwitchState state is 1
+2022-11-17 22:21:25.418  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setRFCameraSwitchState halState is 1
+2022-11-17 22:21:25.418  3535-9153  AVC_CameraDiagMask      pid-3535                             D  sendDiagnosticData() camera_diagmask = pano:0x00
+2022-11-17 22:21:25.418  3535-9153  AVC_CameraDiagMask      pid-3535                             D  sendDiagnosticData() mCameraDiagmask = pano:0x00
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  Java_setRadarDistance len_arr:9
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[0]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[1]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[2]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[3]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[4]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[5]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[6]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[7]=150
+2022-11-17 22:21:25.451  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[8]=150
+2022-11-17 22:21:25.458  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 1 status: 0
+2022-11-17 22:21:25.458  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 2 status: 0
+2022-11-17 22:21:25.459  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 3 status: 0
+2022-11-17 22:21:25.460  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 4 status: 0
+2022-11-17 22:21:25.460  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 0 status: 0
+2022-11-17 22:21:25.461  3535-3535  VehiclePano             pid-3535                             D  setDoorStatus door: 5 status: 0
+2022-11-17 22:21:25.484  3535-3535  VehiclePano             pid-3535                             I  setViewpoint: 4609
+2022-11-17 22:21:25.825  3535-3535  AVC_PVCStatusBarNewUI   pid-3535                             D  switchToPanoOption()
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  Java_setRadarDistance len_arr:9
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[0]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[1]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[2]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[3]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[4]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[5]=65
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[6]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[7]=150
+2022-11-17 22:21:26.249  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[8]=150
+2022-11-17 22:21:26.251  3535-3535  AVC_AutoPa...Controller pid-3535                             D  isAutoOpenPano = true
+2022-11-17 22:21:26.267  3535-3535  VehiclePano             pid-3535                             I  setViewpoint: 4865
+2022-11-17 22:21:26.267  3535-3535  AVC_BYDAutoPanoService  pid-3535                             D  onIntValueChanged Callbacks size is 7; type = 5; value = 11
+2022-11-17 22:21:26.268  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  postEvent device_type: 1031, event_type =5, value = 11
+2022-11-17 22:21:26.268  2828-2865  BYDAutoPanoramaDevice   com.android.voicereminder            D  postEvent device_type: 1031, event_type =5, value = 11
+2022-11-17 22:21:26.271  3535-3535  System.err              pid-3535                             W  	at android.hardware.bydauto.panorama.IBYDAutoPanoListener$Stub$Proxy.onIntValueChanged(IBYDAutoPanoListener.java:144)
+2022-11-17 22:21:26.271  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.BYDAutoPanoService.onIntValueChanged(BYDAutoPanoService.java:121)
+2022-11-17 22:21:26.271  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.PanoramaDevices.setPanoOutput(PanoramaDevices.java:153)
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  Java_setRadarDistance len_arr:9
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[0]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[1]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[2]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[3]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[4]=65
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[5]=65
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[6]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[7]=150
+2022-11-17 22:21:26.398  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[8]=150
+2022-11-17 22:21:26.401  3535-3535  AVC_AutoPa...Controller pid-3535                             D  isAutoOpenPano = true
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  Java_setRadarDistance len_arr:9
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[0]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[1]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[2]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[3]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[4]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[5]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[6]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[7]=150
+2022-11-17 22:21:29.882  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[8]=150
+2022-11-17 22:21:29.883  3535-3535  AVC_AutoPa...Controller pid-3535                             D  isAutoOpenPano = true
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  Java_setRadarDistance len_arr:9
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[0]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[1]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[2]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[3]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[4]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[5]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[6]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[7]=150
+2022-11-17 22:21:29.897  3535-3535  VehiclePano             pid-3535                             D  PanoAPI::setRadarDistance[8]=150
+2022-11-17 22:21:29.900  3535-3535  AVC_AutoPa...Controller pid-3535                             D  isAutoOpenPano = true
+2022-11-17 22:21:29.903  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 8 status: 0
+2022-11-17 22:21:29.907  2027-2027  CruiseListener          pid-2027                             D  isPanoramicImageOrAMapAuto, top activity ----PkgName = com.byd.avc
+2022-11-17 22:21:29.907  2027-2027  CruiseListener          pid-2027                             D  onGearboxAutoModeTypeChanged level: 1 ,mVehicleState: 3 ,isCurrentPanoramicImage: true
+2022-11-17 22:21:29.911  3535-3535  AVC_DeviceStates        pid-3535                             D  enableExitState: isAutoExitPano is true
+2022-11-17 22:21:29.911  3535-3535  AVC_DeviceStates        pid-3535                             D  sendExitPanoIntent: isAutoExitPano is true
+2022-11-17 22:21:29.913  1230-2207  ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.AUTO_EXIT_PANO from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16165)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+                                                                                                    	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:3015)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1021)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:994)
+2022-11-17 22:21:29.917  1230-2207  ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.AUTO_EXIT_PANO from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16259)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+2022-11-17 22:21:29.922  3535-3535  AVC_DeviceStates        pid-3535                             D  disableExitState: isAutoExitPano is false
+2022-11-17 22:21:29.924  1838-1838  statusbar_tk            pid-1838                             I  backToSplitMode,AUTO_EXIT_PANO
+2022-11-17 22:21:29.978  1230-24257 ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.pano from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16165)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+                                                                                                    	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:3015)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1021)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:994)
+2022-11-17 22:21:29.981  1230-24257 ActivityManager         pid-1230                             E  Sending non-protected broadcast byd.intent.action.pano from system 3535:com.byd.avc/1000 pkg com.byd.avc
+                                                                                                    java.lang.Throwable
+                                                                                                    	at com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:15613)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:16259)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:15630)
+                                                                                                    	at com.android.server.am.ActivityManagerService.broadcastIntent(ActivityManagerService.java:16401)
+                                                                                                    	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2037)
+                                                                                                    	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:3015)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1021)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:994)
+2022-11-17 22:21:29.984  3535-3535  AVC_PVCModulePI         pid-3535                             D  onAndroidPause() mIsExitPanoAPP = true
+2022-11-17 22:21:29.986  1230-1322  BroadcastQueue          pid-1230                             D  ssc_skip reciever for uid 1000 name = com.byd.btsetting, broadcast=byd.intent.action.pano
+2022-11-17 22:21:29.986  2894-2894  XCallService            pid-2894                             D  Pano state : 0
+2022-11-17 22:21:29.986  1230-1322  BroadcastQueue          pid-1230                             W  Background execution not allowed: receiving Intent { act=byd.intent.action.pano flg=0x10 (has extras) } to com.byd.btsetting/.bluetooth.BluetoothPairingRequest
+2022-11-17 22:21:29.986  3247-3247  OTA_UPGRAD...APresenter pid-3247                             I  onActionPano reason: 0
+2022-11-17 22:21:29.986  3247-3247  OTA_UPGRAD...APresenter pid-3247                             I  onActionPano mPanoStarted: false
+2022-11-17 22:21:29.986  2828-2828  ReminderService         com.android.voicereminder            D  onReceive: byd.intent.action.pano, panoState :0
+2022-11-17 22:21:29.987  2027-2027  CruiseListener          pid-2027                             D  onReceive: byd.intent.action.pano, panoState :0
+2022-11-17 22:21:29.992  3349-3349  RecorderPresenterImpl   pid-3349                             D  PanoSwitchOnReceiver intent =0----action=byd.intent.action.pano
+2022-11-17 22:21:30.445  3535-3535  AVC_BYDAutoPanoService  pid-3535                             D  onIntValueChanged Callbacks size is 7; type = 5; value = 1
+2022-11-17 22:21:30.445  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  postEvent device_type: 1031, event_type =5, value = 1
+2022-11-17 22:21:30.446  2828-2865  BYDAutoPanoramaDevice   com.android.voicereminder            D  postEvent device_type: 1031, event_type =5, value = 1
+2022-11-17 22:21:30.448  3535-3535  System.err              pid-3535                             W  	at android.hardware.bydauto.panorama.IBYDAutoPanoListener$Stub$Proxy.onIntValueChanged(IBYDAutoPanoListener.java:144)
+2022-11-17 22:21:30.448  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.BYDAutoPanoService.onIntValueChanged(BYDAutoPanoService.java:121)
+2022-11-17 22:21:30.448  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.PanoramaDevices.setPanoOutput(PanoramaDevices.java:153)
+2022-11-17 22:21:30.450  3535-3535  AVC_BYDAutoPanoService  pid-3535                             D  onIntValueChanged Callbacks size is 7; type = 1329598488; value = 0
+2022-11-17 22:21:30.450  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  postEvent device_type: 1031, event_type =4f401018, value = 0
+2022-11-17 22:21:30.451  2828-2865  BYDAutoPanoramaDevice   com.android.voicereminder            D  postEvent device_type: 1031, event_type =4f401018, value = 0
+2022-11-17 22:21:30.452  3535-3535  System.err              pid-3535                             W  	at android.hardware.bydauto.panorama.IBYDAutoPanoListener$Stub$Proxy.onIntValueChanged(IBYDAutoPanoListener.java:144)
+2022-11-17 22:21:30.453  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.BYDAutoPanoService.onIntValueChanged(BYDAutoPanoService.java:121)
+2022-11-17 22:21:30.453  3535-3535  System.err              pid-3535                             W  	at com.byd.avc.BYDAutoPanoService.PanoramaDevices.setPanoramaWork(PanoramaDevices.java:73)
+2022-11-17 22:21:30.454  3535-3535  VehiclePanoAPI          pid-3535                             D  freeDisplay
+2022-11-17 22:21:30.454  3535-3852  VehiclePanoAPI          pid-3535                             D  MSG_PIPANO_SET_PREVIEW_SURFACE
+2022-11-17 22:21:30.455  3535-3852  VehiclePano             pid-3535                             D  release ~WindowSurface
+2022-11-17 22:21:30.456  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  getPanoTransparence is: 0
+2022-11-17 22:21:30.456  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setPanoramaTransparence state is 0
+2022-11-17 22:21:30.456  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setRFCameraSwitchState state is 2
+2022-11-17 22:21:30.457  3535-3535  BYDAutoPanoramaDevice   pid-3535                             D  setRFCameraSwitchState halState is 0
+2022-11-17 22:21:30.459  3535-3852  VehiclePano             pid-3535                             I  setPreviewSurface mNativeWindow null return
+2022-11-17 22:21:30.490  2027-2027  Custom.Air...ngListener pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :0panoramaStatus : 0
+2022-11-17 22:21:30.490  2027-2027  AirCleanerListener      pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :0panoramaStatus : 0
+2022-11-17 22:21:30.491  1230-1230  NetworkTim...ateService pid-1230                             D  mPanoStoppedReceiver pano stopped
+2022-11-17 22:21:30.491  2027-2027  CruiseListener          pid-2027                             D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :0
+2022-11-17 22:21:30.491  1230-1927  NetworkTim...ateService pid-1230                             D  handleMessage: panoOnPollNetworkTimeEnable false
+2022-11-17 22:21:30.492  3461-3461  ProfileService          pid-3461                             D  Pano state : 0
+2022-11-17 22:21:30.492  2828-2828  ReminderService         com.android.voicereminder            D  onReceive: byd.intent.action.AUTO_VIDEO_ON, panoState :0
+2022-11-17 22:21:30.492  3349-3349  RecorderPresenterImpl   pid-3349                             D  PanoSwitchOnReceiver intent =0----action=byd.intent.action.AUTO_VIDEO_ON
+2022-11-17 22:21:30.500  3535-3535  VehiclePanoAPI          pid-3535                             D  freeDisplay
+2022-11-17 22:21:30.500  3535-3852  VehiclePanoAPI          pid-3535                             D  MSG_PIPANO_SET_PREVIEW_SURFACE
+2022-11-17 22:21:30.501  3535-3852  VehiclePano             pid-3535                             I  setPreviewSurface mNativeWindow null return
+2022-11-17 22:21:32.548  3535-3535  VehiclePano             pid-3535                             D  setLightStatus light: 6 status: 0

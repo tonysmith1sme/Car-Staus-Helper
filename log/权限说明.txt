@@ -1,0 +1,17 @@
+需要common权限才能初始化的device:
+android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice
+android.hardware.bydauto.ac.BYDAutoAcDevice
+android.hardware.bydauto.panorama.BYDAutoPanoramaDevice
+android.hardware.bydauto.setting.BYDAutoSettingDevice
+android.hardware.bydauto.instrument.BYDAutoInstrumentDevice
+android.hardware.bydauto.doorlock.BYDAutoDoorLockDevice
+
+get类操作也需要common权限
+android.permission.BYDAUTO_SETTING_COMMON
+android.permission.BYDAUTO_SETTING_GET
+android.permission.BYDAUTO_SETTING_SET
+//设置、获取能量回馈强度
+public int setEnergyFeedback(int value) ;
+public int getEnergyFeedback();//1标准，2较大
+
+android.hardware.bydauto.engine.BYDAutoEngineDevice

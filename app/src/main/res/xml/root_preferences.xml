@@ -37,6 +37,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="雷达测距">
+        <SwitchPreference
+            android:key="radar_distance_enable"
+            android:title="启用雷达测距" />
+        <SwitchPreference
+            android:key="speak_radar_distance_enable"
+            android:title="语音播报" />
         <EditTextPreference
             android:defaultValue="0"
             android:inputType="number"
@@ -75,7 +81,16 @@
             android:key="radar_floating_text_bg_color"
             android:title="文本背景颜色" />
     </PreferenceCategory>
-
+    <PreferenceCategory android:title="雷达测距">
+        <EditTextPreference
+            android:defaultValue="8.5"
+            android:key="latest_fuel_price"
+            android:title="油价" />
+        <EditTextPreference
+            android:defaultValue="1.7"
+            android:key="latest_electric_price"
+            android:title="电价" />
+    </PreferenceCategory>
     <!--
     <SimplePreferenceCategory android:title="@string/messages_header">
         <EditTextPreference

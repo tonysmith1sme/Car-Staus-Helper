@@ -289,8 +289,12 @@
                     android:id="@+id/total_mileage_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 km" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="km" />
             </LinearLayout>
 
 
