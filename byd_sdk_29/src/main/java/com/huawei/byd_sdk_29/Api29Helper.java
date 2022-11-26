@@ -49,7 +49,7 @@ public class Api29Helper {
     }
 
 
-    public static int getAutoType(BYDAutoBodyworkDevice device) {
+    public static String getAutoType(BYDAutoBodyworkDevice device) {
         int autoType = 0;
         try {
             Class<?> clz = Class.forName("android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice");
@@ -60,10 +60,10 @@ public class Api29Helper {
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return autoType;
+        return String.valueOf(autoType);
     }
 
-    public static int getWaterTemperature(BYDAutoStatisticDevice device) {
+    public static String getWaterTemperature(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
@@ -71,16 +71,16 @@ public class Api29Helper {
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 int ret = (int) invoke;
-                return ret > 0 ? ret : 0;
+                return String.valueOf(ret > 0 ? ret : 0);
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return 26;
+        return "26";
     }
 
-    public static double getInstantElecConValue(BYDAutoStatisticDevice device) {
+    public static String getInstantElecConValue(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
@@ -88,29 +88,29 @@ public class Api29Helper {
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 double ret = (double) invoke;
-                return ret > 0 ? ret : 0;
+                return String.valueOf(ret > 0 ? ret : 0);
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return 0;
+        return "0";
     }
 
-    public static double getInstantFuelConValue(BYDAutoStatisticDevice device) {
+    public static String getInstantFuelConValue(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
                 Method method = clz.getDeclaredMethod("getInstantFuelConValue");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                return (double) invoke;
+                return String.valueOf((double) invoke);
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return 0;
+        return "0";
     }
 
     public static int[] getAllRadarDistance(BYDAutoRadarDevice device) {

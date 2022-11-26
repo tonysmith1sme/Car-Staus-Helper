@@ -513,7 +513,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (chargingPowerTv == null) {
                 return;
             }
-            chargingPowerTv.setText(value + "");
+            chargingPowerTv.setText(String.valueOf(value));
         }
 
         /**
@@ -528,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (chargingRestTimeTv == null) {
                 return;
             }
-            chargingRestTimeTv.setText((hour > 24 ? 0 : hour) + "h " + (min > 60 ? 0 : min) + "分");
+            chargingRestTimeTv.setText((hour != 255 ? hour : 0) + "时" + (min > 60 ? 0 : min) + "分钟");
         }
     };
 
@@ -543,7 +543,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (currentWindLevelTv == null) {
                 return;
             }
-            currentWindLevelTv.setText("" + level);
+            currentWindLevelTv.setText(String.valueOf(level));
         }
 
         /**
@@ -569,12 +569,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEnergyModeChanged(int energyMode) {
             super.onEnergyModeChanged(energyMode);
-            String energyModeName = StringUtil.getEnergyModeName(energyMode);
-//            KLog.e("当前能耗模式：" + energyMode + " " + energyModeName);
             if (energyModeTv == null) {
                 return;
             }
-            energyModeTv.setText(energyModeName);
+            energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
         }
 
         /**
@@ -584,12 +582,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onOperationModeChanged(int operationMode) {
             super.onOperationModeChanged(operationMode);
-            String operationModeName = StringUtil.getOperationModeName(operationMode);
-//            KLog.e("当前行车模式：" + operationMode + " " + operationModeName);
             if (operationModeTv == null) {
                 return;
             }
-            operationModeTv.setText(operationModeName);
+            operationModeTv.setText(StringUtil.getOperationModeName(operationMode));
         }
     };
 
@@ -639,11 +635,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onTotalMileageValueChanged(totalMileageValue);
 //            KLog.e("总行驶里程：" + totalMileageValue + " km");
             if (totalMileageTv != null) {
-                totalMileageTv.setText(totalMileageValue + " km");
+                totalMileageTv.setText(totalMileageValue + "km");
             }
             int hevMileageValue = Api29Helper.getHEVMileageValue(statisticDevice);
             if (totalHevMileageTv != null) {
-                totalHevMileageTv.setText(hevMileageValue);
+                totalHevMileageTv.setText(String.valueOf(hevMileageValue));
             }
             //更新单次行程能耗数据
 
@@ -770,7 +766,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onElecDrivingRangeChanged(int value) {
             super.onElecDrivingRangeChanged(value);
             KLog.e("电量续航里程：" + value + "km");
-            updateElecDrivingRange(value);
+            if (powerMileageTv == null) {
+                return;
+            }
+            powerMileageTv.setText(value + "km");
         }
 
 
@@ -782,7 +781,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onFuelDrivingRangeChanged(int value) {
             super.onFuelDrivingRangeChanged(value);
             KLog.e("燃油续航里程：" + value + "km");
-            updateFuelDrivingRange(value);
+            if (fuelMileageTv == null) {
+                return;
+            }
+            fuelMileageTv.setText(value + "km");
         }
 
         /**
@@ -793,7 +795,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onFuelPercentageChanged(int fuelPercentageValue) {
             super.onFuelPercentageChanged(fuelPercentageValue);
             KLog.e("燃油续航百分比：" + fuelPercentageValue);
-            updateFuelPercent(fuelPercentageValue);
+            if (fuelPercentPb != null) {
+                fuelPercentPb.setMax(100);
+                fuelPercentPb.setProgress(fuelPercentageValue);
+            }
+            if (fuelPbTv != null) {
+                fuelPbTv.setText(fuelPercentageValue + "%");
+            }
         }
 
         /**
@@ -803,7 +811,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onElecPercentageChanged(double value) {
             super.onElecPercentageChanged(value);
-            updateElecPercent(value);
+            double ret;
+            if (value <= 1) {
+                ret = value * 100;
+            } else {
+                ret = value;
+            }
+//        KLog.e("电量续航百分比：" + ret);
+            if (elecPercentPb != null) {
+                elecPercentPb.setMax(100);
+                elecPercentPb.setProgress(((int) ret));
+            }
+            safeSetText(elecPbTv, (int) ret + "%");
         }
 
         /**
@@ -851,22 +870,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int rear_motor_torque = Api29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_TORQUE);
 
         if (engineSpeedGbTv != null) {
-            engineSpeedGbTv.setText(engine_speed_gb + "rpm");
+            engineSpeedGbTv.setText(String.valueOf(engine_speed_gb));
         }
         if (engineSpeedWarningTv != null) {
-            engineSpeedWarningTv.setText((engine_speed_warning > 1 ? engine_speed_warning : 0) + "rpm");
+            engineSpeedWarningTv.setText(String.valueOf((engine_speed_warning > 1 ? engine_speed_warning : 0)));
         }
         if (frontMotorSpeedTv != null) {
-            frontMotorSpeedTv.setText(Math.abs(front_motor_speed) + "rpm");
+            frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
         }
         if (frontMotorTorqueTv != null) {
-            frontMotorTorqueTv.setText(getValidTorqueValue(front_motor_torque) + "Nm");
+            frontMotorTorqueTv.setText(String.valueOf(getValidTorqueValue(front_motor_torque)));
         }
         if (rearMotorSpeedTv != null) {
-            rearMotorSpeedTv.setText(Math.abs(rear_motor_speed) + "rpm");
+            rearMotorSpeedTv.setText(String.valueOf(Math.abs(rear_motor_speed)));
         }
         if (rearMotorTorqueTv != null) {
-            rearMotorTorqueTv.setText(getValidTorqueValue(rear_motor_torque) + "Nm");
+            rearMotorTorqueTv.setText(String.valueOf(getValidTorqueValue(rear_motor_torque)));
         }
     }
 
@@ -980,7 +999,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String autoVIN = bodyworkDevice.getAutoVIN();
             textTv.setText(autoVIN);
         } else {
-            textTv.setText("*****************");
+            textTv.setText("***********************");
         }
     }
 
@@ -1002,16 +1021,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             autoModelNameTv.setText(autoModelName);
         }
         if (autoTypeTv != null) {
-            autoTypeTv.setText(Api29Helper.getAutoType(bodyworkDevice) + "");
+            autoTypeTv.setText(Api29Helper.getAutoType(bodyworkDevice));
         }
 
         //发动机名称
         if (engineCodeTv != null) {
-            engineCodeTv.setText(engineDevice.getEngineCode() + "");
+            engineCodeTv.setText(engineDevice.getEngineCode());
         }
         //变速箱名称
         if (gearboxCodeTv != null) {
-            gearboxCodeTv.setText(gearboxDevice.getGearboxCode() + "");
+            gearboxCodeTv.setText(gearboxDevice.getGearboxCode());
         }
         //变速箱类型
         if (gearboxTypeTv != null) {
@@ -1074,30 +1093,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         absBYDAutoStatisticListener.onTotalFuelConPHMChanged(totalFuelConPHMValue);
 
         //剩余电量百分比
-        updateElecPercent(statisticDevice.getElecPercentageValue());
+        absBYDAutoStatisticListener.onElecPercentageChanged(statisticDevice.getElecPercentageValue());
         //剩余电续航里程
-        updateElecDrivingRange(statisticDevice.getElecDrivingRangeValue());
+        absBYDAutoStatisticListener.onElecDrivingRangeChanged(statisticDevice.getElecDrivingRangeValue());
         //剩余燃油百分比
-        updateFuelPercent(statisticDevice.getFuelPercentageValue());
+        absBYDAutoStatisticListener.onFuelPercentageChanged(statisticDevice.getFuelPercentageValue());
         //剩余燃油续航里程
-        updateFuelDrivingRange(statisticDevice.getFuelDrivingRangeValue());
+        absBYDAutoStatisticListener.onFuelDrivingRangeChanged(statisticDevice.getFuelDrivingRangeValue());
 
         //水温
         if (waterTemperatureTv != null) {
-            waterTemperatureTv.setText(String.valueOf(Api29Helper.getWaterTemperature(statisticDevice)));
+            waterTemperatureTv.setText(Api29Helper.getWaterTemperature(statisticDevice));
         }
         //瞬时电耗
         if (instantElecConTv != null) {
-            instantElecConTv.setText(String.valueOf(Api29Helper.getInstantElecConValue(statisticDevice)));
+            instantElecConTv.setText(Api29Helper.getInstantElecConValue(statisticDevice));
         }
         //瞬时油耗
         if (instantFuelConTv != null) {
-            instantFuelConTv.setText(String.valueOf(Api29Helper.getInstantFuelConValue(statisticDevice)));
+            instantFuelConTv.setText(Api29Helper.getInstantFuelConValue(statisticDevice));
         }
 
         //当前风量
-        int acWindLevel = bydAutoAcDevice.getAcWindLevel();
-        absBYDAutoAcListener.onAcWindLevelChanged(acWindLevel);
+        absBYDAutoAcListener.onAcWindLevelChanged(bydAutoAcDevice.getAcWindLevel());
 
         //充电功率与剩余时长
         if (chargingPowerTv != null) {
@@ -1128,71 +1146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 电量续航里程
-     *
-     * @param value
-     */
-    private void updateElecDrivingRange(int value) {
-        if (powerMileageTv == null) {
-            return;
-        }
-        powerMileageTv.setText(value + "km");
-    }
-
-    /**
-     * 燃油续航里程
-     *
-     * @param value
-     */
-    private void updateFuelDrivingRange(int value) {
-        if (fuelMileageTv == null) {
-            return;
-        }
-        fuelMileageTv.setText(value + "km");
-    }
-
-    /**
-     * 燃油百分比
-     *
-     * @param fuelPercentageValue
-     */
-    private void updateFuelPercent(int fuelPercentageValue) {
-        if (fuelPercentPb != null) {
-            fuelPercentPb.setMax(100);
-            fuelPercentPb.setProgress(fuelPercentageValue);
-        }
-        if (fuelPbTv != null) {
-            fuelPbTv.setText(fuelPercentageValue + "%");
-        }
-    }
-
-    /**
-     * 电量百分比
-     *
-     * @param value
-     */
-    private void updateElecPercent(double value) {
-        double ret;
-        if (value <= 1) {
-            ret = value * 100;
-        } else {
-            ret = value;
-        }
-//        KLog.e("电量续航百分比：" + ret);
-        if (elecPercentPb != null) {
-            elecPercentPb.setMax(100);
-            elecPercentPb.setProgress(((int) ret));
-        }
-        safeSetText(elecPbTv, format.format(ret) + "%");
-    }
-
-
     private void updateEnginePower() {
         int enginePower = engineDevice.getEnginePower();
 //        KLog.e("当前功率：" + enginePower + " kw");
         if (enginePowerTv != null) {
-            enginePowerTv.setText(enginePower + " kw");
+            enginePowerTv.setText(enginePower + "kw");
         }
         if (enginePowerEpv != null) {
             enginePowerEpv.setVelocity(enginePower);

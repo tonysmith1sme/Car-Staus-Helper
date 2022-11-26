@@ -347,8 +347,12 @@
                     android:id="@+id/engine_speed_gb_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0rpm" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rpm" />
             </LinearLayout>
 
             <LinearLayout
@@ -364,8 +368,12 @@
                     android:id="@+id/engine_speed_warning_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0rpm" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rpm" />
             </LinearLayout>
 
             <LinearLayout
@@ -381,8 +389,12 @@
                     android:id="@+id/front_motor_speed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0rpm" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rpm" />
             </LinearLayout>
 
             <LinearLayout
@@ -398,8 +410,12 @@
                     android:id="@+id/front_motor_torque_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0Nm" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nm" />
             </LinearLayout>
 
             <LinearLayout
@@ -415,8 +431,12 @@
                     android:id="@+id/rear_motor_speed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0rpm" />
+                    android:text="0" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rpm" />
             </LinearLayout>
 
             <LinearLayout
@@ -432,7 +452,12 @@
                     android:id="@+id/rear_motor_torque_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0Nm" />
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nm" />
 
             </LinearLayout>
 
@@ -773,8 +798,9 @@
                     <ProgressBar
                         android:id="@+id/fuel_percent_pb"
                         style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -790,7 +816,7 @@
 
                         <TextView
                             android:id="@+id/fuel_mileage_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="45dp"
                             android:layout_height="wrap_content"
                             android:text="0km" />
                     </LinearLayout>
@@ -813,8 +839,9 @@
                     <ProgressBar
                         android:id="@+id/elec_percent_pb"
                         style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -831,7 +858,7 @@
 
                         <TextView
                             android:id="@+id/power_mileage_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="45dp"
                             android:layout_height="wrap_content"
                             android:text="0km" />
                     </LinearLayout>
