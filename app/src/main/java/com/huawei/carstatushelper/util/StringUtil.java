@@ -53,6 +53,9 @@ public class StringUtil {
     }
 
     public static String getAutoModelName(BYDAutoBodyworkDevice device) {
+        if (device == null) {
+            return "";
+        }
         int code = device.getAutoModelName();
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "秦 HEV");

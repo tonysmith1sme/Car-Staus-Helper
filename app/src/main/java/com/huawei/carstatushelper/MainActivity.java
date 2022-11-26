@@ -1,7 +1,9 @@
 package com.huawei.carstatushelper;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.hardware.bydauto.BYDAutoFeatureIds;
@@ -24,6 +26,7 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BYDAutoGearboxDevice gearboxDevice;
     private BYDAutoAcDevice bydAutoAcDevice;
 
-    private boolean initSuccess;
+//    private boolean initSuccess;
 
     private double totalElecConPHM;//累计平均电耗
     private double totalFuelConPHM;//累计平均油耗
@@ -187,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "车辆权限不足，无法获取车辆数据", Toast.LENGTH_SHORT).show();
             return;
         }
-        initSuccess = true;
+//        initSuccess = true;
         initDevice();
         initAutoData();
     }
@@ -422,6 +425,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initDevice() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_GET) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "权限不足", Toast.LENGTH_SHORT).show();
+            return;
+        }
         bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
         statisticDevice = BYDAutoStatisticDevice.getInstance(this);
         speedDevice = BYDAutoSpeedDevice.getInstance(this);
@@ -434,7 +441,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register() {
-        if (!initSuccess) {
+//        if (!initSuccess) {
+//            return;
+//        }
+        if (statisticDevice == null) {
             return;
         }
         statisticDevice.registerListener(absBYDAutoStatisticListener);
@@ -448,7 +458,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void unregister() {
-        if (!initSuccess) {
+//        if (!initSuccess) {
+//            return;
+//        }
+        if (statisticDevice == null) {
             return;
         }
         statisticDevice.unregisterListener(absBYDAutoStatisticListener);
@@ -994,6 +1007,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (show) {
             if (bodyworkDevice == null) {
+                textTv.setText("00000000000000000");
                 return;
             }
             String autoVIN = bodyworkDevice.getAutoVIN();
@@ -1007,9 +1021,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化界面数据
      */
     private void initAutoData() {
-        if (!initSuccess) {
+        if (bodyworkDevice == null) {
             return;
         }
+//        if (!initSuccess) {
+//            return;
+//        }
         //6.1.2 车架号
         //LGXC76C44N0131100,LGXC76C44N0131101
         if (showVinCb != null) {

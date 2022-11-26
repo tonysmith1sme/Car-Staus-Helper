@@ -50,6 +50,9 @@ public class Api29Helper {
 
 
     public static String getAutoType(BYDAutoBodyworkDevice device) {
+        if (device == null) {
+            return "";
+        }
         int autoType = 0;
         try {
             Class<?> clz = Class.forName("android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice");
