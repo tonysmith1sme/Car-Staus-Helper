@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".test.ReflectTestActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello Reflection!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,85 +24,104 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="class: " />
+            android:text="class" />
 
         <EditText
             android:id="@+id/clz_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="android.hardware.bydauto.charging.BYDAutoChargingDevice" />
+            android:text="android.hardware.bydauto.statistic.BYDAutoStatisticDevice" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="构造实例" />
+
+    <RadioGroup
+        android:id="@+id/instance_type_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp">
+
+        <RadioButton
+            android:id="@+id/type_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="静态方法" />
+
+        <RadioButton
+            android:id="@+id/type_constructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="构造方法" />
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="method: " />
+            android:text="method" />
 
         <EditText
             android:id="@+id/method_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="getChargingRestTime" />
+            android:text="getTravelTime" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="构造实像方法" />
-
-    <RadioGroup
-        android:id="@+id/constructor_type_rg"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/item1_rb"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="getInstance" />
+            android:text="method arg type" />
 
-        <RadioButton
-            android:id="@+id/item2_rb"
+        <EditText
+            android:id="@+id/method_arg_type_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="int" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Context参数构造方法" />
+            android:text="method arg value" />
 
-        <RadioButton
-            android:id="@+id/item3_rb"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/method_arg_value_et"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="无参构造方法" />
-    </RadioGroup>
+            android:text="1" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/test_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="测试" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="result:" />
+        android:text="测试结果：" />
 
     <TextView
-        android:id="@+id/result_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/test_result_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="null" />
 
 </LinearLayout>

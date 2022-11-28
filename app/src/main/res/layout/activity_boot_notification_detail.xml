@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".receiver.BootNotificationDetailActivity">
+
+    <Button
+        android:id="@+id/start_app_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打开车况助手" />
+
+    <Button
+        android:id="@+id/test_radar_floating_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试雷达距离浮窗" />
+</LinearLayout>

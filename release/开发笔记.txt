@@ -1,0 +1,7 @@
+byd模拟器反射接口需要的东西：（示例：BYDAutoSpeedDevice）
+1.AndroidManifest.xml 中声明权限，如果不声明，在 requestPermissions 不会弹权限请求窗口
+<uses-permission android:name="android.permission.BYDAUTO_SPEED_GET" />
+2.需要使用 platform.keystore 签名
+3.registerListener可以不实现 IBYDAutoListener，但不能将 abstract class 改为 interface
+4.registerListener 注册的抽象类包名必须与 device 一致
+5.registerListener 注册的抽象类可以只写代码中需要的方法

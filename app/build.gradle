@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.android.support:design:25.1.0'
 
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-    implementation project(path: ':byd_sdk_29')
+//    implementation project(path: ':byd_sdk_29')
 //    implementation 'cat.ereza:customactivityoncrash:1.1.0'
     //解除android高版本反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'

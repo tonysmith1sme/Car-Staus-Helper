@@ -1,4 +1,4 @@
-package com.huawei.byd_sdk_29;
+package com.huawei.carstatushelper.util;
 
 import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
@@ -11,10 +11,52 @@ import com.socks.library.KLog;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class Api29Helper {
+public class BydApi29Helper {
+
+    public static int getBatteryPowerValue(BYDAutoBodyworkDevice bodyworkDevice) {
+        int result = 0;
+        try {
+            Class<?> clz = Class.forName("android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice");
+            Method getAutoType = clz.getDeclaredMethod("getBatteryPowerValue");
+            getAutoType.setAccessible(true);
+            Object ret = getAutoType.invoke(bodyworkDevice);
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    /**
+     * @param statisticDevice
+     * @param status          0-->里程1;
+     *                        1-->里程2;
+     *                        2-->总里程
+     * @return
+     */
+    public static int getMileageNumber(BYDAutoStatisticDevice statisticDevice, int status) {
+//        if (status == 0) {
+//            cmd = BYDAutoFeatureIds.STATISTIC_DD_MILEAGE1;
+//        } else if (status == 1) {
+//            cmd = BYDAutoFeatureIds.STATISTIC_DD_MILEAGE2;
+//        } else if (status == 2) {
+//            cmd = BYDAutoFeatureIds.STATISTIC_TOTAL_MILEAGE;
+//        }
+        int result = 0;
+        try {
+            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
+            Method getMileageNumber = clz.getDeclaredMethod("getMileageNumber", int.class);
+            getMileageNumber.setAccessible(true);
+            Object invoke = getMileageNumber.invoke(statisticDevice, status);
+            result = ((int) invoke);
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     public static int getHEVMileageValue(BYDAutoStatisticDevice statisticDevice) {
-        int result = 0;
+        int result = 65535;
         try {
             Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
             Method getHEVMileageValue = clz.getDeclaredMethod("getHEVMileageValue");
@@ -27,12 +69,9 @@ public class Api29Helper {
     }
 
     /**
-     * 1,BYDAutoFeatureIds.STATISTIC_DRIVING_TIME
-     * 2,BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
-     * 3,
-     * 4,BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
-     *
-     * @param target
+     * @param target 1，总行程时间 BYDAutoFeatureIds.STATISTIC_DRIVING_TIME
+     *               2，里程1行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
+     *               4，里程2行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
      * @return
      */
     public static double getTravelTime(BYDAutoStatisticDevice statisticDevice, int target) {
@@ -53,17 +92,18 @@ public class Api29Helper {
         if (device == null) {
             return "";
         }
-        int autoType = 0;
+        String autoTypeName = "";
         try {
             Class<?> clz = Class.forName("android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice");
             Method getAutoType = clz.getDeclaredMethod("getAutoType");
             getAutoType.setAccessible(true);
             Object ret = getAutoType.invoke(device);
-            autoType = (int) ret;
+            int autoType = (int) ret;
+            autoTypeName = StringUtil.getAutoTypeName(autoType);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return String.valueOf(autoType);
+        return autoTypeName;
     }
 
     public static String getWaterTemperature(BYDAutoStatisticDevice device) {

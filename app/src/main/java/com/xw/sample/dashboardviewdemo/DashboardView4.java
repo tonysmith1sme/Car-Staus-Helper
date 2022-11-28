@@ -334,6 +334,10 @@ public class DashboardView4 extends View {
         float[] p2 = getCoordinatePoint(mPSRadius, θ + 180);
         canvas.drawLine(mCenterX, mCenterY, p2[0], p2[1], mPaint);
 
+        int width = getWidth();
+        if (width <= 280) {//小表不显示晶体管
+            return;
+        }
         /**
          * 画实时度数值（画8段晶体管）
          */

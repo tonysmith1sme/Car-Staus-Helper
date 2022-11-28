@@ -36,11 +36,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.jumpToMainBtn.setOnClickListener(this);
 
         if (Settings.canDrawOverlays(this) && isBydAutoPermissionGranted()) {
-//            if (BuildConfig.DEBUG) {
-//
-//            } else {
-//
-//            }
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

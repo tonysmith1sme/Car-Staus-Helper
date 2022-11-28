@@ -4,12 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.huawei.carstatushelper.util.Android29Helper;
+import com.huawei.carstatushelper.util.AutoBootHelper;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Android29Helper.startForegroundService(context, BootCompleteService.class);
+        Intent i = new Intent(context, BootCompleteService.class);
+        i.putExtra("from_boot",true);
+        AutoBootHelper.startForegroundService(context, i);
     }
 }

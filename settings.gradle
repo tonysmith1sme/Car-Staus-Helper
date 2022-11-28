@@ -9,4 +9,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Car Status Helper"
 include ':app'
-include ':byd_sdk_29'

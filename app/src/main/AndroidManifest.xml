@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.BYDAUTO_POWER_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_BIGDATA_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_REAR_VIEW_MIRROR_GET" />
@@ -14,8 +14,8 @@
     <uses-permission android:name="android.permission.BYDAUTO_AC_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_PANORAMA_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_SETTING_COMMON" />
-    <uses-permission android:name="android.permission.BYDAUTO_INSTRUMENT_COMMON"/>
-    <uses-permission android:name="android.permission.BYDAUTO_DOOR_LOCK_COMMON"/>
+    <uses-permission android:name="android.permission.BYDAUTO_INSTRUMENT_COMMON" />
+    <uses-permission android:name="android.permission.BYDAUTO_DOOR_LOCK_COMMON" />
     <uses-permission android:name="android.permission.BYDAUTO_AC_SET" />
     <uses-permission android:name="android.permission.BYDAUTO_AC_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_AUDIO_GET" />
@@ -48,10 +48,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".receiver.BootNotificationDetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <service
             android:name=".receiver.BootCompleteService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".test.ReflectTestActivity"
@@ -65,15 +73,10 @@
             android:name=".receiver.BootCompleteReceiver"
             android:enabled="true"
             android:exported="true">
-            <intent-filter android:priority="100">
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <service
-            android:name=".service.RadarDataProviderService"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".activity.RadarFloatingSettingActivity"
@@ -82,20 +85,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <service
-            android:name=".service.RadarFloatingService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity
-            android:name=".activity.ReflectBydActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-
         <service
             android:name=".service.DetectionService"
             android:exported="false"
@@ -130,7 +119,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <service
             android:name="com.ziwenl.floatingwindowdemo.FloatingWindowService"

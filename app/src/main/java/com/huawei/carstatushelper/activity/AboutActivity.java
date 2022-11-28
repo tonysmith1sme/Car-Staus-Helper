@@ -26,7 +26,7 @@ public class AboutActivity extends BackEnableBaseActivity {
         binding.iconIv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                startActivity(new Intent(v.getContext(), ReflectBydActivity.class));
+//                startActivity(new Intent(v.getContext(), ReflectBydActivity.class));
                 return true;
             }
         });

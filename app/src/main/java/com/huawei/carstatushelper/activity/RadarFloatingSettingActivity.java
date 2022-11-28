@@ -6,8 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.R;
-import com.huawei.carstatushelper.service.RadarDataProviderService;
-import com.huawei.carstatushelper.service.RadarFloatingService;
+import com.huawei.carstatushelper.receiver.BootCompleteService;
 
 import java.util.Random;
 
@@ -31,15 +30,16 @@ public class RadarFloatingSettingActivity extends BackEnableBaseActivity impleme
     public void onClick(View view) {
         int viewId = view.getId();
         if (viewId == R.id.init_service_btn) {
-            startService(new Intent(this, RadarDataProviderService.class));
-            startService(new Intent(this, RadarFloatingService.class));
+//            startService(new Intent(this, RadarDataProviderService.class));
+            startService(new Intent(this, BootCompleteService.class));
+//            startService(new Intent(this, RadarFloatingService.class));
             Toast.makeText(this, "service", Toast.LENGTH_SHORT).show();
 
         } else if (viewId == R.id.show_radar_floating_btn) {
-            sendBroadcast(new Intent(RadarFloatingService.ACTION_SHOW_RADAR_FLOATING));
+            sendBroadcast(new Intent(BootCompleteService.ACTION_SHOW_RADAR_FLOATING));
 
         } else if (viewId == R.id.update_radar_data_btn) {
-            Intent intent = new Intent(RadarFloatingService.ACTION_UPDATE_RADAR_DATA);
+            Intent intent = new Intent(BootCompleteService.ACTION_UPDATE_RADAR_DATA);
             int[] data = new int[9];
             Random random = new Random();
             for (int i = 0; i < data.length; i++) {
