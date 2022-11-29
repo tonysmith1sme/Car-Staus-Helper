@@ -14,7 +14,7 @@
             android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#440000ff"
+            android:background="#400f"
             android:padding="8dp">
 
             <TextView
@@ -24,7 +24,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="左前:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance1_tv"
@@ -34,7 +35,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="右前:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance2_tv"
@@ -44,7 +46,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="左后:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance3_tv"
@@ -54,27 +57,32 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="右后:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance4_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom|center"
+                android:layout_marginEnd="50dp"
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="左:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance5_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
+                android:layout_gravity="bottom|center"
+                android:layout_marginStart="50dp"
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="右:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance6_tv"
@@ -85,7 +93,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="前左中:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance7_tv"
@@ -96,7 +105,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="前右中:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/distance8_tv"
@@ -106,7 +116,8 @@
                 android:background="@android:color/black"
                 android:padding="8dp"
                 android:text="后中:\n10cm"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
         </FrameLayout>
 
         <Button
