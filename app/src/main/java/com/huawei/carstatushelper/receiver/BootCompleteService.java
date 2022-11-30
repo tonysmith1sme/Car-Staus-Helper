@@ -31,8 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huawei.carstatushelper.R;
-import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.AutoBootHelper;
+import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.DpUtil;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
@@ -204,6 +204,8 @@ public class BootCompleteService extends Service {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 panoramaDevice.registerListener(panoramaListener);
             }
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_GET) == PackageManager.PERMISSION_GRANTED) {
             if (radarDevice == null) {
                 radarDevice = BYDAutoRadarDevice.getInstance(this);
                 radarDevice.registerListener(radarListener);

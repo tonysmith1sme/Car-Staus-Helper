@@ -15,6 +15,7 @@ import android.hardware.bydauto.charging.AbsBYDAutoChargingListener;
 import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
+import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
@@ -79,9 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double totalElecConPHM;//累计平均电耗
     private double totalFuelConPHM;//累计平均油耗
 
-    private EngineSpeedView engineSpeedEsv;
-    private EnginePowerView enginePowerEpv;
-    private CarSpeedView carSpeedCsv;
+    private EngineSpeedView engineSpeedEsv;//发动机转速
+    private MotorSpeedView motorSpeedMsv;//前电机转速
+    private CarSpeedView carSpeedCsv;//车速表
+    private EnginePowerView enginePowerEpv;//功率表
 
     private View temperaturePlusBtn;
     private View temperatureSubBtn;
@@ -97,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView totalMileageTv;
     private TextView totalHevMileageTv;
-    private TextView totalFuelCostTv;
-    private TextView totalElecCostTv;
+    private TextView totalFuelCostTv;//累计燃油消耗
+    private TextView totalElecCostTv;//累计电量消耗
     private TextView drivingTimeTv;
     private TextView lastFuelConPhmTv;
     private TextView lastElecConPhmTv;
@@ -109,10 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView fuelPbTv;
     private ProgressBar elecPercentPb;
     private TextView elecPbTv;
-    private TextView enginePowerTv;
-    private TextView totalElecConPhmTv;
-    private TextView totalFuelConPhmTv;
-    private TextView textTv;
+    private TextView enginePowerTv;//发动机功率
+    private TextView totalElecConPhmTv;//累计平均电耗
+    private TextView totalFuelConPhmTv;//累计平均油耗
+    private TextView textTv;//车架号
 
     private TextView totalEvMileageTv;
     private TextView carSpeedTv;
@@ -125,8 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BYDAutoChargingDevice chargingDevice;
     private TextView chargingPowerTv;
     private TextView chargingRestTimeTv;
-    private TextView autoModelNameTv;
-    private TextView engineCodeTv;
     private TextView gearboxCodeTv;
     private Button defrostModeBtn;
     private Button ventilateModeBtn;
@@ -147,10 +147,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tyrePreLeftRearTv;
     private TextView tyrePreRightRearTv;
     private TextView autoTypeTv;
-    private TextView currentTravelElecCostTv;
-    private TextView currentTravelFuelCostTv;
-    private TextView currentTravelMileageTv;
-    private TextView currentTravelEnergyCostTv;
+    private TextView currentTravelElecCostTv;//本次行程平均电耗
+    private TextView currentTravelFuelCostTv;//本次行程平均油耗
+    private TextView currentTravelMileageTv;//本次行程里程
+    private TextView currentTravelEnergyCostTv;//本次行程电耗+油耗
     private BYDAutoBodyworkDevice bodyworkDevice;
     private CheckBox showVinCb;
     private int init_totalMileageValue;
@@ -160,12 +160,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double init_totalFuelConValue;
     private double init_latest_electric_price;
     private double init_latest_fuel_price;
-    private TextView currentTravelYuanCostTv;
+    private TextView currentTravelYuanCostTv;//本次行程花费
     private TextView customMileage1Tv;
     private TextView customMileage2Tv;
-    private TextView smallBatteryVoltageTv;
-    private TextView powerLevelTv;
-    private MotorSpeedView motorSpeedMsv;
+    private TextView smallBatteryVoltageTv;//蓄电池电压
+    private TextView powerLevelTv;//电源档位
     private BYDAutoSettingDevice settingDevice;
     private Button energyFeedbackBtn;
 
@@ -259,8 +258,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initMainView(ActivityMainBinding binding) {
-        engineSpeedEsv = binding.engineSpeedEsv;//发动机转速
-        motorSpeedMsv = binding.motorSpeedMsv;//前电机转速
+        engineSpeedEsv = binding.engineSpeedEsv;
+        motorSpeedMsv = binding.motorSpeedMsv;
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
 
@@ -305,8 +304,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showVin(b);
             }
         });
-        autoModelNameTv = binding.autoModelNameTv;
-        engineCodeTv = binding.engineCodeTv;
         gearboxCodeTv = binding.gearboxCodeTv;
         gearboxTypeTv = binding.gearboxTypeTv;
 
@@ -337,21 +334,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         autoTypeTv = binding.autoTypeTv;
 
-        currentTravelMileageTv = binding.currentTravelMileageTv;//本次行程里程
-        currentTravelEnergyCostTv = binding.currentTravelEnergyCostTv;//本次行程电耗+油耗
-        currentTravelYuanCostTv = binding.currentTravelYuanCostTv;//本次行程花费
-        currentTravelElecCostTv = binding.currentTravelElecCostTv;//本次行程平均电耗
-        currentTravelFuelCostTv = binding.currentTravelFuelCostTv;//本次行程平均油耗
+        currentTravelMileageTv = binding.currentTravelMileageTv;
+        currentTravelEnergyCostTv = binding.currentTravelEnergyCostTv;
+        currentTravelYuanCostTv = binding.currentTravelYuanCostTv;
+        currentTravelElecCostTv = binding.currentTravelElecCostTv;
+        currentTravelFuelCostTv = binding.currentTravelFuelCostTv;
 
-        smallBatteryVoltageTv = binding.smallBatteryVoltageTv;//蓄电池电压
-        powerLevelTv = binding.powerLevelTv;//电源档位
+        smallBatteryVoltageTv = binding.smallBatteryVoltageTv;
+        powerLevelTv = binding.powerLevelTv;
         energyFeedbackBtn = binding.energyFeedbackBtn;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
         engineSpeedEsv = binding.engineSpeedEsv;
-//        carSpeedCsv = binding.carSpeedCsv;
         motorSpeedMsv = binding.motorSpeedMsv;
+        carSpeedCsv = binding.carSpeedCsv;
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
@@ -420,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.registerListener(absBYDAutoBodyworkListener);
         speedDevice.registerListener(absBYDAutoSpeedListener);
         energyDevice.registerListener(absBYDAutoEnergyListener);
+        engineDevice.registerListener(absBYDAutoEngineListener);
         bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
         chargingDevice.registerListener(absBYDAutoChargingListener);
@@ -437,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.unregisterListener(absBYDAutoBodyworkListener);
         speedDevice.unregisterListener(absBYDAutoSpeedListener);
         energyDevice.unregisterListener(absBYDAutoEnergyListener);
+        engineDevice.unregisterListener(absBYDAutoEngineListener);
         bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
         gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
         chargingDevice.unregisterListener(absBYDAutoChargingListener);
@@ -473,6 +472,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tyreDevice = BYDAutoTyreDevice.getInstance(this);
         settingDevice = BYDAutoSettingDevice.getInstance(this);
     }
+
+    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+        /**
+         * 监听发动机转速变化
+         * @param value
+         */
+        @Override
+        public void onEngineSpeedChanged(int value) {
+            super.onEngineSpeedChanged(value);
+            if (value != 0) {
+                updateEngineSpeedUI(value);
+            } else {
+                int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+                updateEngineSpeedUI(engine_speed_gb);
+            }
+        }
+    };
 
     private final AbsBYDAutoSettingListener absBYDAutoSettingListener = new AbsBYDAutoSettingListener() {
         /**
@@ -667,14 +683,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 customMileage2Tv.setText(String.valueOf(BydApi29Helper.getMileageNumber(statisticDevice, 1)));
             }
             //总EV里程
-            if (totalEvMileageTv != null) {
-                totalEvMileageTv.setText(String.valueOf(statisticDevice.getEVMileageValue()));
-            }
+//            if (totalEvMileageTv != null) {
+//                totalEvMileageTv.setText(String.valueOf(statisticDevice.getEVMileageValue()));
+//            }
             //总HEV里程
             int hevMileageValue = BydApi29Helper.getHEVMileageValue(statisticDevice);
-            if (totalHevMileageTv != null) {
-                totalHevMileageTv.setText(String.valueOf(hevMileageValue));
-            }
+//            if (totalHevMileageTv != null) {
+//                totalHevMileageTv.setText(String.valueOf(hevMileageValue));
+//            }
             //更新单次行程能耗数据
             int evMileageValue = statisticDevice.getEVMileageValue();
             double totalElecConValue = statisticDevice.getTotalElecConValue();
@@ -693,7 +709,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //本次行程油耗
             double fuel_cost = totalFuelConValue - init_totalFuelConValue;
             //本次行程能耗(电耗+油耗)
-            String cost = elec_cost + "Kwh+" + fuel_cost + "L";
+            String cost = format.format(elec_cost) + "KWH+" + format.format(fuel_cost) + "L";
             if (currentTravelEnergyCostTv != null) {
                 currentTravelEnergyCostTv.setText(cost);
             }
@@ -703,11 +719,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentTravelYuanCostTv.setText(format.format(yuan));
             }
             //本次行程平均电耗(kwh/100km)
-            if (currentTravelElecCostTv != null) {
+            if (currentTravelElecCostTv != null && ev_mileage != 0) {
                 currentTravelElecCostTv.setText(format.format(elec_cost * 100 / ev_mileage));
             }
             //本次行程平均油耗
-            if (currentTravelFuelCostTv != null) {
+            if (currentTravelFuelCostTv != null && hev_mileage != 0) {
                 currentTravelFuelCostTv.setText(format.format(fuel_cost * 100 / hev_mileage));
             }
         }
@@ -719,10 +735,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalFuelConChanged(double value) {
             super.onTotalFuelConChanged(value);
-            if (totalFuelCostTv == null) {
-                return;
+            if (totalFuelCostTv != null) {
+                totalFuelCostTv.setText(format.format(value));
             }
-            totalFuelCostTv.setText(format.format(value));
         }
 
         /**
@@ -732,10 +747,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalElecConChanged(double value) {
             super.onTotalElecConChanged(value);
-            if (totalElecCostTv == null) {
-                return;
+            if (totalElecCostTv != null) {
+                totalElecCostTv.setText(format.format(value));
             }
-            totalElecCostTv.setText(format.format(value));
         }
 
         /**
@@ -745,10 +759,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onLastFuelConPHMChanged(double value) {
             super.onLastFuelConPHMChanged(value);
-            if (lastFuelConPhmTv == null) {
-                return;
+            if (lastFuelConPhmTv != null) {
+                lastFuelConPhmTv.setText(format.format(value));
             }
-            lastFuelConPhmTv.setText(format.format(value));
         }
 
         /**
@@ -771,10 +784,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onLastElecConPHMChanged(double value) {
             super.onLastElecConPHMChanged(value);
-            if (lastElecConPhmTv == null) {
-                return;
+            if (lastElecConPhmTv != null) {
+                lastElecConPhmTv.setText(format.format(value));
             }
-            lastElecConPhmTv.setText(format.format(value));
         }
 
         /**
@@ -863,10 +875,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEVMileageValueChanged(int value) {
             super.onEVMileageValueChanged(value);
-            if (totalEvMileageTv == null) {
-                return;
+            if (totalEvMileageTv != null) {
+                totalEvMileageTv.setText(String.valueOf(value));
             }
-            totalEvMileageTv.setText(String.valueOf(value));
         }
 
         public void onHEVMileageValueChanged(int value) {
@@ -902,7 +913,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateInstantFuelCon();
         }
 
+        /**
+         * 总行驶时间
+         * @param value
+         */
+        @Override
+        public void onDrivingTimeChanged(double value) {
+            super.onDrivingTimeChanged(value);
+            updateDrivingTime();
+        }
     };
+
+    private void updateFrontMotorSpeed() {
+        int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
+        if (frontMotorSpeedTv != null) {
+            frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
+        }
+        if (motorSpeedMsv != null) {
+            motorSpeedMsv.setVelocity(front_motor_speed);
+        }
+    }
 
     private void updateEngineSpeedData() {
         if (engineDevice == null) {
@@ -962,6 +992,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private final AbsBYDAutoSpeedListener absBYDAutoSpeedListener = new AbsBYDAutoSpeedListener() {
+        double currentSpeed;
+
         /**
          * 监听车速变化[0-282]km/h
          * @param currentSpeed
@@ -969,6 +1001,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onSpeedChanged(double currentSpeed) {
             super.onSpeedChanged(currentSpeed);
+            this.currentSpeed = currentSpeed;
             if (carSpeedTv != null) {
                 carSpeedTv.setText(format.format(currentSpeed));
             }
@@ -979,15 +1012,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //行车模式
             updateEnginePower();
 
-            updateEngineSpeedData();
+//            updateEngineSpeedData();
 
-            updateDrivingTime();
+//            updateDrivingTime();
 
-            //更新前电机轩速表
-            if (motorSpeedMsv != null) {
-                int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
-                motorSpeedMsv.setVelocity(front_motor_speed);
-            }
+            //更新前电机转速表
+//            if (motorSpeedMsv != null) {
+//                int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
+//                motorSpeedMsv.setVelocity(front_motor_speed);
+//            }
+            updateFrontMotorSpeed();
         }
 
         /**
@@ -997,13 +1031,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAccelerateDeepnessChanged(int value) {
             super.onAccelerateDeepnessChanged(value);
-            if (youMengPb == null || youMengTv == null) {
-                return;
-            }
-            youMengPb.setProgress(value);
-            youMengTv.setText(String.valueOf(value));
 
             updateEngineSpeedData();
+
+            if (youMengPb != null && youMengTv != null) {
+                youMengPb.setProgress(value);
+                youMengTv.setText(String.valueOf(value));
+            }
         }
 
         /**
@@ -1013,19 +1047,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onBrakeDeepnessChanged(int value) {
             super.onBrakeDeepnessChanged(value);
-            if (shaChePb == null || shaCheTv == null) {
-                return;
+            if (shaChePb != null || shaCheTv != null) {
+                shaChePb.setProgress(value);
+                shaCheTv.setText(String.valueOf(value));
             }
-            shaChePb.setProgress(value);
-            shaCheTv.setText(String.valueOf(value));
         }
 
     };
 
     private void updateEngineSpeedUI(int engineSpeed) {
-        if (engineSpeed > 8000 || engineSpeed < 0) {
-            engineSpeed = 0;
-        }
         if (engineSpeedTv != null) {
             engineSpeedTv.setText(String.valueOf(engineSpeed));
         }
@@ -1083,7 +1113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateInstantElecCon() {
         if (instantElecConTv != null) {
-            instantElecConTv.setText(BydApi29Helper.getInstantElecConValue(statisticDevice));
+            instantElecConTv.setText(format.format(BydApi29Helper.getInstantElecConValue(statisticDevice)));
         }
     }
 
@@ -1092,7 +1122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateInstantFuelCon() {
         if (instantFuelConTv != null) {
-            instantFuelConTv.setText(BydApi29Helper.getInstantFuelConValue(statisticDevice));
+            instantFuelConTv.setText(format.format(BydApi29Helper.getInstantFuelConValue(statisticDevice)));
         }
     }
 
@@ -1108,10 +1138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (showVinCb != null) {
             showVin(showVinCb.isChecked());
         }
-        //车型名称
-        if (autoModelNameTv != null) {
-            autoModelNameTv.setText(StringUtil.getAutoModelName(bodyworkDevice));
-        }
         //车型代号
         if (autoTypeTv != null) {
             autoTypeTv.setText(BydApi29Helper.getAutoType(bodyworkDevice));
@@ -1121,10 +1147,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //电源档位
         absBYDAutoBodyworkListener.onPowerLevelChanged(bodyworkDevice.getPowerLevel());
 
-        //发动机名称
-        if (engineCodeTv != null) {
-            engineCodeTv.setText(engineDevice.getEngineCode());
-        }
         //变速箱名称
         if (gearboxCodeTv != null) {
             gearboxCodeTv.setText(gearboxDevice.getGearboxCode());

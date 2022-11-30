@@ -18,6 +18,7 @@
         -->
 
         <SwitchPreference
+            android:defaultValue="true"
             android:key="show_ac_layout"
             android:title="显示空调按钮" />
 
@@ -32,12 +33,14 @@
 
     <PreferenceCategory android:title="横屏">
         <SwitchPreference
+            android:defaultValue="true"
             android:key="show_sha_che_group_layout"
             android:title="显示油门、刹车状态条" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="雷达测距">
         <SwitchPreference
+            android:defaultValue="true"
             android:key="radar_distance_enable"
             android:title="启用雷达测距" />
         <SwitchPreference
@@ -81,7 +84,7 @@
             android:key="radar_floating_text_bg_color"
             android:title="文本背景颜色" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="雷达测距">
+    <PreferenceCategory android:title="能耗参数">
         <EditTextPreference
             android:defaultValue="8.5"
             android:key="latest_fuel_price"
