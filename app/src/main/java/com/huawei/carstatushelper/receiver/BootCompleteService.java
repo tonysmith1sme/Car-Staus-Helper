@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.bydauto.panorama.AbsBYDAutoPanoramaListener;
 import android.hardware.bydauto.panorama.BYDAutoPanoramaDevice;
 import android.hardware.bydauto.radar.AbsBYDAutoRadarListener;
@@ -319,10 +320,15 @@ public class BootCompleteService extends Service {
         float text_size = Float.parseFloat(preferences.getString("radar_floating_text_size", "0"));
         String text_color = preferences.getString("radar_floating_text_color", "");
         String text_bg_color = preferences.getString("radar_floating_text_bg_color", "");
+        //设置雷达浮窗背景框颜色
         try {
             if (bg_color.length() != 0) {
                 int bg_color_int = Color.parseColor(bg_color);
-                frame.setBackgroundColor(bg_color_int);
+//                frame.setBackgroundColor(bg_color_int);
+                GradientDrawable drawable = new GradientDrawable();
+                drawable.setStroke(DpUtil.dip2px(this, 2), bg_color_int);
+                drawable.setCornerRadius(DpUtil.dip2px(this, 8));
+                frame.setBackground(drawable);
             }
         } catch (Exception e) {
             e.printStackTrace();

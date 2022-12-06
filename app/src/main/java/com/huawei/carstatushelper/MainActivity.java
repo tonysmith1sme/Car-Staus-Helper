@@ -77,13 +77,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BYDAutoGearboxDevice gearboxDevice;
     private BYDAutoAcDevice bydAutoAcDevice;
 
-    private double totalElecConPHM;//累计平均电耗
-    private double totalFuelConPHM;//累计平均油耗
-
-    private EngineSpeedView engineSpeedEsv;//发动机转速
-    private MotorSpeedView motorSpeedMsv;//前电机转速
-    private CarSpeedView carSpeedCsv;//车速表
-    private EnginePowerView enginePowerEpv;//功率表
+    /**
+     * 累计平均电耗
+     */
+    private double totalElecConPHM;
+    /**
+     * 累计平均油耗
+     */
+    private double totalFuelConPHM;
+    /**
+     * 发动机转速
+     */
+    private EngineSpeedView engineSpeedEsv;
+    /**
+     * 前电机转速
+     */
+    private MotorSpeedView motorSpeedMsv;
+    /**
+     * 车速表
+     */
+    private CarSpeedView carSpeedCsv;
+    /**
+     * 功率表
+     */
+    private EnginePowerView enginePowerEpv;
 
     private View temperaturePlusBtn;
     private View temperatureSubBtn;
@@ -99,8 +116,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView totalMileageTv;
     private TextView totalHevMileageTv;
-    private TextView totalFuelCostTv;//累计燃油消耗
-    private TextView totalElecCostTv;//累计电量消耗
+    /**
+     * 累计燃油消耗
+     */
+    private TextView totalFuelCostTv;
+    /**
+     * 累计电量消耗
+     */
+    private TextView totalElecCostTv;
     private TextView drivingTimeTv;
     private TextView lastFuelConPhmTv;
     private TextView lastElecConPhmTv;
@@ -111,10 +134,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView fuelPbTv;
     private ProgressBar elecPercentPb;
     private TextView elecPbTv;
-    private TextView enginePowerTv;//发动机功率
-    private TextView totalElecConPhmTv;//累计平均电耗
-    private TextView totalFuelConPhmTv;//累计平均油耗
-    private TextView textTv;//车架号
+    /**
+     * 发动机功率
+     */
+    private TextView enginePowerTv;
+    /**
+     * 累计平均电耗
+     */
+    private TextView totalElecConPhmTv;
+    /**
+     * 累计平均油耗
+     */
+    private TextView totalFuelConPhmTv;
+    /**
+     * 车架号
+     */
+    private TextView textTv;
 
     private TextView totalEvMileageTv;
     private TextView carSpeedTv;
@@ -147,10 +182,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tyrePreLeftRearTv;
     private TextView tyrePreRightRearTv;
     private TextView autoTypeTv;
-    private TextView currentTravelElecCostTv;//本次行程平均电耗
-    private TextView currentTravelFuelCostTv;//本次行程平均油耗
-    private TextView currentTravelMileageTv;//本次行程里程
-    private TextView currentTravelEnergyCostTv;//本次行程电耗+油耗
+    /**
+     * 本次行程平均电耗
+     */
+    private TextView currentTravelElecCostTv;
+    /**
+     * 本次行程平均油耗
+     */
+    private TextView currentTravelFuelCostTv;
+    /**
+     * 本次行程里程
+     */
+    private TextView currentTravelMileageTv;
+    /**
+     * 本次行程电耗+油耗
+     */
+    private TextView currentTravelEnergyCostTv;
     private BYDAutoBodyworkDevice bodyworkDevice;
     private CheckBox showVinCb;
     private int init_totalMileageValue;
@@ -160,11 +207,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double init_totalFuelConValue;
     private double init_latest_electric_price;
     private double init_latest_fuel_price;
-    private TextView currentTravelYuanCostTv;//本次行程花费
+    /**
+     * 本次行程花费
+     */
+    private TextView currentTravelYuanCostTv;
     private TextView customMileage1Tv;
     private TextView customMileage2Tv;
-    private TextView smallBatteryVoltageTv;//蓄电池电压
-    private TextView powerLevelTv;//电源档位
+    /**
+     * 蓄电池电压
+     */
+    private TextView smallBatteryVoltageTv;
+    /**
+     * 电源档位
+     */
+    private TextView powerLevelTv;
     private BYDAutoSettingDevice settingDevice;
     private Button energyFeedbackBtn;
 
@@ -658,6 +714,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             operationModeTv.setText(StringUtil.getOperationModeName(operationMode));
         }
+
+        /**
+         * 原地踩油门发电状态
+         *
+         * @param mode
+         */
+        @Override
+        public void onPowerGenerationStateChanged(int mode) {
+            super.onPowerGenerationStateChanged(mode);
+            //发电中
+            if (mode == BYDAutoEnergyDevice.ENERGY_POWER_GENERATING) {
+
+            } else {
+
+            }
+        }
+
+        /**
+         * 原地踩油门发电功率
+         *
+         * @param value
+         */
+        @Override
+        public void onPowerGenerationValueChanged(int value) {
+            super.onPowerGenerationValueChanged(value);
+            updateEnginePower();
+            updateEngineSpeedData();
+        }
     };
 
     private final AbsBYDAutoStatisticListener absBYDAutoStatisticListener = new AbsBYDAutoStatisticListener() {
@@ -1008,19 +1092,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (carSpeedCsv != null) {
                 carSpeedCsv.setVelocity(((int) currentSpeed));
             }
-
-            //行车模式
             updateEnginePower();
-
-//            updateEngineSpeedData();
-
-//            updateDrivingTime();
-
-            //更新前电机转速表
-//            if (motorSpeedMsv != null) {
-//                int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
-//                motorSpeedMsv.setVelocity(front_motor_speed);
-//            }
             updateFrontMotorSpeed();
         }
 

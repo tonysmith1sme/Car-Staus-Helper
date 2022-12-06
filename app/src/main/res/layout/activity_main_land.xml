@@ -18,7 +18,7 @@
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="40dp"
@@ -102,46 +102,50 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.huawei.carstatushelper.view.EngineSpeedView
-            android:id="@+id/engine_speed_esv"
-            android:layout_width="498dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:paddingRight="16dp" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.huawei.carstatushelper.view.MotorSpeedView
-            android:id="@+id/motor_speed_msv"
-            android:layout_width="498dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:paddingRight="16dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical">
-
-            <com.huawei.carstatushelper.view.EnginePowerView
-                android:id="@+id/engine_power_epv"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:paddingRight="16dp" />
+                android:layout_height="match_parent">
 
-            <com.huawei.carstatushelper.view.CarSpeedView
-                android:id="@+id/car_speed_csv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:paddingRight="16dp" />
-        </LinearLayout>
+                <com.huawei.carstatushelper.view.EngineSpeedView
+                    android:id="@+id/engine_speed_esv"
+                    android:layout_width="385dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp" />
+
+                <com.huawei.carstatushelper.view.CarSpeedView
+                    android:id="@+id/car_speed_csv"
+                    android:layout_width="385dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp" />
+
+                <com.huawei.carstatushelper.view.EnginePowerView
+                    android:id="@+id/engine_power_epv"
+                    android:layout_width="385dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp" />
+
+                <com.huawei.carstatushelper.view.MotorSpeedView
+                    android:id="@+id/motor_speed_msv"
+                    android:layout_width="385dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
     </LinearLayout>
 

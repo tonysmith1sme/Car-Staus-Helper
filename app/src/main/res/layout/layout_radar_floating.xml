@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout0"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,13 +9,17 @@
     <FrameLayout
         android:id="@+id/layout1"
         android:layout_width="311dp"
-        android:layout_height="500dp">
+        android:layout_height="500dp"
+        tools:layout_margin="8dp">
 
+        <!--
+            android:background="#400f"
+        -->
         <FrameLayout
             android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#400f"
+            android:background="@drawable/radar_floating_bg"
             android:padding="8dp">
 
             <TextView
@@ -25,7 +30,7 @@
                 android:padding="8dp"
                 android:text="左前:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance1_tv"
@@ -36,7 +41,7 @@
                 android:padding="8dp"
                 android:text="右前:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance2_tv"
@@ -47,7 +52,7 @@
                 android:padding="8dp"
                 android:text="左后:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance3_tv"
@@ -58,7 +63,7 @@
                 android:padding="8dp"
                 android:text="右后:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance4_tv"
@@ -68,9 +73,9 @@
                 android:layout_marginEnd="50dp"
                 android:background="@android:color/black"
                 android:padding="8dp"
-                android:text="左:\n10cm"
+                android:text="后中左:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance5_tv"
@@ -80,9 +85,9 @@
                 android:layout_marginStart="50dp"
                 android:background="@android:color/black"
                 android:padding="8dp"
-                android:text="右:\n10cm"
+                android:text="后中右:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance6_tv"
@@ -94,7 +99,7 @@
                 android:padding="8dp"
                 android:text="前左中:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance7_tv"
@@ -106,7 +111,7 @@
                 android:padding="8dp"
                 android:text="前右中:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/distance8_tv"
@@ -117,7 +122,7 @@
                 android:padding="8dp"
                 android:text="后中:\n10cm"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </FrameLayout>
 
         <Button

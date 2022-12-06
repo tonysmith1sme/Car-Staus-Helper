@@ -38,6 +38,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:ellipsize="middle"
+                    android:lines="1"
                     android:text="***********************"
                     tools:text="LGXC76C44N0131100" />
 
@@ -1201,15 +1203,6 @@
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
 
-            <com.huawei.carstatushelper.view.MotorSpeedView
-                android:id="@+id/motor_speed_msv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:paddingRight="16dp" />
-
             <com.huawei.carstatushelper.view.CarSpeedView
                 android:id="@+id/car_speed_csv"
                 android:layout_width="match_parent"
@@ -1221,6 +1214,15 @@
 
             <com.huawei.carstatushelper.view.EnginePowerView
                 android:id="@+id/engine_power_epv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp" />
+
+            <com.huawei.carstatushelper.view.MotorSpeedView
+                android:id="@+id/motor_speed_msv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
