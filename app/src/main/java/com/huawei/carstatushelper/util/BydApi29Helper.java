@@ -106,54 +106,52 @@ public class BydApi29Helper {
         return autoTypeName;
     }
 
-    public static String getWaterTemperature(BYDAutoStatisticDevice device) {
+    public static int getWaterTemperature(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
                 Method method = clz.getDeclaredMethod("getWaterTemperature");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                int ret = (int) invoke;
-                return String.valueOf(ret > 0 ? ret : 0);
+                return (int) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return "26";
+        return 0;
     }
 
-    public static String getInstantElecConValue(BYDAutoStatisticDevice device) {
+    public static double getInstantElecConValue(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
                 Method method = clz.getDeclaredMethod("getInstantElecConValue");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                double ret = (double) invoke;
-                return String.valueOf(ret > 0 ? ret : 0);
+                return (double) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return "0";
+        return 0;
     }
 
-    public static String getInstantFuelConValue(BYDAutoStatisticDevice device) {
+    public static double getInstantFuelConValue(BYDAutoStatisticDevice device) {
         if (device != null) {
             try {
                 Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
                 Method method = clz.getDeclaredMethod("getInstantFuelConValue");
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
-                return String.valueOf((double) invoke);
+                return (double) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
         }
-        return "0";
+        return 0;
     }
 
     public static int[] getAllRadarDistance(BYDAutoRadarDevice device) {

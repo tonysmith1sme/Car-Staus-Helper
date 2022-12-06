@@ -1104,7 +1104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateWaterTemperature() {
         if (waterTemperatureTv != null) {
-            waterTemperatureTv.setText(BydApi29Helper.getWaterTemperature(statisticDevice));
+            waterTemperatureTv.setText(String.valueOf(BydApi29Helper.getWaterTemperature(statisticDevice)));
         }
     }
 

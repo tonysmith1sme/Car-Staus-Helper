@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <uses-permission android:name="android.permission.BYDAUTO_POWER_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_BIGDATA_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_REAR_VIEW_MIRROR_GET" />
