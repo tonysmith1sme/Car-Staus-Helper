@@ -1,6 +1,7 @@
 package com.huawei.carstatushelper;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -64,6 +65,30 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "比亚迪车辆权限已授予", Toast.LENGTH_SHORT).show();
                 } else {
                     ActivityCompat.requestPermissions(this, BYD_PERMISSIONS, 125);
+                }
+                break;
+            case R.id.set_fast_mode_btn:
+                //ActivityTaskManager: START intent = Intent { act=android.intent.action.MANAGE_APP_PERMISSIONS cmp=com.android.permissioncontroller/com.android.packageinstaller.permission.ui.PermissionsActivity (has extras) }, processName = com.byd.systemsettings
+                //ActivityTaskManager: START intent = Intent { act=android.intent.action.APPLICATION_SETTINGS cat=[android.intent.category.DEFAULT] flg=0x10200000 cmp=com.byd.systemsettings/.applications.ApplicationActivity (has extras) }, processName = system
+                ComponentName componentName = new ComponentName("com.android.permissioncontroller", "com.android.packageinstaller.permission.ui.PermissionsActivity");
+                try {
+                    Intent intent = new Intent("android.intent.action.MANAGE_APP_PERMISSIONS");
+                    intent.setComponent(componentName);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "打开界面失败，请手动打开", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            //跳转自启动设置
+            case R.id.set_boot_with_start_btn:
+                ComponentName componetName = new ComponentName("com.byd.appstartmanagement", "com.byd.appstartmanagement.frame.AppStartManagement");
+                try {
+                    Intent intent = new Intent();
+                    intent.setComponent(componetName);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "跳转异常，请检查跳转配置、包名及Activity访问权限", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.jump_to_main_btn:

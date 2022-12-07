@@ -6,15 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
+import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.panorama.AbsBYDAutoPanoramaListener;
 import android.hardware.bydauto.panorama.BYDAutoPanoramaDevice;
 import android.hardware.bydauto.radar.AbsBYDAutoRadarListener;
@@ -71,6 +70,7 @@ public class BootCompleteService extends Service {
 
     private BYDAutoRadarDevice radarDevice;
     private BYDAutoPanoramaDevice panoramaDevice;
+    private BYDAutoGearboxDevice gearboxDevice;
 
     public BootCompleteService() {
     }
@@ -90,6 +90,9 @@ public class BootCompleteService extends Service {
         initNotification();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        radarFloatingTriggerType = Integer.parseInt(preferences.getString("radar_floating_trigger_type", "0"));
+
         double latest_fuel_price = Double.parseDouble(preferences.getString("latest_fuel_price", "8.5"));
         double latest_electric_price = Double.parseDouble(preferences.getString("latest_electric_price", "1.7"));
 
@@ -125,11 +128,11 @@ public class BootCompleteService extends Service {
             }
         }
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_SHOW_RADAR_FLOATING);
-        filter.addAction(ACTION_HIDE_RADAR_FLOATING);
-        filter.addAction(ACTION_UPDATE_RADAR_DATA);
-        registerReceiver(receiver, filter);
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(ACTION_SHOW_RADAR_FLOATING);
+//        filter.addAction(ACTION_HIDE_RADAR_FLOATING);
+//        filter.addAction(ACTION_UPDATE_RADAR_DATA);
+//        registerReceiver(receiver, filter);
 
         helper = new FloatingWindowHelper(this);
 //        preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -164,14 +167,11 @@ public class BootCompleteService extends Service {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Notification notification = builder
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker("车况助手")
-                .setContentTitle("提示信息")
-                .setContentText("开机自启动服务包括雷达数据监测与雷达距离浮窗服务，请务关闭")
-                .setSubText("运行中。。。")
-                .setContentIntent(pendingIntent)
-                .build();
+        Notification notification = builder.setSmallIcon(R.mipmap.ic_launcher).setTicker("车况助手ticker")
+//                .setContentTitle("提示信息")
+                .setContentTitle("开机自启动服务包括雷达数据监测与雷达距离浮窗服务，请务关闭")
+//                .setContentText("开机自启动服务包括雷达数据监测与雷达距离浮窗服务，请务关闭")
+                .setSubText("运行中。。。").setContentIntent(pendingIntent).build();
         startForeground(1, notification);
         new Thread(new Runnable() {
             @Override
@@ -206,12 +206,19 @@ public class BootCompleteService extends Service {
                 panoramaDevice.registerListener(panoramaListener);
             }
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (gearboxDevice == null) {
+                gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
+                gearboxDevice.registerListener(gearboxListener);
+            }
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_GET) == PackageManager.PERMISSION_GRANTED) {
             if (radarDevice == null) {
                 radarDevice = BYDAutoRadarDevice.getInstance(this);
                 radarDevice.registerListener(radarListener);
             }
         }
+
         return ret;
     }
 
@@ -222,15 +229,46 @@ public class BootCompleteService extends Service {
         if (panoramaDevice != null) {
             panoramaDevice.unregisterListener(panoramaListener);
         }
+        if (gearboxDevice != null) {
+            gearboxDevice.unregisterListener(gearboxListener);
+        }
         if (radarDevice != null) {
             radarDevice.unregisterListener(radarListener);
         }
-        unregisterReceiver(receiver);
+//        unregisterReceiver(receiver);
         if (speak_radar_distance_enable) {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
     }
+
+    private final AbsBYDAutoGearboxListener gearboxListener = new AbsBYDAutoGearboxListener() {
+        /**
+         * 获取自动变速箱档位变化
+         * @param level
+         */
+        @Override
+        public void onGearboxAutoModeTypeChanged(int level) {
+            super.onGearboxAutoModeTypeChanged(level);
+            if (radarFloatingTriggerType == TYPE_GEARBOX_R) {
+                if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_R) {
+                    showRadarFloating();
+                } else {
+                    hideRadarFloating();
+                }
+            }
+        }
+    };
+
+    /**
+     * 0,onPanoWorkStateChanged
+     * 1,onPanOutputStateChanged
+     * 2,
+     */
+    int radarFloatingTriggerType;
+    private static final int TYPE_PANO_WORK_STATE = 0;
+    private static final int TYPE_PANO_OUTPUT_STATE = 1;
+    private static final int TYPE_GEARBOX_R = 2;
 
     private final AbsBYDAutoPanoramaListener panoramaListener = new AbsBYDAutoPanoramaListener() {
         /**
@@ -240,12 +278,36 @@ public class BootCompleteService extends Service {
         @Override
         public void onPanoWorkStateChanged(int mode) {
             super.onPanoWorkStateChanged(mode);
-            KLog.e(mode);
-            if (mode == BYDAutoPanoramaDevice.PANORAMA_WORK_ON) {
-                sendBroadcast(new Intent(BootCompleteService.ACTION_SHOW_RADAR_FLOATING));
-            } else {
-                sendBroadcast(new Intent(BootCompleteService.ACTION_HIDE_RADAR_FLOATING));
+            KLog.e("onPanoWorkStateChanged：" + mode);
+            if (radarFloatingTriggerType == TYPE_PANO_WORK_STATE) {
+                if (mode == BYDAutoPanoramaDevice.PANORAMA_WORK_ON) {
+//                sendBroadcast(new Intent(BootCompleteService.ACTION_SHOW_RADAR_FLOATING));
+                    showRadarFloating();
+                } else {
+//                sendBroadcast(new Intent(BootCompleteService.ACTION_HIDE_RADAR_FLOATING));
+                    hideRadarFloating();
+                }
             }
+        }
+
+        /**
+         * 监听影像输出状态
+         * @param mode
+         */
+        @Override
+        public void onPanOutputStateChanged(int mode) {
+            super.onPanOutputStateChanged(mode);
+            KLog.e("onPanOutputStateChanged = " + mode);
+            if (radarFloatingTriggerType == TYPE_PANO_OUTPUT_STATE) {
+                //关闭显示
+                if (mode == BYDAutoPanoramaDevice.PANORAMA_OUTPUT_OFF) {
+                    hideRadarFloating();
+                    //打开显示
+                } else {
+                    showRadarFloating();
+                }
+            }
+
         }
     };
 
@@ -254,42 +316,47 @@ public class BootCompleteService extends Service {
             KLog.e();
             if (radarDevice != null) {
                 int[] distance = BydApi29Helper.getAllRadarDistance(radarDevice);
-                Intent intent = new Intent(BootCompleteService.ACTION_UPDATE_RADAR_DATA);
-                intent.putExtra("data", distance);
-                sendBroadcast(intent);
+//                Intent intent = new Intent(BootCompleteService.ACTION_UPDATE_RADAR_DATA);
+//                intent.putExtra("data", distance);
+//                sendBroadcast(intent);
+                updateRadarFloating(distance);
             }
         }
     };
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            KLog.e();
-            String action = intent.getAction();
-            if (action == null) {
-                return;
-            }
-            if (ACTION_SHOW_RADAR_FLOATING.equals(action)) {
-                showRadarFloating();
-            } else if (ACTION_HIDE_RADAR_FLOATING.equals(action)) {
-                hideRadarFloating();
-            } else if (ACTION_UPDATE_RADAR_DATA.equals(action)) {
-                int[] data = intent.getIntArrayExtra("data");
-                if (textViewList != null) {
-                    for (int i = 0; i < Math.min(data.length, textViewList.size()); i++) {
-                        textViewList.get(i).setText(data[i] + "cm");
-                    }
-                }
-                if (speak_radar_distance_enable) {
-                    int min = Integer.MAX_VALUE;
-                    for (int item : data) {
-                        min = Math.min(min, item);
-                    }
-                    textToSpeech.speak(String.valueOf(min), TextToSpeech.QUEUE_FLUSH, null, null);
-                }
+//    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            KLog.e();
+//            String action = intent.getAction();
+//            if (action == null) {
+//                return;
+//            }
+//            if (ACTION_SHOW_RADAR_FLOATING.equals(action)) {
+//                showRadarFloating();
+//            } else if (ACTION_HIDE_RADAR_FLOATING.equals(action)) {
+//                hideRadarFloating();
+//            } else if (ACTION_UPDATE_RADAR_DATA.equals(action)) {
+//                int[] data = intent.getIntArrayExtra("data");
+//                updateRadarFloating(data);
+//            }
+//        }
+//    };
+
+    private void updateRadarFloating(int[] data) {
+        if (textViewList != null) {
+            for (int i = 0; i < Math.min(data.length, textViewList.size()); i++) {
+                textViewList.get(i).setText(data[i] + "cm");
             }
         }
-    };
+        if (speak_radar_distance_enable) {
+            int min = Integer.MAX_VALUE;
+            for (int item : data) {
+                min = Math.min(min, item);
+            }
+            textToSpeech.speak(String.valueOf(min), TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+    }
 
     private void showRadarFloating() {
         KLog.e();
