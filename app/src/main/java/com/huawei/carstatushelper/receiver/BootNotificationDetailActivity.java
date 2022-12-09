@@ -39,7 +39,7 @@ public class BootNotificationDetailActivity extends BackEnableBaseActivity {
                     startActivity(intent);
                     return;
                 }
-                sendBroadcast(new Intent(BootCompleteService.ACTION_SHOW_RADAR_FLOATING));
+//                sendBroadcast(new Intent(BootCompleteService.ACTION_SHOW_RADAR_FLOATING));
             }
         });
     }

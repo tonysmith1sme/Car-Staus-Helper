@@ -86,6 +86,7 @@
             </intent-filter>
         </receiver>
 
+        <!--
         <activity
             android:name=".activity.RadarFloatingSettingActivity"
             android:exported="false">
@@ -93,7 +94,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        -->
 
+        <!--
         <service
             android:name=".service.DetectionService"
             android:exported="false"
@@ -106,6 +109,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/detection_service_config" />
         </service>
+        -->
 
         <activity
             android:name=".activity.SettingsActivity"

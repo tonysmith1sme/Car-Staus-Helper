@@ -92,8 +92,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:minWidth="50dp"
-                            android:text="0%" />
+                            android:text="0" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="%" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -120,8 +123,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:minWidth="50dp"
-                            android:text="0%" />
+                            android:text="0" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="%" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -151,14 +157,22 @@
                                 android:id="@+id/fuel_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0%" />
+                                android:text="0" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="%" />
 
                             <TextView
                                 android:id="@+id/fuel_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:text="0km" />
+                                android:text="0" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="km" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -190,14 +204,22 @@
                                 android:id="@+id/elec_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0%" />
+                                android:text="0" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="%" />
 
                             <TextView
                                 android:id="@+id/power_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:text="0km" />
+                                android:text="0" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="km" />
                         </LinearLayout>
 
                     </LinearLayout>

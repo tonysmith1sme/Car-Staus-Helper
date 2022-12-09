@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
+import com.huawei.carstatushelper.receiver.BootCompleteService;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +22,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             Manifest.permission.BYDAUTO_BODYWORK_COMMON,
             Manifest.permission.BYDAUTO_AC_COMMON,
             Manifest.permission.BYDAUTO_PANORAMA_COMMON,
+            Manifest.permission.BYDAUTO_PANORAMA_GET,
             Manifest.permission.BYDAUTO_SETTING_COMMON,
             Manifest.permission.BYDAUTO_INSTRUMENT_COMMON,
             Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
@@ -67,30 +69,30 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     ActivityCompat.requestPermissions(this, BYD_PERMISSIONS, 125);
                 }
                 break;
-            case R.id.set_fast_mode_btn:
-                //ActivityTaskManager: START intent = Intent { act=android.intent.action.MANAGE_APP_PERMISSIONS cmp=com.android.permissioncontroller/com.android.packageinstaller.permission.ui.PermissionsActivity (has extras) }, processName = com.byd.systemsettings
-                //ActivityTaskManager: START intent = Intent { act=android.intent.action.APPLICATION_SETTINGS cat=[android.intent.category.DEFAULT] flg=0x10200000 cmp=com.byd.systemsettings/.applications.ApplicationActivity (has extras) }, processName = system
-                ComponentName componentName = new ComponentName("com.android.permissioncontroller", "com.android.packageinstaller.permission.ui.PermissionsActivity");
-                try {
-                    Intent intent = new Intent("android.intent.action.MANAGE_APP_PERMISSIONS");
-                    intent.setComponent(componentName);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "打开界面失败，请手动打开", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            //跳转自启动设置
-            case R.id.set_boot_with_start_btn:
-                ComponentName componetName = new ComponentName("com.byd.appstartmanagement", "com.byd.appstartmanagement.frame.AppStartManagement");
-                try {
-                    Intent intent = new Intent();
-                    intent.setComponent(componetName);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(this, "跳转异常，请检查跳转配置、包名及Activity访问权限", Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            case R.id.set_fast_mode_btn:
+//                //ActivityTaskManager: START intent = Intent { act=android.intent.action.MANAGE_APP_PERMISSIONS cmp=com.android.permissioncontroller/com.android.packageinstaller.permission.ui.PermissionsActivity (has extras) }, processName = com.byd.systemsettings
+//                //ActivityTaskManager: START intent = Intent { act=android.intent.action.APPLICATION_SETTINGS cat=[android.intent.category.DEFAULT] flg=0x10200000 cmp=com.byd.systemsettings/.applications.ApplicationActivity (has extras) }, processName = system
+//                ComponentName componentName = new ComponentName("com.android.permissioncontroller", "com.android.packageinstaller.permission.ui.PermissionsActivity");
+//                try {
+//                    Intent intent = new Intent("android.intent.action.MANAGE_APP_PERMISSIONS");
+//                    intent.setComponent(componentName);
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(this, "打开界面失败，请手动打开", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            //跳转自启动设置
+//            case R.id.set_boot_with_start_btn:
+//                ComponentName componetName = new ComponentName("com.byd.appstartmanagement", "com.byd.appstartmanagement.frame.AppStartManagement");
+//                try {
+//                    Intent intent = new Intent();
+//                    intent.setComponent(componetName);
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    Toast.makeText(this, "跳转异常，请检查跳转配置、包名及Activity访问权限", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {
                     Toast.makeText(this, "请检查浮窗权限", Toast.LENGTH_SHORT).show();
@@ -102,6 +104,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 //                }
+                startService(new Intent(this, BootCompleteService.class));
+
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;
@@ -113,7 +117,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private boolean isBydAutoPermissionGranted() {
         boolean isAllGranted = true;
         for (String perm : BYD_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+            if (getBaseContext().checkSelfPermission(perm) != PackageManager.PERMISSION_GRANTED) {
                 isAllGranted = false;
                 break;
             }

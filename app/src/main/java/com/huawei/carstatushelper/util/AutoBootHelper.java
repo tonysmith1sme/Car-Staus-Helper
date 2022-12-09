@@ -37,7 +37,7 @@ public class AutoBootHelper {
             Method method = clz.getDeclaredMethod("createNotificationChannel", NotificationChannel.class);
             method.setAccessible(true);
             method.invoke(manager, channel);
-            System.out.println();
+//            System.out.println();
             KLog.e("createNotificationChannel success");
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

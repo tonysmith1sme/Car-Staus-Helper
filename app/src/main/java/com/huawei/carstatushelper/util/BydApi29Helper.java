@@ -4,7 +4,6 @@ import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.radar.BYDAutoRadarDevice;
-import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 
 import com.socks.library.KLog;
 
@@ -27,67 +26,6 @@ public class BydApi29Helper {
     }
 
 
-    /**
-     * @param statisticDevice
-     * @param status          0-->里程1;
-     *                        1-->里程2;
-     *                        2-->总里程
-     * @return
-     */
-    public static int getMileageNumber(BYDAutoStatisticDevice statisticDevice, int status) {
-//        if (status == 0) {
-//            cmd = BYDAutoFeatureIds.STATISTIC_DD_MILEAGE1;
-//        } else if (status == 1) {
-//            cmd = BYDAutoFeatureIds.STATISTIC_DD_MILEAGE2;
-//        } else if (status == 2) {
-//            cmd = BYDAutoFeatureIds.STATISTIC_TOTAL_MILEAGE;
-//        }
-        int result = 0;
-        try {
-            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-            Method getMileageNumber = clz.getDeclaredMethod("getMileageNumber", int.class);
-            getMileageNumber.setAccessible(true);
-            Object invoke = getMileageNumber.invoke(statisticDevice, status);
-            result = ((int) invoke);
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public static int getHEVMileageValue(BYDAutoStatisticDevice statisticDevice) {
-        int result = 65535;
-        try {
-            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-            Method getHEVMileageValue = clz.getDeclaredMethod("getHEVMileageValue");
-            getHEVMileageValue.setAccessible(true);
-            result = (int) getHEVMileageValue.invoke(statisticDevice);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * @param target 1，总行程时间 BYDAutoFeatureIds.STATISTIC_DRIVING_TIME
-     *               2，里程1行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
-     *               4，里程2行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
-     * @return
-     */
-    public static double getTravelTime(BYDAutoStatisticDevice statisticDevice, int target) {
-        double result = 0;
-        try {
-            Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-            Method getTravelTime = clz.getDeclaredMethod("getTravelTime", int.class);
-            getTravelTime.setAccessible(true);
-            result = (double) getTravelTime.invoke(statisticDevice, target);
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
     public static String getAutoType(BYDAutoBodyworkDevice device) {
         if (device == null) {
             return "";
@@ -104,54 +42,6 @@ public class BydApi29Helper {
             e.printStackTrace();
         }
         return autoTypeName;
-    }
-
-    public static int getWaterTemperature(BYDAutoStatisticDevice device) {
-        if (device != null) {
-            try {
-                Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getDeclaredMethod("getWaterTemperature");
-                method.setAccessible(true);
-                Object invoke = method.invoke(device);
-                return (int) invoke;
-            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                e.printStackTrace();
-                KLog.e();
-            }
-        }
-        return 0;
-    }
-
-    public static double getInstantElecConValue(BYDAutoStatisticDevice device) {
-        if (device != null) {
-            try {
-                Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getDeclaredMethod("getInstantElecConValue");
-                method.setAccessible(true);
-                Object invoke = method.invoke(device);
-                return (double) invoke;
-            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                e.printStackTrace();
-                KLog.e();
-            }
-        }
-        return 0;
-    }
-
-    public static double getInstantFuelConValue(BYDAutoStatisticDevice device) {
-        if (device != null) {
-            try {
-                Class<?> clz = Class.forName("android.hardware.bydauto.statistic.BYDAutoStatisticDevice");
-                Method method = clz.getDeclaredMethod("getInstantFuelConValue");
-                method.setAccessible(true);
-                Object invoke = method.invoke(device);
-                return (double) invoke;
-            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                e.printStackTrace();
-                KLog.e();
-            }
-        }
-        return 0;
     }
 
     public static int[] getAllRadarDistance(BYDAutoRadarDevice device) {
@@ -185,6 +75,7 @@ public class BydApi29Helper {
         }
         return result;
     }
+
 
     private static void testReflectInvoke() {
         try {

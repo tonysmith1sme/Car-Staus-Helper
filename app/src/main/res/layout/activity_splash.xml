@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="浮窗权限" />
+            android:text="1、浮窗权限" />
 
         <Button
             android:id="@+id/check_floating_permission_btn"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="比亚迪车辆权限" />
+            android:text="2、比亚迪车辆权限" />
 
         <Button
             android:id="@+id/check_byd_permission_btn"
@@ -55,6 +55,8 @@
             android:text="检查" />
     </LinearLayout>
 
+    <!--
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -62,14 +64,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="设置极速模式白名单" />
+            android:text="3、设置极速模式白名单" />
 
+        <!--
         <Button
             android:id="@+id/set_fast_mode_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="跳转设置" />
+        -->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,14 +82,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="设置允许开机自启动" />
+            android:text="4、设置允许开机自启动" />
 
+        <!--
         <Button
             android:id="@+id/set_boot_with_start_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="跳转设置" />
+        -->
     </LinearLayout>
     <Button
         android:id="@+id/jump_to_main_btn"

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huawei.carstatushelper.R;
+import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.DpUtil;
@@ -59,14 +59,14 @@ import java.util.List;
  */
 public class BootCompleteService extends Service {
     public static final String KEY_INIT_DRIVER_DATA = "init_driver_data";
-    public static final String ACTION_SHOW_RADAR_FLOATING = "android.intent.action.SHOW_RADAR_FLOATING";
-    public static final String ACTION_HIDE_RADAR_FLOATING = "android.intent.action.HIDE_RADAR_FLOATING";
-    public static final String ACTION_UPDATE_RADAR_DATA = "android.intent.action.UPDATE_RADAR_DATA";
+    //    public static final String ACTION_SHOW_RADAR_FLOATING = "android.intent.action.SHOW_RADAR_FLOATING";
+//    public static final String ACTION_HIDE_RADAR_FLOATING = "android.intent.action.HIDE_RADAR_FLOATING";
+//    public static final String ACTION_UPDATE_RADAR_DATA = "android.intent.action.UPDATE_RADAR_DATA";
     private FloatingWindowHelper helper;
     private View rootView;
     private List<TextView> textViewList;
-    private TextToSpeech textToSpeech;
-    private boolean speak_radar_distance_enable;
+//    private TextToSpeech textToSpeech;
+//    private boolean speak_radar_distance_enable;
 
     private BYDAutoRadarDevice radarDevice;
     private BYDAutoPanoramaDevice panoramaDevice;
@@ -107,7 +107,7 @@ public class BootCompleteService extends Service {
             BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(this);
             int totalMileageValue = statisticDevice.getTotalMileageValue();//总里程
             int evMileageValue = statisticDevice.getEVMileageValue();//总ev里程
-            int hevMileageValue = BydApi29Helper.getHEVMileageValue(statisticDevice);//总hev里程
+            int hevMileageValue = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getHEVMileageValue();//总hev里程
             double totalFuelConValue = statisticDevice.getTotalFuelConValue();//累计燃油消耗
             double totalElecConValue = statisticDevice.getTotalElecConValue();//累计电量消耗
             // TODO: 2022/11/23 单次行程数据计算
@@ -136,15 +136,15 @@ public class BootCompleteService extends Service {
 
         helper = new FloatingWindowHelper(this);
 //        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        speak_radar_distance_enable = preferences.getBoolean("speak_radar_distance_enable", false);
-        if (speak_radar_distance_enable) {
-            textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int i) {
-
-                }
-            });
-        }
+//        speak_radar_distance_enable = preferences.getBoolean("speak_radar_distance_enable", false);
+//        if (speak_radar_distance_enable) {
+//            textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+//                @Override
+//                public void onInit(int i) {
+//                    KLog.e("tts onInit result = " + i);
+//                }
+//            });
+//        }
     }
 
     private void initNotification() {
@@ -163,15 +163,19 @@ public class BootCompleteService extends Service {
         if (builder == null) {
             return;
         }
-        Intent intent = new Intent(this, BootNotificationDetailActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        Intent intent = new Intent(this, BootNotificationDetailActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Notification notification = builder.setSmallIcon(R.mipmap.ic_launcher).setTicker("车况助手ticker")
+        Notification notification = builder
+                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setTicker("车况助手ticker")
 //                .setContentTitle("提示信息")
-                .setContentTitle("开机自启动服务包括雷达数据监测与雷达距离浮窗服务，请务关闭")
+                .setContentTitle("服务已启动")
 //                .setContentText("开机自启动服务包括雷达数据监测与雷达距离浮窗服务，请务关闭")
-                .setSubText("运行中。。。").setContentIntent(pendingIntent).build();
+                .setSubText("运行中。。。")
+//                .setContentIntent(pendingIntent)
+                .build();
         startForeground(1, notification);
         new Thread(new Runnable() {
             @Override
@@ -200,11 +204,20 @@ public class BootCompleteService extends Service {
 //        initNotification();
 //        }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED) {
-            if (panoramaDevice == null) {
-                panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
-                panoramaDevice.registerListener(panoramaListener);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (getBaseContext().checkSelfPermission(Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED) {
+                if (panoramaDevice == null) {
+                    panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
+                    panoramaDevice.registerListener(panoramaListener);
+                    KLog.e("panoramaDevice 初始化成功");
+                } else {
+                    KLog.e("panoramaDevice 已启动");
+                }
+            } else {
+                KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
             }
+        } else {
+            KLog.e("BYDAUTO_PANORAMA_GET 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
             if (gearboxDevice == null) {
@@ -236,10 +249,10 @@ public class BootCompleteService extends Service {
             radarDevice.unregisterListener(radarListener);
         }
 //        unregisterReceiver(receiver);
-        if (speak_radar_distance_enable) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
+//        if (speak_radar_distance_enable) {
+//            textToSpeech.stop();
+//            textToSpeech.shutdown();
+//        }
     }
 
     private final AbsBYDAutoGearboxListener gearboxListener = new AbsBYDAutoGearboxListener() {
@@ -266,9 +279,9 @@ public class BootCompleteService extends Service {
      * 2,
      */
     int radarFloatingTriggerType;
-    private static final int TYPE_PANO_WORK_STATE = 0;
-    private static final int TYPE_PANO_OUTPUT_STATE = 1;
-    private static final int TYPE_GEARBOX_R = 2;
+    private static final int TYPE_PANO_WORK_STATE = 1;
+    private static final int TYPE_PANO_OUTPUT_STATE = 2;
+    private static final int TYPE_GEARBOX_R = 0;
 
     private final AbsBYDAutoPanoramaListener panoramaListener = new AbsBYDAutoPanoramaListener() {
         /**
@@ -349,13 +362,13 @@ public class BootCompleteService extends Service {
                 textViewList.get(i).setText(data[i] + "cm");
             }
         }
-        if (speak_radar_distance_enable) {
-            int min = Integer.MAX_VALUE;
-            for (int item : data) {
-                min = Math.min(min, item);
-            }
-            textToSpeech.speak(String.valueOf(min), TextToSpeech.QUEUE_FLUSH, null, null);
-        }
+//        if (speak_radar_distance_enable) {
+//            int min = Integer.MAX_VALUE;
+//            for (int item : data) {
+//                min = Math.min(min, item);
+//            }
+//            textToSpeech.speak(String.valueOf(min), TextToSpeech.QUEUE_FLUSH, null, null);
+//        }
     }
 
     private void showRadarFloating() {
