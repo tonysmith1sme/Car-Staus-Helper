@@ -147,18 +147,22 @@ public class BootCompleteService extends Service {
         int ret = super.onStartCommand(intent, flags, startId);
         KLog.e();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
-            if (getBaseContext().checkSelfPermission(Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED) {
-                if (panoramaDevice == null) {
-                    panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
-                    panoramaDevice.registerListener(panoramaListener);
-                    KLog.e("panoramaDevice 初始化成功");
-                } else {
-                    KLog.e("panoramaDevice 已启动");
-                }
-            } else {
-                KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
+            if (panoramaDevice == null) {
+                panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
+                KLog.e("panoramaDevice 初始化成功");
+            }else {
+                KLog.e("panoramaDevice 已启动");
             }
-        } else {
+        }else {
+            KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (panoramaDevice != null) {
+                panoramaDevice.registerListener(panoramaListener);
+            }else {
+                KLog.e("panoramaDevice == null");
+            }
+        }else {
             KLog.e("BYDAUTO_PANORAMA_GET 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
@@ -200,6 +204,7 @@ public class BootCompleteService extends Service {
         @Override
         public void onGearboxAutoModeTypeChanged(int level) {
             super.onGearboxAutoModeTypeChanged(level);
+            KLog.e("gearbox auto mode type = " + level);
             if (radarFloatingTriggerType == TYPE_GEARBOX_R) {
                 if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_R) {
                     radarDistanceHelper.showRadarFloating();
@@ -261,7 +266,7 @@ public class BootCompleteService extends Service {
 
     private final AbsBYDAutoRadarListener radarListener = new AbsBYDAutoRadarListener() {
         public void onRadarObstacleDistanceChanged(int area, int value) {
-            KLog.e();
+            KLog.e("radar distance ,area = " + area + " value = " + value);
             if (radarDevice != null) {
                 int[] distance = BydApi29Helper.getAllRadarDistance(radarDevice);
                 radarDistanceHelper.updateRadarFloating(distance);
