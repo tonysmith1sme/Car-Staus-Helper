@@ -1084,7 +1084,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void updateDrivingTime() {
         if (drivingTimeTv != null && statisticDevice != null) {
             double travelTime = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getTravelTime(1);
-            drivingTimeTv.setText(String.valueOf(travelTime));
+            drivingTimeTv.setText(format.format(travelTime));
         }
     }
 
