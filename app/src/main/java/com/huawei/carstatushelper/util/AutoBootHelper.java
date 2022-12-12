@@ -57,7 +57,7 @@ public class AutoBootHelper {
             e.printStackTrace();
             KLog.e("newNotificationBuilder failed, error: " + e);
         }
-        return null;
+        return new Notification.Builder(context);
     }
 
     public static void simple(){

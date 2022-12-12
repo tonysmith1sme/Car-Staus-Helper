@@ -3,9 +3,12 @@ package com.ziwenl.floatingwindowdemo;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
-import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
+import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
+import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.MainActivity;
 import com.huawei.carstatushelper.R;
+import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.view.DialogEngineSpeedView;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
@@ -35,6 +39,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
     private BYDAutoEngineDevice mBydAutoEngineDevice;
     private DialogEngineSpeedView mEngineSpeedView;
     private TextView mEngineSpeedTv;
+    private BYDAutoSpeedDevice speedDevice;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -58,14 +63,23 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         if (!BuildConfig.DEBUG) {
             mBydAutoAcDevice = BYDAutoAcDevice.getInstance(this);
             mBydAutoEngineDevice = BYDAutoEngineDevice.getInstance(this);
+            speedDevice = BYDAutoSpeedDevice.getInstance(this);
         }
-        if (mBydAutoAcDevice == null | mBydAutoEngineDevice == null) {
+        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null || speedDevice == null) {
             return;
         }
 
         initData();
 
-        mBydAutoEngineDevice.registerListener(absBYDAutoEngineListener);
+//        mBydAutoEngineDevice.registerListener(absBYDAutoEngineListener);
+        speedDevice.registerListener(speedListener);
+    }
+
+    private boolean checkPermission(String perm) {
+        if (getBaseContext().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
     }
 
     private void initView() {
@@ -131,20 +145,30 @@ public class FloatingWindowService extends Service implements View.OnClickListen
     public void onDestroy() {
         super.onDestroy();
         mFloatingWindowHelper.destroy();
-        if (mBydAutoEngineDevice == null) {
-            return;
+//        mBydAutoEngineDevice.unregisterListener(absBYDAutoEngineListener);
+        if (speedDevice != null) {
+            speedDevice.unregisterListener(speedListener);
         }
-        mBydAutoEngineDevice.unregisterListener(absBYDAutoEngineListener);
     }
 
-    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+    private final AbsBYDAutoSpeedListener speedListener = new AbsBYDAutoSpeedListener() {
         @Override
-        public void onEngineSpeedChanged(int value) {
-            super.onEngineSpeedChanged(value);
-            mEngineSpeedView.setVelocity(value);
-            mEngineSpeedTv.setText(String.valueOf(value));
+        public void onSpeedChanged(double value) {
+            super.onSpeedChanged(value);
+            int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+            mEngineSpeedView.setVelocity(engine_speed_gb);
+            mEngineSpeedTv.setText(String.valueOf(engine_speed_gb));
         }
     };
+
+//    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+//        @Override
+//        public void onEngineSpeedChanged(int value) {
+//            super.onEngineSpeedChanged(value);
+//            mEngineSpeedView.setVelocity(value);
+//            mEngineSpeedTv.setText(String.valueOf(value));
+//        }
+//    };
 
     @Override
     public void onClick(View v) {
