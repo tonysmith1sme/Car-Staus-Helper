@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView lowestBatterTempTv;
     private TextView highestBatterTempTv;
     private TextView averageBatterTempTv;
+    private MotorSpeedView rearMotorSpeedMsv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         motorSpeedMsv = binding.motorSpeedMsv;
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
+        rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
@@ -414,6 +416,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         engineSpeedEsv = binding.engineSpeedEsv;
         motorSpeedMsv = binding.motorSpeedMsv;
         carSpeedCsv = binding.carSpeedCsv;
+        enginePowerEpv = binding.enginePowerEpv;
+        rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
@@ -1020,7 +1024,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
         }
         if (motorSpeedMsv != null) {
-            motorSpeedMsv.setVelocity(front_motor_speed);
+            motorSpeedMsv.setVelocity(Math.abs(front_motor_speed));
+        }
+        int rear_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_SPEED);
+        if (rearMotorSpeedMsv != null) {
+            rearMotorSpeedMsv.setVelocity(Math.abs(rear_motor_speed));
         }
     }
 
@@ -1098,6 +1106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (carSpeedCsv != null) {
                 carSpeedCsv.setVelocity(((int) currentSpeed));
             }
+            updateEngineSpeedData();
             updateEnginePower();
             updateFrontMotorSpeed();
             updateWaterTemperature();
@@ -1125,7 +1134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onAccelerateDeepnessChanged(int value) {
             super.onAccelerateDeepnessChanged(value);
 
-            updateEngineSpeedData();
+//            updateEngineSpeedData();
 
             if (youMengPb != null && youMengTv != null) {
                 youMengPb.setProgress(value);

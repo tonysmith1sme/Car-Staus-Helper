@@ -1314,6 +1314,14 @@
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
 
+            <com.huawei.carstatushelper.view.MotorSpeedView
+                android:id="@+id/rear_motor_speed_msv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp" />
         </LinearLayout>
     </ScrollView>
 

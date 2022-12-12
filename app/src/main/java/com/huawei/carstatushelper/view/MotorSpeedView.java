@@ -23,12 +23,12 @@ public class MotorSpeedView extends DashboardView4 {
 
     @Override
     protected int setMax() {
-        return 10000;
+        return 16000;
     }
 
     @Override
     protected int setSection() {
-        return 10;
+        return 8;
     }
 
     @Override
