@@ -266,11 +266,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (shaCheGroupLayout != null) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean show_sha_che_group_layout = preferences.getBoolean("show_sha_che_group_layout", false);
             shaCheGroupLayout.setVisibility(show_sha_che_group_layout ? View.VISIBLE : View.GONE);
         }
+        boolean power_speed_enable = preferences.getBoolean("power_speed_enable", true);
+        enginePowerEpv.setVisibility(power_speed_enable ? View.VISIBLE : View.GONE);
+        boolean car_speed_enable = preferences.getBoolean("car_speed_enable", true);
+        carSpeedCsv.setVisibility(car_speed_enable ? View.VISIBLE : View.GONE);
     }
 
     private void initBtnListener() {
@@ -1052,18 +1056,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int rear_motor_torque = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_TORQUE);
 
         if (engineSpeedGbTv != null) {
+            if (engine_speed_gb == 1) {
+                engine_speed_gb = 0;
+            }
+            if (engine_speed_gb >= 8000) {
+                engine_speed_gb = 0;
+            }
             engineSpeedGbTv.setText(String.valueOf(engine_speed_gb));
         }
         if (engineSpeedWarningTv != null) {
-            engineSpeedWarningTv.setText(String.valueOf((engine_speed_warning > 1 ? engine_speed_warning : 0)));
+            if (engine_speed_warning == 1) {
+                engine_speed_warning = 0;
+            }
+            if (engine_speed_warning >= 8000) {
+                engine_speed_warning = 0;
+            }
+            engineSpeedWarningTv.setText(String.valueOf((engine_speed_warning)));
         }
         if (frontMotorSpeedTv != null) {
+            if (front_motor_speed == 1) {
+                front_motor_speed = 0;
+            }
+            if (front_motor_speed >= 8000) {
+                front_motor_speed = 0;
+            }
             frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
         }
         if (frontMotorTorqueTv != null) {
             frontMotorTorqueTv.setText(String.valueOf(getValidTorqueValue(front_motor_torque)));
         }
         if (rearMotorSpeedTv != null) {
+            if (rear_motor_speed == 1) {
+                rear_motor_speed = 0;
+            }
+            if (rear_motor_speed >= 8000) {
+                rear_motor_speed = 0;
+            }
             rearMotorSpeedTv.setText(String.valueOf(Math.abs(rear_motor_speed)));
         }
         if (rearMotorTorqueTv != null) {
@@ -1158,7 +1186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     private void updateEngineSpeedUI(int engineSpeed) {
-        if (engineSpeed == 8191) {
+        if (engineSpeed >= 8191) {
             engineSpeed = 0;
         }
         if (engineSpeedTv != null) {

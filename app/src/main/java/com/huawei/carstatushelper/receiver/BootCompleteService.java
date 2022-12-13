@@ -146,7 +146,7 @@ public class BootCompleteService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
         KLog.e();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 KLog.e("panoramaDevice 初始化成功");

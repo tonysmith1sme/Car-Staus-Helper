@@ -5,7 +5,7 @@
     正式发布的时候用 SimplePreferenceCategory（预览不显示）
     -->
 
-    <PreferenceCategory android:title="浮窗">
+    <PreferenceCategory android:title="发动机转速浮窗">
 
         <!--
         <SwitchPreference
@@ -16,9 +16,12 @@
             android:key="auto_show_floating"
             android:title="后台自动显示" />
         -->
-
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
+            android:key="boot_auto_show_enable"
+            android:title="开机显示" />
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="show_ac_layout"
             android:title="显示空调按钮" />
 
@@ -100,6 +103,17 @@
             android:defaultValue="1.7"
             android:key="latest_electric_price"
             android:title="电价（默认：1.7元/KWH）" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="仪表显示">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="power_speed_enable"
+            android:title="功率表" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="car_speed_enable"
+            android:title="车速表" />
     </PreferenceCategory>
     <!--
     <SimplePreferenceCategory android:title="@string/messages_header">

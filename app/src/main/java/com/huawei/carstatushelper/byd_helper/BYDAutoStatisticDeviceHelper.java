@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
 public class BYDAutoStatisticDeviceHelper {
     private static BYDAutoStatisticDeviceHelper INSTANCE;
     BYDAutoStatisticDevice device;
+    private static final int INVALID_DATA = 65535;
 
     private BYDAutoStatisticDeviceHelper(BYDAutoStatisticDevice device) {
         this.device = device;
@@ -36,6 +37,9 @@ public class BYDAutoStatisticDeviceHelper {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_AVERAGE_BATTERY_TEMP);
+            if (result == INVALID_DATA) {
+                return 0;
+            }
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -46,6 +50,9 @@ public class BYDAutoStatisticDeviceHelper {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_ESTIMATE_SOC_V1);
+            if (result == INVALID_DATA) {
+                return 0;
+            }
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -56,6 +63,9 @@ public class BYDAutoStatisticDeviceHelper {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_LOWEST_BATTERY_TEMP);
+            if (result == INVALID_DATA) {
+                return 0;
+            }
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -66,6 +76,9 @@ public class BYDAutoStatisticDeviceHelper {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_HIGHEST_BATTERY_TEMP);
+            if (result == INVALID_DATA) {
+                return 0;
+            }
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
