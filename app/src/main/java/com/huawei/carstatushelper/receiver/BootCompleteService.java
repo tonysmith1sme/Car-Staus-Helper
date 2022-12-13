@@ -26,6 +26,7 @@ import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.RadarDistanceHelper;
 import com.socks.library.KLog;
+import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,6 +101,10 @@ public class BootCompleteService extends Service {
         }
 
         radarDistanceHelper = new RadarDistanceHelper(this);
+
+        if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
+            startService(new Intent(this, FloatingWindowService.class));
+        }
     }
 
     private void initNotification() {
@@ -113,11 +118,7 @@ public class BootCompleteService extends Service {
         } else {
             builder = new Notification.Builder(this);
         }
-        Notification notification = builder
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("服务已启动")
-                .setSubText("运行中。。。")
-                .build();
+        Notification notification = builder.setSmallIcon(R.mipmap.ic_launcher).setContentTitle("服务已启动").setSubText("运行中。。。").build();
         //反射
         if (Build.VERSION.SDK_INT >= 26) {
             NotificationChannel channel = new NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_DEFAULT);
@@ -150,19 +151,19 @@ public class BootCompleteService extends Service {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 KLog.e("panoramaDevice 初始化成功");
-            }else {
+            } else {
                 KLog.e("panoramaDevice 已启动");
             }
-        }else {
+        } else {
             KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice != null) {
                 panoramaDevice.registerListener(panoramaListener);
-            }else {
+            } else {
                 KLog.e("panoramaDevice == null");
             }
-        }else {
+        } else {
             KLog.e("BYDAUTO_PANORAMA_GET 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {

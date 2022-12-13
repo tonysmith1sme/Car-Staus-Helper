@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView highestBatterTempTv;
     private TextView averageBatterTempTv;
     private MotorSpeedView rearMotorSpeedMsv;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,8 +239,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initBtnListener();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String json = preferences.getString(BootCompleteService.KEY_INIT_DRIVER_DATA, null);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String json = mPreferences.getString(BootCompleteService.KEY_INIT_DRIVER_DATA, null);
         if (!TextUtils.isEmpty(json)) {
             try {
                 JSONObject initDriverData = new JSONObject(json);
@@ -266,15 +267,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean show_sha_che_group_layout = mPreferences.getBoolean("show_sha_che_group_layout", false);
         if (shaCheGroupLayout != null) {
-            boolean show_sha_che_group_layout = preferences.getBoolean("show_sha_che_group_layout", false);
             shaCheGroupLayout.setVisibility(show_sha_che_group_layout ? View.VISIBLE : View.GONE);
         }
-        boolean power_speed_enable = preferences.getBoolean("power_speed_enable", true);
-        enginePowerEpv.setVisibility(power_speed_enable ? View.VISIBLE : View.GONE);
-        boolean car_speed_enable = preferences.getBoolean("car_speed_enable", true);
-        carSpeedCsv.setVisibility(car_speed_enable ? View.VISIBLE : View.GONE);
+        boolean power_speed_enable = mPreferences.getBoolean("power_speed_enable", true);
+        if (enginePowerEpv != null) {
+            enginePowerEpv.setVisibility(power_speed_enable ? View.VISIBLE : View.GONE);
+        }
+        boolean car_speed_enable = mPreferences.getBoolean("car_speed_enable", true);
+        if (carSpeedCsv != null) {
+            carSpeedCsv.setVisibility(car_speed_enable ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void initBtnListener() {

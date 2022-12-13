@@ -18,7 +18,7 @@
         -->
         <SwitchPreference
             android:defaultValue="false"
-            android:key="boot_auto_show_enable"
+            android:key="radar_floating_boot_auto_show_enable"
             android:title="开机显示" />
         <SwitchPreference
             android:defaultValue="false"
