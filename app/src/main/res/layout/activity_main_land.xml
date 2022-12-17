@@ -18,7 +18,7 @@
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <LinearLayout
                 android:layout_width="40dp"
@@ -145,7 +145,7 @@
                     android:paddingTop="16dp"
                     android:paddingRight="16dp" />
 
-                <com.huawei.carstatushelper.view.MotorSpeedView
+                <com.huawei.carstatushelper.view.RearMotorSpeedView
                     android:id="@+id/rear_motor_speed_msv"
                     android:layout_width="385dp"
                     android:layout_height="wrap_content"

@@ -64,12 +64,42 @@
     -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3、设置极速模式白名单" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_backgound_running_1" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_backgound_running_2" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_backgound_running_3" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/set_fast_mode_btn"
@@ -77,18 +107,45 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="跳转设置" />
-        <!--
-        -->
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4、设置允许开机自启动" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_auto_boot_1" />
+
+            <ImageView
+                android:id="@+id/image5"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_auto_boot_2" />
+
+            <ImageView
+                android:id="@+id/image6"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/guide_auto_boot_3" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/set_boot_with_start_btn"
@@ -152,6 +209,28 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="测试" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <CheckBox
+            android:id="@+id/agreement_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我同意" />
+
+        <TextView
+            android:id="@+id/agreement_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《车况助手》安装与使用协议" />
     </LinearLayout>
 
     <Button

@@ -3,36 +3,37 @@ package com.huawei.carstatushelper;
 import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.huawei.carstatushelper.activity.AgreementActivity;
+import com.huawei.carstatushelper.activity.ImageDetailActivity;
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
 import com.huawei.carstatushelper.util.RadarDistanceHelper;
 import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String[] BYD_PERMISSIONS = {
-            Manifest.permission.BYDAUTO_BODYWORK_COMMON,
-            Manifest.permission.BYDAUTO_AC_COMMON,
-            Manifest.permission.BYDAUTO_PANORAMA_COMMON,
-            Manifest.permission.BYDAUTO_PANORAMA_GET,
-            Manifest.permission.BYDAUTO_SETTING_COMMON,
-            Manifest.permission.BYDAUTO_INSTRUMENT_COMMON,
-            Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
-    };
+    public static final String[] BYD_PERMISSIONS = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_PANORAMA_COMMON, Manifest.permission.BYDAUTO_PANORAMA_GET, Manifest.permission.BYDAUTO_SETTING_COMMON, Manifest.permission.BYDAUTO_INSTRUMENT_COMMON, Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,};
+    private com.huawei.carstatushelper.databinding.ActivitySplashBinding binding;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.checkFloatingPermissionBtn.setOnClickListener(this);
@@ -46,11 +47,57 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 
         binding.jumpToMainBtn.setOnClickListener(this);
 
-        if (Settings.canDrawOverlays(this) && isBydAutoPermissionGranted()) {
+//        if (Settings.canDrawOverlays(this) && isBydAutoPermissionGranted()) {
+//            startActivity(new Intent(this, MainActivity.class));
+//            finish();
+//        }
+        binding.image1.setOnClickListener(onClickListener);
+        binding.image2.setOnClickListener(onClickListener);
+        binding.image3.setOnClickListener(onClickListener);
+        binding.image4.setOnClickListener(onClickListener);
+        binding.image5.setOnClickListener(onClickListener);
+        binding.image6.setOnClickListener(onClickListener);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean agreement_save = preferences.getBoolean(KEY_AGREEMENT_SAVE, false);
+        binding.agreementCb.setChecked(agreement_save);
+
+        binding.agreementTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SplashActivity.this, AgreementActivity.class));
+            }
+        });
+
+        if (preferences.getBoolean("key_skip_guide_page", false)) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }
+
+    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
+
+    private final View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int viewId = view.getId();
+            Map<Integer, Integer> map = new HashMap<>();
+            map.put(R.id.image1, R.drawable.guide_backgound_running_1);
+            map.put(R.id.image2, R.drawable.guide_backgound_running_2);
+            map.put(R.id.image3, R.drawable.guide_backgound_running_3);
+
+            map.put(R.id.image4, R.drawable.guide_auto_boot_1);
+            map.put(R.id.image5, R.drawable.guide_auto_boot_2);
+            map.put(R.id.image6, R.drawable.guide_auto_boot_3);
+
+            if (map.containsKey(viewId)) {
+                Integer resId = map.get(viewId);
+                Intent intent = new Intent(SplashActivity.this, ImageDetailActivity.class);
+                intent.putExtra(ImageDetailActivity.KEY_IMAGE_RES_ID, resId);
+                startActivity(intent);
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -110,12 +157,18 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "请检查浮窗权限", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                if (!BuildConfig.DEBUG) {
-                if (!isBydAutoPermissionGranted()) {
-                    Toast.makeText(this, "请检查车辆权限", Toast.LENGTH_SHORT).show();
+                if (!BuildConfig.DEBUG) {
+                    if (!isBydAutoPermissionGranted()) {
+                        Toast.makeText(this, "请检查车辆权限", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                if (!binding.agreementCb.isChecked()) {
+                    Toast.makeText(this, "请先阅读并同意协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                }
+                preferences.edit().putBoolean(KEY_AGREEMENT_SAVE, true).apply();
+
                 startService(new Intent(this, BootCompleteService.class));
 
                 startActivity(new Intent(this, MainActivity.class));

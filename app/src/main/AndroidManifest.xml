@@ -50,6 +50,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.AgreementActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.ImageDetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".test.BigDataTestActivity"
             android:exported="false">
             <meta-data
@@ -85,7 +99,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <!--
         <activity
             android:name=".activity.RadarFloatingSettingActivity"
@@ -95,7 +108,6 @@
                 android:value="" />
         </activity>
         -->
-
         <!--
         <service
             android:name=".service.DetectionService"
@@ -110,7 +122,6 @@
                 android:resource="@xml/detection_service_config" />
         </service>
         -->
-
         <activity
             android:name=".activity.SettingsActivity"
             android:exported="false">

@@ -8,16 +8,16 @@ import com.xw.sample.dashboardviewdemo.DashboardView4;
 /**
  * 电机转速表
  */
-public class MotorSpeedView extends DashboardView4 {
-    public MotorSpeedView(Context context) {
+public class RearMotorSpeedView extends DashboardView4 {
+    public RearMotorSpeedView(Context context) {
         this(context, null);
     }
 
-    public MotorSpeedView(Context context, AttributeSet attrs) {
+    public RearMotorSpeedView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MotorSpeedView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RearMotorSpeedView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -38,10 +38,10 @@ public class MotorSpeedView extends DashboardView4 {
 
     @Override
     protected String setHeaderText() {
-        return " x1k rpm(前电机)";
+        return " x1k rpm(后电机)";
     }
 
-//    private String headerText = " x1k rpm(前电机)";
+//    private String headerText = " x1k rpm(后电机)";
 
 //    public void setHeader(String headerText){
 //        this.headerText = headerText;

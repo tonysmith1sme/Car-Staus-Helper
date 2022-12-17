@@ -1,5 +1,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <PreferenceCategory android:title="通用">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_skip_guide_page"
+            android:title="跳过引导页" />
+    </PreferenceCategory>
     <!--
     调试的时候用 PreferenceCategory，
     正式发布的时候用 SimplePreferenceCategory（预览不显示）

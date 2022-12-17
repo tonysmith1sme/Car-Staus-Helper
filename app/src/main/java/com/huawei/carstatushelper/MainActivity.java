@@ -58,6 +58,7 @@ import com.huawei.carstatushelper.view.CarSpeedView;
 import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
+import com.huawei.carstatushelper.view.RearMotorSpeedView;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
@@ -230,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 后电机转速
      */
-    private MotorSpeedView rearMotorSpeedMsv;
+    private RearMotorSpeedView rearMotorSpeedMsv;
     private SharedPreferences mPreferences;
 
     @Override
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
-        rearMotorSpeedMsv.setHeader(" x1k rpm(后电机)");
+//        rearMotorSpeedMsv.setHeader(" x1k rpm(后电机)");
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
