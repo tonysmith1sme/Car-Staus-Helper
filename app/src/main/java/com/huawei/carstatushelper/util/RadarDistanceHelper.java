@@ -23,23 +23,35 @@ import java.util.List;
 public class RadarDistanceHelper {
     private final Context context;
     private final FloatingWindowHelper helper;
+    private final SharedPreferences preferences;
     private View rootView;
     private List<TextView> textViewList;
 
     public RadarDistanceHelper(Context context) {
         this.context = context;
         helper = new FloatingWindowHelper(context);
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public void updateRadarFloating(int[] data) {
+        if (!isRadarDistanceEnable()) {
+            return;
+        }
         if (textViewList != null) {
             for (int i = 0; i < Math.min(data.length, textViewList.size()); i++) {
-                textViewList.get(i).setText(data[i] + "cm");
+                textViewList.get(i).setText(String.valueOf(data[i]));
             }
         }
     }
 
+    private boolean isRadarDistanceEnable() {
+        return preferences.getBoolean("radar_distance_enable", true);
+    }
+
     public void showRadarFloating() {
+        if (!isRadarDistanceEnable()) {
+            return;
+        }
         KLog.e();
         if (!Settings.canDrawOverlays(context)) {
 //            KLog.e("无浮窗权限");
@@ -157,6 +169,9 @@ public class RadarDistanceHelper {
     }
 
     public void hideRadarFloating() {
+        if (!isRadarDistanceEnable()) {
+            return;
+        }
         KLog.e();
         if (rootView == null) {
 //            KLog.e("未显示浮窗");

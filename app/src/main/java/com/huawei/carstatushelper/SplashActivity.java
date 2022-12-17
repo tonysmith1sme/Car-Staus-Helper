@@ -62,14 +62,11 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 } else {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                     intent.setData(Uri.parse("package:" + getPackageName()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
                 break;
             case R.id.check_byd_permission_btn:
-//                if (BuildConfig.DEBUG) {
-//                    Toast.makeText(this, "比亚迪车辆权限已授予", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
                 boolean granted = isBydAutoPermissionGranted();
                 if (granted) {
                     Toast.makeText(this, "比亚迪车辆权限已授予", Toast.LENGTH_SHORT).show();

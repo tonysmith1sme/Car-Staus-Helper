@@ -114,6 +114,10 @@
             android:defaultValue="true"
             android:key="car_speed_enable"
             android:title="车速表" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="rear_motor_speed_enable"
+            android:title="后电机转速表" />
     </PreferenceCategory>
     <!--
     <SimplePreferenceCategory android:title="@string/messages_header">

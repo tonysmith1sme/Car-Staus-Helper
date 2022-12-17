@@ -38,7 +38,13 @@ public class MotorSpeedView extends DashboardView4 {
 
     @Override
     protected String setHeaderText() {
-        return " x1k rpm(前电机)";
+        return headerText;
+    }
+
+    private String headerText = " x1k rpm(前电机)";
+
+    public void setHeader(String headerText){
+        this.headerText = headerText;
     }
 
     @Override

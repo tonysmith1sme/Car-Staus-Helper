@@ -125,22 +125,22 @@ public class BootCompleteService extends Service {
             AutoBootHelper.createNotificationChannel(manager, channel);
         }
         startForeground(1, notification);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int count = 0;
-                do {
-                    KLog.e("boot complete test ,count = " + count);
-                    count++;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } while (count <= 120);
-                KLog.e("boot complete test finish");
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                int count = 0;
+//                do {
+//                    KLog.e("boot complete test ,count = " + count);
+//                    count++;
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                } while (count <= 120);
+//                KLog.e("boot complete test finish");
+//            }
+//        }).start();
     }
 
     @Override

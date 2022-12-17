@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView lowestBatterTempTv;
     private TextView highestBatterTempTv;
     private TextView averageBatterTempTv;
+    /**
+     * 后电机转速
+     */
     private MotorSpeedView rearMotorSpeedMsv;
     private SharedPreferences mPreferences;
 
@@ -278,6 +281,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean car_speed_enable = mPreferences.getBoolean("car_speed_enable", true);
         if (carSpeedCsv != null) {
             carSpeedCsv.setVisibility(car_speed_enable ? View.VISIBLE : View.GONE);
+        }
+        boolean rear_motor_speed_enable = mPreferences.getBoolean("rear_motor_speed_enable", true);
+        if (rearMotorSpeedMsv != null) {
+            rearMotorSpeedMsv.setVisibility(rear_motor_speed_enable ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -332,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
+        rearMotorSpeedMsv.setHeader(" x1k rpm(后电机)");
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
@@ -551,7 +559,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEngineSpeedChanged(int value) {
             super.onEngineSpeedChanged(value);
-            if (value != 0) {
+            if (value > 0 && value <= 8000) {
                 updateEngineSpeedUI(value);
             } else {
                 int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
@@ -714,6 +722,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
+
+            updateEngineSpeedData();
         }
 
         /**
@@ -1028,6 +1038,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateFrontMotorSpeed() {
         int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
+        if (front_motor_speed == 1) {
+            front_motor_speed = 0;
+        }
         if (frontMotorSpeedTv != null) {
             frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
         }
@@ -1242,7 +1255,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateWaterTemperature() {
         if (waterTemperatureTv != null) {
-            waterTemperatureTv.setText(String.valueOf(BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getWaterTemperature()));
+            int waterTemperature = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getWaterTemperature();
+            if (waterTemperature == BYDAutoStatisticDeviceHelper.INVALID_DATA_1) {
+                waterTemperature = 0;
+            }
+            waterTemperatureTv.setText(String.valueOf(waterTemperature));
         }
     }
 
@@ -1251,7 +1268,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void updateInstantElecCon() {
         if (instantElecConTv != null) {
-            instantElecConTv.setText(format.format(BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getInstantElecConValue()));
+            double instantElecConValue = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getInstantElecConValue();
+            if (instantElecConValue == -1) {
+                instantElecConValue = 0;
+            }
+            instantElecConTv.setText(format.format(instantElecConValue));
         }
     }
 
@@ -1349,6 +1370,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT));
         absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR));
         absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR));
+
+        //能量回馈强度
+        absBYDAutoSettingListener.onEnergyFeedbackStrengthChanged(settingDevice.getEnergyFeedback());
     }
 
     private void updateEnginePower() {
