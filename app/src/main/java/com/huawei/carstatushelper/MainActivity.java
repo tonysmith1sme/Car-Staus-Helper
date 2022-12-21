@@ -468,6 +468,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean enable = preferences.getBoolean("show_sha_che_group_layout", false);
         shaCheGroupLayout.setVisibility(enable ? View.VISIBLE : View.GONE);
+
+        tyrePreLeftFrontTv = binding.tyrePreLeftFrontTv;
+        tyrePreRightFrontTv = binding.tyrePreRightFrontTv;
+        tyrePreLeftRearTv = binding.tyrePreLeftRearTv;
+        tyrePreRightRearTv = binding.tyrePreRightRearTv;
+
+        defrostModeBtn = binding.defrostModeBtn;
+        ventilateModeBtn = binding.ventilateModeBtn;
+
+        energyFeedbackBtn = binding.energyFeedbackBtn;
+
+        currentTemperatureTv = binding.currentTemperatureTv;
+        currentWindLevelTv = binding.currentWindLevelTv;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
