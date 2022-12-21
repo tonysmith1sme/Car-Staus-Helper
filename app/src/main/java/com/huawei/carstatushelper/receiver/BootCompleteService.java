@@ -298,6 +298,7 @@ public class BootCompleteService extends Service {
             KLog.e("radar distance ,area = " + area + " value = " + value);
             if (radarDevice != null) {
                 int[] distance = BydApi29Helper.getAllRadarDistance(radarDevice);
+                System.arraycopy(distance, 0, mRadarDistanceArr, 0, distance.length);
 
                 //            updateRadarFloatingTriggerType();
                 if (radarFloatingTriggerType == TYPE_DISTANCE_150_CM) {
@@ -312,7 +313,6 @@ public class BootCompleteService extends Service {
                         radarDistanceShowing = false;
                     }
                 }
-                System.arraycopy(distance, 0, mRadarDistanceArr, 0, distance.length);
             }
         }
     };
