@@ -33,7 +33,7 @@
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="左前:\n150"
+                    android:text="左前"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
 
@@ -50,7 +50,7 @@
                         android:background="@android:color/black"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:text="前左中:\n150"
+                        android:text="左前中"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </FrameLayout>
@@ -68,7 +68,7 @@
                         android:background="@android:color/black"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:text="前右中:\n150"
+                        android:text="右前中"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </FrameLayout>
@@ -82,7 +82,7 @@
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="右前:\n150"
+                    android:text="右前"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -100,7 +100,7 @@
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="左后:\n150"
+                    android:text="左后"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
 
@@ -117,7 +117,7 @@
                         android:background="@android:color/black"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:text="后中左:\n150"
+                        android:text="左后中"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </FrameLayout>
@@ -131,7 +131,7 @@
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="后中:\n150"
+                    android:text="后中"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
 
@@ -148,7 +148,7 @@
                         android:background="@android:color/black"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:text="后中右:\n150"
+                        android:text="右后中"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </FrameLayout>
@@ -161,7 +161,7 @@
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="右后:\n150"
+                    android:text="右后"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
             </LinearLayout>

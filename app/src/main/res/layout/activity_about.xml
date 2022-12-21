@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,63 +30,89 @@
                 tools:text="V1.0.0" />
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/icon_iv"
-                    android:layout_width="240dp"
+                    android:layout_width="244dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:src="@drawable/about_us_douyin" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/zfb_iv"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/qrcode_zfb" />
+
+                    <ImageView
+                        android:id="@+id/wx_iv"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/qrcode_wx" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="应用简介"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="120dp"
+                        android:text="      车况助手是一款可以实时显示车辆运行状况的app，在这里你可以实时以仿真汽车仪表的方式查看各种数据，包括查看车辆运行速度、整车输出功率以及发动机转速等信息，还可以显示最近油耗、电耗等能耗信息，还有其他一些车辆运行信息，更多功能等你去发现"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="290dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="车况助手是一款可以实时显示车辆运行状况的app，在这里你可以实时以仿真汽车仪表的方查看车辆运行速度、整车输出功率以及发动机\n转速等信息，还可以显示最近油耗、电耗等能耗信息，还有其他一些车辆运行信息，更多功能等你去发现"
+                        android:layout_marginTop="8dp"
+                        android:text="特别鸣谢"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="陕KF26382"
                         android:textSize="10sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
-                        android:text="赏个鸡腿"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:text="如果你觉得车况助手有带给你一些便利，你可以赏作者一只鸡腿，或者你囊中羞涩，也可以去抖音帮车况助手点个赞。"
+                        android:text="鲁LF16088"
                         android:textSize="10sp" />
 
+                    <!--
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,11 +133,24 @@
                             android:adjustViewBounds="true"
                             android:src="@drawable/qrcode_wx" />
                     </LinearLayout>
+                    -->
 
                 </LinearLayout>
             </LinearLayout>
-        </FrameLayout>
 
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="赏个鸡腿"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如果你觉得车况助手有带给你一些便利，你可以赏作者一只鸡腿，或者你囊中羞涩，也可以去抖音帮车况助手点个赞。"
+            android:textSize="10sp" />
     </LinearLayout>
+</ScrollView>
 
-</FrameLayout>

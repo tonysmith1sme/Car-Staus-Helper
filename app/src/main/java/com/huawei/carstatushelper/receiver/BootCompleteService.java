@@ -52,6 +52,7 @@ public class BootCompleteService extends Service {
     private BYDAutoPanoramaDevice panoramaDevice;
     private BYDAutoGearboxDevice gearboxDevice;
     private RadarDistanceHelper radarDistanceHelper;
+    private SharedPreferences preferences;
 
     public BootCompleteService() {
     }
@@ -62,15 +63,19 @@ public class BootCompleteService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    private void updateRadarFloatingTriggerType() {
+        radarFloatingTriggerType = Integer.parseInt(preferences.getString("radar_floating_trigger_type", "3"));
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         KLog.e();
         initNotification();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        radarFloatingTriggerType = Integer.parseInt(preferences.getString("radar_floating_trigger_type", "0"));
+        updateRadarFloatingTriggerType();
 
         double latest_fuel_price = Double.parseDouble(preferences.getString("latest_fuel_price", "8.5"));
         double latest_electric_price = Double.parseDouble(preferences.getString("latest_electric_price", "1.7"));
@@ -206,6 +211,7 @@ public class BootCompleteService extends Service {
         public void onGearboxAutoModeTypeChanged(int level) {
             super.onGearboxAutoModeTypeChanged(level);
             KLog.e("gearbox auto mode type = " + level);
+            updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_GEARBOX_R) {
                 if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_R) {
                     radarDistanceHelper.showRadarFloating();
@@ -225,6 +231,7 @@ public class BootCompleteService extends Service {
     private static final int TYPE_PANO_WORK_STATE = 1;
     private static final int TYPE_PANO_OUTPUT_STATE = 2;
     private static final int TYPE_GEARBOX_R = 0;
+    private static final int TYPE_DISTANCE_150_CM = 3;
 
     private final AbsBYDAutoPanoramaListener panoramaListener = new AbsBYDAutoPanoramaListener() {
         /**
@@ -235,6 +242,7 @@ public class BootCompleteService extends Service {
         public void onPanoWorkStateChanged(int mode) {
             super.onPanoWorkStateChanged(mode);
             KLog.e("onPanoWorkStateChanged：" + mode);
+            updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_PANO_WORK_STATE) {
                 if (mode == BYDAutoPanoramaDevice.PANORAMA_WORK_ON) {
                     radarDistanceHelper.showRadarFloating();
@@ -252,6 +260,7 @@ public class BootCompleteService extends Service {
         public void onPanOutputStateChanged(int mode) {
             super.onPanOutputStateChanged(mode);
             KLog.e("onPanOutputStateChanged = " + mode);
+            updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_PANO_OUTPUT_STATE) {
                 //关闭显示
                 if (mode == BYDAutoPanoramaDevice.PANORAMA_OUTPUT_OFF) {
@@ -265,12 +274,45 @@ public class BootCompleteService extends Service {
         }
     };
 
+    private final int[] mRadarDistanceArr = new int[]{
+            150, 150, 150,
+            150, 150, 150,
+            150, 150, 150,
+    };
+
+    private boolean shouldShowRadarDistance() {
+        boolean shouldShow = false;
+        for (int distance : mRadarDistanceArr) {
+            if (distance != 150) {
+                shouldShow = true;
+                break;
+            }
+        }
+        return shouldShow;
+    }
+
+    private boolean radarDistanceShowing;
+
     private final AbsBYDAutoRadarListener radarListener = new AbsBYDAutoRadarListener() {
         public void onRadarObstacleDistanceChanged(int area, int value) {
             KLog.e("radar distance ,area = " + area + " value = " + value);
             if (radarDevice != null) {
                 int[] distance = BydApi29Helper.getAllRadarDistance(radarDevice);
-                radarDistanceHelper.updateRadarFloating(distance);
+
+                //            updateRadarFloatingTriggerType();
+                if (radarFloatingTriggerType == TYPE_DISTANCE_150_CM) {
+                    if (shouldShowRadarDistance()) {
+                        if (!radarDistanceShowing) {
+                            radarDistanceHelper.showRadarFloating();
+                            radarDistanceShowing = true;
+                        }
+                        radarDistanceHelper.updateRadarFloating(distance);
+                    } else {
+                        radarDistanceHelper.hideRadarFloating();
+                        radarDistanceShowing = false;
+                    }
+                }
+                System.arraycopy(distance, 0, mRadarDistanceArr, 0, distance.length);
             }
         }
     };

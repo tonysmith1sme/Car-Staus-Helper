@@ -41,9 +41,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.setFastModeBtn.setOnClickListener(this);
         binding.setBootWithStartBtn.setOnClickListener(this);
 
-        binding.testNotificationBtn.setOnClickListener(this);
-        binding.testEngineSpeedFloatingBtn.setOnClickListener(this);
-        binding.testRadarDistanceFloatingBtn.setOnClickListener(this);
+//        binding.testNotificationBtn.setOnClickListener(this);
+//        binding.testEngineSpeedFloatingBtn.setOnClickListener(this);
+//        binding.testRadarDistanceFloatingBtn.setOnClickListener(this);
 
         binding.jumpToMainBtn.setOnClickListener(this);
 
@@ -59,15 +59,15 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.image6.setOnClickListener(onClickListener);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean agreement_save = preferences.getBoolean(KEY_AGREEMENT_SAVE, false);
-        binding.agreementCb.setChecked(agreement_save);
+//        boolean agreement_save = preferences.getBoolean(KEY_AGREEMENT_SAVE, false);
+//        binding.agreementCb.setChecked(agreement_save);
 
-        binding.agreementTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SplashActivity.this, AgreementActivity.class));
-            }
-        });
+//        binding.agreementTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(SplashActivity.this, AgreementActivity.class));
+//            }
+//        });
 
         if (preferences.getBoolean("key_skip_guide_page", false)) {
             startActivity(new Intent(this, MainActivity.class));
@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
+//    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -142,16 +142,16 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "跳转禁止自启动失败，请手动打开", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.test_notification_btn:
-                startService(new Intent(this, BootCompleteService.class));
-                break;
-            case R.id.test_engine_speed_floating_btn:
-                startService(new Intent(this, FloatingWindowService.class));
-                break;
-            case R.id.test_radar_distance_floating_btn:
-                RadarDistanceHelper radarDistanceHelper = new RadarDistanceHelper(this);
-                radarDistanceHelper.showRadarFloating();
-                break;
+//            case R.id.test_notification_btn:
+//                startService(new Intent(this, BootCompleteService.class));
+//                break;
+//            case R.id.test_engine_speed_floating_btn:
+//                startService(new Intent(this, FloatingWindowService.class));
+//                break;
+//            case R.id.test_radar_distance_floating_btn:
+//                RadarDistanceHelper radarDistanceHelper = new RadarDistanceHelper(this);
+//                radarDistanceHelper.showRadarFloating();
+//                break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {
                     Toast.makeText(this, "请检查浮窗权限", Toast.LENGTH_SHORT).show();
@@ -163,11 +163,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                         return;
                     }
                 }
-                if (!binding.agreementCb.isChecked()) {
-                    Toast.makeText(this, "请先阅读并同意协议", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                preferences.edit().putBoolean(KEY_AGREEMENT_SAVE, true).apply();
+//                if (!binding.agreementCb.isChecked()) {
+//                    Toast.makeText(this, "请先阅读并同意协议", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                preferences.edit().putBoolean(KEY_AGREEMENT_SAVE, true).apply();
+                preferences.edit().putBoolean("key_skip_guide_page",true).apply();
 
                 startService(new Intent(this, BootCompleteService.class));
 

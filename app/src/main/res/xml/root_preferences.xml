@@ -52,10 +52,10 @@
             android:key="radar_distance_enable"
             android:title="启用雷达测距" />
         <EditTextPreference
-            android:defaultValue="0"
+            android:defaultValue="3"
             android:inputType="number"
             android:key="radar_floating_trigger_type"
-            android:title="浮窗触发方式（0，1，2）" />
+            android:title="浮窗触发方式（0，1，2，3）" />
         <!--
         <SwitchPreference
             android:key="speak_radar_distance_enable"
