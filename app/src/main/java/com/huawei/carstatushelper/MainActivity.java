@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 前电机转速
      */
-    private MotorSpeedView motorSpeedMsv;
+    private MotorSpeedView frontMotorSpeedMsv;
     /**
      * 车速表
      */
@@ -233,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private RearMotorSpeedView rearMotorSpeedMsv;
     private SharedPreferences mPreferences;
+    private boolean supportTyreValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -336,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initMainView(ActivityMainBinding binding) {
         engineSpeedEsv = binding.engineSpeedEsv;
-        motorSpeedMsv = binding.motorSpeedMsv;
+        frontMotorSpeedMsv = binding.motorSpeedMsv;
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
@@ -431,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initMainLandView(ActivityMainLandBinding binding) {
         engineSpeedEsv = binding.engineSpeedEsv;
-        motorSpeedMsv = binding.motorSpeedMsv;
+        frontMotorSpeedMsv = binding.motorSpeedMsv;
         carSpeedCsv = binding.carSpeedCsv;
         enginePowerEpv = binding.enginePowerEpv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
@@ -477,10 +478,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defrostModeBtn = binding.defrostModeBtn;
         ventilateModeBtn = binding.ventilateModeBtn;
 
-        energyFeedbackBtn = binding.energyFeedbackBtn;
-
         currentTemperatureTv = binding.currentTemperatureTv;
         currentWindLevelTv = binding.currentWindLevelTv;
+
+        currentTravelMileageTv = binding.currentTravelMileageTv;
+        currentTravelEnergyCostTv = binding.currentTravelEnergyCostTv;
+        currentTravelYuanCostTv = binding.currentTravelYuanCostTv;
+        currentTravelElecCostTv = binding.currentTravelElecCostTv;
+        currentTravelFuelCostTv = binding.currentTravelFuelCostTv;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -628,24 +633,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final AbsBYDAutoTyreListener absBYDAutoTyreListener = new AbsBYDAutoTyreListener() {
         /**
-         * 胎压变化
+         *
+         * @param area
+         * @param state
+         */
+        @Override
+        public void onTyrePressureStateChanged(int area, int state) {
+            super.onTyrePressureStateChanged(area, state);
+            if (supportTyreValue) {
+                return;
+            }
+            String tyreStateName = StringUtil.getTyreStateName(state);
+            if (tyrePreLeftFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) {
+                tyrePreLeftFrontTv.setText(tyreStateName);
+            }
+            if (tyrePreRightFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT) {
+                tyrePreRightFrontTv.setText(tyreStateName);
+            }
+            if (tyrePreLeftRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR) {
+                tyrePreLeftRearTv.setText(tyreStateName);
+            }
+            if (tyrePreRightRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR) {
+                tyrePreRightRearTv.setText(tyreStateName);
+            }
+        }
+
+        /**
+         * 胎压值变化（只有胎压报警的车型无此数据）
          * @param area
          * @param value
          */
         @Override
         public void onTyrePressureValueChanged(int area, int value) {
             super.onTyrePressureValueChanged(area, value);
+            if (!supportTyreValue) {
+                return;
+            }
             if (tyrePreLeftFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) {
-                tyrePreLeftFrontTv.setText(String.valueOf(value));
+                tyrePreLeftFrontTv.setText(String.valueOf(value) + "kPa");
             }
             if (tyrePreRightFrontTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT) {
-                tyrePreRightFrontTv.setText(String.valueOf(value));
+                tyrePreRightFrontTv.setText(String.valueOf(value) + "kPa");
             }
             if (tyrePreLeftRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR) {
-                tyrePreLeftRearTv.setText(String.valueOf(value));
+                tyrePreLeftRearTv.setText(String.valueOf(value) + "kPa");
             }
             if (tyrePreRightRearTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR) {
-                tyrePreRightRearTv.setText(String.valueOf(value));
+                tyrePreRightRearTv.setText(String.valueOf(value) + "kPa");
             }
         }
     };
@@ -718,15 +752,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTemperatureChanged(int area, int value) {
             super.onTemperatureChanged(area, value);
-            if (currentTemperatureTv != null) {
-                currentTemperatureTv.setText("区域:" + StringUtil.getAcTemperatureAreaName(area) + "，" + value);
+            if (area == BYDAutoAcDevice.AC_TEMPERATURE_MAIN) {
+                if (currentTemperatureTv != null) {
+                    currentTemperatureTv.setText(String.valueOf(value));
+                }
             }
         }
     };
 
     private final AbsBYDAutoEnergyListener absBYDAutoEnergyListener = new AbsBYDAutoEnergyListener() {
         /**
-         * 监听整车工作模式（EV/强制EV/HEV）
+         * 监听能耗模式（EV/强制EV/HEV）
          * @param energyMode
          */
         @Override
@@ -1058,8 +1094,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (frontMotorSpeedTv != null) {
             frontMotorSpeedTv.setText(String.valueOf(Math.abs(front_motor_speed)));
         }
-        if (motorSpeedMsv != null) {
-            motorSpeedMsv.setVelocity(Math.abs(front_motor_speed));
+        if (frontMotorSpeedMsv != null) {
+            frontMotorSpeedMsv.setVelocity(Math.abs(front_motor_speed));
         }
         int rear_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_REAR_MOTOR_SPEED);
         if (rearMotorSpeedMsv != null) {
@@ -1067,6 +1103,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * onEnergyModeChanged()
+     * onPowerGenerationValueChanged()
+     * onSpeedChanged()
+     * initAutoData()
+     */
     private void updateEngineSpeedData() {
         if (engineDevice == null) {
             return;
@@ -1380,10 +1422,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int[] time = chargingDevice.getChargingRestTime();
         absBYDAutoChargingListener.onChargingRestTimeChanged(time[0], time[1]);
         //胎压
-        absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT));
-        absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT));
-        absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR));
-        absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR));
+        supportTyreValue = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) != 0;
+        if (supportTyreValue) {
+            absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT));
+            absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT));
+            absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR));
+            absBYDAutoTyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR));
+        } else {
+            absBYDAutoTyreListener.onTyrePressureStateChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT, tyreDevice.getTyrePressureState(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT));
+            absBYDAutoTyreListener.onTyrePressureStateChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, tyreDevice.getTyrePressureState(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT));
+            absBYDAutoTyreListener.onTyrePressureStateChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, tyreDevice.getTyrePressureState(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR));
+            absBYDAutoTyreListener.onTyrePressureStateChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, tyreDevice.getTyrePressureState(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR));
+        }
 
         //能量回馈强度
         absBYDAutoSettingListener.onEnergyFeedbackStrengthChanged(settingDevice.getEnergyFeedback());

@@ -4,6 +4,7 @@ import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
+import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -287,6 +288,19 @@ public class StringUtil {
             return "车外温度";
         }
         return String.valueOf(area);
+    }
+
+    public static String getTyreStateName(int state) {
+        if (state == BYDAutoTyreDevice.TYRE_PRESSURE_STATE_NORMAL) {
+            return "正常";
+        }
+        if (state == BYDAutoTyreDevice.TYRE_PRESSURE_STATE_OVERPRESSURE) {
+            return "过压";
+        }
+        if (state == BYDAutoTyreDevice.TYRE_PRESSURE_STATE_UNDERPRESSURE) {
+            return "欠压";
+        }
+        return "未知";
     }
 
     /**

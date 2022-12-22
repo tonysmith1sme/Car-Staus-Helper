@@ -815,6 +815,7 @@
 
             </LinearLayout>
 
+            <!--本次行程里程-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -880,7 +881,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -904,6 +904,7 @@
 
             </LinearLayout>
 
+            <!--本次行程油耗-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1085,12 +1086,8 @@
                             android:id="@+id/tyre_pre_left_front_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="240" />
+                            android:text="240kPa" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kPa" />
                     </LinearLayout>
                     <!--左后-->
                     <LinearLayout
@@ -1103,12 +1100,8 @@
                             android:id="@+id/tyre_pre_left_rear_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="240" />
+                            android:text="240kPa" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kPa" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -1129,12 +1122,8 @@
                             android:id="@+id/tyre_pre_right_front_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="240" />
+                            android:text="240kPa" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kPa" />
                     </LinearLayout>
 
 
@@ -1149,12 +1138,8 @@
                             android:id="@+id/tyre_pre_right_rear_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="240" />
+                            android:text="240kPa" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kPa" />
                     </LinearLayout>
                 </LinearLayout>
 
