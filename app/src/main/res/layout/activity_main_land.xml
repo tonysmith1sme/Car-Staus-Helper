@@ -304,7 +304,8 @@
                     android:id="@+id/total_ev_mileage_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    tools:text="9999" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -326,7 +327,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="0" />
+                    android:text="0"
+                    tools:text="9999" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -348,7 +350,7 @@
                 <ProgressBar
                     android:id="@+id/fuel_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
@@ -374,14 +376,15 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="50dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/fuel_mileage_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:text="0"
+                            tools:text="9999" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -406,7 +409,7 @@
                 <ProgressBar
                     android:id="@+id/elec_percent_pb"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
@@ -433,14 +436,15 @@
 
 
                     <LinearLayout
-                        android:layout_width="50dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/power_mileage_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:text="0"
+                            tools:text="9999" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -461,10 +465,154 @@
             android:layout_marginEnd="4dp"
             android:background="@color/purple_200" />
 
-        <FrameLayout
-            android:layout_width="230dp"
-            android:layout_height="wrap_content">
+        <!--本次行程-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--本次行程里程-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次行程里程：" />
+
+                <TextView
+                    android:id="@+id/current_travel_mileage_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KM" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次行程能耗：" />
+
+                <TextView
+                    android:id="@+id/current_travel_energy_cost_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0KWH+0L" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次行程花费：" />
+
+                <TextView
+                    android:id="@+id/current_travel_yuan_cost_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="230dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次行程电耗：" />
+
+                <TextView
+                    android:id="@+id/current_travel_elec_cost_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    tools:text="12.333" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KWH/100KM" />
+
+            </LinearLayout>
+
+            <!--本次行程油耗-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次行程油耗：" />
+
+                <TextView
+                    android:id="@+id/current_travel_fuel_cost_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L/100KM" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="能量回馈强度" />
+
+                <Button
+                    android:id="@+id/energy_feedback_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="标准" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/purple_200" />
+
+        <!--胎压-->
+        <FrameLayout
+            android:layout_width="210dp"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="100dp"
@@ -554,173 +702,24 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:background="@color/purple_200" />
+
         <!--里程-->
-        <ScrollView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="最近油耗：" />
-
-                    <TextView
-                        android:id="@+id/last_fuel_con_phm_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="L/100Km" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="最近电耗：" />
-
-                    <TextView
-                        android:id="@+id/last_elec_con_phm_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kwh/100Km" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="累计燃油消耗：" />
-
-                    <TextView
-                        android:id="@+id/total_fuel_cost_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="L" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="累计电量消耗：" />
-
-                    <TextView
-                        android:id="@+id/total_elec_cost_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kwh" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="平均油耗：" />
-
-                    <TextView
-                        android:id="@+id/total_fuel_con_phm_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="L/100Km" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="平均电耗：" />
-
-                    <TextView
-                        android:id="@+id/total_elec_con_phm_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kwh/100Km" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <TextView
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@color/purple_200" />
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!--本次行程里程-->
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="本次行程里程：" />
+                    android:text="最近油耗：" />
 
                 <TextView
-                    android:id="@+id/current_travel_mileage_tv"
+                    android:id="@+id/last_fuel_con_phm_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0" />
@@ -728,40 +727,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KM" />
-
+                    android:text="L/100Km" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="180dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="本次行程能耗：" />
+                    android:text="最近电耗：" />
 
                 <TextView
-                    android:id="@+id/current_travel_energy_cost_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0KWH+0L" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="本次行程花费：" />
-
-                <TextView
-                    android:id="@+id/current_travel_yuan_cost_tv"
+                    android:id="@+id/last_elec_con_phm_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0" />
@@ -769,22 +748,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¥" />
-
+                    android:text="Kwh/100Km" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="本次行程电耗：" />
+                    android:text="累计燃油消耗：" />
 
                 <TextView
-                    android:id="@+id/current_travel_elec_cost_tv"
+                    android:id="@+id/total_fuel_cost_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0" />
@@ -792,23 +769,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KWH/100KM" />
+                    android:text="L" />
 
             </LinearLayout>
 
-            <!--本次行程油耗-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="本次行程油耗：" />
+                    android:text="累计电量消耗：" />
 
                 <TextView
-                    android:id="@+id/current_travel_fuel_cost_tv"
+                    android:id="@+id/total_elec_cost_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0" />
@@ -816,8 +791,52 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L/100KM" />
+                    android:text="Kwh" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平均油耗：" />
+
+                <TextView
+                    android:id="@+id/total_fuel_con_phm_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L/100Km" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平均电耗：" />
+
+                <TextView
+                    android:id="@+id/total_elec_con_phm_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kwh/100Km" />
             </LinearLayout>
         </LinearLayout>
 

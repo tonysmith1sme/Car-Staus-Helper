@@ -57,6 +57,27 @@ public class FloatingWindowHelper {
         return layoutParams;
     }
 
+    @SuppressLint("WrongConstant")
+    public WindowManager.LayoutParams createLayoutParamsNew() {
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        if (Build.VERSION.SDK_INT >= 26) {
+            //比亚迪sdk在api25中没有TYPE_APPLICATION_OVERLAY，所以只能从其他版本获取值手动赋值数值。
+            layoutParams.type = 2038;
+        } else {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+        layoutParams.format = PixelFormat.RGBA_8888;
+        layoutParams.gravity = Gravity.START | Gravity.TOP;
+//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+        //此处设置为WRAP_CONTENT，布局中rootView的宽高参数才会生效
+        layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        return layoutParams;
+    }
+
     /**
      * 添加并显示悬浮View
      *
@@ -134,7 +155,8 @@ public class FloatingWindowHelper {
             mChildViewMap = new HashMap<>();
         }
         if (!mChildViewMap.containsKey(view)) {
-            WindowManager.LayoutParams layoutParams = createLayoutParams();
+//            WindowManager.LayoutParams layoutParams = createLayoutParams();
+            WindowManager.LayoutParams layoutParams = createLayoutParamsNew();
             layoutParams.x = x;
             layoutParams.y = y;
             mChildViewMap.put(view, layoutParams);

@@ -51,7 +51,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         mFloatingWindowHelper = new FloatingWindowHelper(this);
         mExampleViewC = LayoutInflater.from(this).inflate(R.layout.widget_test_view_c, null, false);
         try {
-            mFloatingWindowHelper.addView(mExampleViewC, 0, 0, true);
+            mFloatingWindowHelper.addView(mExampleViewC, 0, 0, false);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "error:" + e.toString(), Toast.LENGTH_SHORT).show();
@@ -176,7 +176,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         }
     };
 
-    private void updateEngineSpeedUI(int speed){
+    private void updateEngineSpeedUI(int speed) {
         mEngineSpeedView.setVelocity(speed);
         mEngineSpeedTv.setText(String.valueOf(speed));
     }

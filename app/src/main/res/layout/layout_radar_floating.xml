@@ -10,181 +10,175 @@
         android:id="@+id/layout1"
         android:layout_width="311dp"
         android:layout_height="500dp"
+        android:background="@drawable/radar_floating_bg"
+        android:padding="8dp"
         tools:layout_margin="8dp">
 
-        <!--
-            android:background="#400f"
-        -->
-        <FrameLayout
-            android:id="@+id/layout2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/radar_floating_bg"
-            android:padding="8dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/distance0_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/black"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="左前"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp" />
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/distance6_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@android:color/black"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="左前中"
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/distance7_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@android:color/black"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="右前中"
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp" />
-                </FrameLayout>
-
-
-                <TextView
-                    android:id="@+id/distance1_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:background="@android:color/black"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="右前"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/distance0_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="左前"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/distance2_tv"
+                    android:id="@+id/distance6_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="center_horizontal"
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="左后"
+                    android:text="左前中"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/distance4_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:background="@android:color/black"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="左后中"
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp" />
-                </FrameLayout>
-
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/distance8_tv"
+                    android:id="@+id/distance7_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="后中"
+                    android:text="右前中"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/distance5_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:background="@android:color/black"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="右后中"
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp" />
-                </FrameLayout>
+            <TextView
+                android:id="@+id/distance1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="右前"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/distance2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="左后"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/distance3_tv"
+                    android:id="@+id/distance4_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end|bottom"
+                    android:layout_gravity="bottom|center"
                     android:background="@android:color/black"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="右后"
+                    android:text="左后中"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
-            </LinearLayout>
+            </FrameLayout>
 
-        </FrameLayout>
+
+            <TextView
+                android:id="@+id/distance8_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="后中"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/distance5_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:background="@android:color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="右后中"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/distance3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:background="@android:color/black"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="右后"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="#ff000000"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="车况助手(单位：cm)" />
+                android:padding="8dp"
+                android:text="车况助手"
+                android:textColor="@android:color/white" />
 
-            <Button
-                android:id="@+id/close_btn"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="关闭" />
+                android:padding="8dp"
+                android:text="(单位：cm)"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 

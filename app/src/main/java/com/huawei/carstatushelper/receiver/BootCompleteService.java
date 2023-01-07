@@ -77,9 +77,6 @@ public class BootCompleteService extends Service {
 
         updateRadarFloatingTriggerType();
 
-        double latest_fuel_price = Double.parseDouble(preferences.getString("latest_fuel_price", "8.5"));
-        double latest_electric_price = Double.parseDouble(preferences.getString("latest_electric_price", "1.7"));
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
             BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(this);
             int totalMileageValue = statisticDevice.getTotalMileageValue();//总里程
@@ -95,8 +92,6 @@ public class BootCompleteService extends Service {
                 object.put("hevMileageValue", hevMileageValue);
                 object.put("totalElecConValue", totalElecConValue);
                 object.put("totalFuelConValue", totalFuelConValue);
-                object.put("latest_fuel_price", latest_fuel_price);
-                object.put("latest_electric_price", latest_electric_price);
                 String json = object.toString();
                 KLog.e("初始化行程数据：" + json);
                 preferences.edit().putString(KEY_INIT_DRIVER_DATA, json).apply();
@@ -130,22 +125,6 @@ public class BootCompleteService extends Service {
             AutoBootHelper.createNotificationChannel(manager, channel);
         }
         startForeground(1, notification);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int count = 0;
-//                do {
-//                    KLog.e("boot complete test ,count = " + count);
-//                    count++;
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                } while (count <= 120);
-//                KLog.e("boot complete test finish");
-//            }
-//        }).start();
     }
 
     @Override

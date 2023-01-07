@@ -63,12 +63,6 @@ public class RadarDistanceHelper {
         }
         rootView = LayoutInflater.from(context).inflate(R.layout.layout_radar_floating, null, false);
         View frame = rootView.findViewById(R.id.layout1);
-        rootView.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideRadarFloating();
-            }
-        });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         int x = Integer.parseInt(preferences.getString("radar_floating_x", "0"));
@@ -114,11 +108,11 @@ public class RadarDistanceHelper {
 
         //自定义浮窗偏移
         if (x > 0 && y > 0) {
-            helper.addView(rootView, x, y, true);
+            helper.addView(rootView, x, y, false);
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            helper.addView(rootView, 280, 110, true);
+            helper.addView(rootView, 280, 110, false);
         } else {
-            helper.addView(rootView, 70, 780, true);
+            helper.addView(rootView, 70, 780, false);
         }
 
         TextView tv0 = (TextView) rootView.findViewById(R.id.distance0_tv);

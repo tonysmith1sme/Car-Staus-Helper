@@ -4,6 +4,20 @@
             android:defaultValue="false"
             android:key="key_skip_guide_page"
             android:title="跳过引导页" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="map_place_holder_enable"
+            android:title="地图浮窗占位" />
+
+        <!--
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/engine_speed_data_source_entries"
+            android:entryValues="@array/engine_speed_data_source_values"
+            android:key="engine_speed_data_source"
+            android:title="发动机转速源" />
+        -->
     </PreferenceCategory>
     <!--
     调试的时候用 PreferenceCategory，

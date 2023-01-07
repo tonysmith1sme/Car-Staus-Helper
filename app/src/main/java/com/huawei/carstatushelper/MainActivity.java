@@ -19,6 +19,8 @@ import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
+import android.hardware.bydauto.instrument.AbsBYDAutoInstrumentListener;
+import android.hardware.bydauto.instrument.BYDAutoInstrumentDevice;
 import android.hardware.bydauto.setting.AbsBYDAutoSettingListener;
 import android.hardware.bydauto.setting.BYDAutoSettingDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
@@ -234,6 +236,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RearMotorSpeedView rearMotorSpeedMsv;
     private SharedPreferences mPreferences;
     private boolean supportTyreValue;
+    private TextView mapPlaceHolderTv;
+    private BYDAutoInstrumentDevice instrumentDevice;
+    private TextView waterTemperaturePercentTv;
+    //    private String engine_speed_data_source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,8 +260,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 init_hevMileageValue = initDriverData.getInt("hevMileageValue");
                 init_totalElecConValue = initDriverData.getDouble("totalElecConValue");
                 init_totalFuelConValue = initDriverData.getDouble("totalFuelConValue");
-                init_latest_electric_price = initDriverData.getDouble("latest_electric_price");
-                init_latest_fuel_price = initDriverData.getDouble("latest_fuel_price");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -288,6 +292,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (rearMotorSpeedMsv != null) {
             rearMotorSpeedMsv.setVisibility(rear_motor_speed_enable ? View.VISIBLE : View.GONE);
         }
+        boolean map_place_holder_enable = mPreferences.getBoolean("map_place_holder_enable", false);
+        if (mapPlaceHolderTv != null) {
+            mapPlaceHolderTv.setVisibility(map_place_holder_enable ? View.VISIBLE : View.GONE);
+        }
+//        engine_speed_data_source = mPreferences.getString("engine_speed_data_source", "0");
+        init_latest_electric_price = Double.parseDouble(mPreferences.getString("latest_fuel_price", "8.5"));
+        init_latest_fuel_price = Double.parseDouble(mPreferences.getString("latest_electric_price", "1.7"));
     }
 
     private void initBtnListener() {
@@ -428,6 +439,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lowestBatterTempTv = binding.lowestBatterTempTv;
         highestBatterTempTv = binding.highestBatterTempTv;
         averageBatterTempTv = binding.averageBatterTempTv;
+
+        mapPlaceHolderTv = binding.mapPlaceHolderTv;
+        waterTemperaturePercentTv = binding.waterTemperaturePercentTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -486,6 +500,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentTravelYuanCostTv = binding.currentTravelYuanCostTv;
         currentTravelElecCostTv = binding.currentTravelElecCostTv;
         currentTravelFuelCostTv = binding.currentTravelFuelCostTv;
+
+        energyFeedbackBtn = binding.energyFeedbackBtn;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -527,6 +543,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chargingDevice.unregisterListener(absBYDAutoChargingListener);
         tyreDevice.unregisterListener(absBYDAutoTyreListener);
         settingDevice.unregisterListener(absBYDAutoSettingListener);
+        instrumentDevice.unregisterListener(instrumentListener);
     }
 
     @Override
@@ -557,6 +574,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chargingDevice = BYDAutoChargingDevice.getInstance(this);
         tyreDevice = BYDAutoTyreDevice.getInstance(this);
         settingDevice = BYDAutoSettingDevice.getInstance(this);
+        instrumentDevice = BYDAutoInstrumentDevice.getInstance(this);
 
         statisticDevice.registerListener(absBYDAutoStatisticListener);
         bodyworkDevice.registerListener(absBYDAutoBodyworkListener);
@@ -568,6 +586,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chargingDevice.registerListener(absBYDAutoChargingListener);
         tyreDevice.registerListener(absBYDAutoTyreListener);
         settingDevice.registerListener(absBYDAutoSettingListener);
+        instrumentDevice.registerListener(instrumentListener);
     }
 
     private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
@@ -983,7 +1002,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (fuelMileageTv == null) {
                 return;
             }
-            fuelMileageTv.setText(String.valueOf(value));
+            if (value >= 2046) {
+                fuelMileageTv.setText("--");
+            } else {
+                fuelMileageTv.setText(String.valueOf(value));
+            }
         }
 
         /**
@@ -1120,6 +1143,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateEngineSpeedUI(engine_speed_gb);
         } else if (engine_speed > 0 && engine_speed <= 8000) {
             updateEngineSpeedUI(engine_speed);
+        } else {
+            updateEngineSpeedUI(0);
         }
 
         int front_motor_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_FRONT_MOTOR_SPEED);
@@ -1313,9 +1338,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (waterTemperatureTv != null) {
             int waterTemperature = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getWaterTemperature();
             if (waterTemperature == BYDAutoStatisticDeviceHelper.INVALID_DATA_1) {
-                waterTemperature = 0;
+                waterTemperatureTv.setText("--");
+            } else {
+                waterTemperatureTv.setText(String.valueOf(waterTemperature));
             }
-            waterTemperatureTv.setText(String.valueOf(waterTemperature));
         }
     }
 
@@ -1575,4 +1601,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return "failed";
     }
+
+    private final AbsBYDAutoInstrumentListener instrumentListener = new AbsBYDAutoInstrumentListener() {
+
+        /**
+         * 水温计百分比变化(0-100)
+         * @param percent
+         */
+        public void onWaterTempMeterPercentChanged(double percent) {
+            if (waterTemperaturePercentTv != null) {
+                waterTemperaturePercentTv.setText(format.format(percent));
+            }
+        }
+
+        @Override
+        public void onMalfunctionInfoChanged(int typeName, int hasMalfunction) {
+            super.onMalfunctionInfoChanged(typeName, hasMalfunction);
+            //BYDAutoFeatureIds.INSTRUMENT_HIGH_WATER_TEMPERATURE
+            if (typeName == BYDAutoInstrumentDevice.MALFUNCTION_HIGH_WATER_TEMPERATURE) {
+
+            }
+        }
+
+        @Override
+        public void onMaintenanceInfoChanged(int typeName, int infoValue) {
+            super.onMaintenanceInfoChanged(typeName, infoValue);
+        }
+
+        @Override
+        public void onAlarmBuzzleStateChange(int state) {
+            super.onAlarmBuzzleStateChange(state);
+        }
+
+        @Override
+        public void onExternalChargingPowerChanged(double value) {
+            super.onExternalChargingPowerChanged(value);
+        }
+    };
 }

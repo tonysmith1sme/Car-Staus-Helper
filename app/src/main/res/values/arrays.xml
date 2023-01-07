@@ -19,4 +19,14 @@
         <item>button</item>
     </string-array>
 
+    <string-array name="engine_speed_data_source_entries">
+        <item>发动机转速</item>
+        <item>发动机转速（GB）</item>
+    </string-array>
+    <string-array name="engine_speed_data_source_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+
 </resources>
