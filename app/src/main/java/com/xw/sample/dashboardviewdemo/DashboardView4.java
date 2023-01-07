@@ -351,7 +351,24 @@ public class DashboardView4 extends View {
         if (mMax >= 1000) {
             isEngineSpeed = true;
         }
-        if (mVelocity >= 1000) {
+        boolean isMotorSpeed = false;
+        if (mMax >= 10000) {
+            isMotorSpeed = true;
+        }
+        if (mVelocity >= 10000) {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, mVelocity / 10000, -xOffset * 3, true);
+            }
+            if (isEngineSpeed) {
+                drawDigitalTube(canvas, mVelocity % 10000 / 1000, -xOffset * 2, true);
+            }
+            drawDigitalTube(canvas, mVelocity % 10000 % 1000 / 100, -xOffset, isEngineSpeed);
+            drawDigitalTube(canvas, mVelocity % 10000 % 1000 % 100 / 10, 0, isEngineSpeed);
+            drawDigitalTube(canvas, mVelocity % 10000 % 1000 % 100 % 10, xOffset, isEngineSpeed);
+        } else if (mVelocity >= 1000) {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, -1, -xOffset * 3, true);
+            }
             if (isEngineSpeed) {
                 drawDigitalTube(canvas, mVelocity / 1000, -xOffset * 2, true);
             }
@@ -359,13 +376,19 @@ public class DashboardView4 extends View {
             drawDigitalTube(canvas, mVelocity % 1000 % 100 / 10, 0, isEngineSpeed);
             drawDigitalTube(canvas, mVelocity % 1000 % 100 % 10, xOffset, isEngineSpeed);
         } else if (mVelocity >= 100) {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, -1, -xOffset * 3, true);
+            }
             if (isEngineSpeed) {
                 drawDigitalTube(canvas, -1, -xOffset * 2, true);
             }
-            drawDigitalTube(canvas, mVelocity / 100, -xOffset);
+            drawDigitalTube(canvas, mVelocity / 100, -xOffset, isEngineSpeed);
             drawDigitalTube(canvas, mVelocity % 100 / 10, 0, isEngineSpeed);
             drawDigitalTube(canvas, mVelocity % 100 % 10, xOffset, isEngineSpeed);
         } else if (mVelocity >= 10) {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, -1, -xOffset * 3, true);
+            }
             if (isEngineSpeed) {
                 drawDigitalTube(canvas, -1, -xOffset * 2, true);
             }
@@ -373,6 +396,9 @@ public class DashboardView4 extends View {
             drawDigitalTube(canvas, mVelocity / 10, 0, isEngineSpeed);
             drawDigitalTube(canvas, mVelocity % 10, xOffset, isEngineSpeed);
         } else if (mVelocity < 0) {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, -1, -xOffset * 3, true);
+            }
             int tmp = Math.abs(mVelocity);
             if (isEngineSpeed) {
                 drawDigitalTube(canvas, -1, -xOffset * 2, true);
@@ -382,6 +408,9 @@ public class DashboardView4 extends View {
             drawDigitalTube(canvas, tmp % 10, xOffset, isEngineSpeed);
 
         } else {
+            if (isMotorSpeed) {
+                drawDigitalTube(canvas, -1, -xOffset * 3, true);
+            }
             if (isEngineSpeed) {
                 drawDigitalTube(canvas, -1, -xOffset * 2, true);
             }
