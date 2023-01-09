@@ -9,7 +9,10 @@
             android:defaultValue="false"
             android:key="map_place_holder_enable"
             android:title="地图浮窗占位" />
-
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="wireless_charging_boot_close_enable"
+            android:title="开机关闭无线充电" />
         <!--
         <ListPreference
             android:defaultValue="0"
@@ -39,6 +42,10 @@
             android:defaultValue="false"
             android:key="radar_floating_boot_auto_show_enable"
             android:title="开机显示" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="radar_floating_engine_speed_view_enable"
+            android:title="发动机转速表" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="show_ac_layout"
@@ -138,35 +145,55 @@
             android:key="rear_motor_speed_enable"
             android:title="后电机转速表" />
     </PreferenceCategory>
-    <!--
-    <SimplePreferenceCategory android:title="@string/messages_header">
+
+    <PreferenceCategory android:title="智能提醒">
         <EditTextPreference
-            android:key="signature"
-            android:title="@string/signature_title" />
+            android:defaultValue="com.xiaomi.mibrain.speech"
+            android:key="default_tts_engine_pkg"
+            android:title="语音引擎索（参考：[小爱：com.xiaomi.mibrain.speech]，[讯飞语记：com.iflytek.vflynote]）" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="smart_remind_enable"
+            android:title="启用" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="smart_remind_enable"
+            android:key="radar_distance_tts_enable"
+            android:title="雷达距离播报" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:dependency="smart_remind_enable"
+            android:key="boot_welcome_tts_content"
+            android:title="开机欢迎语" />
+        <EditTextPreference
+            android:defaultValue="驻车档"
+            android:dependency="smart_remind_enable"
+            android:key="gearbox_level_p_content"
+            android:title="P档" />
+        <EditTextPreference
+            android:defaultValue="倒车档"
+            android:dependency="smart_remind_enable"
+            android:key="gearbox_level_r_content"
+            android:title="R档" />
+        <EditTextPreference
+            android:defaultValue="滑行档"
+            android:dependency="smart_remind_enable"
+            android:key="gearbox_level_n_content"
+            android:title="N档" />
+        <EditTextPreference
+            android:defaultValue="前进档"
+            android:dependency="smart_remind_enable"
+            android:key="gearbox_level_d_content"
+            android:title="D档" />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="定制">
         <ListPreference
-            android:defaultValue="reply"
-            android:entries="@array/reply_entries"
-            android:entryValues="@array/reply_values"
-            android:key="reply"
-            android:title="@string/reply_title" />
-    </SimplePreferenceCategory>
-
-    <SimplePreferenceCategory android:title="@string/sync_header">
-
-        <SwitchPreference
-            android:key="sync"
-            android:title="@string/sync_title" />
-
-        <SwitchPreference
-            android:dependency="sync"
-            android:key="attachment"
-            android:summaryOff="@string/attachment_summary_off"
-            android:summaryOn="@string/attachment_summary_on"
-            android:title="@string/attachment_title" />
-
-    </SimplePreferenceCategory>
-    -->
-
+            android:defaultValue="0"
+            android:entries="@array/app_logo_customized_entries"
+            android:entryValues="@array/app_logo_customized_value"
+            android:key="app_logo_current_value"
+            android:title="logo切换" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

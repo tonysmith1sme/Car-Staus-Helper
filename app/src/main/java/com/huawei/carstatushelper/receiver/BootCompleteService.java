@@ -18,6 +18,7 @@ import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 
 import com.huawei.carstatushelper.R;
@@ -25,6 +26,7 @@ import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.RadarDistanceHelper;
+import com.huawei.carstatushelper.util.SmartRemindUtil;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.FloatingWindowService;
 
@@ -53,6 +55,7 @@ public class BootCompleteService extends Service {
     private BYDAutoGearboxDevice gearboxDevice;
     private RadarDistanceHelper radarDistanceHelper;
     private SharedPreferences preferences;
+    private TextToSpeech tts;
 
     public BootCompleteService() {
     }
@@ -162,7 +165,21 @@ public class BootCompleteService extends Service {
                 radarDevice.registerListener(radarListener);
             }
         }
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String ttsEnginePkg = preferences.getString("default_tts_engine_pkg", "");
+        if (SmartRemindUtil.isEnable(this) && ttsEnginePkg.length() != 0) {
+            tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        String welcomeContent = SmartRemindUtil.getWelcomeContent(BootCompleteService.this);
+                        speakTTS(welcomeContent);
+                    } else {
+                        tts = null;
+                    }
+                }
+            }, ttsEnginePkg);
+        }
         return ret;
     }
 
@@ -178,6 +195,17 @@ public class BootCompleteService extends Service {
         }
         if (radarDevice != null) {
             radarDevice.unregisterListener(radarListener);
+        }
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
+    }
+
+    private void speakTTS(String ttsText) {
+        if (tts != null && ttsText.length() != 0) {
+            tts.speak(ttsText, TextToSpeech.QUEUE_ADD, null, null);
         }
     }
 
@@ -197,6 +225,10 @@ public class BootCompleteService extends Service {
                 } else {
                     radarDistanceHelper.hideRadarFloating();
                 }
+            }
+            if (SmartRemindUtil.isEnable(BootCompleteService.this)) {
+                String gearboxLevelName = SmartRemindUtil.getGearboxLevelName(BootCompleteService.this, level);
+                speakTTS(gearboxLevelName);
             }
         }
     };
@@ -253,11 +285,7 @@ public class BootCompleteService extends Service {
         }
     };
 
-    private final int[] mRadarDistanceArr = new int[]{
-            150, 150, 150,
-            150, 150, 150,
-            150, 150, 150,
-    };
+    private final int[] mRadarDistanceArr = new int[]{150, 150, 150, 150, 150, 150, 150, 150, 150,};
 
     private boolean shouldShowRadarDistance() {
         boolean shouldShow = false;
@@ -273,6 +301,8 @@ public class BootCompleteService extends Service {
     private boolean radarDistanceShowing;
 
     private final AbsBYDAutoRadarListener radarListener = new AbsBYDAutoRadarListener() {
+        long lastSpeakTime;
+
         public void onRadarObstacleDistanceChanged(int area, int value) {
             KLog.e("radar distance ,area = " + area + " value = " + value);
             if (radarDevice != null) {
@@ -285,6 +315,18 @@ public class BootCompleteService extends Service {
                         if (!radarDistanceShowing) {
                             radarDistanceHelper.showRadarFloating();
                             radarDistanceShowing = true;
+                        }
+                        if (SmartRemindUtil.isEnable(BootCompleteService.this) && SmartRemindUtil.isRadarDistanceTTS(BootCompleteService.this)) {
+                            int min = 150;
+                            for (int i : distance) {
+                                min = Math.min(i, min);
+                            }
+                            if (min != 150) {
+                                if (System.currentTimeMillis() - lastSpeakTime > 500) {
+                                    lastSpeakTime = System.currentTimeMillis();
+                                    speakTTS(min + "");
+                                }
+                            }
                         }
                         radarDistanceHelper.updateRadarFloating(distance);
                     } else {

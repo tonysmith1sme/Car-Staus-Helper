@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/version_update"
-        android:title="开源地址" />
+        android:title="版本更新" />
 
     <item
         android:id="@+id/float_show"
@@ -16,9 +16,4 @@
         android:id="@+id/settings"
         android:title="设置" />
 
-    <!--
-    <item
-        android:id="@+id/radar_distance"
-        android:title="雷达测距" />
-    -->
 </menu>

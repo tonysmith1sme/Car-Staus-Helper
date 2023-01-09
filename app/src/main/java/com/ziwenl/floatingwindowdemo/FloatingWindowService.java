@@ -126,6 +126,8 @@ public class FloatingWindowService extends Service implements View.OnClickListen
             ac_layout_seekbar.setVisibility(View.GONE);
             ac_layout_button.setVisibility(View.VISIBLE);
         }
+        boolean radar_floating_engine_speed_view_enable = preferences.getBoolean("radar_floating_engine_speed_view_enable", true);
+        mEngineSpeedView.setVisibility(radar_floating_engine_speed_view_enable ? View.VISIBLE : View.GONE);
     }
 
     void initData() {
@@ -250,7 +252,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
                 return;
             }
             if (seekBarId == R.id.temprature_seekbar) {
-                mBydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, currentTempValue, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+                mBydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, currentTempValue, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
                 mCurrentTempTv.setText(String.valueOf(currentTempValue));
             } else if (seekBarId == R.id.wind_level_seekbar) {
                 mCurrentWindLevelTv.setText(String.valueOf(currentWindLevelValue));

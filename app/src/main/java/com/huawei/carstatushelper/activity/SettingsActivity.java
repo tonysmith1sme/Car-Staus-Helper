@@ -1,12 +1,18 @@
 package com.huawei.carstatushelper.activity;
 
+import android.content.ComponentName;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import com.huawei.carstatushelper.R;
 
 public class SettingsActivity extends BackEnableBaseActivity {
+
+    private SharedPreferences preferences;
 
     @Override
     public CharSequence setPageTitle() {
@@ -19,18 +25,57 @@ public class SettingsActivity extends BackEnableBaseActivity {
         setContentView(R.layout.activity_settings);
 
         if (savedInstanceState == null) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.settings, new SettingsFragment())
-                    .commit();
+            getFragmentManager().beginTransaction().replace(R.id.settings, new SettingsFragment()).commit();
         }
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.registerOnSharedPreferenceChangeListener(listener);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        preferences.unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if ("app_logo_current_value".equals(key)) {
+                String app_logo_current_value = sharedPreferences.getString("app_logo_current_value", "0");
+                //车况助手
+                if ("0".equals(app_logo_current_value)) {
+                    PackageManager pm = getPackageManager();
+                    pm.setComponentEnabledSetting(
+                            new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity.jindihui"),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP);
+                    pm.setComponentEnabledSetting(
+                            new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity"),
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+                    //津迪会
+                } else if ("1".equals(app_logo_current_value)) {
+                    PackageManager pm = getPackageManager();
+                    pm.setComponentEnabledSetting(
+                            new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity"),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP);
+                    pm.setComponentEnabledSetting(
+                            new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity.jindihui"),
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+                }
+            }
+        }
+    };
+
 
     public static class SettingsFragment extends PreferenceFragment {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.root_preferences);
+
         }
     }
 }

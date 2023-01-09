@@ -792,7 +792,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
 
-            updateEngineSpeedData();
+//            updateEngineSpeedData();
+
+            if (engineSpeedEsv != null) {
+                if (energyMode == BYDAutoEnergyDevice.ENERGY_MODE_EV || energyMode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
+                    engineSpeedEsv.setVisibility(View.GONE);
+                } else {
+                    engineSpeedEsv.setVisibility(View.VISIBLE);
+                }
+            }
         }
 
         /**
@@ -1300,7 +1308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (item.getItemId() == R.id.about_us) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (item.getItemId() == R.id.version_update) {
-            Uri uri = Uri.parse("https://gitee.com/liyiwei1032/car-staus-helper");
+            Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } else if (item.getItemId() == R.id.float_show) {
@@ -1308,9 +1316,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
-//        else if (item.getItemId() == R.id.radar_distance) {
-//            startActivity(new Intent(this, RadarFloatingSettingActivity.class));
-//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -1530,28 +1535,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
                     return;
                 }
-                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
-                if (isLandLayoutShow()) {
-                    Toast.makeText(this, "当前温度：" + (temprature + 1), Toast.LENGTH_SHORT).show();
-                }
+                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
             } else if (vId == R.id.temperature_sub_btn) {
                 int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
                     return;
                 }
-                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN_DEPUTY, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
-                if (isLandLayoutShow()) {
-                    Toast.makeText(this, "当前温度：" + (temprature - 1), Toast.LENGTH_SHORT).show();
-                }
+                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
             } else if (vId == R.id.wind_level_plus_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_7) {
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
-                if (isLandLayoutShow()) {
-                    Toast.makeText(this, "当前风量：" + (acWindLevel + 1), Toast.LENGTH_SHORT).show();
-                }
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
                 if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
@@ -1561,9 +1557,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
-                if (isLandLayoutShow()) {
-                    Toast.makeText(this, "当前风量：" + (acWindLevel - 1), Toast.LENGTH_SHORT).show();
-                }
             } else if (vId == R.id.defrost_mode_btn) {
                 int state = bydAutoAcDevice.getAcDefrostState(BYDAutoAcDevice.AC_DEFROST_AREA_FRONT);
                 if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
