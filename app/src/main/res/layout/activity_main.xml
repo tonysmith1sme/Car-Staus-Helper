@@ -11,13 +11,13 @@
         android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="@drawable/bg_simple_1"
         android:orientation="vertical">
 
         <ScrollView
             android:layout_width="260dp"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@drawable/bg_simple_1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -274,11 +274,17 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
+
                 <!--总里程-->
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -400,14 +406,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="h" />
+                        android:text="H" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
 
                 <!--本次行程里程-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -515,6 +527,13 @@
                         android:text="L/100KM" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
 
                 <!--温度-->
                 <LinearLayout
@@ -630,6 +649,13 @@
                         android:text="标准" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
+
                 <!--累计电量消耗-->
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -672,6 +698,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="L" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="外接充电总量：" />
+
+                    <TextView
+                        android:id="@+id/external_charging_power_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KWH" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -855,13 +902,12 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="变速箱档位：" />
+                        android:text="变速箱挡位：" />
 
                     <TextView
                         android:id="@+id/current_gearbox_level_tv"
@@ -878,7 +924,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="电源档位：" />
+                        android:text="电源挡位：" />
 
                     <TextView
                         android:id="@+id/power_level_tv"
@@ -1143,10 +1189,16 @@
                         android:text="℃" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1298,7 +1350,7 @@
         <TextView
             android:id="@+id/map_place_holder_tv"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="280dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="地图浮窗占位"
@@ -1318,7 +1370,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="8dp">
@@ -1327,6 +1378,7 @@
                 android:id="@+id/engine_speed_esv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
@@ -1335,7 +1387,7 @@
                 android:id="@+id/car_speed_csv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
@@ -1344,7 +1396,7 @@
                 android:id="@+id/engine_power_epv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
@@ -1353,7 +1405,7 @@
                 android:id="@+id/motor_speed_msv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
@@ -1362,7 +1414,7 @@
                 android:id="@+id/rear_motor_speed_msv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />

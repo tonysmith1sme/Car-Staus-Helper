@@ -128,6 +128,10 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        //适配dm车型无getHEVMileageValue接口的情况
+        if (result == 0) {
+            result = device.getTotalMileageValue() - device.getEVMileageValue();
+        }
         return result;
     }
 

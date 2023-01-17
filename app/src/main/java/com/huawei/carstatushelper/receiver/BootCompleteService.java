@@ -179,6 +179,12 @@ public class BootCompleteService extends Service {
                     }
                 }
             }, ttsEnginePkg);
+        } else {
+            if (tts != null) {
+                tts.stop();
+                tts.shutdown();
+                tts = null;
+            }
         }
         return ret;
     }

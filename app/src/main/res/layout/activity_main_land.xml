@@ -18,7 +18,7 @@
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="40dp"
@@ -117,13 +117,14 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:paddingRight="16dp" />
 
                 <com.huawei.carstatushelper.view.CarSpeedView
                     android:id="@+id/car_speed_csv"
                     android:layout_width="415dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp" />
@@ -132,7 +133,7 @@
                     android:id="@+id/engine_power_epv"
                     android:layout_width="415dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp" />
@@ -141,7 +142,7 @@
                     android:id="@+id/motor_speed_msv"
                     android:layout_width="415dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp" />
@@ -150,7 +151,7 @@
                     android:id="@+id/rear_motor_speed_msv"
                     android:layout_width="415dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp" />
@@ -288,7 +289,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="km" />
+                    android:text="KM" />
             </LinearLayout>
 
             <LinearLayout
@@ -310,7 +311,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Km" />
+                    android:text="KM" />
             </LinearLayout>
 
             <LinearLayout
@@ -333,7 +334,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Km" />
+                    android:text="KM" />
             </LinearLayout>
 
             <LinearLayout
@@ -389,7 +390,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Km" />
+                            android:text="KM" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -449,7 +450,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Km" />
+                            android:text="KM" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -748,7 +749,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kwh/100Km" />
+                    android:text="KWH/100Km" />
             </LinearLayout>
 
             <LinearLayout
@@ -791,7 +792,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kwh" />
+                    android:text="KWH" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="外接充电总量：" />
+
+                <TextView
+                    android:id="@+id/external_charging_power_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KWH" />
             </LinearLayout>
 
             <LinearLayout
@@ -836,7 +857,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kwh/100Km" />
+                    android:text="KWH/100KM" />
             </LinearLayout>
         </LinearLayout>
 

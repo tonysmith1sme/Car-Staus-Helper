@@ -239,6 +239,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mapPlaceHolderTv;
     private BYDAutoInstrumentDevice instrumentDevice;
     private TextView waterTemperaturePercentTv;
+    /**
+     * 外接充电总量
+     */
+    private TextView externalChargingPowerTv;
     //    private String engine_speed_data_source;
 
     @Override
@@ -442,6 +446,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mapPlaceHolderTv = binding.mapPlaceHolderTv;
         waterTemperaturePercentTv = binding.waterTemperaturePercentTv;
+
+        externalChargingPowerTv = binding.externalChargingPowerTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -502,6 +508,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentTravelFuelCostTv = binding.currentTravelFuelCostTv;
 
         energyFeedbackBtn = binding.energyFeedbackBtn;
+
+        externalChargingPowerTv = binding.externalChargingPowerTv;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -1468,6 +1476,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //能量回馈强度
         absBYDAutoSettingListener.onEnergyFeedbackStrengthChanged(settingDevice.getEnergyFeedback());
+
+        //外接充电总量
+        instrumentListener.onExternalChargingPowerChanged(instrumentDevice.getExternalChargingPower());
     }
 
     private void updateEnginePower() {
@@ -1629,6 +1640,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onExternalChargingPowerChanged(double value) {
             super.onExternalChargingPowerChanged(value);
+            String va = MainActivity.format.format(value);
+            if (externalChargingPowerTv != null) {
+                externalChargingPowerTv.setText(va);
+            }
         }
     };
 }

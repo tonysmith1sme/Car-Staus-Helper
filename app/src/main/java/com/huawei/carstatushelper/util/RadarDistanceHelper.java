@@ -108,11 +108,11 @@ public class RadarDistanceHelper {
 
         //自定义浮窗偏移
         if (x > 0 && y > 0) {
-            helper.addView(rootView, x, y, false);
+            helper.addView(rootView, x, y, false, true);
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            helper.addView(rootView, 280, 110, false);
+            helper.addView(rootView, 280, 110, false, true);
         } else {
-            helper.addView(rootView, 70, 780, false);
+            helper.addView(rootView, 70, 780, false, true);
         }
 
         TextView tv0 = (TextView) rootView.findViewById(R.id.distance0_tv);

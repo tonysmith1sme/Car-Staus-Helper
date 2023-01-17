@@ -1,7 +1,9 @@
 package com.huawei.carstatushelper;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,19 +11,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.huawei.carstatushelper.activity.AgreementActivity;
 import com.huawei.carstatushelper.activity.ImageDetailActivity;
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
-import com.huawei.carstatushelper.util.RadarDistanceHelper;
-import com.ziwenl.floatingwindowdemo.FloatingWindowService;
+import com.socks.library.KLog;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,6 +31,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public static final String[] BYD_PERMISSIONS = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_PANORAMA_COMMON, Manifest.permission.BYDAUTO_PANORAMA_GET, Manifest.permission.BYDAUTO_SETTING_COMMON, Manifest.permission.BYDAUTO_INSTRUMENT_COMMON, Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,};
     private com.huawei.carstatushelper.databinding.ActivitySplashBinding binding;
     private SharedPreferences preferences;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.checkBydPermissionBtn.setOnClickListener(this);
         binding.setFastModeBtn.setOnClickListener(this);
         binding.setBootWithStartBtn.setOnClickListener(this);
+        binding.selectTtsEngineBtn.setOnClickListener(this);
 
 //        binding.testNotificationBtn.setOnClickListener(this);
 //        binding.testEngineSpeedFloatingBtn.setOnClickListener(this);
@@ -73,6 +77,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
+        tts = new TextToSpeech(SplashActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                KLog.e("onInit = " + i);
+            }
+        });
     }
 
 //    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
@@ -152,6 +162,31 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 //                RadarDistanceHelper radarDistanceHelper = new RadarDistanceHelper(this);
 //                radarDistanceHelper.showRadarFloating();
 //                break;
+            case R.id.select_tts_engine_btn:
+                List<TextToSpeech.EngineInfo> engineInfoList = tts.getEngines();
+                String[] infos = new String[engineInfoList.size()];
+                for (int i = 0; i < engineInfoList.size(); i++) {
+                    TextToSpeech.EngineInfo engineInfo = engineInfoList.get(i);
+                    String label = engineInfo.label;
+                    String name = engineInfo.name;
+                    int icon = engineInfo.icon;
+                    infos[i] = label + ":" + name;
+                }
+                //app版
+                new AlertDialog.Builder(SplashActivity.this).setTitle("请选择语音引擎").setItems(infos, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                TextToSpeech.EngineInfo engineInfo = engineInfoList.get(i);
+                                String ttsPkg = engineInfo.name;
+                                preferences.edit()
+                                        .putString("default_tts_engine_pkg", ttsPkg)
+                                        .putBoolean("smart_remind_enable", true)
+                                        .apply();
+                                Toast.makeText(SplashActivity.this, "语音引擎设置成功", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setCancelable(false).show();
+                break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {
                     Toast.makeText(this, "请检查浮窗权限", Toast.LENGTH_SHORT).show();
@@ -168,7 +203,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 //                    return;
 //                }
 //                preferences.edit().putBoolean(KEY_AGREEMENT_SAVE, true).apply();
-                preferences.edit().putBoolean("key_skip_guide_page",true).apply();
+                preferences.edit().putBoolean("key_skip_guide_page", true).apply();
 
                 startService(new Intent(this, BootCompleteService.class));
 

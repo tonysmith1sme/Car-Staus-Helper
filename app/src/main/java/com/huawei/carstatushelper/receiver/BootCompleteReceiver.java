@@ -20,8 +20,8 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         } else {
             context.startService(i);
         }
-        if (PrefUtil.isWirelessChargingBootCloseEnable(context)) {
-            BYDWirelessCharger.turnOff(context);
-        }
+//        if (PrefUtil.isWirelessChargingBootCloseEnable(context)) {
+//            BYDWirelessCharger.turnOff(context);
+//        }
     }
 }

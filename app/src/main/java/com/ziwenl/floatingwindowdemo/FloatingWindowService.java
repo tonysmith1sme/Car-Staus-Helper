@@ -51,7 +51,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
         mFloatingWindowHelper = new FloatingWindowHelper(this);
         mExampleViewC = LayoutInflater.from(this).inflate(R.layout.widget_test_view_c, null, false);
         try {
-            mFloatingWindowHelper.addView(mExampleViewC, 0, 0, false);
+            mFloatingWindowHelper.addView(mExampleViewC, 0, 0, true, false);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "error:" + e.toString(), Toast.LENGTH_SHORT).show();

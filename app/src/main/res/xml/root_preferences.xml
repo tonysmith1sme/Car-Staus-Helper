@@ -9,10 +9,12 @@
             android:defaultValue="false"
             android:key="map_place_holder_enable"
             android:title="地图浮窗占位" />
+        <!--
         <SwitchPreference
             android:defaultValue="false"
             android:key="wireless_charging_boot_close_enable"
             android:title="开机关闭无线充电" />
+        -->
         <!--
         <ListPreference
             android:defaultValue="0"
@@ -49,7 +51,7 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="show_ac_layout"
-            android:title="显示空调按钮" />
+            android:title="空调按钮" />
 
         <ListPreference
             android:defaultValue="seekbar"
@@ -71,12 +73,12 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="radar_distance_enable"
-            android:title="启用雷达测距" />
+            android:title="启用" />
         <EditTextPreference
             android:defaultValue="3"
             android:inputType="number"
             android:key="radar_floating_trigger_type"
-            android:title="浮窗触发方式（0，1，2，3）" />
+            android:title="触发方式（0，1，2，3）" />
         <!--
         <SwitchPreference
             android:key="speak_radar_distance_enable"
@@ -147,44 +149,46 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="智能提醒">
-        <EditTextPreference
-            android:defaultValue="com.xiaomi.mibrain.speech"
-            android:key="default_tts_engine_pkg"
-            android:title="语音引擎索（参考：[小爱：com.xiaomi.mibrain.speech]，[讯飞语记：com.iflytek.vflynote]）" />
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="smart_remind_enable"
             android:title="启用" />
+        <!--
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="default_tts_engine_pkg"
+            android:title="语音引擎（参考：[小爱：com.xiaomi.mibrain.speech]，[讯飞语记：com.iflytek.vflynote]）" />
+        -->
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="smart_remind_enable"
             android:key="radar_distance_tts_enable"
-            android:title="雷达距离播报" />
+            android:title="雷达距离" />
         <EditTextPreference
-            android:defaultValue=""
+            android:defaultValue="车况助手提醒您，道路千万条，安全第一条，行车不规范，亲人两行泪。"
             android:dependency="smart_remind_enable"
             android:key="boot_welcome_tts_content"
             android:title="开机欢迎语" />
         <EditTextPreference
-            android:defaultValue="驻车档"
+            android:defaultValue="驻车挡"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_p_content"
-            android:title="P档" />
+            android:title="P挡" />
         <EditTextPreference
-            android:defaultValue="倒车档"
+            android:defaultValue="倒车挡"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_r_content"
-            android:title="R档" />
+            android:title="R挡" />
         <EditTextPreference
-            android:defaultValue="滑行档"
+            android:defaultValue="滑行挡"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_n_content"
-            android:title="N档" />
+            android:title="N挡" />
         <EditTextPreference
-            android:defaultValue="前进档"
+            android:defaultValue="前进挡"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_d_content"
-            android:title="D档" />
+            android:title="D挡" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="定制">

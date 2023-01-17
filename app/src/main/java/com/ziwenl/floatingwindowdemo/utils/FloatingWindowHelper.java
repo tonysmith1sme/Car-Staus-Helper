@@ -147,7 +147,7 @@ public class FloatingWindowHelper {
      * @param view    要悬浮的View
      * @param canMove 是否可以拖动
      */
-    public void addView(View view, int x, int y, boolean canMove) {
+    public void addView(View view, int x, int y, boolean canMove, boolean noTouch) {
         if (mWindowManager == null) {
             return;
         }
@@ -155,8 +155,12 @@ public class FloatingWindowHelper {
             mChildViewMap = new HashMap<>();
         }
         if (!mChildViewMap.containsKey(view)) {
-//            WindowManager.LayoutParams layoutParams = createLayoutParams();
-            WindowManager.LayoutParams layoutParams = createLayoutParamsNew();
+            WindowManager.LayoutParams layoutParams;
+            if (noTouch) {
+                layoutParams = createLayoutParamsNew();
+            } else {
+                layoutParams = createLayoutParams();
+            }
             layoutParams.x = x;
             layoutParams.y = y;
             mChildViewMap.put(view, layoutParams);
