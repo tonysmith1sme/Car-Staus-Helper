@@ -62,7 +62,7 @@ import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
 import com.huawei.carstatushelper.view.RearMotorSpeedView;
 import com.socks.library.KLog;
-import com.ziwenl.floatingwindowdemo.FloatingWindowService;
+import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -243,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 外接充电总量
      */
     private TextView externalChargingPowerTv;
-    //    private String engine_speed_data_source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,29 +279,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        boolean show_sha_che_group_layout = mPreferences.getBoolean("show_sha_che_group_layout", false);
+        boolean show_sha_che_group_layout = mPreferences.getBoolean("show_sha_che_group_layout", getResources().getBoolean(R.bool.default_show_sha_che_group_layout_value));
         if (shaCheGroupLayout != null) {
             shaCheGroupLayout.setVisibility(show_sha_che_group_layout ? View.VISIBLE : View.GONE);
         }
-        boolean power_speed_enable = mPreferences.getBoolean("power_speed_enable", true);
+        boolean power_speed_enable = mPreferences.getBoolean("power_speed_enable", getResources().getBoolean(R.bool.default_power_speed_enable_value));
         if (enginePowerEpv != null) {
             enginePowerEpv.setVisibility(power_speed_enable ? View.VISIBLE : View.GONE);
         }
-        boolean car_speed_enable = mPreferences.getBoolean("car_speed_enable", true);
+        boolean car_speed_enable = mPreferences.getBoolean("car_speed_enable", getResources().getBoolean(R.bool.default_car_speed_enable_value));
         if (carSpeedCsv != null) {
             carSpeedCsv.setVisibility(car_speed_enable ? View.VISIBLE : View.GONE);
         }
-        boolean rear_motor_speed_enable = mPreferences.getBoolean("rear_motor_speed_enable", true);
+        boolean rear_motor_speed_enable = mPreferences.getBoolean("rear_motor_speed_enable", getResources().getBoolean(R.bool.default_rear_motor_speed_enable_value));
         if (rearMotorSpeedMsv != null) {
             rearMotorSpeedMsv.setVisibility(rear_motor_speed_enable ? View.VISIBLE : View.GONE);
         }
-        boolean map_place_holder_enable = mPreferences.getBoolean("map_place_holder_enable", false);
+        boolean map_place_holder_enable = mPreferences.getBoolean("map_place_holder_enable", getResources().getBoolean(R.bool.default_map_place_holder_enable_value));
         if (mapPlaceHolderTv != null) {
             mapPlaceHolderTv.setVisibility(map_place_holder_enable ? View.VISIBLE : View.GONE);
         }
-//        engine_speed_data_source = mPreferences.getString("engine_speed_data_source", "0");
-        init_latest_electric_price = Double.parseDouble(mPreferences.getString("latest_fuel_price", "8.5"));
-        init_latest_fuel_price = Double.parseDouble(mPreferences.getString("latest_electric_price", "1.7"));
+        init_latest_fuel_price = Double.parseDouble(mPreferences.getString("latest_fuel_price", getString(R.string.default_latest_fuel_price)));
+        init_latest_electric_price = Double.parseDouble(mPreferences.getString("latest_electric_price", getString(R.string.default_latest_electric_price)));
     }
 
     private void initBtnListener() {
@@ -1320,7 +1318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } else if (item.getItemId() == R.id.float_show) {
-            startService(new Intent(this, FloatingWindowService.class));
+            startService(new Intent(this, EngineSpeedFloatingService.class));
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }

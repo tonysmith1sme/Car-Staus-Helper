@@ -25,8 +25,8 @@ import com.huawei.carstatushelper.view.DialogEngineSpeedView;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
 
-public class FloatingWindowService extends Service implements View.OnClickListener {
-    private static final String TAG = FloatingWindowService.class.getSimpleName();
+public class EngineSpeedFloatingService extends Service implements View.OnClickListener {
+    private static final String TAG = EngineSpeedFloatingService.class.getSimpleName();
 
     private FloatingWindowHelper mFloatingWindowHelper;
     private View mExampleViewC;
@@ -187,7 +187,7 @@ public class FloatingWindowService extends Service implements View.OnClickListen
     public void onClick(View v) {
         int vId = v.getId();
         if (vId == R.id.back_btn) {
-            Intent intent = new Intent(FloatingWindowService.this, MainActivity.class);
+            Intent intent = new Intent(EngineSpeedFloatingService.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             mFloatingWindowHelper.destroy();

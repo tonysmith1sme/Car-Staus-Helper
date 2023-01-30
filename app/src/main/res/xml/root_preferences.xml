@@ -6,7 +6,7 @@
             android:title="跳过引导页" />
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="@bool/default_map_place_holder_enable_value"
             android:key="map_place_holder_enable"
             android:title="地图浮窗占位" />
         <!--
@@ -64,9 +64,9 @@
 
     <PreferenceCategory android:title="横屏">
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/default_show_sha_che_group_layout_value"
             android:key="show_sha_che_group_layout"
-            android:title="显示油门、刹车状态条" />
+            android:title="油门、刹车状态" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="雷达测距">
@@ -124,33 +124,33 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="能耗参数">
         <EditTextPreference
-            android:defaultValue="8.5"
+            android:defaultValue="@string/default_latest_fuel_price"
             android:key="latest_fuel_price"
-            android:title="油价（默认：8.5元/L）" />
+            android:title="油价" />
         <EditTextPreference
-            android:defaultValue="1.7"
+            android:defaultValue="@string/default_latest_electric_price"
             android:key="latest_electric_price"
-            android:title="电价（默认：1.7元/KWH）" />
+            android:title="电价" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="仪表显示">
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/default_power_speed_enable_value"
             android:key="power_speed_enable"
             android:title="功率表" />
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/default_car_speed_enable_value"
             android:key="car_speed_enable"
             android:title="车速表" />
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="@bool/default_rear_motor_speed_enable_value"
             android:key="rear_motor_speed_enable"
             android:title="后电机转速表" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="智能提醒">
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="smart_remind_enable"
             android:title="启用" />
         <!--
@@ -165,27 +165,27 @@
             android:key="radar_distance_tts_enable"
             android:title="雷达距离" />
         <EditTextPreference
-            android:defaultValue="车况助手提醒您，道路千万条，安全第一条，行车不规范，亲人两行泪。"
+            android:defaultValue="@string/default_boot_welcome_content"
             android:dependency="smart_remind_enable"
             android:key="boot_welcome_tts_content"
             android:title="开机欢迎语" />
         <EditTextPreference
-            android:defaultValue="驻车挡"
+            android:defaultValue="@string/default_gearbox_level_p_content"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_p_content"
             android:title="P挡" />
         <EditTextPreference
-            android:defaultValue="倒车挡"
+            android:defaultValue="@string/default_gearbox_level_r_content"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_r_content"
             android:title="R挡" />
         <EditTextPreference
-            android:defaultValue="滑行挡"
+            android:defaultValue="@string/default_gearbox_level_n_content"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_n_content"
             android:title="N挡" />
         <EditTextPreference
-            android:defaultValue="前进挡"
+            android:defaultValue="@string/default_gearbox_level_d_content"
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_d_content"
             android:title="D挡" />

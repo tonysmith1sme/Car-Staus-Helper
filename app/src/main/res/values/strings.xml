@@ -44,4 +44,18 @@
 
     <string name="app_name_jdh">津迪会</string>
 
+    <string name="default_boot_welcome_content">车况助手提醒您，道路千万条，安全第一条，行车不规范，亲人两行泪。</string>
+    <string name="default_gearbox_level_p_content">驻车挡</string>
+    <string name="default_gearbox_level_r_content">倒车挡</string>
+    <string name="default_gearbox_level_n_content">滑行挡</string>
+    <string name="default_gearbox_level_d_content">前进挡</string>
+    <string name="default_latest_fuel_price">8.5</string>
+    <string name="default_latest_electric_price">1.7</string>
+
+    <bool name="default_show_sha_che_group_layout_value">true</bool>
+    <bool name="default_power_speed_enable_value">true</bool>
+    <bool name="default_car_speed_enable_value">true</bool>
+    <bool name="default_rear_motor_speed_enable_value">true</bool>
+    <bool name="default_map_place_holder_enable_value">false</bool>
+
 </resources>

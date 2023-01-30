@@ -28,7 +28,7 @@ import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.RadarDistanceHelper;
 import com.huawei.carstatushelper.util.SmartRemindUtil;
 import com.socks.library.KLog;
-import com.ziwenl.floatingwindowdemo.FloatingWindowService;
+import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,7 +106,7 @@ public class BootCompleteService extends Service {
         radarDistanceHelper = new RadarDistanceHelper(this);
 
         if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
-            startService(new Intent(this, FloatingWindowService.class));
+            startService(new Intent(this, EngineSpeedFloatingService.class));
         }
     }
 
