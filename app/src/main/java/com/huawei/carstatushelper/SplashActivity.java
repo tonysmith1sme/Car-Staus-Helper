@@ -28,7 +28,15 @@ import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String[] BYD_PERMISSIONS = {Manifest.permission.BYDAUTO_BODYWORK_COMMON, Manifest.permission.BYDAUTO_AC_COMMON, Manifest.permission.BYDAUTO_PANORAMA_COMMON, Manifest.permission.BYDAUTO_PANORAMA_GET, Manifest.permission.BYDAUTO_SETTING_COMMON, Manifest.permission.BYDAUTO_INSTRUMENT_COMMON, Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,};
+    public static final String[] BYD_PERMISSIONS = {
+            Manifest.permission.BYDAUTO_BODYWORK_COMMON,
+            Manifest.permission.BYDAUTO_AC_COMMON,
+            Manifest.permission.BYDAUTO_PANORAMA_COMMON,
+            Manifest.permission.BYDAUTO_PANORAMA_GET,
+            Manifest.permission.BYDAUTO_SETTING_COMMON,
+            Manifest.permission.BYDAUTO_INSTRUMENT_COMMON,
+            Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON
+    };
     private com.huawei.carstatushelper.databinding.ActivitySplashBinding binding;
     private SharedPreferences preferences;
     private TextToSpeech tts;
@@ -171,6 +179,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     String name = engineInfo.name;
                     int icon = engineInfo.icon;
                     infos[i] = label + ":" + name;
+                }
+                if (engineInfoList.size() == 0) {
+                    Toast.makeText(this, "请先安装tts语音引擎", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //app版
                 new AlertDialog.Builder(SplashActivity.this).setTitle("请选择语音引擎").setItems(infos, new DialogInterface.OnClickListener() {

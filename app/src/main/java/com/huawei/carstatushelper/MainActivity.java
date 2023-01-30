@@ -15,7 +15,6 @@ import android.hardware.bydauto.charging.AbsBYDAutoChargingListener;
 import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
-import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
@@ -243,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 外接充电总量
      */
     private TextView externalChargingPowerTv;
+    private Button acControlModeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,6 +324,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (energyFeedbackBtn != null) {
             energyFeedbackBtn.setOnClickListener(this);
+        }
+        if (acControlModeBtn != null) {
+            acControlModeBtn.setOnClickListener(this);
         }
     }
 
@@ -446,6 +449,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         waterTemperaturePercentTv = binding.waterTemperaturePercentTv;
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
+
+        acControlModeBtn = binding.acControlModeBtn;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -508,6 +513,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         energyFeedbackBtn = binding.energyFeedbackBtn;
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
+
+        acControlModeBtn = binding.acControlModeBtn;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -543,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.unregisterListener(absBYDAutoBodyworkListener);
         speedDevice.unregisterListener(absBYDAutoSpeedListener);
         energyDevice.unregisterListener(absBYDAutoEnergyListener);
-        engineDevice.unregisterListener(absBYDAutoEngineListener);
+//        engineDevice.unregisterListener(absBYDAutoEngineListener);
         bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
         gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
         chargingDevice.unregisterListener(absBYDAutoChargingListener);
@@ -586,7 +593,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.registerListener(absBYDAutoBodyworkListener);
         speedDevice.registerListener(absBYDAutoSpeedListener);
         energyDevice.registerListener(absBYDAutoEnergyListener);
-        engineDevice.registerListener(absBYDAutoEngineListener);
+//        engineDevice.registerListener(absBYDAutoEngineListener);
         bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
         chargingDevice.registerListener(absBYDAutoChargingListener);
@@ -595,22 +602,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         instrumentDevice.registerListener(instrumentListener);
     }
 
-    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
-        /**
-         * 监听发动机转速变化
-         * @param value
-         */
-        @Override
-        public void onEngineSpeedChanged(int value) {
-            super.onEngineSpeedChanged(value);
-            if (value > 0 && value <= 8000) {
-                updateEngineSpeedUI(value);
-            } else {
-                int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-                updateEngineSpeedUI(engine_speed_gb);
-            }
-        }
-    };
+//    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+//        /**
+//         * 监听发动机转速变化
+//         * @param value
+//         */
+//        @Override
+//        public void onEngineSpeedChanged(int value) {
+//            super.onEngineSpeedChanged(value);
+//            if (value > 0 && value <= 8000) {
+//                updateEngineSpeedUI(value);
+//            } else {
+//                int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+//                updateEngineSpeedUI(engine_speed_gb);
+//            }
+//        }
+//    };
 
     private final AbsBYDAutoSettingListener absBYDAutoSettingListener = new AbsBYDAutoSettingListener() {
         /**
@@ -780,6 +787,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (area == BYDAutoAcDevice.AC_TEMPERATURE_MAIN) {
                 if (currentTemperatureTv != null) {
                     currentTemperatureTv.setText(String.valueOf(value));
+                }
+            }
+        }
+
+        @Override
+        public void onAcCtrlModeChanged(int mode) {
+            super.onAcCtrlModeChanged(mode);
+            if (acControlModeBtn != null) {
+                if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
+                    acControlModeBtn.setText("自动");
+                } else if (mode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
+                    acControlModeBtn.setText("手动");
+                } else {
+                    acControlModeBtn.setText("mode:" + mode);
                 }
             }
         }
@@ -1477,6 +1498,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //外接充电总量
         instrumentListener.onExternalChargingPowerChanged(instrumentDevice.getExternalChargingPower());
+
+        //空调的手动、与自动控制方式
+        absBYDAutoAcListener.onAcCtrlModeChanged(bydAutoAcDevice.getAcControlMode());
     }
 
     private void updateEnginePower() {
@@ -1538,7 +1562,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Toast.makeText(this, "error feedback mode:" + energyFeedback, Toast.LENGTH_SHORT).show();
             }
-        } else if (bydAutoAcDevice != null) {
+            return;
+        }
+        if (bydAutoAcDevice != null) {
+            if (vId == R.id.ac_control_mode_btn) {
+                int acControlMode = bydAutoAcDevice.getAcControlMode();
+                if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
+                    bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_MANUAL);
+                } else if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
+                    bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_AUTO);
+                }
+                return;
+            }
             if (vId == R.id.temperature_plus_btn) {
                 int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
                 if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {

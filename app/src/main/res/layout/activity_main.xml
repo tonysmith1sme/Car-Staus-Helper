@@ -190,7 +190,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="45dp"
+                                android:layout_width="55dp"
                                 android:layout_height="wrap_content">
 
                                 <TextView
@@ -253,7 +253,7 @@
 
 
                             <LinearLayout
-                                android:layout_width="45dp"
+                                android:layout_width="55dp"
                                 android:layout_height="wrap_content">
 
                                 <TextView
@@ -565,14 +565,14 @@
 
                     <Button
                         android:id="@+id/temperature_sub_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="-"
                         android:textSize="24sp" />
 
                     <Button
                         android:id="@+id/temperature_plus_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="+"
                         android:textSize="24sp" />
@@ -601,14 +601,14 @@
 
                     <Button
                         android:id="@+id/wind_level_sub_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="-"
                         android:textSize="24sp" />
 
                     <Button
                         android:id="@+id/wind_level_plus_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="+"
                         android:textSize="24sp" />
@@ -619,14 +619,20 @@
                     android:layout_height="wrap_content">
 
                     <Button
+                        android:id="@+id/ac_control_mode_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="自动" />
+
+                    <Button
                         android:id="@+id/defrost_mode_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="除霜" />
 
                     <Button
                         android:id="@+id/ventilate_mode_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="通风" />
                 </LinearLayout>
@@ -643,7 +649,7 @@
 
                     <Button
                         android:id="@+id/energy_feedback_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="标准" />

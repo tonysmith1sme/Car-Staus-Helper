@@ -19,7 +19,7 @@ android {
         minSdk 25
         targetSdk 32
         versionCode 31
-        versionName "V1.3.3"
+        versionName "V1.3.4"
     }
 
     buildTypes {

@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
-import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
+import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
+import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
+import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
+import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -38,7 +41,8 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
     private BYDAutoEngineDevice mBydAutoEngineDevice;
     private DialogEngineSpeedView mEngineSpeedView;
     private TextView mEngineSpeedTv;
-//    private BYDAutoSpeedDevice speedDevice;
+    private BYDAutoSpeedDevice speedDevice;
+    private BYDAutoEnergyDevice energyDevice;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -62,17 +66,19 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         if (!BuildConfig.DEBUG) {
             mBydAutoAcDevice = BYDAutoAcDevice.getInstance(this);
             mBydAutoEngineDevice = BYDAutoEngineDevice.getInstance(this);
-//            speedDevice = BYDAutoSpeedDevice.getInstance(this);
+            speedDevice = BYDAutoSpeedDevice.getInstance(this);
+            energyDevice = BYDAutoEnergyDevice.getInstance(this);
         }
-//        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null || speedDevice == null) {
-        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null) {
+        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null || speedDevice == null) {
+//        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null) {
             return;
         }
 
         initData();
 
-        mBydAutoEngineDevice.registerListener(absBYDAutoEngineListener);
-//        speedDevice.registerListener(speedListener);
+//        mBydAutoEngineDevice.registerListener(absBYDAutoEngineListener);
+        speedDevice.registerListener(speedListener);
+        energyDevice.registerListener(energyListener);
     }
 
     private boolean checkPermission(String perm) {
@@ -147,40 +153,75 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
     public void onDestroy() {
         super.onDestroy();
         mFloatingWindowHelper.destroy();
-        if (mBydAutoEngineDevice != null) {
-            mBydAutoEngineDevice.unregisterListener(absBYDAutoEngineListener);
-        }
-//        if (speedDevice != null) {
-//            speedDevice.unregisterListener(speedListener);
+//        if (mBydAutoEngineDevice != null) {
+//            mBydAutoEngineDevice.unregisterListener(absBYDAutoEngineListener);
 //        }
+        if (speedDevice != null) {
+            speedDevice.unregisterListener(speedListener);
+        }
+        if (energyDevice != null) {
+            energyDevice.unregisterListener(energyListener);
+        }
     }
 
-//    private final AbsBYDAutoSpeedListener speedListener = new AbsBYDAutoSpeedListener() {
-//        @Override
-//        public void onSpeedChanged(double value) {
-//            super.onSpeedChanged(value);
-//            int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-//            mEngineSpeedView.setVelocity(engine_speed_gb);
-//            mEngineSpeedTv.setText(String.valueOf(engine_speed_gb));
-//        }
-//    };
-
-    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+    private final AbsBYDAutoEnergyListener energyListener = new AbsBYDAutoEnergyListener() {
         @Override
-        public void onEngineSpeedChanged(int value) {
-            super.onEngineSpeedChanged(value);
-            if (value > 0 && value <= 8000) {
-                updateEngineSpeedUI(value);
-            } else {
-                int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-                updateEngineSpeedUI(engine_speed_gb);
-            }
+        public void onPowerGenerationValueChanged(int value) {
+            super.onPowerGenerationValueChanged(value);
+            updateEngineSpeedData();
         }
     };
 
-    private void updateEngineSpeedUI(int speed) {
-        mEngineSpeedView.setVelocity(speed);
-        mEngineSpeedTv.setText(String.valueOf(speed));
+    private final AbsBYDAutoSpeedListener speedListener = new AbsBYDAutoSpeedListener() {
+        @Override
+        public void onSpeedChanged(double value) {
+            super.onSpeedChanged(value);
+//            int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+//            mEngineSpeedView.setVelocity(engine_speed_gb);
+//            mEngineSpeedTv.setText(String.valueOf(engine_speed_gb));
+            updateEngineSpeedData();
+        }
+    };
+
+//    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
+//        @Override
+//        public void onEngineSpeedChanged(int value) {
+//            super.onEngineSpeedChanged(value);
+//            if (value > 0 && value <= 8000) {
+//                updateEngineSpeedUI(value);
+//            } else {
+//                int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+//                updateEngineSpeedUI(engine_speed_gb);
+//            }
+//        }
+//    };
+
+    private void updateEngineSpeedData() {
+        if (mBydAutoEngineDevice == null) {
+            return;
+        }
+        int engine_speed = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
+        int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
+        int engine_speed_warning = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
+        if (engine_speed_gb > 0 && engine_speed_gb <= 8000) {
+            updateEngineSpeedUI(engine_speed_gb);
+        } else if (engine_speed > 0 && engine_speed <= 8000) {
+            updateEngineSpeedUI(engine_speed);
+        } else {
+            updateEngineSpeedUI(0);
+        }
+    }
+
+    private void updateEngineSpeedUI(int engineSpeed) {
+        if (engineSpeed >= 8191) {
+            engineSpeed = 0;
+        }
+        if (mEngineSpeedTv != null) {
+            mEngineSpeedTv.setText(String.valueOf(engineSpeed));
+        }
+        if (mEngineSpeedView != null) {
+            mEngineSpeedView.setVelocity(engineSpeed);
+        }
     }
 
     @Override
