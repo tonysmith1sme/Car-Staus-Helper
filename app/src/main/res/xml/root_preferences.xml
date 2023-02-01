@@ -189,7 +189,6 @@
             android:dependency="smart_remind_enable"
             android:key="gearbox_level_d_content"
             android:title="D挡" />
-        <!--
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="smart_remind_enable"
@@ -200,6 +199,7 @@
             android:dependency="smart_remind_enable"
             android:key="driving_charging_cap_not_close_remind_enable"
             android:title="行车充电盖未关闭提醒" />
+        <!--
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="smart_remind_enable"

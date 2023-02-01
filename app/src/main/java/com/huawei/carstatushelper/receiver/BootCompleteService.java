@@ -8,6 +8,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
+import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.panorama.AbsBYDAutoPanoramaListener;
@@ -56,6 +58,8 @@ public class BootCompleteService extends Service {
     private RadarDistanceHelper radarDistanceHelper;
     private SharedPreferences preferences;
     private TextToSpeech tts;
+    private BYDAutoBodyworkDevice bodyworkDevice;
+    private BYDAutoChargingDevice chargingDevice;
 
     public BootCompleteService() {
     }
@@ -165,6 +169,16 @@ public class BootCompleteService extends Service {
                 radarDevice.registerListener(radarListener);
             }
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED) {
+            if (bodyworkDevice == null) {
+                bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_CHARGING_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (chargingDevice == null) {
+                chargingDevice = BYDAutoChargingDevice.getInstance(this);
+            }
+        }
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String ttsEnginePkg = preferences.getString("default_tts_engine_pkg", "");
         if (SmartRemindUtil.isEnable(this) && ttsEnginePkg.length() != 0) {
@@ -211,7 +225,10 @@ public class BootCompleteService extends Service {
 
     private void speakTTS(String ttsText) {
         if (tts != null && ttsText.length() != 0) {
-            tts.speak(ttsText, TextToSpeech.QUEUE_ADD, null, null);
+            if (tts.isSpeaking()) {
+                tts.stop();
+            }
+            tts.speak(ttsText, TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
 
@@ -235,6 +252,27 @@ public class BootCompleteService extends Service {
             if (SmartRemindUtil.isEnable(BootCompleteService.this)) {
                 String gearboxLevelName = SmartRemindUtil.getGearboxLevelName(BootCompleteService.this, level);
                 speakTTS(gearboxLevelName);
+            }
+            if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_P) {
+                boolean enable = preferences.getBoolean("steering_wheel_not_reset_remind_enable", true);
+                if (enable) {
+                    //获取方向盘角度
+                    double steeringWheelValue = bodyworkDevice.getSteeringWheelValue(BYDAutoBodyworkDevice.BODYWORK_CMD_STEERING_WHEEL_ANGEL);
+                    if (steeringWheelValue > 45 || steeringWheelValue < -45) {
+                        speakTTS("驻车挡，请注意，方向盘未回正");
+                    }
+                }
+            }
+            if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_D) {
+                boolean enable = preferences.getBoolean("driving_charging_cap_not_close_remind_enable", true);
+                if (enable) {
+                    //获取充电口盖打开状态
+                    int state1 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_AC);
+                    int state2 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_DC);
+                    if (state1 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON || state2 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON) {
+                        speakTTS("前进挡，请注意，充电口盖未关闭");
+                    }
+                }
             }
         }
     };
@@ -291,7 +329,7 @@ public class BootCompleteService extends Service {
         }
     };
 
-    private final int[] mRadarDistanceArr = new int[]{150, 150, 150, 150, 150, 150, 150, 150, 150,};
+    private final int[] mRadarDistanceArr = new int[]{150, 150, 150, 150, 150, 150, 150, 150, 150};
 
     private boolean shouldShowRadarDistance() {
         boolean shouldShow = false;
