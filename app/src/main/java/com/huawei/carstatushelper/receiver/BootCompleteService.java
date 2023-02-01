@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 
+import com.huawei.carstatushelper.MainActivity;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.util.AutoBootHelper;
@@ -101,6 +102,10 @@ public class BootCompleteService extends Service {
                 object.put("totalFuelConValue", totalFuelConValue);
                 String json = object.toString();
                 KLog.e("初始化行程数据：" + json);
+                if (preferences.getBoolean(MainActivity.KEY_PAUSE_CURRENT_MILEAGE_DATA, false)) {
+                    preferences.edit().putBoolean(MainActivity.KEY_PAUSE_CURRENT_MILEAGE_DATA, false).apply();
+                    return;
+                }
                 preferences.edit().putString(KEY_INIT_DRIVER_DATA, json).apply();
             } catch (JSONException e) {
                 e.printStackTrace();

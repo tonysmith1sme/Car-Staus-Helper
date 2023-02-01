@@ -322,6 +322,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="KM" />
+
+                    <Button
+                        android:id="@+id/reset_mileage1_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="重置" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -343,6 +350,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="KM" />
+
+                    <Button
+                        android:id="@+id/reset_mileage2_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="重置" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -528,6 +542,12 @@
 
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/pause_current_mileage_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂停行程" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -636,6 +656,13 @@
                         android:layout_height="wrap_content"
                         android:text="通风" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/purple_200" />
 
                 <!--能量回馈强度-->
                 <LinearLayout

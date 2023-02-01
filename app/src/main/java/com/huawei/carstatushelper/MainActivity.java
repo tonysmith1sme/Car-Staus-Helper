@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
@@ -243,6 +244,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView externalChargingPowerTv;
     private Button acControlModeBtn;
+    private Button resetMileage1Btn;
+    private Button resetMileage2Btn;
+    /**
+     * 暂停行程
+     */
+    private Button pauseCurrentMileageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -328,7 +335,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (acControlModeBtn != null) {
             acControlModeBtn.setOnClickListener(this);
         }
+        if (resetMileage1Btn != null) {
+            resetMileage1Btn.setOnLongClickListener(onLongClickListener);
+        }
+        if (resetMileage2Btn != null) {
+            resetMileage2Btn.setOnLongClickListener(onLongClickListener);
+        }
+        if (pauseCurrentMileageBtn != null) {
+            pauseCurrentMileageBtn.setOnClickListener(this);
+        }
     }
+
+    private final View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            switch (view.getId()) {
+                case R.id.reset_mileage1_btn:
+                    if (instrumentDevice != null) {
+                        instrumentDevice.set(BYDAutoConstants.BYDAUTO_DEVICE_INSTRUMENT, BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 0);
+                    }
+                    break;
+                case R.id.reset_mileage2_btn:
+                    if (instrumentDevice != null) {
+                        instrumentDevice.set(BYDAutoConstants.BYDAUTO_DEVICE_INSTRUMENT, BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 1);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+    };
 
     private void loadContentView() {
         int orientation = getResources().getConfiguration().orientation;
@@ -451,6 +488,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         externalChargingPowerTv = binding.externalChargingPowerTv;
 
         acControlModeBtn = binding.acControlModeBtn;
+
+        resetMileage1Btn = binding.resetMileage1Btn;
+        resetMileage2Btn = binding.resetMileage2Btn;
+
+        pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -1545,9 +1587,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
+    public static final String KEY_PAUSE_CURRENT_MILEAGE_DATA = "key_pause_current_mileage_data";
+
     @Override
     public void onClick(View v) {
         int vId = v.getId();
+        if (vId == R.id.pause_current_mileage_btn) {
+            if (mPreferences != null) {
+                mPreferences.edit().putBoolean(KEY_PAUSE_CURRENT_MILEAGE_DATA, true).apply();
+                Toast.makeText(this, "下次启动车辆本次行程数据将保留", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
         if (vId == R.id.energy_feedback_btn) {
             if (settingDevice == null || energyFeedbackBtn == null) {
                 return;
