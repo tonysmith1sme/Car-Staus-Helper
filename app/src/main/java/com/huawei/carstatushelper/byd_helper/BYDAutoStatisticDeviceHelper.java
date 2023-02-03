@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 
 public class BYDAutoStatisticDeviceHelper {
     private static BYDAutoStatisticDeviceHelper INSTANCE;
-    BYDAutoStatisticDevice device;
+    private BYDAutoStatisticDevice device;
     private static final int INVALID_DATA = 65535;
     public static final int INVALID_DATA_1 = -10011;
 

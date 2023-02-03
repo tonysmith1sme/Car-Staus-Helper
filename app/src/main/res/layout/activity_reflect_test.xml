@@ -124,4 +124,69 @@
         android:layout_height="wrap_content"
         tools:text="null" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="倒车外后视镜翻转" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态：" />
+
+        <TextView
+            android:id="@+id/rear_view_mirror_flip_state_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/rear_view_mirror_flip_state_change_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="切换倒车外后视镜翻转" />
+
+    <Button
+        android:id="@+id/get_rear_mirror_angle_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取后视镜角度" />
+
+    <Button
+        android:id="@+id/set_rear_mirror_angle_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置后视镜角度" />
+
+
+    <TextView
+        android:id="@+id/on_active_change_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="onActiveChanged:0" />
+
+    <TextView
+        android:id="@+id/on_lks_mode_changed_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="onLKSModeChanged:0" />
+
+    <TextView
+        android:id="@+id/on_lks_sensitivity_changed_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="onLKSSensitivityChanged:0" />
+
+    <TextView
+        android:id="@+id/on_lane_offset_state_changed_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="onLaneOffsetStateChanged:0" />
 </LinearLayout>

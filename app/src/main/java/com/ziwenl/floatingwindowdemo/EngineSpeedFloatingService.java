@@ -11,6 +11,8 @@ import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
+import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
+import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -43,6 +45,11 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
     private TextView mEngineSpeedTv;
     private BYDAutoSpeedDevice speedDevice;
     private BYDAutoEnergyDevice energyDevice;
+    private BYDAutoTyreDevice tyreDevice;
+    private TextView leftFrontTyrePreTv;
+    private TextView rightFrontTyrePreTv;
+    private TextView leftRearTyrePreTv;
+    private TextView rightRearTyrePreTv;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -68,6 +75,7 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
             mBydAutoEngineDevice = BYDAutoEngineDevice.getInstance(this);
             speedDevice = BYDAutoSpeedDevice.getInstance(this);
             energyDevice = BYDAutoEnergyDevice.getInstance(this);
+            tyreDevice = BYDAutoTyreDevice.getInstance(this);
         }
         if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null || speedDevice == null) {
 //        if (mBydAutoAcDevice == null || mBydAutoEngineDevice == null) {
@@ -79,7 +87,27 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
 //        mBydAutoEngineDevice.registerListener(absBYDAutoEngineListener);
         speedDevice.registerListener(speedListener);
         energyDevice.registerListener(energyListener);
+        tyreDevice.registerListener(tyreListener);
     }
+
+    private final AbsBYDAutoTyreListener tyreListener = new AbsBYDAutoTyreListener() {
+        @Override
+        public void onTyrePressureValueChanged(int area, int value) {
+            super.onTyrePressureValueChanged(area, value);
+            if (leftFrontTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) {
+                leftFrontTyrePreTv.setText(String.valueOf(value) + "kPa");
+            }
+            if (rightFrontTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT) {
+                rightFrontTyrePreTv.setText(String.valueOf(value) + "kPa");
+            }
+            if (leftRearTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR) {
+                leftRearTyrePreTv.setText(String.valueOf(value) + "kPa");
+            }
+            if (rightRearTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR) {
+                rightRearTyrePreTv.setText(String.valueOf(value) + "kPa");
+            }
+        }
+    };
 
     private boolean checkPermission(String perm) {
         if (getBaseContext().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED) {
@@ -95,6 +123,11 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         }
         mEngineSpeedView = (DialogEngineSpeedView) mExampleViewC.findViewById(R.id.engine_speed_esv);
         mEngineSpeedTv = (TextView) mExampleViewC.findViewById(R.id.engine_speed_tv);
+
+        leftFrontTyrePreTv = (TextView) mExampleViewC.findViewById(R.id.tyre_pre_left_front_tv);
+        rightFrontTyrePreTv = (TextView) mExampleViewC.findViewById(R.id.tyre_pre_right_front_tv);
+        leftRearTyrePreTv = (TextView) mExampleViewC.findViewById(R.id.tyre_pre_left_rear_tv);
+        rightRearTyrePreTv = (TextView) mExampleViewC.findViewById(R.id.tyre_pre_right_rear_tv);
 
         mCurrentTempTv = (TextView) mExampleViewC.findViewById(R.id.current_temperature_tv);
         mCurrentWindLevelTv = (TextView) mExampleViewC.findViewById(R.id.current_wind_level_tv);
@@ -161,6 +194,9 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         }
         if (energyDevice != null) {
             energyDevice.unregisterListener(energyListener);
+        }
+        if (tyreDevice != null) {
+            tyreDevice.unregisterListener(tyreListener);
         }
     }
 

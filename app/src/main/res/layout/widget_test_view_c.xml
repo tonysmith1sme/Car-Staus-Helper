@@ -77,6 +77,54 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tyre_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tyre_pre_left_front_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="左前：250"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/tyre_pre_right_front_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="右前：250"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tyre_pre_left_rear_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="左后：250"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/tyre_pre_right_rear_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="右后：250"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ac_layout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,7 +238,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>

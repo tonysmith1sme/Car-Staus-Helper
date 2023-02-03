@@ -1,27 +1,27 @@
-package android.hardware.bydauto.bigdata;
+package android.hardware.bydauto.doormirror;
 
 import android.hardware.IBYDAutoEvent;
 import android.hardware.IBYDAutoListener;
 import android.hardware.bydauto.BYDAutoEventValue;
 
 /* loaded from: classes.dex */
-public abstract class AbsBYDAutoBigDataListener implements IBYDAutoListener {
+public abstract class AbsBYDAutoRearViewMirrorListener implements IBYDAutoListener {
     private static final boolean DEBUG = true;
-    protected static final String TAG = "AbsBYDAutoBigDataListener";
+    protected static final String TAG = "AbsBYDRearViewMirrorListener";
 
-    public void onNeedRendRegisterTable(int value) {
+    public void onAutoExternalRearMirrorStateChanged(int state) {
         throw new RuntimeException("Stub!");
     }
 
-    public void onWholeFrameDataChanged(byte[] data) {
+    public void onAutoExternalRearMirrorAntiglareStateChanged(int state) {
         throw new RuntimeException("Stub!");
     }
 
-    private BigDataMessageData parse(Object obj) {
+    private RearViewMirrorMessageData parse(Object obj) {
         throw new RuntimeException("Stub!");
     }
 
-//    @Override // android.hardware.IBYDAutoListener
+    //    @Override // android.hardware.IBYDAutoListener
     public void onError(int errCode, String errMessage) {
         throw new RuntimeException("Stub!");
     }
@@ -37,8 +37,8 @@ public abstract class AbsBYDAutoBigDataListener implements IBYDAutoListener {
     }
 
     /* loaded from: classes.dex */
-    private class BigDataMessageData {
-        private BigDataMessageData() {
+    private class RearViewMirrorMessageData {
+        private RearViewMirrorMessageData() {
             throw new RuntimeException("Stub!");
         }
     }
