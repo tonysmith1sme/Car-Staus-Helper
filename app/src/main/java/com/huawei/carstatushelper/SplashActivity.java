@@ -81,16 +81,36 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 //            }
 //        });
 
-        if (preferences.getBoolean("key_skip_guide_page", false)) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
         tts = new TextToSpeech(SplashActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
                 KLog.e("onInit = " + i);
             }
         });
+        if (!preferences.getBoolean("has_read_disclaimers", false)) {
+            new AlertDialog.Builder(this)
+                    .setTitle("免责声明")
+                    .setMessage("为保证行车驾驶安全，行车过程中不建议操作软件。免费软件，无偿使用，对于使用过程中造成的任何问题以及影响，车况助手开发与相关管理、测试人员对此概不负责，同意请点击确定，否则点击取消退出软件。")
+                    .setCancelable(false)
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            preferences.edit().putBoolean("has_read_disclaimers", true).apply();
+                        }
+                    })
+                    .show();
+            return;
+        }
+        if (preferences.getBoolean("key_skip_guide_page", false)) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
 //    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
@@ -185,7 +205,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
                 //app版
-                new AlertDialog.Builder(SplashActivity.this).setTitle("请选择语音引擎").setItems(infos, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(SplashActivity.this)
+                        .setTitle("请选择语音引擎")
+                        .setItems(infos, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 TextToSpeech.EngineInfo engineInfo = engineInfoList.get(i);
@@ -197,7 +219,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                                 Toast.makeText(SplashActivity.this, "语音引擎设置成功", Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .setCancelable(false).show();
+                        .show();
                 break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {

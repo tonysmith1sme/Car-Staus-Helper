@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
@@ -48,6 +47,8 @@ import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
+import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
+import com.huawei.carstatushelper.byd_helper.BYDAutoInstrumentDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
@@ -62,7 +63,6 @@ import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
 import com.huawei.carstatushelper.view.RearMotorSpeedView;
 import com.socks.library.KLog;
-import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -250,6 +250,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 暂停行程
      */
     private Button pauseCurrentMileageBtn;
+    private Button acOnOffBtn;
+    private Button acCycleModeBtn;
+    private Button acCompressorBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -344,6 +347,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (pauseCurrentMileageBtn != null) {
             pauseCurrentMileageBtn.setOnClickListener(this);
         }
+        if (acOnOffBtn != null) {
+            acOnOffBtn.setOnClickListener(this);
+        }
+        if (acCycleModeBtn != null) {
+            acCycleModeBtn.setOnClickListener(this);
+        }
+        if (acCompressorBtn != null) {
+            acCompressorBtn.setOnClickListener(this);
+        }
     }
 
     private final View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
@@ -352,12 +364,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (view.getId()) {
                 case R.id.reset_mileage1_btn:
                     if (instrumentDevice != null) {
-                        instrumentDevice.set(BYDAutoConstants.BYDAUTO_DEVICE_INSTRUMENT, BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 0);
+                        BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
+                        instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 0);
                     }
                     break;
                 case R.id.reset_mileage2_btn:
                     if (instrumentDevice != null) {
-                        instrumentDevice.set(BYDAutoConstants.BYDAUTO_DEVICE_INSTRUMENT, BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 1);
+                        BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
+                        instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 0);
                     }
                     break;
                 default:
@@ -493,6 +507,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetMileage2Btn = binding.resetMileage2Btn;
 
         pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
+
+        acOnOffBtn = binding.acOnOffBtn;
+        acCycleModeBtn = binding.acCycleModeBtn;
+        acCompressorBtn = binding.acCompressorBtn;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -846,6 +864,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+
+        @Override
+        public void onAcStarted() {
+            super.onAcStarted();
+            if (acOnOffBtn != null) {
+                acOnOffBtn.setText("开启");
+            }
+        }
+
+        @Override
+        public void onAcStoped() {
+            super.onAcStoped();
+            if (acOnOffBtn != null) {
+                acOnOffBtn.setText("关闭");
+            }
+        }
+
+        @Override
+        public void onAcCycleModeChanged(int mode) {
+            super.onAcCycleModeChanged(mode);
+            if (acCycleModeBtn != null) {
+                if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
+                    acCycleModeBtn.setText("外循环");
+                } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
+                    acCycleModeBtn.setText("内循环");
+                } else {
+                    acCycleModeBtn.setText("mode:" + mode);
+                }
+            }
+        }
+
+        @Override
+        public void onAcCompressorModeChanged(int mode) {
+            super.onAcCompressorModeChanged(mode);
+            if (acCompressorBtn != null) {
+                if (mode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
+                    acCompressorBtn.setTextColor(getColor(android.R.color.secondary_text_dark));
+                } else if (mode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
+                    acCompressorBtn.setTextColor(getColor(android.R.color.secondary_text_light));
+                }
+            }
+        }
     };
 
     private final AbsBYDAutoEnergyListener absBYDAutoEnergyListener = new AbsBYDAutoEnergyListener() {
@@ -856,10 +916,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEnergyModeChanged(int energyMode) {
             super.onEnergyModeChanged(energyMode);
-            if (energyModeTv == null) {
-                return;
+            if (energyModeTv != null) {
+                energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
             }
-            energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
 
 //            updateEngineSpeedData();
 
@@ -952,8 +1011,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             double totalFuelConValue = statisticDevice.getTotalFuelConValue();
 
             //本次行程总里程
+            int total_mileage = totalMileageValue - init_totalMileageValue;
             if (currentTravelMileageTv != null) {
-                currentTravelMileageTv.setText(String.valueOf(totalMileageValue - init_totalMileageValue));
+                currentTravelMileageTv.setText(String.valueOf(total_mileage));
             }
             //本次行程ev里程
             int ev_mileage = evMileageValue - init_evMileageValue;
@@ -1380,9 +1440,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        } else if (item.getItemId() == R.id.float_show) {
-            startService(new Intent(this, EngineSpeedFloatingService.class));
-        } else if (item.getItemId() == R.id.settings) {
+        }
+//        else if (item.getItemId() == R.id.float_show) {
+//            startService(new Intent(this, EngineSpeedFloatingService.class));
+//        }
+        else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
@@ -1543,6 +1605,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //空调的手动、与自动控制方式
         absBYDAutoAcListener.onAcCtrlModeChanged(bydAutoAcDevice.getAcControlMode());
+        //获取空调开启状态
+        int acStartState = bydAutoAcDevice.getAcStartState();
+        if (acStartState == BYDAutoAcDevice.AC_POWER_ON) {
+            absBYDAutoAcListener.onAcStarted();
+        } else if (acStartState == BYDAutoAcDevice.AC_POWER_OFF) {
+            absBYDAutoAcListener.onAcStoped();
+        }
+        //获取空调内外循环
+        absBYDAutoAcListener.onAcCycleModeChanged(bydAutoAcDevice.getAcCycleMode());
     }
 
     private void updateEnginePower() {
@@ -1592,6 +1663,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int vId = v.getId();
+        if (vId == R.id.ac_compressor_btn) {
+            int acCompressorMode = bydAutoAcDevice.getAcCompressorMode();
+            if (acCompressorMode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
+                BYDAutoAcDeviceHelper.getInstance(bydAutoAcDevice).setAcCompressorMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_COMPRESSOR_ON);
+            } else if (acCompressorMode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
+                BYDAutoAcDeviceHelper.getInstance(bydAutoAcDevice).setAcCompressorMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_COMPRESSOR_OFF);
+            }
+            return;
+        }
+        if (vId == R.id.ac_on_off_btn) {
+            if (bydAutoAcDevice != null) {
+                int acStartState = bydAutoAcDevice.getAcStartState();
+                if (acStartState == BYDAutoAcDevice.AC_POWER_ON) {
+                    bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                } else if (acStartState == BYDAutoAcDevice.AC_POWER_OFF) {
+                    bydAutoAcDevice.start(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                }
+            }
+            return;
+        }
+        if (vId == R.id.ac_cycle_mode_btn) {
+            if (bydAutoAcDevice != null) {
+                int acCycleMode = bydAutoAcDevice.getAcCycleMode();
+                if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
+                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
+                } else if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
+                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
+                }
+            }
+            return;
+        }
         if (vId == R.id.pause_current_mileage_btn) {
             if (mPreferences != null) {
                 mPreferences.edit().putBoolean(KEY_PAUSE_CURRENT_MILEAGE_DATA, true).apply();
@@ -1669,8 +1771,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
                     bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
                     bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
-                } else {
-
                 }
             }
         }

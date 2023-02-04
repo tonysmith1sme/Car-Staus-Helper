@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.charging.BYDAutoChargingDevice;
+import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
+import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.panorama.AbsBYDAutoPanoramaListener;
@@ -56,11 +58,14 @@ public class BootCompleteService extends Service {
     private BYDAutoRadarDevice radarDevice;
     private BYDAutoPanoramaDevice panoramaDevice;
     private BYDAutoGearboxDevice gearboxDevice;
+
     private RadarDistanceHelper radarDistanceHelper;
     private SharedPreferences preferences;
     private TextToSpeech tts;
+
     private BYDAutoBodyworkDevice bodyworkDevice;
     private BYDAutoChargingDevice chargingDevice;
+    private BYDAutoEnergyDevice energyDevice;
 
     public BootCompleteService() {
     }
@@ -114,9 +119,9 @@ public class BootCompleteService extends Service {
 
         radarDistanceHelper = new RadarDistanceHelper(this);
 
-        if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
-            startService(new Intent(this, EngineSpeedFloatingService.class));
-        }
+//        if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
+//            startService(new Intent(this, EngineSpeedFloatingService.class));
+//        }
     }
 
     private void initNotification() {
@@ -184,6 +189,12 @@ public class BootCompleteService extends Service {
                 chargingDevice = BYDAutoChargingDevice.getInstance(this);
             }
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_ENERGY_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (energyDevice == null) {
+                energyDevice = BYDAutoEnergyDevice.getInstance(this);
+                energyDevice.registerListener(energyListener);
+            }
+        }
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String ttsEnginePkg = preferences.getString("default_tts_engine_pkg", "");
         if (SmartRemindUtil.isEnable(this) && ttsEnginePkg.length() != 0) {
@@ -220,6 +231,9 @@ public class BootCompleteService extends Service {
         }
         if (radarDevice != null) {
             radarDevice.unregisterListener(radarListener);
+        }
+        if (energyDevice != null) {
+            energyDevice.unregisterListener(energyListener);
         }
         if (tts != null) {
             tts.stop();
@@ -383,6 +397,18 @@ public class BootCompleteService extends Service {
                         radarDistanceShowing = false;
                     }
                 }
+            }
+        }
+    };
+
+    private AbsBYDAutoEnergyListener energyListener = new AbsBYDAutoEnergyListener() {
+        @Override
+        public void onEnergyModeChanged(int mode) {
+            super.onEnergyModeChanged(mode);
+            if (mode == BYDAutoEnergyDevice.ENERGY_MODE_EV || mode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
+                stopService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+            } else {
+                startService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
             }
         }
     };

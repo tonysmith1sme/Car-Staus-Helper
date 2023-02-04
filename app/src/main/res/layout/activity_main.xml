@@ -555,87 +555,8 @@
                     android:layout_marginBottom="4dp"
                     android:background="@color/purple_200" />
 
-                <!--温度-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="温度:" />
-
-                    <TextView
-                        android:id="@+id/current_temperature_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="26" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="℃" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/temperature_sub_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/temperature_plus_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="+"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="风量:" />
-
-                    <TextView
-                        android:id="@+id/current_wind_level_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/wind_level_sub_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="24sp" />
-
-                    <Button
-                        android:id="@+id/wind_level_plus_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="+"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <Button
@@ -645,16 +566,118 @@
                         android:text="自动" />
 
                     <Button
+                        android:id="@+id/ac_on_off_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="关" />
+
+                    <Button
+                        android:id="@+id/ac_compressor_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="A/C" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
                         android:id="@+id/defrost_mode_btn"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="除霜" />
 
                     <Button
+                        android:id="@+id/ac_cycle_mode_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="内循环" />
+
+                    <Button
                         android:id="@+id/ventilate_mode_btn"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="通风" />
+                </LinearLayout>
+
+                <!--温度-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="温度:" />
+
+                        <TextView
+                            android:id="@+id/current_temperature_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="26" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="℃" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/temperature_sub_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="-" />
+
+                    <Button
+                        android:id="@+id/temperature_plus_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="风量:" />
+
+                        <TextView
+                            android:id="@+id/current_wind_level_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="1" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/wind_level_sub_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="-" />
+
+                    <Button
+                        android:id="@+id/wind_level_plus_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="+" />
                 </LinearLayout>
 
                 <TextView

@@ -146,15 +146,7 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
                 //0,1,2,3
                 //0==2
                 int rearViewMirrorFlip = settingDevice.getRearViewMirrorFlip();
-                if (rearViewMirrorFlip == BYDAutoSettingDevice.SET_OFF) {
-                    int ret = settingDevice.setRearViewMirrorFlip(BYDAutoSettingDevice.SET_ON);
-                    Toast.makeText(this, getRetName(ret), Toast.LENGTH_SHORT).show();
-                } else if (rearViewMirrorFlip == BYDAutoSettingDevice.SET_ON) {
-                    int ret = settingDevice.setRearViewMirrorFlip(BYDAutoSettingDevice.SET_OFF);
-                    Toast.makeText(this, getRetName(ret), Toast.LENGTH_SHORT).show();
-                } else if (rearViewMirrorFlip == BYDAutoSettingDevice.SET_INVALID) {
-                    Toast.makeText(this, "无此设置项", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(this, "rearViewMirrorFlip:" + rearViewMirrorFlip, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.get_rear_mirror_angle_btn:
                 int leftViewMirrorFlipAngle = settingDeviceHelper.getLeftViewMirrorFlipAngle();
