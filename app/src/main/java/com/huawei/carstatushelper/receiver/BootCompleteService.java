@@ -268,17 +268,15 @@ public class BootCompleteService extends Service {
                     radarDistanceHelper.hideRadarFloating();
                 }
             }
-            if (SmartRemindUtil.isEnable(BootCompleteService.this)) {
-                String gearboxLevelName = SmartRemindUtil.getGearboxLevelName(BootCompleteService.this, level);
-                speakTTS(gearboxLevelName);
-            }
+            boolean haveWarningMsg = false;
             if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_P) {
                 boolean enable = preferences.getBoolean("steering_wheel_not_reset_remind_enable", true);
                 if (enable) {
                     //获取方向盘角度
                     double steeringWheelValue = bodyworkDevice.getSteeringWheelValue(BYDAutoBodyworkDevice.BODYWORK_CMD_STEERING_WHEEL_ANGEL);
                     if (steeringWheelValue > 45 || steeringWheelValue < -45) {
-                        speakTTS("驻车挡，请注意，方向盘未回正");
+                        haveWarningMsg = true;
+                        speakTTS("方向盘未回正");
                     }
                 }
             }
@@ -289,9 +287,14 @@ public class BootCompleteService extends Service {
                     int state1 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_AC);
                     int state2 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_DC);
                     if (state1 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON || state2 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON) {
-                        speakTTS("前进挡，请注意，充电口盖未关闭");
+                        haveWarningMsg = true;
+                        speakTTS("充电盖未关闭");
                     }
                 }
+            }
+            if (SmartRemindUtil.isEnable(BootCompleteService.this) && !haveWarningMsg) {
+                String gearboxLevelName = SmartRemindUtil.getGearboxLevelName(BootCompleteService.this, level);
+                speakTTS(gearboxLevelName);
             }
         }
     };
@@ -401,14 +404,17 @@ public class BootCompleteService extends Service {
         }
     };
 
-    private AbsBYDAutoEnergyListener energyListener = new AbsBYDAutoEnergyListener() {
+    private final AbsBYDAutoEnergyListener energyListener = new AbsBYDAutoEnergyListener() {
         @Override
         public void onEnergyModeChanged(int mode) {
             super.onEnergyModeChanged(mode);
-            if (mode == BYDAutoEnergyDevice.ENERGY_MODE_EV || mode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
-                stopService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
-            } else {
-                startService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+            boolean ret = preferences.getBoolean("auto_show_engine_speed_floating", false);
+            if (ret) {
+                if (mode == BYDAutoEnergyDevice.ENERGY_MODE_EV || mode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
+                    stopService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+                } else {
+                    startService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+                }
             }
         }
     };

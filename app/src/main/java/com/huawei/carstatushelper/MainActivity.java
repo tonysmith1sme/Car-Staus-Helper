@@ -63,6 +63,7 @@ import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
 import com.huawei.carstatushelper.view.RearMotorSpeedView;
 import com.socks.library.KLog;
+import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1440,11 +1441,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        }
-//        else if (item.getItemId() == R.id.float_show) {
-//            startService(new Intent(this, EngineSpeedFloatingService.class));
-//        }
-        else if (item.getItemId() == R.id.settings) {
+        } else if (item.getItemId() == R.id.float_show) {
+            startService(new Intent(this, EngineSpeedFloatingService.class));
+        } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);

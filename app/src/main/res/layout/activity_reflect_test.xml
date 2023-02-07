@@ -165,6 +165,36 @@
         android:layout_height="wrap_content"
         android:text="设置后视镜角度" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="区域：1，左前;2,右前；3，左后；4，右后；5，天窗；6，遮阳帘" />
+
+    <EditText
+        android:id="@+id/area_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="区域：" />
+
+    <Button
+        android:id="@+id/get_window_open_percent_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取车窗开合度" />
+
+    <EditText
+        android:id="@+id/area_percent_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="开合百分比" />
+
+    <Button
+        android:id="@+id/set_window_open_percent_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置车窗开合度" />
+
 
     <TextView
         android:id="@+id/on_active_change_tv"

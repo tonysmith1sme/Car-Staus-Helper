@@ -2,6 +2,7 @@ package com.huawei.carstatushelper.test;
 
 import android.hardware.bydauto.adas.AbsBYDAutoADASListener;
 import android.hardware.bydauto.adas.BYDAutoADASDevice;
+import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.setting.AbsBYDAutoSettingListener;
 import android.hardware.bydauto.setting.BYDAutoSettingDevice;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.carstatushelper.R;
+import com.huawei.carstatushelper.byd_helper.BYDAutoBodyworkDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoSettingDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityReflectTestBinding;
 import com.huawei.carstatushelper.util.ReflectHelper;
@@ -36,6 +38,10 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
     private TextView onLksModeChangedTv;
     private TextView onLksSensitivityChangedTv;
     private TextView onLaneOffsetStateChangedTv;
+    private EditText areaEt;
+    private EditText areaPercentEt;
+    private BYDAutoBodyworkDevice bodyworkDevice;
+    private BYDAutoBodyworkDeviceHelper bodyworkDeviceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +61,26 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
         onLksModeChangedTv = binding.onLksModeChangedTv;
         onLksSensitivityChangedTv = binding.onLksSensitivityChangedTv;
         onLaneOffsetStateChangedTv = binding.onLaneOffsetStateChangedTv;
+        areaEt = binding.areaEt;
+        areaPercentEt = binding.areaPercentEt;
 
         testBtn.setOnClickListener(this);
         binding.rearViewMirrorFlipStateChangeBtn.setOnClickListener(this);
         binding.setRearMirrorAngleBtn.setOnClickListener(this);
+        binding.getWindowOpenPercentBtn.setOnClickListener(this);
+        binding.setWindowOpenPercentBtn.setOnClickListener(this);
 
 //        ReflectHelper.testHelper(this);
 
         settingDevice = BYDAutoSettingDevice.getInstance(this);
         adasDevice = BYDAutoADASDevice.getInstance(this);
+        bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
 
         settingDevice.registerListener(settingListener);
         adasDevice.registerListener(adasListener);
 
         settingDeviceHelper = BYDAutoSettingDeviceHelper.getInstance(settingDevice);
+        bodyworkDeviceHelper = BYDAutoBodyworkDeviceHelper.getInstance(bodyworkDevice);
 
         settingListener.onRearViewMirrorFlipSwitchChanged(settingDevice.getRearViewMirrorFlip());
     }
@@ -162,6 +174,30 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
                 int ret2 = settingDeviceHelper.setRightViewMirrorFlipAngle(mirrorAngle);
                 mirrorAngle++;
                 Toast.makeText(this, "ret1:" + ret1 + ",ret2:" + ret2, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.get_window_open_percent_btn:
+                String aaa = areaEt.getText().toString();
+                int percent = bodyworkDevice.getWindowOpenPercent(Integer.parseInt(aaa));
+                int state = bodyworkDevice.getWindowState(Integer.parseInt(aaa));
+                Toast.makeText(this, "percent：" + percent + ",state: " + state, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.set_window_open_percent_btn:
+                String bbb = areaEt.getText().toString();
+                String ccc = areaPercentEt.getText().toString();
+                //setBodyWindowCtrlState: area = 2--state = 4
+                //setBodyWindowCtrlState window is: 2 window state is 4
+                int area = Integer.parseInt(bbb);
+                if (area == 1) {//左前
+
+                } else if (area == 2) {//右前
+
+                } else if (area == 3) {//左后
+
+                } else if (area == 4) {//右后
+
+                }
+                int ret = bodyworkDeviceHelper.setAllWindowState(Integer.parseInt(ccc), 3, 4, 5);
+                Toast.makeText(this, "ret:" + ret, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;

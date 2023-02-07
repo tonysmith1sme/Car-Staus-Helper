@@ -90,12 +90,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         if (!preferences.getBoolean("has_read_disclaimers", false)) {
             new AlertDialog.Builder(this)
                     .setTitle("免责声明")
-                    .setMessage("为保证行车驾驶安全，行车过程中不建议操作软件。免费软件，无偿使用，对于使用过程中造成的任何问题以及影响，车况助手开发与相关管理、测试人员对此概不负责，同意请点击确定，否则点击取消退出软件。")
+                    .setMessage("为保证行车驾驶安全，行车过程中不建议操作软件。免费软件，无偿使用，对于使用过程中造成的任何问题以及影响，车况助手开发及相关管理、测试人员对此概不负责，同意请点击确定，否则点击取消退出软件。")
                     .setCancelable(false)
                     .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            finish();
                         }
                     })
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
