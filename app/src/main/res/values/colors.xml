@@ -19,4 +19,7 @@
     <color name="color_dark">#263238</color>
     <color name="color_dark_light">#455A64</color>
     <color name="color_light">#ECEFF1</color>
+
+    <color name="color_button_state_on">@android:color/secondary_text_light</color>
+    <color name="color_button_state_off">@android:color/secondary_text_dark</color>
 </resources>

@@ -323,12 +323,6 @@
                         android:layout_height="wrap_content"
                         android:text="KM" />
 
-                    <Button
-                        android:id="@+id/reset_mileage1_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="重置" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -351,12 +345,6 @@
                         android:layout_height="wrap_content"
                         android:text="KM" />
 
-                    <Button
-                        android:id="@+id/reset_mileage2_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="重置" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1448,8 +1436,8 @@
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
 
-            <com.huawei.carstatushelper.view.EnginePowerView
-                android:id="@+id/engine_power_epv"
+            <com.huawei.carstatushelper.view.MotorSpeedView
+                android:id="@+id/motor_speed_msv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -1457,8 +1445,8 @@
                 android:paddingTop="16dp"
                 android:paddingRight="16dp" />
 
-            <com.huawei.carstatushelper.view.MotorSpeedView
-                android:id="@+id/motor_speed_msv"
+            <com.huawei.carstatushelper.view.EnginePowerView
+                android:id="@+id/engine_power_epv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

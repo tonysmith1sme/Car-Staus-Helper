@@ -64,11 +64,9 @@
     <uses-permission android:name="android.permission.BYDAUTO_TIME_GET" />
     <uses-permission android:name="android.permission.BYDAUTO_TYRE_GET" />
 
-    <!--
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_COMMON"/>
-    <uses-permission android:name="android.permission.BYDAUTO_ADAS_SET"/>
-    -->
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_GET"/>
+    <uses-permission android:name="android.permission.BYDAUTO_ADAS_SET"/>
 
     <application
         android:name=".App"

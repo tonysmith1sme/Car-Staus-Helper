@@ -245,8 +245,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView externalChargingPowerTv;
     private Button acControlModeBtn;
-    private Button resetMileage1Btn;
-    private Button resetMileage2Btn;
+//    private Button resetMileage1Btn;
+//    private Button resetMileage2Btn;
     /**
      * 暂停行程
      */
@@ -339,11 +339,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (acControlModeBtn != null) {
             acControlModeBtn.setOnClickListener(this);
         }
-        if (resetMileage1Btn != null) {
-            resetMileage1Btn.setOnLongClickListener(onLongClickListener);
+        if (customMileage1Tv != null) {
+            customMileage1Tv.setOnLongClickListener(onLongClickListener);
         }
-        if (resetMileage2Btn != null) {
-            resetMileage2Btn.setOnLongClickListener(onLongClickListener);
+        if (customMileage2Tv != null) {
+            customMileage2Tv.setOnLongClickListener(onLongClickListener);
         }
         if (pauseCurrentMileageBtn != null) {
             pauseCurrentMileageBtn.setOnClickListener(this);
@@ -363,16 +363,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public boolean onLongClick(View view) {
             switch (view.getId()) {
-                case R.id.reset_mileage1_btn:
+                case R.id.custom_mileage1_tv:
                     if (instrumentDevice != null) {
                         BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
-                        instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 0);
+                        int ret = instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 1);
+                        Toast.makeText(MainActivity.this, "ret:" + ret, Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case R.id.reset_mileage2_btn:
+                case R.id.custom_mileage2_tv:
                     if (instrumentDevice != null) {
                         BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
-                        instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 0);
+                        int ret = instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 1);
+                        Toast.makeText(MainActivity.this, "ret:" + ret, Toast.LENGTH_SHORT).show();
                     }
                     break;
                 default:
@@ -468,8 +470,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chargingPowerTv = binding.chargingPowerTv;
         chargingRestTimeTv = binding.chargingRestTimeTv;
 
-        defrostModeBtn = binding.defrostModeBtn;
-        ventilateModeBtn = binding.ventilateModeBtn;
+        defrostModeBtn = binding.defrostModeBtn;//除霜
+        ventilateModeBtn = binding.ventilateModeBtn;//通风
 
         waterTemperatureTv = binding.waterTemperatureTv;
         instantElecConTv = binding.instantElecConTv;
@@ -504,8 +506,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         acControlModeBtn = binding.acControlModeBtn;
 
-        resetMileage1Btn = binding.resetMileage1Btn;
-        resetMileage2Btn = binding.resetMileage2Btn;
+//        resetMileage1Btn = binding.resetMileage1Btn;
+//        resetMileage2Btn = binding.resetMileage2Btn;
 
         pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
 
@@ -896,14 +898,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        /**
+         * 压缩机状态改变
+         * @param mode
+         */
         @Override
         public void onAcCompressorModeChanged(int mode) {
             super.onAcCompressorModeChanged(mode);
             if (acCompressorBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
-                    acCompressorBtn.setTextColor(getColor(android.R.color.secondary_text_dark));
+                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_off));
                 } else if (mode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
-                    acCompressorBtn.setTextColor(getColor(android.R.color.secondary_text_light));
+                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_on));
+                }
+            }
+        }
+
+        /**
+         * 除霜
+         * @param area
+         * @param state
+         */
+        @Override
+        public void onAcDefrostStateChanged(int area, int state) {
+            super.onAcDefrostStateChanged(area, state);
+            if (area == BYDAutoAcDevice.AC_DEFROST_AREA_FRONT) {
+                if (defrostModeBtn != null) {
+                    if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
+                        defrostModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                    } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
+                        defrostModeBtn.setTextColor(getColor(R.color.color_button_state_on));
+                    }
+                }
+            } else if (area == BYDAutoAcDevice.AC_DEFROST_AREA_REAR) {
+                if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
+
+                } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
+
+                }
+            }
+        }
+
+        /**
+         * 通风
+         * @param state
+         */
+        @Override
+        public void onAcVentilationStateChanged(int state) {
+            super.onAcVentilationStateChanged(state);
+            if (ventilateModeBtn != null) {
+                if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
+                    ventilateModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
+                    ventilateModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 }
             }
         }
@@ -1711,8 +1758,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (energyFeedback == BYDAutoSettingDevice.SET_DR_ENERGY_FB_LARGE) {
                 settingDevice.setEnergyFeedback(BYDAutoSettingDevice.SET_DR_ENERGY_FB_STANDARD);
                 energyFeedbackBtn.setText("标准");
-            } else {
-                Toast.makeText(this, "error feedback mode:" + energyFeedback, Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -1746,10 +1791,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
             } else if (vId == R.id.wind_level_sub_btn) {
                 int acWindLevel = bydAutoAcDevice.getAcWindLevel();
-                if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_0) {
+                if (acWindLevel - 1 == BYDAutoAcDevice.AC_WINDLEVEL_0) {
                     bydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
                     int ret = bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
-                    Toast.makeText(this, getCommandRet(ret), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
@@ -1759,16 +1803,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_ON);
                 } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
                     bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_OFF);
-                } else {
-
                 }
             } else if (vId == R.id.ventilate_mode_btn) {
                 int state = bydAutoAcDevice.getAcVentilationState();
                 if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
-                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
+//                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
                     bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_ON);
                 } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
-                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
+//                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
                     bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
                 }
             }

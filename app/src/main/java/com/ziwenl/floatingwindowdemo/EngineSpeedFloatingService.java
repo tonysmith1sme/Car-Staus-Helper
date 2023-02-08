@@ -95,16 +95,16 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         public void onTyrePressureValueChanged(int area, int value) {
             super.onTyrePressureValueChanged(area, value);
             if (leftFrontTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT) {
-                leftFrontTyrePreTv.setText(String.valueOf(value) + "kPa");
+                leftFrontTyrePreTv.setText("左前：" + value);
             }
             if (rightFrontTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT) {
-                rightFrontTyrePreTv.setText(String.valueOf(value) + "kPa");
+                rightFrontTyrePreTv.setText("右前：" + value);
             }
             if (leftRearTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR) {
-                leftRearTyrePreTv.setText(String.valueOf(value) + "kPa");
+                leftRearTyrePreTv.setText("左后：" + value);
             }
             if (rightRearTyrePreTv != null && area == BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR) {
-                rightRearTyrePreTv.setText(String.valueOf(value) + "kPa");
+                rightRearTyrePreTv.setText("右后：" + value);
             }
         }
     };

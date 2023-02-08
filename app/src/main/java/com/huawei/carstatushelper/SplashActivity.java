@@ -35,7 +35,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             Manifest.permission.BYDAUTO_PANORAMA_GET,
             Manifest.permission.BYDAUTO_SETTING_COMMON,
             Manifest.permission.BYDAUTO_INSTRUMENT_COMMON,
-            Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON
+            Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
+            "android.permission.BYDAUTO_ADAS_COMMON",
     };
     private com.huawei.carstatushelper.databinding.ActivitySplashBinding binding;
     private SharedPreferences preferences;
