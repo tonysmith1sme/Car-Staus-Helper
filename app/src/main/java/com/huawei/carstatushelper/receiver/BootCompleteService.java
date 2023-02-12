@@ -281,16 +281,16 @@ public class BootCompleteService extends Service {
                 }
             }
             if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_D) {
-                boolean enable = preferences.getBoolean("driving_charging_cap_not_close_remind_enable", true);
-                if (enable) {
-                    //获取充电口盖打开状态
-                    int state1 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_AC);
-                    int state2 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_DC);
-                    if (state1 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON || state2 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON) {
-                        haveWarningMsg = true;
-                        speakTTS("充电盖未关闭");
-                    }
-                }
+//                boolean enable = preferences.getBoolean("driving_charging_cap_not_close_remind_enable", true);
+//                if (enable) {
+//                    //获取充电口盖打开状态
+//                    int state1 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_AC);
+//                    int state2 = chargingDevice.getChargingCapState(BYDAutoChargingDevice.CHARGING_CAP_DC);
+//                    if (state1 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON || state2 == BYDAutoChargingDevice.CHARGING_CAP_STATE_ON) {
+//                        haveWarningMsg = true;
+//                        speakTTS("充电盖未关闭");
+//                    }
+//                }
             }
             if (SmartRemindUtil.isEnable(BootCompleteService.this) && !haveWarningMsg) {
                 String gearboxLevelName = SmartRemindUtil.getGearboxLevelName(BootCompleteService.this, level);

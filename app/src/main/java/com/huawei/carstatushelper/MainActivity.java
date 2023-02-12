@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
+import com.huawei.carstatushelper.activity.SponsorListActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoInstrumentDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
@@ -312,6 +313,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         init_latest_fuel_price = Double.parseDouble(mPreferences.getString("latest_fuel_price", getString(R.string.default_latest_fuel_price)));
         init_latest_electric_price = Double.parseDouble(mPreferences.getString("latest_electric_price", getString(R.string.default_latest_electric_price)));
+        if (statisticDevice != null) {
+            int totalMileageValue = statisticDevice.getTotalMileageValue();
+            absBYDAutoStatisticListener.onTotalMileageValueChanged(totalMileageValue);
+        }
     }
 
     private void initBtnListener() {
@@ -657,7 +662,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         speedDevice.registerListener(absBYDAutoSpeedListener);
         energyDevice.registerListener(absBYDAutoEnergyListener);
 //        engineDevice.registerListener(absBYDAutoEngineListener);
-        bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
         chargingDevice.registerListener(absBYDAutoChargingListener);
         tyreDevice.registerListener(absBYDAutoTyreListener);
@@ -1484,6 +1488,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about_us) {
             startActivity(new Intent(this, AboutActivity.class));
+        } else if (item.getItemId() == R.id.sponsor_list) {
+            startActivity(new Intent(this, SponsorListActivity.class));
         } else if (item.getItemId() == R.id.version_update) {
             Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -1623,6 +1629,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateInstantElecCon();
         //瞬时油耗
         updateInstantFuelCon();
+        //获取各区域空调温度
+        int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
+        int temprature1 = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_REAR);
+        int temprature2 = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_OUT);
+        absBYDAutoAcListener.onTemperatureChanged(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature);
+        absBYDAutoAcListener.onTemperatureChanged(BYDAutoAcDevice.AC_TEMPERATURE_REAR, temprature1);
+        absBYDAutoAcListener.onTemperatureChanged(BYDAutoAcDevice.AC_TEMPERATURE_OUT, temprature2);
         //当前风量
         absBYDAutoAcListener.onAcWindLevelChanged(bydAutoAcDevice.getAcWindLevel());
         //充电功率与剩余时长

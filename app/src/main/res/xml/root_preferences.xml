@@ -192,11 +192,13 @@
             android:dependency="smart_remind_enable"
             android:key="steering_wheel_not_reset_remind_enable"
             android:title="驻车方向盘未回正提醒" />
+        <!--
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="smart_remind_enable"
             android:key="driving_charging_cap_not_close_remind_enable"
             android:title="行车充电盖未关闭提醒" />
+        -->
         <!--
         <SwitchPreference
             android:defaultValue="true"
