@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/about_us"
-        android:title="打赏作者" />
+        android:title="关于" />
     <item
         android:id="@+id/sponsor_list"
         android:title="赞助列表" />
