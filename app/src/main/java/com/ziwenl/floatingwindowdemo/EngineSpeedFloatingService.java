@@ -180,6 +180,16 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         final int currentWindLevel = mBydAutoAcDevice.getAcWindLevel();
         mCurrentWindLevelTv.setText(String.valueOf(currentWindLevel));
         mWindSeekBar.setProgress(currentWindLevel);
+
+        int pressure_lf = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT);
+        int pressure_rf = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT);
+        int pressure_lr = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR);
+        int pressure_rr = tyreDevice.getTyrePressureValue(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR);
+        tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_FRONT, pressure_lf);
+        tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, pressure_rf);
+        tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, pressure_lr);
+        tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, pressure_rr);
+
     }
 
     @Override
@@ -238,25 +248,17 @@ public class EngineSpeedFloatingService extends Service implements View.OnClickL
         }
         int engine_speed = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
         int engine_speed_gb = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-        int engine_speed_warning = BydApi29Helper.get(mBydAutoEngineDevice, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
+        int engine_speed_result = 0;
         if (engine_speed_gb > 0 && engine_speed_gb <= 8000) {
-            updateEngineSpeedUI(engine_speed_gb);
+            engine_speed_result = engine_speed_gb;
         } else if (engine_speed > 0 && engine_speed <= 8000) {
-            updateEngineSpeedUI(engine_speed);
-        } else {
-            updateEngineSpeedUI(0);
-        }
-    }
-
-    private void updateEngineSpeedUI(int engineSpeed) {
-        if (engineSpeed >= 8191) {
-            engineSpeed = 0;
+            engine_speed_result = engine_speed;
         }
         if (mEngineSpeedTv != null) {
-            mEngineSpeedTv.setText(String.valueOf(engineSpeed));
+            mEngineSpeedTv.setText(String.valueOf(engine_speed_result));
         }
         if (mEngineSpeedView != null) {
-            mEngineSpeedView.setVelocity(engineSpeed);
+            mEngineSpeedView.setVelocity(engine_speed_result);
         }
     }
 
