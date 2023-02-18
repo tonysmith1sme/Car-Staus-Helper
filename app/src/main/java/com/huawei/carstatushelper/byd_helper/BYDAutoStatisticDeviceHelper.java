@@ -34,6 +34,32 @@ public class BYDAutoStatisticDeviceHelper {
         return result;
     }
 
+    public int getSTATISTIC_HIGHEST_BATTERY_VOLTAGE(){
+        int result = 0;
+        try {
+            result = get(BYDAutoFeatureIds.STATISTIC_HIGHEST_BATTERY_VOLTAGE);
+            if (result == INVALID_DATA || result == INVALID_DATA_1) {
+                return 0;
+            }
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int getSTATISTIC_LOWEST_BATTERY_VOLTAGE(){
+        int result = 0;
+        try {
+            result = get(BYDAutoFeatureIds.STATISTIC_LOWEST_BATTERY_VOLTAGE);
+            if (result == INVALID_DATA || result == INVALID_DATA_1) {
+                return 0;
+            }
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public int getAVERAGE_BATTERY_TEMP() {
         int result = 0;
         try {

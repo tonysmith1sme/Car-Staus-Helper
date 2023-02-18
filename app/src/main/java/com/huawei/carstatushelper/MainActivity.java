@@ -236,10 +236,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView powerLevelTv;
     private BYDAutoSettingDevice settingDevice;
     private Button energyFeedbackBtn;
-    private TextView batterSocTv;
+
+    //    private TextView batterSocTv;
+    /**
+     * 最低电池电压
+     */
+    private TextView lowestBatterVoltageTv;
+    /**
+     * 最高电池电压
+     */
+    private TextView highestBatterVoltageTv;
     private TextView lowestBatterTempTv;
     private TextView highestBatterTempTv;
     private TextView averageBatterTempTv;
+
     /**
      * 后电机转速
      */
@@ -509,7 +519,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         powerLevelTv = binding.powerLevelTv;
         energyFeedbackBtn = binding.energyFeedbackBtn;
 
-        batterSocTv = binding.batterSocTv;
+//        batterSocTv = binding.batterSocTv;
+        lowestBatterVoltageTv = binding.lowestBatterVoltageTv;
+        highestBatterVoltageTv = binding.highestBatterVoltageTv;
         lowestBatterTempTv = binding.lowestBatterTempTv;
         highestBatterTempTv = binding.highestBatterTempTv;
         averageBatterTempTv = binding.averageBatterTempTv;
@@ -1079,8 +1091,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int hev_mileage = hevMileageValue - init_hevMileageValue;
             if (currentTravelMileageTv != null) {
                 //"12(ev)+13(hev)=25"
-                String result = ev_mileage + "(ev)+" + hev_mileage + "(hev)=" + total_mileage;
-                currentTravelMileageTv.setText(result);
+//                String result = ev_mileage + "(ev)+" + hev_mileage + "(hev)=" + total_mileage;
+//                currentTravelMileageTv.setText(result);
+                currentTravelMileageTv.setText(String.valueOf(total_mileage));
             }
             //本次行程电耗
             double elec_cost = totalElecConValue - init_totalElecConValue;
@@ -1208,10 +1221,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onElecDrivingRangeChanged(int value) {
             super.onElecDrivingRangeChanged(value);
-            if (powerMileageTv == null) {
-                return;
+            if (powerMileageTv != null) {
+                powerMileageTv.setText(String.valueOf(value));
             }
-            powerMileageTv.setText(String.valueOf(value));
+            BYDAutoStatisticDeviceHelper statisticDeviceHelper = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice);
+            if (lowestBatterVoltageTv != null) {
+                lowestBatterVoltageTv.setText(String.valueOf(statisticDeviceHelper.getSTATISTIC_LOWEST_BATTERY_VOLTAGE()));
+            }
+            if (highestBatterVoltageTv != null) {
+                highestBatterVoltageTv.setText(String.valueOf(statisticDeviceHelper.getSTATISTIC_HIGHEST_BATTERY_VOLTAGE()));
+            }
+            if (lowestBatterTempTv != null) {
+                lowestBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getLOWEST_BATTERY_TEMP()));
+            }
+            if (highestBatterTempTv != null) {
+                highestBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getHIGHEST_BATTERY_TEMP()));
+            }
+            if (averageBatterTempTv != null) {
+                averageBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
+            }
         }
 
 
@@ -1471,20 +1499,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateEnginePower();
             updateFrontMotorSpeed();
             updateWaterTemperature();
-
-            BYDAutoStatisticDeviceHelper statisticDeviceHelper = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice);
-            if (batterSocTv != null) {
-                batterSocTv.setText(String.valueOf(statisticDeviceHelper.getESTIMATE_SOC_V1()));
-            }
-            if (lowestBatterTempTv != null) {
-                lowestBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getLOWEST_BATTERY_TEMP()));
-            }
-            if (highestBatterTempTv != null) {
-                highestBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getHIGHEST_BATTERY_TEMP()));
-            }
-            if (averageBatterTempTv != null) {
-                averageBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
-            }
         }
 
         /**
