@@ -1079,7 +1079,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int hev_mileage = hevMileageValue - init_hevMileageValue;
             if (currentTravelMileageTv != null) {
                 //"12(ev)+13(hev)=25"
-                String result = ev_mileage + "(ev)" + hev_mileage + "(hev)=" + total_mileage;
+                String result = ev_mileage + "(ev)+" + hev_mileage + "(hev)=" + total_mileage;
                 currentTravelMileageTv.setText(result);
             }
             //本次行程电耗
@@ -1108,21 +1108,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (currentTravelFuelCostTv != null && hev_mileage != 0) {
                 currentTravelFuelCostTv.setText(format.format(fuel_cost * 100 / hev_mileage));
             }
-            //本次行程花费的钱相当于多少油
-            double a = yuan / init_latest_fuel_price;//多少L
-
             //本次行程花费的钱相当于多少电
-            double b = yuan / init_latest_electric_price;//多少kwh
-
-            //本次行程综合电耗
-            double c = a * 100.0f / total_mileage;//L/100km
-            //本次行程综合油耗
-            double d = b * 100.0f / total_mileage;//kwh/100km
+            double valueKwh = yuan / init_latest_electric_price;//多少kwh
+            //本次行程花费的钱相当于多少油
+            double valueL = yuan / init_latest_fuel_price;//多少L
+            double c = 0;
+            double d = 0;
+            if (total_mileage != 0) {
+                //本次行程综合电耗
+                d = valueKwh * 100.0f / total_mileage;//kwh/100km
+                //本次行程综合油耗
+                c = valueL * 100.0f / total_mileage;//L/100km
+            }
             if (currentComprehensiveElecCostTv != null) {
-                currentComprehensiveElecCostTv.setText(format.format(c));
+                currentComprehensiveElecCostTv.setText(format.format(d));
             }
             if (currentComprehensiveFuelCostTv != null) {
-                currentComprehensiveFuelCostTv.setText(format.format(d));
+                currentComprehensiveFuelCostTv.setText(format.format(c));
             }
 
             updateWaterTemperature();
