@@ -54,6 +54,7 @@ import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
+import com.huawei.carstatushelper.service.FloatingService;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.PermissionUtils;
 import com.huawei.carstatushelper.util.StringUtil;
@@ -1524,7 +1525,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onBrakeDeepnessChanged(int value) {
             super.onBrakeDeepnessChanged(value);
-            if (shaChePb != null || shaCheTv != null) {
+            if (shaChePb != null && shaCheTv != null) {
                 shaChePb.setProgress(value);
                 shaCheTv.setText(String.valueOf(value));
             }
@@ -1556,6 +1557,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } else if (item.getItemId() == R.id.float_show) {
             startService(new Intent(this, EngineSpeedFloatingService.class));
+        }else if (item.getItemId() == R.id.float_show_new) {
+            startService(new Intent(this, FloatingService.class));
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }

@@ -3,7 +3,6 @@ package com.huawei.carstatushelper.test;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityTestBinding;
-import com.huawei.carstatushelper.util.RadarDistanceHelper;
+import com.huawei.carstatushelper.floating.RadarDistanceHelper;
 import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;

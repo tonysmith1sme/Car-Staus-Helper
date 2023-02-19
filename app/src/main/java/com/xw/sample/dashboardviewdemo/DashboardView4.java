@@ -560,7 +560,7 @@ public class DashboardView4 extends View {
 
     public void setVelocity(int velocity) {
         if (mVelocity == velocity || velocity < mMin || velocity > mMax) {
-            return;
+//            return;
         }
 
         mVelocity = velocity;

@@ -13,6 +13,9 @@
     <item
         android:id="@+id/float_show"
         android:title="转速浮窗" />
+    <item
+        android:id="@+id/float_show_new"
+        android:title="多功能浮窗" />
 
     <item
         android:id="@+id/settings"

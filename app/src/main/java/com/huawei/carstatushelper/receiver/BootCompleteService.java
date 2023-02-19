@@ -30,7 +30,7 @@ import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
-import com.huawei.carstatushelper.util.RadarDistanceHelper;
+import com.huawei.carstatushelper.floating.RadarDistanceHelper;
 import com.huawei.carstatushelper.util.SmartRemindUtil;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;

@@ -1,4 +1,4 @@
-package com.huawei.carstatushelper.util;
+package com.huawei.carstatushelper.floating;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huawei.carstatushelper.R;
+import com.huawei.carstatushelper.util.DpUtil;
 import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
 

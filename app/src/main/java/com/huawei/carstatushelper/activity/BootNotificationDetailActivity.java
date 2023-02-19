@@ -1,4 +1,4 @@
-package com.huawei.carstatushelper.receiver;
+package com.huawei.carstatushelper.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.SplashActivity;
-import com.huawei.carstatushelper.activity.BackEnableBaseActivity;
 import com.socks.library.KLog;
 
 public class BootNotificationDetailActivity extends BackEnableBaseActivity {

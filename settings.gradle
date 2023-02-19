@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Car Status Helper"
 include ':app'
+include ':indicator_library'

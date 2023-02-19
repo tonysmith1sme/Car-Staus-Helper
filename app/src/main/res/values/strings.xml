@@ -57,5 +57,7 @@
     <bool name="default_car_speed_enable_value">true</bool>
     <bool name="default_rear_motor_speed_enable_value">true</bool>
     <bool name="default_map_place_holder_enable_value">false</bool>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
