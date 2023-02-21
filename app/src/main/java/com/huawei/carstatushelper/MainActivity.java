@@ -47,7 +47,6 @@ import android.widget.Toast;
 
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
-import com.huawei.carstatushelper.activity.SponsorListActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
@@ -1533,31 +1532,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     };
 
-//    private void updateEngineSpeedUI(int engineSpeed) {
-//        if (engineSpeed >= 8191) {
-//            engineSpeed = 0;
-//        }
-//        if (engineSpeedTv != null) {
-//            engineSpeedTv.setText(String.valueOf(engineSpeed));
-//        }
-//        if (engineSpeedEsv != null) {
-//            engineSpeedEsv.setVelocity(engineSpeed);
-//        }
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about_us) {
             startActivity(new Intent(this, AboutActivity.class));
-        } else if (item.getItemId() == R.id.sponsor_list) {
-            startActivity(new Intent(this, SponsorListActivity.class));
-        } else if (item.getItemId() == R.id.version_update) {
+        }  else if (item.getItemId() == R.id.version_update) {
             Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        } else if (item.getItemId() == R.id.float_show) {
-            startService(new Intent(this, EngineSpeedFloatingService.class));
-        }else if (item.getItemId() == R.id.float_show_new) {
+        } else if (item.getItemId() == R.id.float_show_new) {
             startService(new Intent(this, FloatingService.class));
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));

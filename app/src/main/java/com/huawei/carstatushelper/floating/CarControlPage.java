@@ -1,6 +1,8 @@
 package com.huawei.carstatushelper.floating;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
 import android.support.v4.content.ContextCompat;
@@ -61,6 +63,9 @@ public class CarControlPage implements IPage, View.OnClickListener {
         binding.windLevelPlusBtn.setOnClickListener(this);
         binding.windLevelSubBtn.setOnClickListener(this);
 
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_AC_GET) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         acDevice = BYDAutoAcDevice.getInstance(context);
 
         //空调的手动、与自动控制方式
@@ -102,17 +107,26 @@ public class CarControlPage implements IPage, View.OnClickListener {
 
     @Override
     public void onCreate() {
+        if (acDevice == null) {
+            return;
+        }
         acDevice.registerListener(acListener);
     }
 
     @Override
     public void onDestroy() {
+        if (acDevice == null) {
+            return;
+        }
         acDevice.unregisterListener(acListener);
     }
 
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
+        if (acDevice == null) {
+            return;
+        }
         if (viewId == R.id.ac_control_mode_btn) {
             int acControlMode = acDevice.getAcControlMode();
             if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
@@ -156,12 +170,15 @@ public class CarControlPage implements IPage, View.OnClickListener {
         public void onAcStarted() {
             super.onAcStarted();
             acOnOffBtn.setText("开启");
+            acOnOffBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
+
         }
 
         @Override
         public void onAcStoped() {
             super.onAcStoped();
             acOnOffBtn.setText("关闭");
+            acOnOffBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_off));
         }
 
         @Override
@@ -179,8 +196,10 @@ public class CarControlPage implements IPage, View.OnClickListener {
             super.onAcCtrlModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
                 acControlModeBtn.setText("自动");
+                acControlModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
             } else if (mode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
                 acControlModeBtn.setText("手动");
+                acControlModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_off));
             }
         }
 
@@ -189,8 +208,11 @@ public class CarControlPage implements IPage, View.OnClickListener {
             super.onAcCycleModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
                 acCycleModeBtn.setText("外循环");
+                acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
             } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
                 acCycleModeBtn.setText("内循环");
+                acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_off));
+
             }
         }
 

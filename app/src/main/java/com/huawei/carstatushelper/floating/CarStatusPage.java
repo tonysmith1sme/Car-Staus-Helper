@@ -1,6 +1,8 @@
 package com.huawei.carstatushelper.floating;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
@@ -10,6 +12,7 @@ import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
 import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
 import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +21,7 @@ import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem1Bindin
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.view.DialogEngineSpeedView;
 
-public class CarStatusPage implements IPage{
+public class CarStatusPage implements IPage {
 
     private final Context context;
     private View rootView;
@@ -50,6 +53,9 @@ public class CarStatusPage implements IPage{
         tyrePreLeftRearTv = binding.tyrePreLeftRearTv;
         tyrePreRightRearTv = binding.tyrePreRightRearTv;
 
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_SPEED_GET) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         speedDevice = BYDAutoSpeedDevice.getInstance(context);
         engineDevice = BYDAutoEngineDevice.getInstance(context);
         energyDevice = BYDAutoEnergyDevice.getInstance(context);
@@ -74,6 +80,9 @@ public class CarStatusPage implements IPage{
 
     @Override
     public void onCreate() {
+        if (speedDevice == null) {
+            return;
+        }
         speedDevice.registerListener(speedListener);
         engineDevice.registerListener(engineListener);
         energyDevice.registerListener(energyListener);
@@ -82,6 +91,9 @@ public class CarStatusPage implements IPage{
 
     @Override
     public void onDestroy() {
+        if (speedDevice == null) {
+            return;
+        }
         speedDevice.unregisterListener(speedListener);
         engineDevice.unregisterListener(engineListener);
         energyDevice.unregisterListener(energyListener);

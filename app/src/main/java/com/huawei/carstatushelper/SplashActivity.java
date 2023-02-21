@@ -154,7 +154,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.check_byd_permission_btn:
                 boolean granted = isBydAutoPermissionGranted();
-                if (granted) {
+                if (granted || BuildConfig.DEBUG) {
                     Toast.makeText(this, "比亚迪车辆权限已授予", Toast.LENGTH_SHORT).show();
                 } else {
                     ActivityCompat.requestPermissions(this, BYD_PERMISSIONS, 125);

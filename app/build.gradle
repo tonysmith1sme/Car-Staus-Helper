@@ -18,8 +18,8 @@ android {
         applicationId "com.huawei.carstatushelper"
         minSdk 25
         targetSdk 32
-        versionCode 36
-        versionName "V1.3.9"
+        versionCode 37
+        versionName "V1.4.0"
     }
 
     buildTypes {

@@ -1,9 +1,6 @@
 package com.huawei.carstatushelper.receiver;
 
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,14 +23,15 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 
 import com.huawei.carstatushelper.MainActivity;
-import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
+import com.huawei.carstatushelper.floating.RadarDistanceHelper;
+import com.huawei.carstatushelper.service.FloatingService;
 import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
-import com.huawei.carstatushelper.floating.RadarDistanceHelper;
+import com.huawei.carstatushelper.util.NotificationHelper;
 import com.huawei.carstatushelper.util.SmartRemindUtil;
+import com.huawei.carstatushelper.util.Utils;
 import com.socks.library.KLog;
-import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +82,7 @@ public class BootCompleteService extends Service {
     public void onCreate() {
         super.onCreate();
         KLog.e();
-        initNotification();
+        NotificationHelper.showNotification(this);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -118,37 +116,14 @@ public class BootCompleteService extends Service {
         }
 
         radarDistanceHelper = new RadarDistanceHelper(this);
-
-//        if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
-//            startService(new Intent(this, EngineSpeedFloatingService.class));
-//        }
-    }
-
-    private void initNotification() {
-        String channelId = getPackageName();
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        //反射
-        Notification.Builder builder;
-        if (Build.VERSION.SDK_INT >= 26) {
-            builder = AutoBootHelper.newNotificationBuilder(this, channelId);
-        } else {
-            builder = new Notification.Builder(this);
-        }
-        Notification notification = builder.setSmallIcon(R.mipmap.ic_launcher).setContentTitle("服务已启动").setSubText("运行中。。。").build();
-        //反射
-        if (Build.VERSION.SDK_INT >= 26) {
-            NotificationChannel channel = new NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_DEFAULT);
-            AutoBootHelper.createNotificationChannel(manager, channel);
-        }
-        startForeground(1, notification);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
         KLog.e();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 KLog.e("panoramaDevice 初始化成功");
@@ -179,7 +154,8 @@ public class BootCompleteService extends Service {
                 radarDevice.registerListener(radarListener);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_GET) == PackageManager.PERMISSION_GRANTED) {
             if (bodyworkDevice == null) {
                 bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
             }
@@ -410,10 +386,15 @@ public class BootCompleteService extends Service {
             super.onEnergyModeChanged(mode);
             boolean ret = preferences.getBoolean("auto_show_engine_speed_floating", false);
             if (ret) {
+                Intent intent = new Intent(BootCompleteService.this, FloatingService.class);
                 if (mode == BYDAutoEnergyDevice.ENERGY_MODE_EV || mode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
-                    stopService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+                    stopService(intent);
                 } else {
-                    startService(new Intent(BootCompleteService.this, EngineSpeedFloatingService.class));
+                    if (Build.VERSION.SDK_INT >= 26 && Utils.isBackground(BootCompleteService.this)) {
+                        AutoBootHelper.startForegroundService(BootCompleteService.this, intent);
+                    } else {
+                        startService(intent);
+                    }
                 }
             }
         }

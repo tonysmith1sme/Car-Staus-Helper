@@ -4,15 +4,13 @@
         android:id="@+id/about_us"
         android:title="关于" />
     <item
-        android:id="@+id/sponsor_list"
-        android:title="赞助列表" />
-    <item
         android:id="@+id/version_update"
         android:title="版本更新" />
-
+    <!--
     <item
         android:id="@+id/float_show"
         android:title="转速浮窗" />
+    -->
     <item
         android:id="@+id/float_show_new"
         android:title="多功能浮窗" />

@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00f"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="210dp"
         android:layout_height="match_parent"
-        android:background="#8f00"
+        android:background="@color/color_dark"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -24,28 +23,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="发动机转速: "
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/engine_speed_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 tools:text="1460" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" rpm"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,8 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="8dp">
 
             <FrameLayout
                 android:layout_width="match_parent"

@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00f"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="210dp"
         android:layout_height="match_parent"
-        android:background="#8f00"
+        android:background="@color/color_dark"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -33,7 +32,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="自动"
-                    android:textSize="12sp" />
+                    android:textColor="@color/color_button_state_on"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/ac_on_off_btn"
@@ -42,7 +42,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="关闭"
-                    android:textSize="12sp" />
+                    android:textColor="@color/color_button_state_off"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/ac_compressor_btn"
@@ -51,7 +52,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="A/C"
-                    android:textSize="12sp" />
+                    android:textColor="@color/color_button_state_on"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,16 +68,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="除霜"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/ac_cycle_mode_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="外循环"
-                    android:textSize="12sp" />
+                    android:textColor="@color/color_button_state_off"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/ventilate_mode_btn"
@@ -84,7 +78,19 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="通风"
-                    android:textSize="12sp" />
+                    android:textColor="@color/color_button_state_off"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/ac_cycle_mode_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="内/外"
+                    android:textColor="@color/color_button_state_off"
+                    android:textSize="14sp" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -122,13 +128,17 @@
                 android:id="@+id/temperature_sub_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:text="-"
+                android:textColor="@color/color_button_state_on"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/temperature_plus_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="+"
+                android:textColor="@color/color_button_state_on"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -160,13 +170,17 @@
                 android:id="@+id/wind_level_sub_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:text="-"
+                android:textColor="@color/color_button_state_on"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/wind_level_plus_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="+"
+                android:textColor="@color/color_button_state_on"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

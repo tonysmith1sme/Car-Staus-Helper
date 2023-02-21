@@ -9,19 +9,19 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.huawei.carstatushelper.MainActivity;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.floating.CarControlPage;
 import com.huawei.carstatushelper.floating.CarCurrentTripPage;
 import com.huawei.carstatushelper.floating.CarStatusPage;
+import com.huawei.carstatushelper.util.NotificationHelper;
+import com.huawei.carstatushelper.util.Utils;
 import com.viewpagerindicator.UnderlinePageIndicator;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class FloatingService extends Service implements View.OnClickListener {
 
@@ -48,14 +48,8 @@ public class FloatingService extends Service implements View.OnClickListener {
         rootView = LayoutInflater.from(this).inflate(R.layout.layout_floating, null, false);
         floatingWindowHelper.addView(rootView, 0, 0, true, false);
 
-        rootView.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Random random = new Random();
-                int ret = random.nextInt(8000);
-                Toast.makeText(FloatingService.this, "test", Toast.LENGTH_SHORT).show();
-            }
-        });
+        rootView.findViewById(R.id.back_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.close_btn).setOnClickListener(this);
 
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
         UnderlinePageIndicator indicator = (UnderlinePageIndicator) rootView.findViewById(R.id.indicator_upi);
@@ -74,6 +68,10 @@ public class FloatingService extends Service implements View.OnClickListener {
 
         indicator.setViewPager(viewPager);
         indicator.setFades(false);
+
+        if (Utils.isBackground(this)) {
+            NotificationHelper.showNotification(this);
+        }
     }
 
     @Override
