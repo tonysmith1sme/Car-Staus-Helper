@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.huawei.carstatushelper.util.AutoBootHelper;
-import com.huawei.carstatushelper.util.BYDWirelessCharger;
-import com.huawei.carstatushelper.util.PrefUtil;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
 

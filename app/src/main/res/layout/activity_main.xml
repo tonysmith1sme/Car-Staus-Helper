@@ -612,7 +612,7 @@
                         android:id="@+id/ac_control_mode_btn"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="自动" />
+                        android:text="手动" />
 
                     <Button
                         android:id="@+id/ac_on_off_btn"

@@ -1,14 +1,10 @@
 package com.huawei.carstatushelper.util;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 
 import com.socks.library.KLog;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -29,38 +25,5 @@ public class AutoBootHelper {
             e.printStackTrace();
             KLog.e("startForegroundService failed, error: " + e);
         }
-    }
-
-    public static void createNotificationChannel(NotificationManager manager, NotificationChannel channel) {
-        try {
-            Class<?> clz = Class.forName("android.app.NotificationManager");
-            Method method = clz.getDeclaredMethod("createNotificationChannel", NotificationChannel.class);
-            method.setAccessible(true);
-            method.invoke(manager, channel);
-//            System.out.println();
-            KLog.e("createNotificationChannel success");
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            KLog.e("createNotificationChannel failed, error: " + e);
-        }
-    }
-
-    public static Notification.Builder newNotificationBuilder(Context context, String channelId) {
-        try {
-            Class<?> clz = Class.forName("android.app.Notification$Builder");
-            Constructor<?> constructor = clz.getDeclaredConstructor(Context.class, String.class);
-            constructor.setAccessible(true);
-            Object obj = constructor.newInstance(context, channelId);
-            KLog.e("newNotificationBuilder success");
-            return (Notification.Builder) obj;
-        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-            KLog.e("newNotificationBuilder failed, error: " + e);
-        }
-        return new Notification.Builder(context);
-    }
-
-    public static void simple(){
-
     }
 }

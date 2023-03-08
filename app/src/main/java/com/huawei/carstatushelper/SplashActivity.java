@@ -233,11 +233,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                         return;
                     }
                 }
-//                if (!binding.agreementCb.isChecked()) {
-//                    Toast.makeText(this, "请先阅读并同意协议", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                preferences.edit().putBoolean(KEY_AGREEMENT_SAVE, true).apply();
                 preferences.edit().putBoolean("key_skip_guide_page", true).apply();
 
                 startService(new Intent(this, BootCompleteService.class));

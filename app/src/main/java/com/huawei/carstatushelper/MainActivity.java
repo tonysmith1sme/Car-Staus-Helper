@@ -63,7 +63,6 @@ import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
 import com.huawei.carstatushelper.view.RearMotorSpeedView;
 import com.socks.library.KLog;
-import com.ziwenl.floatingwindowdemo.EngineSpeedFloatingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1536,7 +1535,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about_us) {
             startActivity(new Intent(this, AboutActivity.class));
-        }  else if (item.getItemId() == R.id.version_update) {
+        } else if (item.getItemId() == R.id.version_update) {
             Uri uri = Uri.parse("https://pan.baidu.com/s/1HH9eXbn2hWWwIhCYNwGyJg?pwd=gaqe");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
@@ -1768,6 +1767,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int vId = v.getId();
+        if (bydAutoAcDevice == null) {
+            return;
+        }
         if (vId == R.id.ac_compressor_btn) {
             int acCompressorMode = bydAutoAcDevice.getAcCompressorMode();
             if (acCompressorMode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
@@ -1778,24 +1780,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if (vId == R.id.ac_on_off_btn) {
-            if (bydAutoAcDevice != null) {
-                int acStartState = bydAutoAcDevice.getAcStartState();
-                if (acStartState == BYDAutoAcDevice.AC_POWER_ON) {
-                    bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
-                } else if (acStartState == BYDAutoAcDevice.AC_POWER_OFF) {
-                    bydAutoAcDevice.start(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
-                }
+            int acStartState = bydAutoAcDevice.getAcStartState();
+            if (acStartState == BYDAutoAcDevice.AC_POWER_ON) {
+                bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+            } else if (acStartState == BYDAutoAcDevice.AC_POWER_OFF) {
+                bydAutoAcDevice.start(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
             }
             return;
         }
         if (vId == R.id.ac_cycle_mode_btn) {
-            if (bydAutoAcDevice != null) {
-                int acCycleMode = bydAutoAcDevice.getAcCycleMode();
-                if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
-                } else if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
-                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
-                }
+            int acCycleMode = bydAutoAcDevice.getAcCycleMode();
+            if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
+                bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
+            } else if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
+                bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
             }
             return;
         }
@@ -1820,58 +1818,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return;
         }
-        if (bydAutoAcDevice != null) {
-            if (vId == R.id.ac_control_mode_btn) {
-                int acControlMode = bydAutoAcDevice.getAcControlMode();
-                if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
-                    bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_MANUAL);
-                } else if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
-                    bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_AUTO);
-                }
+        if (vId == R.id.ac_control_mode_btn) {
+            int acControlMode = bydAutoAcDevice.getAcControlMode();
+            if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
+                bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_MANUAL);
+            } else if (acControlMode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
+                bydAutoAcDevice.setAcControlMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CTRLMODE_AUTO);
+            }
+            return;
+        }
+        if (vId == R.id.temperature_plus_btn) {
+            int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
+            if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
                 return;
             }
-            if (vId == R.id.temperature_plus_btn) {
-                int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
-                if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
-                    return;
-                }
-                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
-            } else if (vId == R.id.temperature_sub_btn) {
-                int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
-                if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
-                    return;
-                }
-                bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
-            } else if (vId == R.id.wind_level_plus_btn) {
-                int acWindLevel = bydAutoAcDevice.getAcWindLevel();
-                if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_7) {
-                    return;
-                }
-                bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
-            } else if (vId == R.id.wind_level_sub_btn) {
-                int acWindLevel = bydAutoAcDevice.getAcWindLevel();
-                if (acWindLevel - 1 == BYDAutoAcDevice.AC_WINDLEVEL_0) {
-                    bydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
-                    int ret = bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
-                    return;
-                }
-                bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
-            } else if (vId == R.id.defrost_mode_btn) {
-                int state = bydAutoAcDevice.getAcDefrostState(BYDAutoAcDevice.AC_DEFROST_AREA_FRONT);
-                if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
-                    bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_ON);
-                } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
-                    bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_OFF);
-                }
-            } else if (vId == R.id.ventilate_mode_btn) {
-                int state = bydAutoAcDevice.getAcVentilationState();
-                if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
+            bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+        } else if (vId == R.id.temperature_sub_btn) {
+            int temprature = bydAutoAcDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
+            if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
+                return;
+            }
+            bydAutoAcDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+        } else if (vId == R.id.wind_level_plus_btn) {
+            int acWindLevel = bydAutoAcDevice.getAcWindLevel();
+            if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_7) {
+                return;
+            }
+            bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
+        } else if (vId == R.id.wind_level_sub_btn) {
+            int acWindLevel = bydAutoAcDevice.getAcWindLevel();
+            if (acWindLevel - 1 == BYDAutoAcDevice.AC_WINDLEVEL_0) {
+                bydAutoAcDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                int ret = bydAutoAcDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                return;
+            }
+            bydAutoAcDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
+        } else if (vId == R.id.defrost_mode_btn) {
+            int state = bydAutoAcDevice.getAcDefrostState(BYDAutoAcDevice.AC_DEFROST_AREA_FRONT);
+            if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
+                bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_ON);
+            } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
+                bydAutoAcDevice.setAcDefrostState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_DEFROST_AREA_FRONT, BYDAutoAcDevice.AC_DEFROST_STATE_OFF);
+            }
+        } else if (vId == R.id.ventilate_mode_btn) {
+            int state = bydAutoAcDevice.getAcVentilationState();
+            if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
 //                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
-                    bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_ON);
-                } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
+                bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_ON);
+            } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
 //                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
-                    bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
-                }
+                bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
             }
         }
     }

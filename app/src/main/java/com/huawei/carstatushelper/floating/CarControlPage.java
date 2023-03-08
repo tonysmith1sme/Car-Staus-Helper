@@ -207,10 +207,8 @@ public class CarControlPage implements IPage, View.OnClickListener {
         public void onAcCycleModeChanged(int mode) {
             super.onAcCycleModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-                acCycleModeBtn.setText("外循环");
                 acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
             } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
-                acCycleModeBtn.setText("内循环");
                 acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_off));
 
             }

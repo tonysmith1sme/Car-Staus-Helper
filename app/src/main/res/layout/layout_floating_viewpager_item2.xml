@@ -31,8 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="自动"
-                    android:textColor="@color/color_button_state_on"
+                    android:text="手动"
                     android:textSize="14sp" />
 
                 <Button
@@ -52,7 +51,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="A/C"
-                    android:textColor="@color/color_button_state_on"
                     android:textSize="14sp" />
             </LinearLayout>
 
