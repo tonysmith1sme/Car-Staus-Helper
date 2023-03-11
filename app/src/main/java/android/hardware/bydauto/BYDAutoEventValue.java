@@ -1,6 +1,8 @@
 package android.hardware.bydauto;
 
-/* loaded from: classes.dex */
+import android.support.annotation.Keep;
+
+@Keep
 public class BYDAutoEventValue {
     public static final int INVAILD_INT = -999999999;
     public static final double INVALID_DOUBLE = -9.99999999E8d;

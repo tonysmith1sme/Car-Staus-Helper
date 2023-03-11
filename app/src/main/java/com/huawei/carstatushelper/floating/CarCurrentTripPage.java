@@ -129,9 +129,6 @@ public class CarCurrentTripPage implements IPage {
             //本次行程hev里程
             int hev_mileage = hevMileageValue - init_hevMileageValue;
             if (currentTravelMileageTv != null) {
-                //"12(ev)+13(hev)=25"
-//                String result = ev_mileage + "(ev)+" + hev_mileage + "(hev)=" + total_mileage;
-//                currentTravelMileageTv.setText(result);
                 currentTravelMileageTv.setText(String.valueOf(total_mileage));
             }
             //本次行程电耗
@@ -178,71 +175,6 @@ public class CarCurrentTripPage implements IPage {
             if (currentComprehensiveFuelCostTv != null) {
                 currentComprehensiveFuelCostTv.setText(format.format(c));
             }
-        }
-
-        @Override
-        public void onTotalFuelConChanged(double value) {
-            super.onTotalFuelConChanged(value);
-        }
-
-        @Override
-        public void onTotalElecConChanged(double value) {
-            super.onTotalElecConChanged(value);
-        }
-
-        @Override
-        public void onDrivingTimeChanged(double value) {
-            super.onDrivingTimeChanged(value);
-        }
-
-        @Override
-        public void onLastFuelConPHMChanged(double value) {
-            super.onLastFuelConPHMChanged(value);
-        }
-
-        @Override
-        public void onTotalFuelConPHMChanged(double value) {
-            super.onTotalFuelConPHMChanged(value);
-        }
-
-        @Override
-        public void onLastElecConPHMChanged(double value) {
-            super.onLastElecConPHMChanged(value);
-        }
-
-        @Override
-        public void onTotalElecConPHMChanged(double value) {
-            super.onTotalElecConPHMChanged(value);
-        }
-
-        @Override
-        public void onElecDrivingRangeChanged(int value) {
-            super.onElecDrivingRangeChanged(value);
-        }
-
-        @Override
-        public void onFuelDrivingRangeChanged(int value) {
-            super.onFuelDrivingRangeChanged(value);
-        }
-
-        @Override
-        public void onFuelPercentageChanged(int value) {
-            super.onFuelPercentageChanged(value);
-        }
-
-        @Override
-        public void onElecPercentageChanged(double value) {
-            super.onElecPercentageChanged(value);
-        }
-
-        @Override
-        public void onKeyBatteryLevelChanged(int value) {
-            super.onKeyBatteryLevelChanged(value);
-        }
-
-        @Override
-        public void onEVMileageValueChanged(int value) {
-            super.onEVMileageValueChanged(value);
         }
     };
 }

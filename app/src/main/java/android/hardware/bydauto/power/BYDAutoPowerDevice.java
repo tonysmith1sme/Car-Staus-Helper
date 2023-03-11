@@ -1,7 +1,9 @@
 package android.hardware.bydauto.power;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 
+@Keep
 public final class BYDAutoPowerDevice {
     public static final int ACC_STATUS = -1728053193;
     public static final int POWER_CTL_STATE_OFF = 0;

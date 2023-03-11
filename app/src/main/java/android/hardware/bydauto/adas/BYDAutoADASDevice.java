@@ -2,9 +2,10 @@ package android.hardware.bydauto.adas;
 
 import android.content.Context;
 import android.hardware.bydauto.AbsBYDAutoDevice;
+import android.support.annotation.Keep;
 
-/* loaded from: classes.dex */
-public final class BYDAutoADASDevice extends AbsBYDAutoDevice {
+@Keep
+public class BYDAutoADASDevice extends AbsBYDAutoDevice {
     public static final int ABS_TCS_ESP_ACC_AEB_ACTIVE = 9;
     public static final int ADAS_COMMAND_BUSY = -2147482647;
     public static final int ADAS_COMMAND_FAILED = -2147482648;

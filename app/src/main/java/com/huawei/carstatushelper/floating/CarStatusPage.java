@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
 import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
-import android.hardware.bydauto.engine.AbsBYDAutoEngineListener;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
@@ -42,7 +41,6 @@ public class CarStatusPage implements IPage {
 
     @Override
     public void init() {
-//        rootView = LayoutInflater.from(context).inflate(R.layout.layout_floating_viewpager_item1, null, false);
         LayoutFloatingViewpagerItem1Binding binding = LayoutFloatingViewpagerItem1Binding.inflate(LayoutInflater.from(context));
         rootView = binding.getRoot();
 
@@ -84,7 +82,6 @@ public class CarStatusPage implements IPage {
             return;
         }
         speedDevice.registerListener(speedListener);
-        engineDevice.registerListener(engineListener);
         energyDevice.registerListener(energyListener);
         tyreDevice.registerListener(tyreListener);
     }
@@ -95,7 +92,6 @@ public class CarStatusPage implements IPage {
             return;
         }
         speedDevice.unregisterListener(speedListener);
-        engineDevice.unregisterListener(engineListener);
         energyDevice.unregisterListener(energyListener);
         tyreDevice.unregisterListener(tyreListener);
     }
@@ -110,28 +106,7 @@ public class CarStatusPage implements IPage {
         @Override
         public void onAccelerateDeepnessChanged(int value) {
             super.onAccelerateDeepnessChanged(value);
-        }
-
-        @Override
-        public void onBrakeDeepnessChanged(int value) {
-            super.onBrakeDeepnessChanged(value);
-        }
-    };
-
-    private final AbsBYDAutoEngineListener engineListener = new AbsBYDAutoEngineListener() {
-        @Override
-        public void onEngineSpeedChanged(int value) {
-            super.onEngineSpeedChanged(value);
-        }
-
-        @Override
-        public void onEngineCoolantLevelChanged(int state) {
-            super.onEngineCoolantLevelChanged(state);
-        }
-
-        @Override
-        public void onOilLevelChanged(int value) {
-            super.onOilLevelChanged(value);
+            updateEngineSpeedData();
         }
     };
 
@@ -139,16 +114,7 @@ public class CarStatusPage implements IPage {
         @Override
         public void onEnergyModeChanged(int mode) {
             super.onEnergyModeChanged(mode);
-        }
-
-        @Override
-        public void onOperationModeChanged(int mode) {
-            super.onOperationModeChanged(mode);
-        }
-
-        @Override
-        public void onPowerGenerationStateChanged(int mode) {
-            super.onPowerGenerationStateChanged(mode);
+            updateEngineSpeedData();
         }
 
         @Override
@@ -157,43 +123,9 @@ public class CarStatusPage implements IPage {
             updateEngineSpeedData();
         }
 
-        @Override
-        public void onRoadSurfaceChanged(int type) {
-            super.onRoadSurfaceChanged(type);
-        }
     };
 
     private final AbsBYDAutoTyreListener tyreListener = new AbsBYDAutoTyreListener() {
-        @Override
-        public void onTyreSystemStateChanged(int state) {
-            super.onTyreSystemStateChanged(state);
-        }
-
-        @Override
-        public void onTyreTemperatureStateChanged(int state) {
-            super.onTyreTemperatureStateChanged(state);
-        }
-
-        @Override
-        public void onTyreBatteryStateChanged(int state) {
-            super.onTyreBatteryStateChanged(state);
-        }
-
-        @Override
-        public void onTyreAirLeakStateChanged(int area, int state) {
-            super.onTyreAirLeakStateChanged(area, state);
-        }
-
-        @Override
-        public void onTyreSignalStateChanged(int area, int state) {
-            super.onTyreSignalStateChanged(area, state);
-        }
-
-        @Override
-        public void onTyrePressureStateChanged(int area, int state) {
-            super.onTyrePressureStateChanged(area, state);
-        }
-
         @Override
         public void onTyrePressureValueChanged(int area, int value) {
             super.onTyrePressureValueChanged(area, value);
@@ -218,11 +150,13 @@ public class CarStatusPage implements IPage {
         }
         int engine_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
         int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-        int engine_speed_result = 0;
+        int engine_speed_result;
         if (engine_speed_gb > 0 && engine_speed_gb <= 8000) {
             engine_speed_result = engine_speed_gb;
         } else if (engine_speed > 0 && engine_speed <= 8000) {
             engine_speed_result = engine_speed;
+        } else {
+            engine_speed_result = 0;
         }
         if (engineSpeedTv != null) {
             engineSpeedTv.setText(String.valueOf(engine_speed_result));

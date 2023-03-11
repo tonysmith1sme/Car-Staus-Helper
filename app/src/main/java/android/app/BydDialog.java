@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Keep;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import java.util.LinkedHashMap;
 
-/* loaded from: classes.dex */
+@Keep
 public class BydDialog implements DialogInterface {
     public static final int LAYOUT_HINT_NONE = 0;
     public static final int LAYOUT_HINT_SIDE = 1;

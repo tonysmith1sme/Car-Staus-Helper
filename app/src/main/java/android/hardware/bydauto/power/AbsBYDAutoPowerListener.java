@@ -1,5 +1,8 @@
 package android.hardware.bydauto.power;
 
+import android.support.annotation.Keep;
+
+@Keep
 public abstract class AbsBYDAutoPowerListener {
     public void onPowerCtlStatusChanged(int event_type, int value) {
     }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
@@ -31,6 +30,7 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Keep;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BYDAutoSettingDevice settingDevice;
     private Button energyFeedbackBtn;
 
-    //    private TextView batterSocTv;
     /**
      * 最低电池电压
      */
@@ -263,8 +262,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView externalChargingPowerTv;
     private Button acControlModeBtn;
-//    private Button resetMileage1Btn;
-//    private Button resetMileage2Btn;
     /**
      * 暂停行程
      */
@@ -361,12 +358,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (acControlModeBtn != null) {
             acControlModeBtn.setOnClickListener(this);
         }
-//        if (customMileage1Tv != null) {
-//            customMileage1Tv.setOnLongClickListener(onLongClickListener);
-//        }
-//        if (customMileage2Tv != null) {
-//            customMileage2Tv.setOnLongClickListener(onLongClickListener);
-//        }
         if (pauseCurrentMileageBtn != null) {
             pauseCurrentMileageBtn.setOnClickListener(this);
         }
@@ -380,31 +371,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             acCompressorBtn.setOnClickListener(this);
         }
     }
-
-//    private final View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
-//        @Override
-//        public boolean onLongClick(View view) {
-//            switch (view.getId()) {
-//                case R.id.custom_mileage1_tv:
-//                    if (instrumentDevice != null) {
-//                        BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
-//                        int ret = instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE1_SET, 1);
-//                        Toast.makeText(MainActivity.this, "ret:" + ret, Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                case R.id.custom_mileage2_tv:
-//                    if (instrumentDevice != null) {
-//                        BYDAutoInstrumentDeviceHelper instrumentDeviceHelper = BYDAutoInstrumentDeviceHelper.getInstance(instrumentDevice);
-//                        int ret = instrumentDeviceHelper.set(BYDAutoFeatureIds.INSTRUMENT_CLEAR_MILEAGE2_SET, 1);
-//                        Toast.makeText(MainActivity.this, "ret:" + ret, Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//            return true;
-//        }
-//    };
 
     private void loadContentView() {
         int orientation = getResources().getConfiguration().orientation;
@@ -433,7 +399,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePowerEpv = binding.enginePowerEpv;
         carSpeedCsv = binding.carSpeedCsv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
-//        rearMotorSpeedMsv.setHeader(" x1k rpm(后电机)");
 
         temperaturePlusBtn = binding.temperaturePlusBtn;
         temperatureSubBtn = binding.temperatureSubBtn;
@@ -518,7 +483,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         powerLevelTv = binding.powerLevelTv;
         energyFeedbackBtn = binding.energyFeedbackBtn;
 
-//        batterSocTv = binding.batterSocTv;
         lowestBatterVoltageTv = binding.lowestBatterVoltageTv;
         highestBatterVoltageTv = binding.highestBatterVoltageTv;
         lowestBatterTempTv = binding.lowestBatterTempTv;
@@ -531,9 +495,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         externalChargingPowerTv = binding.externalChargingPowerTv;
 
         acControlModeBtn = binding.acControlModeBtn;
-
-//        resetMileage1Btn = binding.resetMileage1Btn;
-//        resetMileage2Btn = binding.resetMileage2Btn;
 
         pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
 
@@ -641,7 +602,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.unregisterListener(absBYDAutoBodyworkListener);
         speedDevice.unregisterListener(absBYDAutoSpeedListener);
         energyDevice.unregisterListener(absBYDAutoEnergyListener);
-//        engineDevice.unregisterListener(absBYDAutoEngineListener);
         bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
         gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
         chargingDevice.unregisterListener(absBYDAutoChargingListener);
@@ -654,13 +614,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initAutoData();
-    }
-
-    @Override
-    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
-        super.onMultiWindowModeChanged(isInMultiWindowMode);
-        KLog.e("当前分屏模式：" + isInMultiWindowMode);
-        //分屏模式
     }
 
     private void initDevice() {
@@ -684,7 +637,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bodyworkDevice.registerListener(absBYDAutoBodyworkListener);
         speedDevice.registerListener(absBYDAutoSpeedListener);
         energyDevice.registerListener(absBYDAutoEnergyListener);
-//        engineDevice.registerListener(absBYDAutoEngineListener);
         bydAutoAcDevice.registerListener(absBYDAutoAcListener);
         gearboxDevice.registerListener(absBYDAutoGearboxListener);
         chargingDevice.registerListener(absBYDAutoChargingListener);
@@ -692,23 +644,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingDevice.registerListener(absBYDAutoSettingListener);
         instrumentDevice.registerListener(instrumentListener);
     }
-
-//    private final AbsBYDAutoEngineListener absBYDAutoEngineListener = new AbsBYDAutoEngineListener() {
-//        /**
-//         * 监听发动机转速变化
-//         * @param value
-//         */
-//        @Override
-//        public void onEngineSpeedChanged(int value) {
-//            super.onEngineSpeedChanged(value);
-//            if (value > 0 && value <= 8000) {
-//                updateEngineSpeedUI(value);
-//            } else {
-//                int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
-//                updateEngineSpeedUI(engine_speed_gb);
-//            }
-//        }
-//    };
 
     private final AbsBYDAutoSettingListener absBYDAutoSettingListener = new AbsBYDAutoSettingListener() {
         /**
@@ -742,6 +677,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        @Keep
         public void onBatteryPowerChanged(int value) {
             updateBatteryPower();
         }
@@ -888,8 +824,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (acControlModeBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
                     acControlModeBtn.setText("自动");
+                    acControlModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 } else if (mode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
                     acControlModeBtn.setText("手动");
+                    acControlModeBtn.setTextColor(getColor(R.color.color_button_state_off));
                 }
             }
         }
@@ -899,6 +837,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcStarted();
             if (acOnOffBtn != null) {
                 acOnOffBtn.setText("开启");
+                acOnOffBtn.setTextColor(getColor(R.color.color_button_state_on));
             }
         }
 
@@ -907,6 +846,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcStoped();
             if (acOnOffBtn != null) {
                 acOnOffBtn.setText("关闭");
+                acOnOffBtn.setTextColor(getColor(R.color.color_button_state_off));
             }
         }
 
@@ -916,8 +856,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (acCycleModeBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
                     acCycleModeBtn.setText("外循环");
+                    acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_off));
                 } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
                     acCycleModeBtn.setText("内循环");
+                    acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 }
             }
         }
@@ -992,7 +934,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 energyModeTv.setText(StringUtil.getEnergyModeName(energyMode));
             }
 
-//            updateEngineSpeedData();
+            updateEngineSpeedData();
 
             if (engineSpeedEsv != null) {
                 if (energyMode == BYDAutoEnergyDevice.ENERGY_MODE_EV || energyMode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
@@ -1017,22 +959,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         /**
-         * 原地踩油门发电状态
-         *
-         * @param mode
-         */
-        @Override
-        public void onPowerGenerationStateChanged(int mode) {
-            super.onPowerGenerationStateChanged(mode);
-            //发电中
-            if (mode == BYDAutoEnergyDevice.ENERGY_POWER_GENERATING) {
-
-            } else {
-
-            }
-        }
-
-        /**
          * 原地踩油门发电功率
          *
          * @param value
@@ -1041,7 +967,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onPowerGenerationValueChanged(int value) {
             super.onPowerGenerationValueChanged(value);
             updateEnginePower();
-            updateEngineSpeedData();
+//            updateEngineSpeedData();
         }
     };
 
@@ -1068,17 +994,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (customMileage2Tv != null) {
                 customMileage2Tv.setText(format.format(statisticDeviceHelper.getMileageNumber(1)));
             }
-            //总EV里程
-//            if (totalEvMileageTv != null) {
-//                totalEvMileageTv.setText(String.valueOf(statisticDevice.getEVMileageValue()));
-//            }
             //总HEV里程
             int hevMileageValue = statisticDeviceHelper.getHEVMileageValue();
             if (totalHevMileageTv != null) {
                 totalHevMileageTv.setText(String.valueOf(hevMileageValue));
             }
-            //更新单次行程能耗数据
+            //总EV里程
             int evMileageValue = statisticDevice.getEVMileageValue();
+            //更新单次行程能耗数据
             double totalElecConValue = statisticDevice.getTotalElecConValue();
             double totalFuelConValue = statisticDevice.getTotalFuelConValue();
 
@@ -1089,9 +1012,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //本次行程hev里程
             int hev_mileage = hevMileageValue - init_hevMileageValue;
             if (currentTravelMileageTv != null) {
-                //"12(ev)+13(hev)=25"
-//                String result = ev_mileage + "(ev)+" + hev_mileage + "(hev)=" + total_mileage;
-//                currentTravelMileageTv.setText(result);
                 currentTravelMileageTv.setText(String.valueOf(total_mileage));
             }
             //本次行程电耗
@@ -1185,9 +1105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalFuelConPHMChanged(double value) {
             super.onTotalFuelConPHMChanged(value);
-//            String s = format.format(value) + "(监听值)";
             totalFuelConPHM = value;
-//            binding.totalFuelConPhmTv.setText(s);
         }
 
 
@@ -1225,10 +1143,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             BYDAutoStatisticDeviceHelper statisticDeviceHelper = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice);
             if (lowestBatterVoltageTv != null) {
-                lowestBatterVoltageTv.setText(String.valueOf(statisticDeviceHelper.getSTATISTIC_LOWEST_BATTERY_VOLTAGE()));
+                int data = statisticDeviceHelper.getSTATISTIC_LOWEST_BATTERY_VOLTAGE();//3323
+                lowestBatterVoltageTv.setText(format.format(data * 1.0f / 1000));//3.323
             }
             if (highestBatterVoltageTv != null) {
-                highestBatterVoltageTv.setText(String.valueOf(statisticDeviceHelper.getSTATISTIC_HIGHEST_BATTERY_VOLTAGE()));
+                int data = statisticDeviceHelper.getSTATISTIC_HIGHEST_BATTERY_VOLTAGE();//3331
+                highestBatterVoltageTv.setText(format.format(data * 1.0f / 1000));//3.331
             }
             if (lowestBatterTempTv != null) {
                 lowestBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getLOWEST_BATTERY_TEMP()));
@@ -1240,7 +1160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 averageBatterTempTv.setText(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
             }
         }
-
 
         /**
          * 监听燃油续航里程变化
@@ -1296,15 +1215,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             safeSetText(elecPbTv, String.valueOf((int) ret));
         }
 
-        /**
-         * 监听钥匙电池电量变化
-         * @param value
-         */
-        @Override
-        public void onKeyBatteryLevelChanged(int value) {
-            super.onKeyBatteryLevelChanged(value);
-        }
-
         @Override
         public void onEVMileageValueChanged(int value) {
             super.onEVMileageValueChanged(value);
@@ -1313,6 +1223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        @Keep
         public void onHEVMileageValueChanged(int value) {
             KLog.e("onHEVMileageValueChanged = " + value);
             if (totalHevMileageTv != null) {
@@ -1325,6 +1236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
+        @Keep
         public void onWaterTemperatureChanged(int value) {
             KLog.e("onWaterTemperatureChanged = " + value);
             updateWaterTemperature();
@@ -1335,6 +1247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
+        @Keep
         public void onInstantElecConChanged(double value) {
             updateInstantElecCon();
         }
@@ -1344,6 +1257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
+        @Keep
         public void onInstantFuelConChanged(double value) {
             updateInstantFuelCon();
         }
@@ -1389,19 +1303,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int engine_speed = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED);
         int engine_speed_gb = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_GB);
         int engine_speed_warning = BydApi29Helper.get(engineDevice, BYDAutoFeatureIds.ENGINE_SPEED_WARNING);
-        int engine_speed_result = 0;
+        int engine_speed_result;
         if (engine_speed_gb > 0 && engine_speed_gb <= 8000) {
-//            updateEngineSpeedUI(engine_speed_gb);
             engine_speed_result = engine_speed_gb;
         } else if (engine_speed > 0 && engine_speed <= 8000) {
-//            updateEngineSpeedUI(engine_speed);
             engine_speed_result = engine_speed;
         } else {
-//            updateEngineSpeedUI(0);
+            engine_speed_result = 0;
         }
-//        if (engine_speed_result >= 8191) {
-//            engine_speed_result = 0;
-//        }
         if (engineSpeedTv != null) {
             engineSpeedTv.setText(String.valueOf(engine_speed_result));
         }
@@ -1508,7 +1417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onAccelerateDeepnessChanged(int value) {
             super.onAccelerateDeepnessChanged(value);
 
-//            updateEngineSpeedData();
+            updateEngineSpeedData();
 
             if (youMengPb != null && youMengTv != null) {
                 youMengPb.setProgress(value);
@@ -1734,11 +1643,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double totalElecConPHMValue = statisticDevice.getTotalElecConPHMValue();
         double totalFuelConPHMValue = statisticDevice.getTotalFuelConPHMValue();
 
-//        //燃油消耗总量
-//        double totalFuelConValue = statisticDevice.getTotalFuelConValue();
-//        //电消耗总量
-//        double totalElecConValue = statisticDevice.getTotalElecConValue();
-
         String elec_listener_and_cacu = format.format(totalElecConPHM == 0 ? totalElecConPHMValue : totalElecConPHM);
         String fuel_listener_and_cacu = format.format(totalFuelConPHM == 0 ? totalFuelConPHMValue : totalFuelConPHM);
 
@@ -1748,18 +1652,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (totalFuelConPhmTv != null) {
             totalFuelConPhmTv.setText(fuel_listener_and_cacu);
         }
-    }
-
-    private boolean isLandLayoutShow() {
-        Resources resources = getResources();
-        if (resources == null) {
-            return false;
-        }
-        Configuration configuration = resources.getConfiguration();
-        if (configuration == null) {
-            return false;
-        }
-        return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     public static final String KEY_PAUSE_CURRENT_MILEAGE_DATA = "key_pause_current_mileage_data";
@@ -1863,10 +1755,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (vId == R.id.ventilate_mode_btn) {
             int state = bydAutoAcDevice.getAcVentilationState();
             if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
-//                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
                 bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_ON);
             } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
-//                    bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_INLOOP);
                 bydAutoAcDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
             }
         }
@@ -1879,42 +1769,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         target.setText(text);
     }
 
-    private static String getCommandRet(int ret) {
-        if (ret == 0) {
-            return "success";
-        }
-        return "failed";
-    }
-
     private final AbsBYDAutoInstrumentListener instrumentListener = new AbsBYDAutoInstrumentListener() {
 
         /**
          * 水温计百分比变化(0-100)
          * @param percent
          */
+        @Keep
         public void onWaterTempMeterPercentChanged(double percent) {
             if (waterTemperaturePercentTv != null) {
                 waterTemperaturePercentTv.setText(format.format(percent));
             }
-        }
-
-        @Override
-        public void onMalfunctionInfoChanged(int typeName, int hasMalfunction) {
-            super.onMalfunctionInfoChanged(typeName, hasMalfunction);
-            //BYDAutoFeatureIds.INSTRUMENT_HIGH_WATER_TEMPERATURE
-            if (typeName == BYDAutoInstrumentDevice.MALFUNCTION_HIGH_WATER_TEMPERATURE) {
-
-            }
-        }
-
-        @Override
-        public void onMaintenanceInfoChanged(int typeName, int infoValue) {
-            super.onMaintenanceInfoChanged(typeName, infoValue);
-        }
-
-        @Override
-        public void onAlarmBuzzleStateChange(int state) {
-            super.onAlarmBuzzleStateChange(state);
         }
 
         @Override

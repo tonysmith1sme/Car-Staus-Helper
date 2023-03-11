@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.Keep;
 import android.support.v4.content.ContextCompat;
 
 import com.huawei.carstatushelper.MainActivity;
@@ -345,6 +346,13 @@ public class BootCompleteService extends Service {
     private final AbsBYDAutoRadarListener radarListener = new AbsBYDAutoRadarListener() {
         long lastSpeakTime;
 
+        /**
+         * 加 @Keep 注解防止混淆时被优化掉
+         *
+         * @param area
+         * @param value
+         */
+        @Keep
         public void onRadarObstacleDistanceChanged(int area, int value) {
             KLog.e("radar distance ,area = " + area + " value = " + value);
             if (radarDevice != null) {

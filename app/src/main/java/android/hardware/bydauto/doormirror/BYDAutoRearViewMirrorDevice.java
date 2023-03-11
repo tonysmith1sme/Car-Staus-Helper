@@ -2,8 +2,9 @@ package android.hardware.bydauto.doormirror;
 
 import android.content.Context;
 import android.hardware.bydauto.AbsBYDAutoDevice;
+import android.support.annotation.Keep;
 
-/* loaded from: classes.dex */
+@Keep
 public final class BYDAutoRearViewMirrorDevice extends AbsBYDAutoDevice {
     private static final boolean DEBUG = true;
     public static final int REAR_VIEW_MIRROR_ANTIGLARE_STATE_INVALID = 0;

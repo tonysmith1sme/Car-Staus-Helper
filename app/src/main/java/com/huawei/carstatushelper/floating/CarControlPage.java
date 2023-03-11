@@ -34,7 +34,6 @@ public class CarControlPage implements IPage, View.OnClickListener {
 
     @Override
     public void init() {
-//        rootView = LayoutInflater.from(context).inflate(R.layout.layout_floating_viewpager_item2, null, false);
         LayoutFloatingViewpagerItem2Binding binding = LayoutFloatingViewpagerItem2Binding.inflate(LayoutInflater.from(context));
         rootView = binding.getRoot();
 
@@ -182,16 +181,6 @@ public class CarControlPage implements IPage, View.OnClickListener {
         }
 
         @Override
-        public void onAcRearStarted() {
-            super.onAcRearStarted();
-        }
-
-        @Override
-        public void onAcRearStoped() {
-            super.onAcRearStoped();
-        }
-
-        @Override
         public void onAcCtrlModeChanged(int mode) {
             super.onAcCtrlModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
@@ -207,10 +196,9 @@ public class CarControlPage implements IPage, View.OnClickListener {
         public void onAcCycleModeChanged(int mode) {
             super.onAcCycleModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-                acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
-            } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
                 acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_off));
-
+            } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
+                acCycleModeBtn.setTextColor(ContextCompat.getColor(context, R.color.color_button_state_on));
             }
         }
 
@@ -239,11 +227,6 @@ public class CarControlPage implements IPage, View.OnClickListener {
         }
 
         @Override
-        public void onAcCompressorManualSignChanged(int sign) {
-            super.onAcCompressorManualSignChanged(sign);
-        }
-
-        @Override
         public void onAcCompressorModeChanged(int mode) {
             super.onAcCompressorModeChanged(mode);
             if (mode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
@@ -254,29 +237,9 @@ public class CarControlPage implements IPage, View.OnClickListener {
         }
 
         @Override
-        public void onAcWindModeManualSignChanged(int sign) {
-            super.onAcWindModeManualSignChanged(sign);
-        }
-
-        @Override
-        public void onAcWindModeChanged(int mode) {
-            super.onAcWindModeChanged(mode);
-        }
-
-        @Override
-        public void onAcWindLevelManualSignChanged(int sign) {
-            super.onAcWindLevelManualSignChanged(sign);
-        }
-
-        @Override
         public void onAcWindLevelChanged(int level) {
             super.onAcWindLevelChanged(level);
             currentWindLevelTv.setText(String.valueOf(level));
-        }
-
-        @Override
-        public void onTemperatureUnitChanged(int unit) {
-            super.onTemperatureUnitChanged(unit);
         }
 
         @Override
@@ -287,11 +250,6 @@ public class CarControlPage implements IPage, View.OnClickListener {
                     currentTemperatureTv.setText(String.valueOf(value));
                 }
             }
-        }
-
-        @Override
-        public void onAcWindModeShownStateChanged(int state) {
-            super.onAcWindModeShownStateChanged(state);
         }
     };
 }

@@ -1,5 +1,8 @@
 package android.hardware.bydauto;
 
+import android.support.annotation.Keep;
+
+@Keep
 public class BYDAutoConstants {
     public static final int BYDAUTO_COMMAND_RESULT_BUSY = -2147482647;
     public static final int BYDAUTO_COMMAND_RESULT_FAILED = -2147482648;

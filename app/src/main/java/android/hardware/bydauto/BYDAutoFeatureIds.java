@@ -1,5 +1,8 @@
 package android.hardware.bydauto;
 
+import android.support.annotation.Keep;
+
+@Keep
 public class BYDAutoFeatureIds {
     public static final int AC_AIR_QUAL_CTRL_MENU_STATE = 1077936142;
     public static final int AC_AUTO_CLEAN_AIR = 1301291046;

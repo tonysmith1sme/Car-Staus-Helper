@@ -3,8 +3,9 @@ package android.hardware.bydauto.bigdata;
 import android.hardware.IBYDAutoEvent;
 import android.hardware.IBYDAutoListener;
 import android.hardware.bydauto.BYDAutoEventValue;
+import android.support.annotation.Keep;
 
-/* loaded from: classes.dex */
+@Keep
 public abstract class AbsBYDAutoBigDataListener implements IBYDAutoListener {
     private static final boolean DEBUG = true;
     protected static final String TAG = "AbsBYDAutoBigDataListener";

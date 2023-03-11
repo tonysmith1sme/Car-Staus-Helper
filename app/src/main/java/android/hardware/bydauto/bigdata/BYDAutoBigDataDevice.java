@@ -1,13 +1,10 @@
 package android.hardware.bydauto.bigdata;
 
 import android.content.Context;
-import android.hardware.IBYDAutoListener;
 import android.hardware.bydauto.AbsBYDAutoDevice;
-import android.hardware.bydauto.BYDAutoEvent;
-import android.util.Log;
-import java.util.Arrays;
+import android.support.annotation.Keep;
 
-/* loaded from: classes.dex */
+@Keep
 public final class BYDAutoBigDataDevice extends AbsBYDAutoDevice {
     public static final int BIGDATA_COMMAND_BUSY = -2147482647;
     public static final int BIGDATA_COMMAND_FAILED = -2147482648;
