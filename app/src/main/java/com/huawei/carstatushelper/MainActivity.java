@@ -40,6 +40,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -263,9 +264,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView externalChargingPowerTv;
     private Button acControlModeBtn;
     /**
+     * 重置本次行程数据
+     */
+    private ImageView resetCurrentMileageBtn;
+    /**
      * 暂停行程
      */
-    private Button pauseCurrentMileageBtn;
+    private ImageView pauseCurrentMileageBtn;
     private Button acOnOffBtn;
     private Button acCycleModeBtn;
     private Button acCompressorBtn;
@@ -280,6 +285,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initBtnListener();
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        loadCurrentTripData();
+        boolean need = PermissionUtils.needRequestPermission(this, SplashActivity.BYD_PERMISSIONS);
+        if (need) {
+            Toast.makeText(this, "车辆权限不足，无法获取车辆数据", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        initDevice();
+        initAutoData();
+    }
+
+    private void loadCurrentTripData() {
         String json = mPreferences.getString(BootCompleteService.KEY_INIT_DRIVER_DATA, null);
         if (!TextUtils.isEmpty(json)) {
             try {
@@ -293,13 +309,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         }
-        boolean need = PermissionUtils.needRequestPermission(this, SplashActivity.BYD_PERMISSIONS);
-        if (need) {
-            Toast.makeText(this, "车辆权限不足，无法获取车辆数据", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        initDevice();
-        initAutoData();
     }
 
     @Override
@@ -358,6 +367,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (acControlModeBtn != null) {
             acControlModeBtn.setOnClickListener(this);
         }
+        if (resetCurrentMileageBtn != null) {
+            resetCurrentMileageBtn.setOnClickListener(this);
+        }
         if (pauseCurrentMileageBtn != null) {
             pauseCurrentMileageBtn.setOnClickListener(this);
         }
@@ -400,11 +412,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         carSpeedCsv = binding.carSpeedCsv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
 
-        temperaturePlusBtn = binding.temperaturePlusBtn;
-        temperatureSubBtn = binding.temperatureSubBtn;
-        windLevelPlusBtn = binding.windLevelPlusBtn;
-        windLevelSubBtn = binding.windLevelSubBtn;
-
         currentGearboxLevelTv = binding.currentGearboxLevelTv;
         currentTemperatureTv = binding.currentTemperatureTv;
         currentWindLevelTv = binding.currentWindLevelTv;
@@ -415,6 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         totalMileageTv = binding.totalMileageTv;
         customMileage1Tv = binding.customMileage1Tv;
         customMileage2Tv = binding.customMileage2Tv;
+        totalEvMileageTv = binding.totalEvMileageTv;
         totalHevMileageTv = binding.totalHevMileageTv;
 
         totalFuelCostTv = binding.totalFuelCostTv;
@@ -423,7 +431,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lastFuelConPhmTv = binding.lastFuelConPhmTv;
         lastElecConPhmTv = binding.lastElecConPhmTv;
 
-        totalEvMileageTv = binding.totalEvMileageTv;
         carSpeedTv = binding.carSpeedTv;
         engineSpeedTv = binding.engineSpeedTv;
         engineSpeedGbTv = binding.engineSpeedGbTv;
@@ -456,9 +463,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         chargingPowerTv = binding.chargingPowerTv;
         chargingRestTimeTv = binding.chargingRestTimeTv;
-
-        defrostModeBtn = binding.defrostModeBtn;//除霜
-        ventilateModeBtn = binding.ventilateModeBtn;//通风
 
         waterTemperatureTv = binding.waterTemperatureTv;
         instantElecConTv = binding.instantElecConTv;
@@ -494,13 +498,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
 
-        acControlModeBtn = binding.acControlModeBtn;
-
+        resetCurrentMileageBtn = binding.resetCurrentMileageBtn;
         pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
 
-        acOnOffBtn = binding.acOnOffBtn;
-        acCycleModeBtn = binding.acCycleModeBtn;
-        acCompressorBtn = binding.acCompressorBtn;
+        acControlModeBtn = binding.acControlModeBtn;//手动、自动
+        acOnOffBtn = binding.acOnOffBtn;//关、开
+        acCompressorBtn = binding.acCompressorBtn;//A/C
+        defrostModeBtn = binding.defrostModeBtn;//除霜
+        acCycleModeBtn = binding.acCycleModeBtn;//内/外循环
+        ventilateModeBtn = binding.ventilateModeBtn;//通风
+        temperatureSubBtn = binding.temperatureSubBtn;//温度-
+        temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
+        windLevelSubBtn = binding.windLevelSubBtn;//风量-
+        windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -510,19 +520,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePowerEpv = binding.enginePowerEpv;
         rearMotorSpeedMsv = binding.rearMotorSpeedMsv;
 
-        temperaturePlusBtn = binding.temperaturePlusBtn;
-        temperatureSubBtn = binding.temperatureSubBtn;
-        windLevelPlusBtn = binding.windLevelPlusBtn;
-        windLevelSubBtn = binding.windLevelSubBtn;
-
-        totalMileageTv = binding.totalMileageTv;
-        totalHevMileageTv = binding.totalHevMileageTv;
         totalFuelCostTv = binding.totalFuelCostTv;
         totalElecCostTv = binding.totalElecCostTv;
         lastFuelConPhmTv = binding.lastFuelConPhmTv;
         lastElecConPhmTv = binding.lastElecConPhmTv;
 
+        totalMileageTv = binding.totalMileageTv;
+        customMileage1Tv = binding.customMileage1Tv;
+        customMileage2Tv = binding.customMileage2Tv;
         totalEvMileageTv = binding.totalEvMileageTv;
+        totalHevMileageTv = binding.totalHevMileageTv;
 
         powerMileageTv = binding.powerMileageTv;
         fuelMileageTv = binding.fuelMileageTv;
@@ -548,8 +555,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tyrePreLeftRearTv = binding.tyrePreLeftRearTv;
         tyrePreRightRearTv = binding.tyrePreRightRearTv;
 
-        defrostModeBtn = binding.defrostModeBtn;
-        ventilateModeBtn = binding.ventilateModeBtn;
+        lowestBatterVoltageTv = binding.lowestBatterVoltageTv;
+        highestBatterVoltageTv = binding.highestBatterVoltageTv;
+        lowestBatterTempTv = binding.lowestBatterTempTv;
+        highestBatterTempTv = binding.highestBatterTempTv;
+        averageBatterTempTv = binding.averageBatterTempTv;
 
         currentTemperatureTv = binding.currentTemperatureTv;
         currentWindLevelTv = binding.currentWindLevelTv;
@@ -562,11 +572,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentComprehensiveElecCostTv = binding.currentComprehensiveElecCostTv;
         currentComprehensiveFuelCostTv = binding.currentComprehensiveFuelCostTv;
 
+        resetCurrentMileageBtn = binding.resetCurrentMileageBtn;
+        pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
+
         energyFeedbackBtn = binding.energyFeedbackBtn;
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
 
-        acControlModeBtn = binding.acControlModeBtn;
+        acControlModeBtn = binding.acControlModeBtn;//手动、自动
+        acOnOffBtn = binding.acOnOffBtn;//关、开
+        acCompressorBtn = binding.acCompressorBtn;//A/C
+        defrostModeBtn = binding.defrostModeBtn;//除霜
+        acCycleModeBtn = binding.acCycleModeBtn;//内/外循环
+        ventilateModeBtn = binding.ventilateModeBtn;//通风
+        temperatureSubBtn = binding.temperatureSubBtn;//温度-
+        temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
+        windLevelSubBtn = binding.windLevelSubBtn;//风量-
+        windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -823,10 +845,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcCtrlModeChanged(mode);
             if (acControlModeBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
-                    acControlModeBtn.setText("自动");
+                    acControlModeBtn.setText("手动");
                     acControlModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 } else if (mode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
-                    acControlModeBtn.setText("手动");
+                    acControlModeBtn.setText("自动");
                     acControlModeBtn.setTextColor(getColor(R.color.color_button_state_off));
                 }
             }
@@ -836,7 +858,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onAcStarted() {
             super.onAcStarted();
             if (acOnOffBtn != null) {
-                acOnOffBtn.setText("开启");
+                acOnOffBtn.setText("关");
                 acOnOffBtn.setTextColor(getColor(R.color.color_button_state_on));
             }
         }
@@ -845,7 +867,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onAcStoped() {
             super.onAcStoped();
             if (acOnOffBtn != null) {
-                acOnOffBtn.setText("关闭");
+                acOnOffBtn.setText("开");
                 acOnOffBtn.setTextColor(getColor(R.color.color_button_state_off));
             }
         }
@@ -855,10 +877,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcCycleModeChanged(mode);
             if (acCycleModeBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-                    acCycleModeBtn.setText("外循环");
+                    acCycleModeBtn.setText("内循环");
                     acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_off));
                 } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
-                    acCycleModeBtn.setText("内循环");
+                    acCycleModeBtn.setText("外循环");
                     acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 }
             }
@@ -936,13 +958,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             updateEngineSpeedData();
 
-            if (engineSpeedEsv != null) {
-                if (energyMode == BYDAutoEnergyDevice.ENERGY_MODE_EV || energyMode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
-                    engineSpeedEsv.setVisibility(View.GONE);
-                } else {
-                    engineSpeedEsv.setVisibility(View.VISIBLE);
-                }
-            }
+//            if (engineSpeedEsv != null) {
+//                if (energyMode == BYDAutoEnergyDevice.ENERGY_MODE_EV || energyMode == BYDAutoEnergyDevice.ENERGY_MODE_FORCE_EV) {
+//                    engineSpeedEsv.setVisibility(View.GONE);
+//                } else {
+//                    engineSpeedEsv.setVisibility(View.VISIBLE);
+//                }
+//            }
         }
 
         /**
@@ -1687,6 +1709,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (acCycleMode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
                 bydAutoAcDevice.setAcCycleMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP);
             }
+            return;
+        }
+        if (vId == R.id.reset_current_mileage_btn) {
+            //保存当前里程、电量、油量信息
+            BootCompleteService.saveCurrentTripData(this);
+            //加载最新里程、电量、油量信息
+            loadCurrentTripData();
+            //更新界面本次行程信息
+            absBYDAutoStatisticListener.onTotalMileageValueChanged(statisticDevice.getTotalMileageValue());
             return;
         }
         if (vId == R.id.pause_current_mileage_btn) {

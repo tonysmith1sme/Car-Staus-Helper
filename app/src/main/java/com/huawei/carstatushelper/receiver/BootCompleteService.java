@@ -2,6 +2,7 @@ package com.huawei.carstatushelper.receiver;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -89,8 +90,15 @@ public class BootCompleteService extends Service {
 
         updateRadarFloatingTriggerType();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
-            BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(this);
+        saveCurrentTripData(this);
+
+        radarDistanceHelper = new RadarDistanceHelper(this);
+    }
+
+    public static void saveCurrentTripData(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
+            BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(context);
             int totalMileageValue = statisticDevice.getTotalMileageValue();//总里程
             int evMileageValue = statisticDevice.getEVMileageValue();//总ev里程
             int hevMileageValue = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getHEVMileageValue();//总hev里程
@@ -115,8 +123,6 @@ public class BootCompleteService extends Service {
                 e.printStackTrace();
             }
         }
-
-        radarDistanceHelper = new RadarDistanceHelper(this);
     }
 
     @Override
