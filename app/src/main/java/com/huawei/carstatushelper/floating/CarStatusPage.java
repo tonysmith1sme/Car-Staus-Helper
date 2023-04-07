@@ -9,16 +9,22 @@ import android.hardware.bydauto.energy.BYDAutoEnergyDevice;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
 import android.hardware.bydauto.speed.BYDAutoSpeedDevice;
+import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
+import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
 import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
+import android.support.annotation.Keep;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem1Binding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.view.DialogEngineSpeedView;
+
+import java.text.DecimalFormat;
 
 public class CarStatusPage implements IPage {
 
@@ -34,6 +40,8 @@ public class CarStatusPage implements IPage {
     private BYDAutoEngineDevice engineDevice;
     private BYDAutoEnergyDevice energyDevice;
     private BYDAutoTyreDevice tyreDevice;
+    private BYDAutoStatisticDevice statisticDevice;
+    private TextView instantFuelConTv;
 
     public CarStatusPage(Context context) {
         this.context = context;
@@ -50,6 +58,7 @@ public class CarStatusPage implements IPage {
         tyrePreRightFrontTv = binding.tyrePreRightFrontTv;
         tyrePreLeftRearTv = binding.tyrePreLeftRearTv;
         tyrePreRightRearTv = binding.tyrePreRightRearTv;
+        instantFuelConTv = binding.instantFuelConTv;
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_SPEED_GET) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -58,6 +67,7 @@ public class CarStatusPage implements IPage {
         engineDevice = BYDAutoEngineDevice.getInstance(context);
         energyDevice = BYDAutoEnergyDevice.getInstance(context);
         tyreDevice = BYDAutoTyreDevice.getInstance(context);
+        statisticDevice = BYDAutoStatisticDevice.getInstance(context);
 
         updateEngineSpeedData();
 
@@ -69,6 +79,8 @@ public class CarStatusPage implements IPage {
         tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_FRONT, pressure_rf);
         tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_LEFT_REAR, pressure_lr);
         tyreListener.onTyrePressureValueChanged(BYDAutoTyreDevice.TYRE_COMMAND_AREA_RIGHT_REAR, pressure_rr);
+
+        updateInstantFuelCon();
     }
 
     @Override
@@ -84,6 +96,7 @@ public class CarStatusPage implements IPage {
         speedDevice.registerListener(speedListener);
         energyDevice.registerListener(energyListener);
         tyreDevice.registerListener(tyreListener);
+        statisticDevice.registerListener(statisticListener);
     }
 
     @Override
@@ -94,6 +107,7 @@ public class CarStatusPage implements IPage {
         speedDevice.unregisterListener(speedListener);
         energyDevice.unregisterListener(energyListener);
         tyreDevice.unregisterListener(tyreListener);
+        statisticDevice.unregisterListener(statisticListener);
     }
 
     private final AbsBYDAutoSpeedListener speedListener = new AbsBYDAutoSpeedListener() {
@@ -163,6 +177,29 @@ public class CarStatusPage implements IPage {
         }
         if (engineSpeedEsv != null) {
             engineSpeedEsv.setVelocity(engine_speed_result);
+        }
+    }
+
+    private final AbsBYDAutoStatisticListener statisticListener = new AbsBYDAutoStatisticListener() {
+        /**
+         * 瞬时油耗
+         *
+         * @param value
+         */
+        @Keep
+        public void onInstantFuelConChanged(double value) {
+            updateInstantFuelCon();
+        }
+    };
+
+    DecimalFormat format = new DecimalFormat("##0.0##");
+
+    /**
+     * 瞬时油耗
+     */
+    private void updateInstantFuelCon() {
+        if (instantFuelConTv != null) {
+            instantFuelConTv.setText(format.format(BYDAutoStatisticDeviceHelper.getInstance(statisticDevice).getInstantFuelConValue()));
         }
     }
 }

@@ -60,6 +60,8 @@ public class BYDAutoStatisticDeviceHelper {
         return result;
     }
 
+    private static final int BATTERY_TEMP_OFFSET = 40;
+
     public int getAVERAGE_BATTERY_TEMP() {
         int result = 0;
         try {
@@ -70,7 +72,7 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result;
+        return result - BATTERY_TEMP_OFFSET;
     }
 
     public int getESTIMATE_SOC_V1() {
@@ -96,7 +98,7 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result;
+        return result - BATTERY_TEMP_OFFSET;
     }
 
     public int getHIGHEST_BATTERY_TEMP() {
@@ -109,7 +111,7 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result;
+        return result - BATTERY_TEMP_OFFSET;
     }
 
     /**

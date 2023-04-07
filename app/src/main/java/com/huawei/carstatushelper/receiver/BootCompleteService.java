@@ -93,6 +93,10 @@ public class BootCompleteService extends Service {
         saveCurrentTripData(this);
 
         radarDistanceHelper = new RadarDistanceHelper(this);
+
+        if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
+            startService(new Intent(this, FloatingService.class));
+        }
     }
 
     public static void saveCurrentTripData(Context context){
