@@ -231,6 +231,9 @@ public class BootCompleteService extends Service {
         if (energyDevice != null) {
             energyDevice.unregisterListener(energyListener);
         }
+        if (statisticDevice != null) {
+            statisticDevice.unregisterListener(statisticListener);
+        }
         if (tts != null) {
             tts.stop();
             tts.shutdown();
