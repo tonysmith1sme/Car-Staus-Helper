@@ -3,10 +3,11 @@ package com.huawei.carstatushelper.test;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityTestBinding;

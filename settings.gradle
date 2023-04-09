@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -10,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Car Status Helper"
 include ':app'
 include ':indicator_library'
+include ':byd_sdk_33'

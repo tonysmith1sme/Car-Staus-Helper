@@ -643,20 +643,31 @@
 
                     <Button
                         android:id="@+id/ac_control_mode_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="手动" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/ac_on_off_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="关" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/ac_compressor_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="A/C" />
                 </LinearLayout>
 
@@ -666,20 +677,31 @@
 
                     <Button
                         android:id="@+id/defrost_mode_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="除霜" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/ac_cycle_mode_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="内循环" />
+                        android:layout_weight="1"
+                        android:text="内/外" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/ventilate_mode_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="通风" />
                 </LinearLayout>
 
@@ -690,8 +712,9 @@
                     android:layout_marginTop="8dp">
 
                     <LinearLayout
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -712,16 +735,26 @@
                             android:text="℃" />
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
+
                     <Button
                         android:id="@+id/temperature_sub_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="-" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/temperature_plus_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="+" />
                 </LinearLayout>
 
@@ -730,8 +763,9 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -747,16 +781,26 @@
                             android:text="0" />
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
+
                     <Button
                         android:id="@+id/wind_level_sub_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="-" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/wind_level_plus_btn"
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="+" />
                 </LinearLayout>
 

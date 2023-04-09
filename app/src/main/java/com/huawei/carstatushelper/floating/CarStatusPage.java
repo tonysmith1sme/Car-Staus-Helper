@@ -1,6 +1,5 @@
 package com.huawei.carstatushelper.floating;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.BYDAutoFeatureIds;
@@ -13,12 +12,14 @@ import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.hardware.bydauto.tyre.AbsBYDAutoTyreListener;
 import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
-import android.support.annotation.Keep;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Keep;
+import androidx.core.content.ContextCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem1Binding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
@@ -60,7 +61,7 @@ public class CarStatusPage implements IPage {
         tyrePreRightRearTv = binding.tyrePreRightRearTv;
         instantFuelConTv = binding.instantFuelConTv;
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_SPEED_GET) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_SPEED_GET) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         speedDevice = BYDAutoSpeedDevice.getInstance(context);

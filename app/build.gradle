@@ -11,15 +11,15 @@ android {
             keyPassword 'android'
         }
     }
-    //noinspection GradleCompatible
-    compileSdk 25
+    namespace 'com.huawei.carstatushelper'
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.huawei.carstatushelper"
         minSdk 25
         targetSdk 33
-        versionCode 40
-        versionName "V1.4.3"
+        versionCode 41
+        versionName "V1.4.4"
     }
 
     buildTypes {
@@ -41,10 +41,7 @@ android {
 
     buildFeatures {
         viewBinding true
-    }
-    //导入dataBinding支持
-    dataBinding {
-        enabled true
+        dataBinding true
     }
     flavorDimensions 'type'
     productFlavors {
@@ -58,28 +55,14 @@ android {
     }
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")) {
-                details.useVersion '25.3.0'
-            }
-        }
-    }
-}
-
 dependencies {
-    implementation 'com.android.support:appcompat-v7:25.3.0'
-//    implementation 'com.android.support:support-compat:25.3.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:design:25.3.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.8.0'
 
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-//    implementation project(path: ':byd_sdk_29')
-//    implementation 'cat.ereza:customactivityoncrash:1.1.0'
     //解除android高版本反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'
     implementation project(path: ':indicator_library')
-
+    implementation project(path: ':byd_sdk_33')
 }

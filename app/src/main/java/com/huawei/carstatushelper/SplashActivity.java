@@ -1,6 +1,5 @@
 package com.huawei.carstatushelper;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -12,11 +11,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.activity.ImageDetailActivity;
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
@@ -29,13 +31,13 @@ import java.util.Map;
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String[] BYD_PERMISSIONS = {
-            Manifest.permission.BYDAUTO_BODYWORK_COMMON,
-            Manifest.permission.BYDAUTO_AC_COMMON,
-            Manifest.permission.BYDAUTO_PANORAMA_COMMON,
-            Manifest.permission.BYDAUTO_PANORAMA_GET,
-            Manifest.permission.BYDAUTO_SETTING_COMMON,
-            Manifest.permission.BYDAUTO_INSTRUMENT_COMMON,
-            Manifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
+            BydManifest.permission.BYDAUTO_BODYWORK_COMMON,
+            BydManifest.permission.BYDAUTO_AC_COMMON,
+            BydManifest.permission.BYDAUTO_PANORAMA_COMMON,
+            BydManifest.permission.BYDAUTO_PANORAMA_GET,
+            BydManifest.permission.BYDAUTO_SETTING_COMMON,
+            BydManifest.permission.BYDAUTO_INSTRUMENT_COMMON,
+            BydManifest.permission.BYDAUTO_DOOR_LOCK_COMMON,
 //            "android.permission.BYDAUTO_ADAS_COMMON",
     };
     private com.huawei.carstatushelper.databinding.ActivitySplashBinding binding;
@@ -53,6 +55,11 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.setFastModeBtn.setOnClickListener(this);
         binding.setBootWithStartBtn.setOnClickListener(this);
         binding.selectTtsEngineBtn.setOnClickListener(this);
+
+        binding.alwaysLightModeBtn.setOnClickListener(this);
+        binding.alwaysNightModeBtn.setOnClickListener(this);
+        binding.autoNightModeBtn.setOnClickListener(this);
+        binding.followSystemModeBtn.setOnClickListener(this);
 
 //        binding.testNotificationBtn.setOnClickListener(this);
 //        binding.testEngineSpeedFloatingBtn.setOnClickListener(this);
@@ -221,6 +228,18 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                             }
                         })
                         .show();
+                break;
+            case R.id.always_light_mode_btn:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case R.id.always_night_mode_btn:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case R.id.auto_night_mode_btn:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME);
+                break;
+            case R.id.follow_system_mode_btn:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {

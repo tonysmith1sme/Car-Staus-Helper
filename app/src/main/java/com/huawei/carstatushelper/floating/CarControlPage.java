@@ -1,16 +1,17 @@
 package com.huawei.carstatushelper.floating;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem2Binding;
@@ -62,7 +63,7 @@ public class CarControlPage implements IPage, View.OnClickListener {
         binding.windLevelPlusBtn.setOnClickListener(this);
         binding.windLevelSubBtn.setOnClickListener(this);
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_AC_GET) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_AC_GET) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         acDevice = BYDAutoAcDevice.getInstance(context);

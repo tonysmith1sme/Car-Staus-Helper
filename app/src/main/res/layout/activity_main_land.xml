@@ -181,19 +181,27 @@
 
                 <Button
                     android:id="@+id/ac_control_mode_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="手动" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/ac_on_off_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="关" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/ac_compressor_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="A/C" />
             </LinearLayout>
@@ -204,19 +212,27 @@
 
                 <Button
                     android:id="@+id/defrost_mode_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="除霜" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/ac_cycle_mode_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
-                    android:text="内循环" />
+                    android:text="内/外" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/ventilate_mode_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="通风" />
             </LinearLayout>
@@ -245,13 +261,17 @@
 
                 <Button
                     android:id="@+id/temperature_sub_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="-" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/temperature_plus_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="+" />
             </LinearLayout>
@@ -276,13 +296,17 @@
 
                 <Button
                     android:id="@+id/wind_level_sub_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="-" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/wind_level_plus_btn"
-                    android:layout_width="80dp"
+                    android:layout_width="78dp"
                     android:layout_height="wrap_content"
                     android:text="+" />
             </LinearLayout>
@@ -549,6 +573,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -721,22 +746,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="能量回馈强度" />
-
-                    <Button
-                        android:id="@+id/energy_feedback_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="标准" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -785,8 +794,8 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="-15dp"
-                    android:layout_marginBottom="-15dp"
+                    android:layout_marginTop="-18dp"
+                    android:layout_marginBottom="-18dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/car_model" />
 
@@ -876,7 +885,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -1180,6 +1188,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="KWH/100KM" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="能量回馈强度" />
+
+                <Button
+                    android:id="@+id/energy_feedback_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="标准" />
             </LinearLayout>
         </LinearLayout>
 

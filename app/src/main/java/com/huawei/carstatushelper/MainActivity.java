@@ -1,6 +1,5 @@
 package com.huawei.carstatushelper;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,9 +29,6 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Keep;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +42,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Keep;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
@@ -639,7 +640,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initDevice() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_GET) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_GET) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "权限不足", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -700,6 +701,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Keep
+        @Override
         public void onBatteryPowerChanged(int value) {
             updateBatteryPower();
         }
@@ -877,10 +879,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcCycleModeChanged(mode);
             if (acCycleModeBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-                    acCycleModeBtn.setText("内循环");
+//                    acCycleModeBtn.setText("内循环");
                     acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_off));
                 } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
-                    acCycleModeBtn.setText("外循环");
+//                    acCycleModeBtn.setText("外循环");
                     acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_on));
                 }
             }
@@ -895,9 +897,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onAcCompressorModeChanged(mode);
             if (acCompressorBtn != null) {
                 if (mode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
-                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_off));
-                } else if (mode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
                     acCompressorBtn.setTextColor(getColor(R.color.color_button_state_on));
+                } else if (mode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
+                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_off));
                 }
             }
         }
@@ -1246,6 +1248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Keep
+        @Override
         public void onHEVMileageValueChanged(int value) {
             KLog.e("onHEVMileageValueChanged = " + value);
             if (totalHevMileageTv != null) {
@@ -1259,6 +1262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * @param value
          */
         @Keep
+        @Override
         public void onWaterTemperatureChanged(int value) {
             KLog.e("onWaterTemperatureChanged = " + value);
             updateWaterTemperature();
@@ -1270,6 +1274,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * @param value
          */
         @Keep
+        @Override
         public void onInstantElecConChanged(double value) {
             updateInstantElecCon();
         }
@@ -1280,6 +1285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * @param value
          */
         @Keep
+        @Override
         public void onInstantFuelConChanged(double value) {
             updateInstantFuelCon();
         }
@@ -1475,6 +1481,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
+//        else if (item.getItemId() == R.id.fuel_consumption_statistics) {
+//            startActivity(new Intent(this, FuelConsumptionStatisticsActivity.class));
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -1807,7 +1816,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * @param percent
          */
         @Keep
+        @Override
         public void onWaterTempMeterPercentChanged(double percent) {
+            super.onWaterTempMeterPercentChanged(percent);
             if (waterTemperaturePercentTv != null) {
                 waterTemperaturePercentTv.setText(format.format(percent));
             }

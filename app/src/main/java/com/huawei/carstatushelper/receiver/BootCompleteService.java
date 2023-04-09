@@ -1,6 +1,5 @@
 package com.huawei.carstatushelper.receiver;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,9 +20,11 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.Keep;
-import android.support.v4.content.ContextCompat;
 
+import androidx.annotation.Keep;
+import androidx.core.content.ContextCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.MainActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.floating.RadarDistanceHelper;
@@ -101,7 +102,7 @@ public class BootCompleteService extends Service {
 
     public static void saveCurrentTripData(Context context){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
             BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(context);
             int totalMileageValue = statisticDevice.getTotalMileageValue();//总里程
             int evMileageValue = statisticDevice.getEVMileageValue();//总ev里程
@@ -133,8 +134,8 @@ public class BootCompleteService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
         KLog.e();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 KLog.e("panoramaDevice 初始化成功");
@@ -144,7 +145,7 @@ public class BootCompleteService extends Service {
         } else {
             KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice != null) {
                 panoramaDevice.registerListener(panoramaListener);
             } else {
@@ -153,30 +154,30 @@ public class BootCompleteService extends Service {
         } else {
             KLog.e("BYDAUTO_PANORAMA_GET 未授权");
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
             if (gearboxDevice == null) {
                 gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
                 gearboxDevice.registerListener(gearboxListener);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_RADAR_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_RADAR_GET) == PackageManager.PERMISSION_GRANTED) {
             if (radarDevice == null) {
                 radarDevice = BYDAutoRadarDevice.getInstance(this);
                 radarDevice.registerListener(radarListener);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_BODYWORK_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_GET) == PackageManager.PERMISSION_GRANTED) {
             if (bodyworkDevice == null) {
                 bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_CHARGING_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_CHARGING_GET) == PackageManager.PERMISSION_GRANTED) {
             if (chargingDevice == null) {
                 chargingDevice = BYDAutoChargingDevice.getInstance(this);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BYDAUTO_ENERGY_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_ENERGY_GET) == PackageManager.PERMISSION_GRANTED) {
             if (energyDevice == null) {
                 energyDevice = BYDAutoEnergyDevice.getInstance(this);
                 energyDevice.registerListener(energyListener);

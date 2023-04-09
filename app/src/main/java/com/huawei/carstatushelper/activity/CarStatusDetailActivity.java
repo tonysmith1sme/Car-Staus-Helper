@@ -1,9 +1,6 @@
 package com.huawei.carstatushelper.activity;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.hardware.bydauto.bodywork.AbsBYDAutoBodyworkListener;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.doorlock.AbsBYDAutoDoorLockListener;
@@ -27,9 +24,13 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.databinding.ViewDataBinding;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.bean.CarStatusInfo;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
+import com.huawei.carstatushelper.databinding.ActivityCarStatusDetailBinding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.StringUtil;
 
@@ -59,11 +60,13 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_car_status_detail);
+        binding = ActivityCarStatusDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         carStatusInfo = new CarStatusInfo();
         binding.setVariable(R.id.data, carStatusInfo);
 
-        if (getBaseContext().checkSelfPermission(Manifest.permission.BYDAUTO_BODYWORK_GET) != PackageManager.PERMISSION_GRANTED) {
+        if (getBaseContext().checkSelfPermission(BydManifest.permission.BYDAUTO_BODYWORK_GET) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "权限不足", Toast.LENGTH_SHORT).show();
             return;
         }

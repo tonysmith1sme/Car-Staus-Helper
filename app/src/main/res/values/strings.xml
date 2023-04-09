@@ -53,9 +53,9 @@
     <string name="default_latest_electric_price">1.04</string>
 
     <bool name="default_show_sha_che_group_layout_value">true</bool>
-    <bool name="default_power_speed_enable_value">false</bool>
-    <bool name="default_car_speed_enable_value">false</bool>
-    <bool name="default_rear_motor_speed_enable_value">false</bool>
+    <bool name="default_power_speed_enable_value">true</bool>
+    <bool name="default_car_speed_enable_value">true</bool>
+    <bool name="default_rear_motor_speed_enable_value">true</bool>
     <bool name="default_map_place_holder_enable_value">false</bool>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

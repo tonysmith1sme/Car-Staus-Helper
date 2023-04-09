@@ -1,18 +1,19 @@
 package com.huawei.carstatushelper.floating;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem3Binding;
@@ -63,7 +64,7 @@ public class CarCurrentTripPage implements IPage {
         currentComprehensiveElecCostTv = binding.currentComprehensiveElecCostTv;
         currentComprehensiveFuelCostTv = binding.currentComprehensiveFuelCostTv;
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.BYDAUTO_STATISTIC_GET) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_STATISTIC_GET) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         statisticDevice = BYDAutoStatisticDevice.getInstance(context);

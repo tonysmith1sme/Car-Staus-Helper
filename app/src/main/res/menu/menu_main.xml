@@ -19,4 +19,10 @@
         android:id="@+id/settings"
         android:title="设置" />
 
+    <!--
+    <item
+        android:id="@+id/fuel_consumption_statistics"
+        android:title="油耗统计" />
+    -->
+
 </menu>
