@@ -1,7 +1,9 @@
 package com.huawei.carstatushelper.receiver;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +17,7 @@ import android.hardware.bydauto.panorama.AbsBYDAutoPanoramaListener;
 import android.hardware.bydauto.panorama.BYDAutoPanoramaDevice;
 import android.hardware.bydauto.radar.AbsBYDAutoRadarListener;
 import android.hardware.bydauto.radar.BYDAutoRadarDevice;
+import android.hardware.bydauto.statistic.AbsBYDAutoStatisticListener;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 import android.os.Build;
 import android.os.IBinder;
@@ -67,6 +70,7 @@ public class BootCompleteService extends Service {
     private BYDAutoBodyworkDevice bodyworkDevice;
     private BYDAutoChargingDevice chargingDevice;
     private BYDAutoEnergyDevice energyDevice;
+    private BYDAutoStatisticDevice statisticDevice;
 
     public BootCompleteService() {
     }
@@ -100,7 +104,7 @@ public class BootCompleteService extends Service {
         }
     }
 
-    public static void saveCurrentTripData(Context context){
+    public static void saveCurrentTripData(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
             BYDAutoStatisticDevice statisticDevice = BYDAutoStatisticDevice.getInstance(context);
@@ -134,8 +138,7 @@ public class BootCompleteService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
         KLog.e();
-        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
                 KLog.e("panoramaDevice 初始化成功");
@@ -166,8 +169,7 @@ public class BootCompleteService extends Service {
                 radarDevice.registerListener(radarListener);
             }
         }
-        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_GET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_COMMON) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_BODYWORK_GET) == PackageManager.PERMISSION_GRANTED) {
             if (bodyworkDevice == null) {
                 bodyworkDevice = BYDAutoBodyworkDevice.getInstance(this);
             }
@@ -181,6 +183,12 @@ public class BootCompleteService extends Service {
             if (energyDevice == null) {
                 energyDevice = BYDAutoEnergyDevice.getInstance(this);
                 energyDevice.registerListener(energyListener);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_STATISTIC_GET) == PackageManager.PERMISSION_GRANTED) {
+            if (statisticDevice == null) {
+                statisticDevice = BYDAutoStatisticDevice.getInstance(this);
+                statisticDevice.registerListener(energyListener);
             }
         }
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -265,6 +273,50 @@ public class BootCompleteService extends Service {
                     if (steeringWheelValue > 45 || steeringWheelValue < -45) {
                         haveWarningMsg = true;
                         speakTTS("方向盘未回正");
+                    }
+                }
+                //记录油量、电量，用于加油、充电统计
+                //当油量电量有变大时记录公里数
+                String autoVIN = bodyworkDevice.getAutoVIN();
+                if (autoVIN.endsWith("131100")) {
+                    int fuelPercentageValue = statisticDevice.getFuelPercentageValue();//当前油量百分比
+                    double elecPercentageValue = statisticDevice.getElecPercentageValue();
+                    int elecPercentageIntValue;//当前电量百分比
+                    if (elecPercentageValue <= 1) {
+                        elecPercentageIntValue = (int) (elecPercentageValue * 100);
+                    } else {
+                        elecPercentageIntValue = (int) elecPercentageValue;
+                    }
+
+                    int last_fuel_percentage = preferences.getInt("last_fuel_percentage", -1);//上次油量百分比
+                    int last_elec_percentage = preferences.getInt("last_elec_percentage", -1);//上次电量百分比
+                    if (last_fuel_percentage == -1 || last_elec_percentage == -1) {
+                        preferences.edit()
+                                .putInt("last_fuel_percentage", fuelPercentageValue)
+                                .putInt("last_elec_percentage", elecPercentageIntValue)
+                                .apply();
+                        return;
+                    }
+                    //如果当前油量较上次油量增加了10%以上，则提醒是否加油了
+                    if (fuelPercentageValue - last_fuel_percentage > 10 || elecPercentageIntValue - last_elec_percentage > 50) {
+                        try {
+                            new AlertDialog.Builder(BootCompleteService.this)
+                                    .setTitle("油量、电量增加提醒")
+                                    .setMessage("本次加油百分比[" + (fuelPercentageValue - last_fuel_percentage) + "],充电百分比[" + (elecPercentageIntValue - last_elec_percentage) + "]")
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    }).show();
+                        } catch (Exception e) {
+                            KLog.e(e);
+                        }
+                    } else {
+                        preferences.edit()
+                                .putInt("last_fuel_percentage", fuelPercentageValue)
+                                .putInt("last_elec_percentage", elecPercentageIntValue)
+                                .apply();
                     }
                 }
             }
@@ -416,6 +468,18 @@ public class BootCompleteService extends Service {
                     }
                 }
             }
+        }
+    };
+
+    private final AbsBYDAutoStatisticListener statisticListener = new AbsBYDAutoStatisticListener() {
+        @Override
+        public void onFuelPercentageChanged(int value) {
+            super.onFuelPercentageChanged(value);
+        }
+
+        @Override
+        public void onElecPercentageChanged(double value) {
+            super.onElecPercentageChanged(value);
         }
     };
 }
