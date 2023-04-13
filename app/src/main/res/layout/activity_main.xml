@@ -641,68 +641,146 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/ac_control_mode_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="手动" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ac_control_mode_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Auto"
+                            android:textAllCaps="false" />
+
+                        <TextView
+                            android:id="@+id/control_mode_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
 
                     <Space
                         android:layout_width="8dp"
                         android:layout_height="wrap_content" />
 
-                    <Button
-                        android:id="@+id/ac_on_off_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="关" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ac_on_off_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="开/关" />
+
+                        <TextView
+                            android:id="@+id/ac_on_off_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
+
 
                     <Space
                         android:layout_width="8dp"
                         android:layout_height="wrap_content" />
 
-                    <Button
-                        android:id="@+id/ac_compressor_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="A/C" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ac_compressor_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="A/C" />
+
+                        <TextView
+                            android:id="@+id/compressor_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/defrost_mode_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="除霜" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/defrost_mode_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="除霜" />
+
+                        <TextView
+                            android:id="@+id/defrost_mode_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
+
 
                     <Space
                         android:layout_width="8dp"
                         android:layout_height="wrap_content" />
 
-                    <Button
-                        android:id="@+id/ac_cycle_mode_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="内/外" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ac_cycle_mode_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="内/外" />
+
+                        <TextView
+                            android:id="@+id/cycle_mode_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
+
 
                     <Space
                         android:layout_width="8dp"
                         android:layout_height="wrap_content" />
 
-                    <Button
-                        android:id="@+id/ventilate_mode_btn"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="通风" />
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ventilate_mode_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="通风" />
+
+                        <TextView
+                            android:id="@+id/ventilate_status_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@drawable/selector_ac_button_indicator" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <!--温度-->

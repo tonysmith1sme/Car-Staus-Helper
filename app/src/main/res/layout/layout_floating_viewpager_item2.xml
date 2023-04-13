@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="210dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/color_dark"
         android:orientation="vertical"
         android:padding="8dp">
@@ -21,74 +21,78 @@
             tools:visibility="visible">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/ac_control_mode_btn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="手动"
+                    android:text="Auto"
                     android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/ac_on_off_btn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
-                    android:text="关闭"
-                    android:textColor="@color/color_button_state_off"
+                    android:text="开/关"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/ac_compressor_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="A/C"
-                    android:textSize="14sp" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/defrost_mode_btn"
-                    android:layout_width="0dp"
+                    android:id="@+id/ac_compressor_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="除霜"
-                    android:textColor="@color/color_button_state_off"
+                    android:text="A/C"
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/ventilate_mode_btn"
-                    android:layout_width="0dp"
+                    android:id="@+id/defrost_mode_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="除霜"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/ventilate_mode_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="通风"
-                    android:textColor="@color/color_button_state_off"
                     android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/ac_cycle_mode_btn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
                     android:text="内/外"
-                    android:textColor="@color/color_button_state_off"
                     android:textSize="14sp" />
-
             </LinearLayout>
 
         </LinearLayout>
@@ -117,7 +121,7 @@
                 android:text="℃"
                 android:textColor="@color/white" />
 
-            <androidx.legacy.widget.Space
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
@@ -127,15 +131,14 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:textColor="@color/color_button_state_on"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/temperature_plus_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="+"
-                android:textColor="@color/color_button_state_on"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -159,7 +162,7 @@
                 android:textColor="@color/white"
                 tools:text="1" />
 
-            <androidx.legacy.widget.Space
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -169,16 +172,15 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:textColor="@color/color_button_state_on"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/wind_level_plus_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="+"
-                android:textColor="@color/color_button_state_on"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

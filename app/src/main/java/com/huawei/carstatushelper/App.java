@@ -3,6 +3,8 @@ package com.huawei.carstatushelper;
 import android.app.Application;
 import android.content.Context;
 
+import com.huawei.carstatushelper.util.CrashHandler;
+
 import me.weishu.reflection.Reflection;
 
 public class App extends Application {
@@ -16,5 +18,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler.getInstance().init(this);
     }
 }

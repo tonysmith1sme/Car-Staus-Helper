@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--状态：开-->
+    <item android:state_selected="true">
+        <shape>
+            <size android:width="50dp" android:height="2dp" />
+            <solid android:color="#0f0" />
+        </shape>
+    </item>
+    <!--状态：关-->
+    <item android:state_selected="false">
+        <shape>
+            <size android:width="50dp" android:height="2dp" />
+            <solid android:color="@color/color_blue" />
+        </shape>
+    </item>
+</selector>

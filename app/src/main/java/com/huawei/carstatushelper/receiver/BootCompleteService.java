@@ -301,7 +301,7 @@ public class BootCompleteService extends Service {
                         return;
                     }
                     //如果当前油量较上次油量增加了10%以上，则提醒是否加油了
-                    if (fuelPercentageValue - last_fuel_percentage > 10 || elecPercentageIntValue - last_elec_percentage > 50) {
+                    if (fuelPercentageValue - last_fuel_percentage > 10 || elecPercentageIntValue - last_elec_percentage > 10) {
                         try {
                             new AlertDialog.Builder(BootCompleteService.this)
                                     .setTitle("油量、电量增加提醒")

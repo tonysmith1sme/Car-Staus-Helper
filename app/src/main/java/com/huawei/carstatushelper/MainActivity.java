@@ -1,5 +1,6 @@
 package com.huawei.carstatushelper;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.huawei.byd_sdk_33.BydManifest;
@@ -275,6 +277,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button acOnOffBtn;
     private Button acCycleModeBtn;
     private Button acCompressorBtn;
+    private TextView controlModeStatusTv;
+    private TextView acOnOffStatusTv;
+    private TextView compressorStatusTv;
+    private TextView defrostModeStatusTv;
+    private TextView cycleModeStatusTv;
+    private TextView ventilateStatusTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,6 +302,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         initDevice();
         initAutoData();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
     }
 
     private void loadCurrentTripData() {
@@ -512,6 +524,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
         windLevelSubBtn = binding.windLevelSubBtn;//风量-
         windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
+
+        controlModeStatusTv = binding.controlModeStatusTv;
+        acOnOffStatusTv = binding.acOnOffStatusTv;
+        compressorStatusTv = binding.compressorStatusTv;
+        defrostModeStatusTv = binding.defrostModeStatusTv;
+        cycleModeStatusTv = binding.cycleModeStatusTv;
+        ventilateStatusTv = binding.ventilateStatusTv;
     }
 
     private void initMainLandView(ActivityMainLandBinding binding) {
@@ -590,6 +609,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
         windLevelSubBtn = binding.windLevelSubBtn;//风量-
         windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
+
+        controlModeStatusTv = binding.controlModeStatusTv;
+        acOnOffStatusTv = binding.acOnOffStatusTv;
+        compressorStatusTv = binding.compressorStatusTv;
+        defrostModeStatusTv = binding.defrostModeStatusTv;
+        cycleModeStatusTv = binding.cycleModeStatusTv;
+        ventilateStatusTv = binding.ventilateStatusTv;
     }
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
@@ -842,16 +868,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        /**
+         * 手动/自动
+         * @param mode
+         */
         @Override
         public void onAcCtrlModeChanged(int mode) {
             super.onAcCtrlModeChanged(mode);
-            if (acControlModeBtn != null) {
+            if (controlModeStatusTv != null) {
                 if (mode == BYDAutoAcDevice.AC_CTRLMODE_AUTO) {
-                    acControlModeBtn.setText("手动");
-                    acControlModeBtn.setTextColor(getColor(R.color.color_button_state_on));
+                    controlModeStatusTv.setSelected(true);
                 } else if (mode == BYDAutoAcDevice.AC_CTRLMODE_MANUAL) {
-                    acControlModeBtn.setText("自动");
-                    acControlModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                    controlModeStatusTv.setSelected(false);
                 }
             }
         }
@@ -859,31 +887,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAcStarted() {
             super.onAcStarted();
-            if (acOnOffBtn != null) {
-                acOnOffBtn.setText("关");
-                acOnOffBtn.setTextColor(getColor(R.color.color_button_state_on));
+            if (acOnOffStatusTv != null) {
+                acOnOffStatusTv.setSelected(true);
             }
         }
 
         @Override
         public void onAcStoped() {
             super.onAcStoped();
-            if (acOnOffBtn != null) {
-                acOnOffBtn.setText("开");
-                acOnOffBtn.setTextColor(getColor(R.color.color_button_state_off));
+            if (acOnOffStatusTv != null) {
+                acOnOffStatusTv.setSelected(false);
             }
         }
 
+        /**
+         * 内/外循环
+         * @param mode
+         */
         @Override
         public void onAcCycleModeChanged(int mode) {
             super.onAcCycleModeChanged(mode);
-            if (acCycleModeBtn != null) {
+            if (cycleModeStatusTv != null) {
                 if (mode == BYDAutoAcDevice.AC_CYCLEMODE_OUTLOOP) {
-//                    acCycleModeBtn.setText("内循环");
-                    acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                    cycleModeStatusTv.setSelected(false);
                 } else if (mode == BYDAutoAcDevice.AC_CYCLEMODE_INLOOP) {
-//                    acCycleModeBtn.setText("外循环");
-                    acCycleModeBtn.setTextColor(getColor(R.color.color_button_state_on));
+                    cycleModeStatusTv.setSelected(true);
                 }
             }
         }
@@ -895,11 +923,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAcCompressorModeChanged(int mode) {
             super.onAcCompressorModeChanged(mode);
-            if (acCompressorBtn != null) {
+            if (compressorStatusTv != null) {
                 if (mode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
-                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_on));
+                    compressorStatusTv.setSelected(false);
                 } else if (mode == BYDAutoAcDevice.AC_COMPRESSOR_ON) {
-                    acCompressorBtn.setTextColor(getColor(R.color.color_button_state_off));
+                    compressorStatusTv.setSelected(true);
                 }
             }
         }
@@ -913,11 +941,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onAcDefrostStateChanged(int area, int state) {
             super.onAcDefrostStateChanged(area, state);
             if (area == BYDAutoAcDevice.AC_DEFROST_AREA_FRONT) {
-                if (defrostModeBtn != null) {
+                if (defrostModeStatusTv != null) {
                     if (state == BYDAutoAcDevice.AC_DEFROST_STATE_OFF) {
-                        defrostModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                        defrostModeStatusTv.setSelected(false);
                     } else if (state == BYDAutoAcDevice.AC_DEFROST_STATE_ON) {
-                        defrostModeBtn.setTextColor(getColor(R.color.color_button_state_on));
+                        defrostModeStatusTv.setSelected(true);
                     }
                 }
             } else if (area == BYDAutoAcDevice.AC_DEFROST_AREA_REAR) {
@@ -936,11 +964,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onAcVentilationStateChanged(int state) {
             super.onAcVentilationStateChanged(state);
-            if (ventilateModeBtn != null) {
+            if (ventilateStatusTv != null) {
                 if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_OFF) {
-                    ventilateModeBtn.setTextColor(getColor(R.color.color_button_state_off));
+                    ventilateStatusTv.setSelected(false);
                 } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
-                    ventilateModeBtn.setTextColor(getColor(R.color.color_button_state_on));
+                    ventilateStatusTv.setSelected(true);
                 }
             }
         }
@@ -1059,10 +1087,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //本次行程平均电耗(kwh/100km)
             if (currentTravelElecCostTv != null && ev_mileage != 0) {
                 currentTravelElecCostTv.setText(format.format(elec_cost * 100 / ev_mileage));
+            } else {
+                currentTravelElecCostTv.setText("0");
             }
             //本次行程平均油耗
             if (currentTravelFuelCostTv != null && hev_mileage != 0) {
                 currentTravelFuelCostTv.setText(format.format(fuel_cost * 100 / hev_mileage));
+            } else {
+                currentTravelFuelCostTv.setText("0");
             }
             //本次行程花费的钱相当于多少电
             double valueKwh = yuan / init_latest_electric_price;//多少kwh
@@ -1701,6 +1733,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BYDAutoAcDeviceHelper.getInstance(bydAutoAcDevice).setAcCompressorMode(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_COMPRESSOR_OFF);
             }
             return;
+//            throw new NullPointerException("测试闪退");
         }
         if (vId == R.id.ac_on_off_btn) {
             int acStartState = bydAutoAcDevice.getAcStartState();

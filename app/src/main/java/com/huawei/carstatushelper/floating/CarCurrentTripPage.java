@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
-public class CarCurrentTripPage implements IPage {
+public class CarCurrentTripPage implements IPage, View.OnClickListener {
     private static final DecimalFormat format = new DecimalFormat("##0.0##");
 
     private Context context;
@@ -63,6 +63,9 @@ public class CarCurrentTripPage implements IPage {
         currentTravelFuelCostTv = binding.currentTravelFuelCostTv;
         currentComprehensiveElecCostTv = binding.currentComprehensiveElecCostTv;
         currentComprehensiveFuelCostTv = binding.currentComprehensiveFuelCostTv;
+
+        binding.resetCurrentMileageBtn.setOnClickListener(this);
+        binding.pauseCurrentMileageBtn.setOnClickListener(this);
 
         if (ContextCompat.checkSelfPermission(context, BydManifest.permission.BYDAUTO_STATISTIC_GET) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -178,4 +181,14 @@ public class CarCurrentTripPage implements IPage {
             }
         }
     };
+
+    @Override
+    public void onClick(View v) {
+        int vId = v.getId();
+        if (vId == R.id.reset_current_mileage_btn) {
+
+        } else if (vId == R.id.pause_current_mileage_btn) {
+
+        }
+    }
 }
