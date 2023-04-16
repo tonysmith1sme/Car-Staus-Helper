@@ -182,45 +182,6 @@
                 android:text="选择" />
         </LinearLayout>
 
-        <!--选择语音引擎-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6、暗夜模式" />
-
-            <Button
-                android:id="@+id/always_light_mode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="始终白天" />
-
-            <Button
-                android:id="@+id/always_night_mode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="始终夜间" />
-
-            <Button
-                android:id="@+id/auto_night_mode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="自动模式" />
-
-            <Button
-                android:id="@+id/follow_system_mode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="跟随系统" />
-        </LinearLayout>
-
         <!--
         <TextView
             android:layout_width="wrap_content"

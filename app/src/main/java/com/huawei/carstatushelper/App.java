@@ -2,6 +2,10 @@ package com.huawei.carstatushelper;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.huawei.carstatushelper.util.CrashHandler;
 
@@ -19,5 +23,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         CrashHandler.getInstance().init(this);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int default_night_mode = Integer.parseInt(preferences.getString(getString(R.string.key_default_night_mode), String.valueOf(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED)));
+        AppCompatDelegate.setDefaultNightMode(default_night_mode);
     }
 }

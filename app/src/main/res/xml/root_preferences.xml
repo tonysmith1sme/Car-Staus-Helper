@@ -15,6 +15,12 @@
             android:key="wireless_charging_boot_close_enable"
             android:title="开机关闭无线充电" />
         -->
+        <ListPreference
+            android:defaultValue="-100"
+            android:entries="@array/night_mode_entries_names"
+            android:entryValues="@array/night_mode_entry_value"
+            android:key="@string/key_default_night_mode"
+            android:title="夜间模式" />
     </PreferenceCategory>
     <!--
     调试的时候用 PreferenceCategory，

@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 import com.huawei.byd_sdk_33.BydManifest;
@@ -56,21 +55,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.setBootWithStartBtn.setOnClickListener(this);
         binding.selectTtsEngineBtn.setOnClickListener(this);
 
-        binding.alwaysLightModeBtn.setOnClickListener(this);
-        binding.alwaysNightModeBtn.setOnClickListener(this);
-        binding.autoNightModeBtn.setOnClickListener(this);
-        binding.followSystemModeBtn.setOnClickListener(this);
-
-//        binding.testNotificationBtn.setOnClickListener(this);
-//        binding.testEngineSpeedFloatingBtn.setOnClickListener(this);
-//        binding.testRadarDistanceFloatingBtn.setOnClickListener(this);
-
         binding.jumpToMainBtn.setOnClickListener(this);
 
-//        if (Settings.canDrawOverlays(this) && isBydAutoPermissionGranted()) {
-//            startActivity(new Intent(this, MainActivity.class));
-//            finish();
-//        }
         binding.image1.setOnClickListener(onClickListener);
         binding.image2.setOnClickListener(onClickListener);
         binding.image3.setOnClickListener(onClickListener);
@@ -79,15 +65,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         binding.image6.setOnClickListener(onClickListener);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        boolean agreement_save = preferences.getBoolean(KEY_AGREEMENT_SAVE, false);
-//        binding.agreementCb.setChecked(agreement_save);
-
-//        binding.agreementTv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(SplashActivity.this, AgreementActivity.class));
-//            }
-//        });
 
         tts = new TextToSpeech(SplashActivity.this, new TextToSpeech.OnInitListener() {
             @Override
@@ -120,8 +97,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
     }
-
-//    private static final String KEY_AGREEMENT_SAVE = "agreement_save";
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -188,16 +163,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "跳转禁止自启动失败，请手动打开", Toast.LENGTH_SHORT).show();
                 }
                 break;
-//            case R.id.test_notification_btn:
-//                startService(new Intent(this, BootCompleteService.class));
-//                break;
-//            case R.id.test_engine_speed_floating_btn:
-//                startService(new Intent(this, FloatingWindowService.class));
-//                break;
-//            case R.id.test_radar_distance_floating_btn:
-//                RadarDistanceHelper radarDistanceHelper = new RadarDistanceHelper(this);
-//                radarDistanceHelper.showRadarFloating();
-//                break;
             case R.id.select_tts_engine_btn:
                 List<TextToSpeech.EngineInfo> engineInfoList = tts.getEngines();
                 String[] infos = new String[engineInfoList.size()];
@@ -228,18 +193,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                             }
                         })
                         .show();
-                break;
-            case R.id.always_light_mode_btn:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
-            case R.id.always_night_mode_btn:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-            case R.id.auto_night_mode_btn:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME);
-                break;
-            case R.id.follow_system_mode_btn:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
             case R.id.jump_to_main_btn:
                 if (!Settings.canDrawOverlays(this)) {

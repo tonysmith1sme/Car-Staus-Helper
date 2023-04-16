@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivitySettingsBinding;
@@ -44,7 +46,7 @@ public class SettingsActivity extends BackEnableBaseActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if ("app_logo_current_value".equals(key)) {
-                String app_logo_current_value = sharedPreferences.getString("app_logo_current_value", "0");
+                String app_logo_current_value = sharedPreferences.getString(key, "0");
                 //车况助手
                 if ("0".equals(app_logo_current_value)) {
                     PackageManager pm = getPackageManager();
@@ -56,6 +58,19 @@ public class SettingsActivity extends BackEnableBaseActivity {
                     pm.setComponentEnabledSetting(new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
                     pm.setComponentEnabledSetting(new ComponentName(SettingsActivity.this, "com.huawei.carstatushelper.SplashActivity.jindihui"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
                 }
+            } else if (getString(R.string.key_default_night_mode).equals(key)) {
+                String num = sharedPreferences.getString(key, String.valueOf(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED));
+                int mode = Integer.parseInt(num);
+                /*
+                  AppCompatDelegate.MODE_NIGHT_NO;//1
+                  AppCompatDelegate.MODE_NIGHT_YES;//2
+                  AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;//3
+                  AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;-1
+                  AppCompatDelegate.MODE_NIGHT_UNSPECIFIED;//-100
+                  AppCompatDelegate.MODE_NIGHT_AUTO_TIME;//0
+                  AppCompatDelegate.MODE_NIGHT_AUTO;//0
+                 */
+                AppCompatDelegate.setDefaultNightMode(mode);
             }
         }
     };
