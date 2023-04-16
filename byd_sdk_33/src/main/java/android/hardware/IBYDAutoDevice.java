@@ -9,17 +9,21 @@ import androidx.annotation.Keep;
 
 @Keep
 public interface IBYDAutoDevice {
+//    int[] getFeatureList();
+
     int getType();
 
-    boolean onPostEvent(IBYDAutoEvent var1);
+    boolean onError(int i, String str);
 
-    boolean postEvent(int var1, int var2, int var3, Object var4);
+    boolean onPostEvent(IBYDAutoEvent iBYDAutoEvent);
 
-    boolean postEvent(int var1, int var2, double var3, Object var5);
+    boolean postEvent(int i, int i2, float f, Object obj);
 
-    boolean postEvent(int var1, int var2, byte[] var3, Object var4);
+    boolean postEvent(int i, int i2, int i3, Object obj);
 
-    void registerListener(IBYDAutoListener var1);
+    boolean postEvent(int i, int i2, byte[] bArr, Object obj);
 
-    void unregisterListener(IBYDAutoListener var1);
+    void registerListener(IBYDAutoListener iBYDAutoListener);
+
+    void unregisterListener(IBYDAutoListener iBYDAutoListener);
 }

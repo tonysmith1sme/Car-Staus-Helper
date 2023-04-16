@@ -9,15 +9,17 @@ import androidx.annotation.Keep;
 
 @Keep
 public interface IBYDAutoEvent {
+    byte[] getBufferData();
+
+    Object getData();
+
     int getDeviceType();
+
+    double getDoubleValue();
 
     int getEventType();
 
     int getValue();
 
-    double getDoubleValue();
-
-    Object getData();
-
-    void setData(Object var1);
+    void setData(Object obj);
 }

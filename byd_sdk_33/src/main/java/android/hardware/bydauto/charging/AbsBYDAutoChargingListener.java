@@ -92,4 +92,84 @@ public abstract class AbsBYDAutoChargingListener implements IBYDAutoListener {
     public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
         throw new RuntimeException("Stub!");
     }
+    //-------------------sdk 29--------------------------
+    public void onChargingStateChanged(int state) {
+    }
+
+    public void onChargingModeChanged(int mode) {
+    }
+
+    public void onChargingTimerInfoChanged(ChargingTimerInfo timerInfo) {
+    }
+
+    public void onWirelessChargingSwitchStateChanged(int state) {
+    }
+
+    public void onWirelessChargingOnline5sStateChanged(int state) {
+    }
+
+    public void onSmartChargingStateChanged(int state) {
+    }
+
+    public void onDischargeStateChanged(int type, int state) {
+    }
+
+    public void onDisChargeWarningStateChanged(int state) {
+    }
+
+    public void onFeatureChanged(String feature, int ifHas) {
+    }
+
+    public void onWirlessChargingStateChanged(int state) {
+    }
+
+    public void onChargeTempCtlStateChanged(int state) {
+    }
+
+    public void onBatteryTypeChanged(int type) {
+    }
+
+    public void onChargeStopSwitchStateChanged(int state) {
+    }
+
+    public void onChargeStopCapacityStateChanged(int state) {
+    }
+
+    public void onWeatherAndTimeRequestChanged(int state) {
+    }
+
+    public void onCarDischargeStateChanged(int state) {
+    }
+
+    public void onCarDischargeLowWarnChanged(int state) {
+    }
+
+    public void onVtovDischargeConnectStateChanged(int value) {
+    }
+
+    public void onVtovDischargeLimitValChanged(int value) {
+    }
+
+    public void onVtovDischargeLowestValChanged(int value) {
+    }
+
+    public void onVtovDischargeQuantityChanged(double value) {
+    }
+
+    public void onCapStateChanged(int value) {
+    }
+
+    public void onSocSaveSwitchChanged(int value) {
+    }
+
+    private ChargingMessageData parse(Object obj) {
+        return null;
+    }
+
+    /* loaded from: classes.dex */
+    private class ChargingMessageData {
+        private ChargingMessageData() {
+        }
+    }
+
 }
