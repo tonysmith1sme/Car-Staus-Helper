@@ -54,6 +54,7 @@
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_SET" />
     -->
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_SENSOR_GET"/>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

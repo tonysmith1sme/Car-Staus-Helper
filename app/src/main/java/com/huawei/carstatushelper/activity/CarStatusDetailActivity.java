@@ -3,6 +3,8 @@ package com.huawei.carstatushelper.activity;
 import android.content.pm.PackageManager;
 import android.hardware.bydauto.bodywork.AbsBYDAutoBodyworkListener;
 import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
+import android.hardware.bydauto.charging.AbsBYDAutoChargingListener;
+import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 import android.hardware.bydauto.doorlock.AbsBYDAutoDoorLockListener;
 import android.hardware.bydauto.doorlock.BYDAutoDoorLockDevice;
 import android.hardware.bydauto.energy.AbsBYDAutoEnergyListener;
@@ -13,6 +15,8 @@ import android.hardware.bydauto.gearbox.AbsBYDAutoGearboxListener;
 import android.hardware.bydauto.gearbox.BYDAutoGearboxDevice;
 import android.hardware.bydauto.instrument.AbsBYDAutoInstrumentListener;
 import android.hardware.bydauto.instrument.BYDAutoInstrumentDevice;
+import android.hardware.bydauto.sensor.AbsBYDAutoSensorListener;
+import android.hardware.bydauto.sensor.BYDAutoSensorDevice;
 import android.hardware.bydauto.setting.AbsBYDAutoSettingListener;
 import android.hardware.bydauto.setting.BYDAutoSettingDevice;
 import android.hardware.bydauto.speed.AbsBYDAutoSpeedListener;
@@ -24,8 +28,6 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.bean.CarStatusInfo;
@@ -34,12 +36,14 @@ import com.huawei.carstatushelper.databinding.ActivityCarStatusDetailBinding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
 import com.huawei.carstatushelper.util.StringUtil;
 
+import java.text.DecimalFormat;
+
 /**
  * google android databinding 最佳实践
  */
 public class CarStatusDetailActivity extends BackEnableBaseActivity {
 
-    private ViewDataBinding binding;
+    private ActivityCarStatusDetailBinding binding;
     private CarStatusInfo carStatusInfo;
     private BYDAutoStatisticDevice statisticDevice;
     private BYDAutoBodyworkDevice bodyworkDevice;
@@ -51,6 +55,8 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
     private BYDAutoInstrumentDevice instrumentDevice;
     private BYDAutoSettingDevice settingDevice;
     private BYDAutoGearboxDevice gearboxDevice;
+    private BYDAutoSensorDevice sensorDevice;
+    private BYDAutoChargingDevice chargingDevice;
 
     @Override
     public CharSequence setPageTitle() {
@@ -81,6 +87,8 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
         instrumentDevice = BYDAutoInstrumentDevice.getInstance(this);
         settingDevice = BYDAutoSettingDevice.getInstance(this);
         gearboxDevice = BYDAutoGearboxDevice.getInstance(this);
+        sensorDevice = BYDAutoSensorDevice.getInstance(this);
+        chargingDevice = BYDAutoChargingDevice.getInstance(this);
 
         statisticDevice.registerListener(statisticListener);
         bodyworkDevice.registerListener(bodyworkListener);
@@ -92,6 +100,8 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
         instrumentDevice.registerListener(instrumentListener);
         settingDevice.registerListener(settingListener);
         gearboxDevice.registerListener(gearboxListener);
+        sensorDevice.registerListener(sensorListener);
+        chargingDevice.registerListener(chargingListener);
 
         initDeviceData();
     }
@@ -112,6 +122,8 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
         instrumentDevice.unregisterListener(instrumentListener);
         settingDevice.unregisterListener(settingListener);
         gearboxDevice.unregisterListener(gearboxListener);
+        sensorDevice.unregisterListener(sensorListener);
+        chargingDevice.unregisterListener(chargingListener);
     }
 
     private void initDeviceData() {
@@ -653,6 +665,62 @@ public class CarStatusDetailActivity extends BackEnableBaseActivity {
         @Override
         public void onBrakePedalStateChanged(int level) {
             super.onBrakePedalStateChanged(level);
+        }
+    };
+    final DecimalFormat format = new DecimalFormat("#0.000");
+    private final AbsBYDAutoSensorListener sensorListener = new AbsBYDAutoSensorListener() {
+
+        /**
+         * 温度
+         * @param value
+         */
+        @Override
+        public void onTemperatureSensorValueChanged(double value) {
+            super.onTemperatureSensorValueChanged(value);
+            binding.temperatureTv.setText(format.format(value));
+        }
+
+        /**
+         * 湿度
+         * @param value
+         */
+        @Override
+        public void onHumiditySensorValueChanged(double value) {
+            super.onHumiditySensorValueChanged(value);
+            binding.humidityTv.setText(format.format(value));
+        }
+
+        /**
+         * 感光
+         * @param value
+         */
+        @Override
+        public void onLightIntensityChanged(int value) {
+            super.onLightIntensityChanged(value);
+            binding.lightIntensityTv.setText(String.valueOf(value));
+        }
+
+        /**
+         * 坡度
+         * @param value
+         */
+        @Override
+        public void onSlopeValueChanged(int value) {
+            super.onSlopeValueChanged(value);
+            binding.slopTv.setText(String.valueOf(value));
+        }
+    };
+
+    private final AbsBYDAutoChargingListener chargingListener = new AbsBYDAutoChargingListener() {
+        /**
+         * 监听本次累计总充电量的变化【0~131.07kwh】
+         *
+         * @param value
+         */
+        @Override
+        public void onChargingCapacityChanged(double value) {
+            super.onChargingCapacityChanged(value);
+            binding.currentChargingCountTv.setText(format.format(value));
         }
     };
 }

@@ -74,7 +74,6 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static final DecimalFormat format = new DecimalFormat("##0.0##");
 
     private BYDAutoEngineDevice engineDevice;
