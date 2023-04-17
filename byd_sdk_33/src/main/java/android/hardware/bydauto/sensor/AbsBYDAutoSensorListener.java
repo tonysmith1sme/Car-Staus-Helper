@@ -70,7 +70,7 @@ public abstract class AbsBYDAutoSensorListener implements IBYDAutoListener {
     public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class SensorMessageData {
         private SensorMessageData() {
         }

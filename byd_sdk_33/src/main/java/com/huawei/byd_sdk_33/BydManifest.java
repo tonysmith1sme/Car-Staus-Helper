@@ -13,6 +13,7 @@ public final class BydManifest {
         throw new RuntimeException("Stub!");
     }
 
+    @Keep
     public static final class permission_group {
         public static final String CALENDAR = "android.permission-group.CALENDAR";
         public static final String CAMERA = "android.permission-group.CAMERA";
@@ -29,6 +30,7 @@ public final class BydManifest {
         }
     }
 
+    @Keep
     public static final class permission {
         public static final String ACCESS_CHECKIN_PROPERTIES = "android.permission.ACCESS_CHECKIN_PROPERTIES";
         public static final String ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION";

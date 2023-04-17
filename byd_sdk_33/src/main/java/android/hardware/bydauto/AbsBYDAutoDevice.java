@@ -30,13 +30,11 @@ public abstract class AbsBYDAutoDevice implements IBYDAutoDevice {
 
 //    public abstract String getSetPermission();
 
-    /* JADX INFO: Access modifiers changed from: protected */
-    public AbsBYDAutoDevice(Context con) {
+    protected AbsBYDAutoDevice(Context con) {
         throw new RuntimeException("Stub!");
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
-    /* loaded from: classes.dex */
+    @Keep
     public class IBYDAutoListenerMap extends IBYDAutoListenerIdsMap<IBYDAutoListener> {
         IBYDAutoListenerMap() {
             throw new RuntimeException("Stub!");

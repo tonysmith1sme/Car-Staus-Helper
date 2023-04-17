@@ -241,7 +241,7 @@ public abstract class AbsBYDAutoADASListener implements IBYDAutoListener {
         throw new RuntimeException("Stub!");
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class ADASMessageData {
         private ADASMessageData() {
             throw new RuntimeException("Stub!");

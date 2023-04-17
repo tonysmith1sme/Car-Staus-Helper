@@ -81,8 +81,7 @@ public abstract class BYDAutoDeviceManager implements BYDAutoManager.OnBYDAutoLi
         throw new RuntimeException("Stub!");
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
-    /* loaded from: classes.dex */
+    @Keep
     public static final class BYDAutoDeviceManagerImpl extends BYDAutoDeviceManager {
         private HashMap<Integer, IBYDAutoDevice> mDevices;
         protected Handler mMainHandler;

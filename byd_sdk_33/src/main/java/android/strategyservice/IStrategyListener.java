@@ -14,7 +14,7 @@ import java.util.List;
 public interface IStrategyListener extends IInterface {
     void onStrategyChange(String str, List<String> list) throws RemoteException;
 
-    /* loaded from: classes2.dex */
+    @Keep
     public static abstract class Stub extends Binder implements IStrategyListener {
         private static final String DESCRIPTOR = "android.strategyservice.IStrategyListener";
         static final int TRANSACTION_onStrategyChange = 1;
@@ -37,7 +37,7 @@ public interface IStrategyListener extends IInterface {
             throw new RuntimeException("Stub!");
         }
 
-        /* loaded from: classes2.dex */
+        @Keep
         private static class Proxy implements IStrategyListener {
             private IBinder mRemote;
 

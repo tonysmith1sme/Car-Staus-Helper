@@ -551,7 +551,7 @@ public abstract class AbsBYDAutoInstrumentListener implements IBYDAutoListener {
         return null;
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class InstrumentMessageData {
         private InstrumentMessageData() {
         }

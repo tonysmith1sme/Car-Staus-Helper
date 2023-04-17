@@ -74,7 +74,7 @@ public final class StrategyManager implements IBinder.DeathRecipient {
     private Lock mLock = new ReentrantLock();
     private HashMap<String, List<Listener>> mListeners = new HashMap<>();
 
-    /* loaded from: classes2.dex */
+    @Keep
     public final class Listener {
         public List<String> items;
         public IStrategyListener listener;

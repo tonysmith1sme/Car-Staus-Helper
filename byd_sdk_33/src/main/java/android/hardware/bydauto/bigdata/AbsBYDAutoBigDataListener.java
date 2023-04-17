@@ -35,7 +35,7 @@ public abstract class AbsBYDAutoBigDataListener implements IBYDAutoListener {
         throw new RuntimeException("Stub!");
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class BigDataMessageData {
         private BigDataMessageData() {
             throw new RuntimeException("Stub!");

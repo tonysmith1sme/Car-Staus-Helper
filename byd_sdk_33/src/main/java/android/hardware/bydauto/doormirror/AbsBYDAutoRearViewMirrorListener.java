@@ -35,7 +35,7 @@ public abstract class AbsBYDAutoRearViewMirrorListener implements IBYDAutoListen
         throw new RuntimeException("Stub!");
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class RearViewMirrorMessageData {
         private RearViewMirrorMessageData() {
             throw new RuntimeException("Stub!");

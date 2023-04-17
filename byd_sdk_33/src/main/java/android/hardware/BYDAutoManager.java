@@ -28,6 +28,7 @@ public final class BYDAutoManager {
     private static boolean mForbidCall = false;
     private static ArrayList<OnBYDAutoListener> mOnBYDAutoListeners = new ArrayList<>();
 
+    @Keep
     public interface OnBYDAutoListener {
         void onChanged(int i, int i2, float f, Object obj);
 
@@ -82,6 +83,7 @@ public final class BYDAutoManager {
         throw new RuntimeException("Stub!");
     }
 
+    @Keep
     public class StrategyListener extends IStrategyListener.Stub {
         StrategyListener() {
         }

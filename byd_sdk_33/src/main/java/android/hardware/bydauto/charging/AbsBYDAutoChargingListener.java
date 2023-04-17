@@ -166,7 +166,7 @@ public abstract class AbsBYDAutoChargingListener implements IBYDAutoListener {
         return null;
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class ChargingMessageData {
         private ChargingMessageData() {
         }

@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
-import androidx.annotation.Keep;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.Keep;
 
 import java.util.LinkedHashMap;
 
@@ -195,6 +196,7 @@ public class BydDialog implements DialogInterface {
         throw new RuntimeException("Stub!");
     }
 
+    @Keep
     public static class Builder {
 
         public Builder(Context context) {

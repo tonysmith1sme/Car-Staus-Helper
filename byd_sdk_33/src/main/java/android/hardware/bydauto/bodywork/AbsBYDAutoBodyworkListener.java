@@ -101,7 +101,7 @@ public abstract class AbsBYDAutoBodyworkListener implements IBYDAutoListener {
         throw new RuntimeException("Stub!");
     }
 
-    /* loaded from: classes.dex */
+    @Keep
     private class BodyworkMessageData {
         private BodyworkMessageData() {
         }

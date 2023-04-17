@@ -20,7 +20,7 @@ public interface IStrategyManagerService extends IInterface {
 
     void unregisterListener(String str, List<String> list, IStrategyListener iStrategyListener) throws RemoteException;
 
-    /* loaded from: classes2.dex */
+    @Keep
     public static abstract class Stub extends Binder implements IStrategyManagerService {
         private static final String DESCRIPTOR = "android.strategyservice.IStrategyManagerService";
         static final int TRANSACTION_getStrategy = 3;
@@ -46,8 +46,7 @@ public interface IStrategyManagerService extends IInterface {
             throw new RuntimeException("Stub!");
         }
 
-        /* JADX INFO: Access modifiers changed from: private */
-        /* loaded from: classes2.dex */
+        @Keep
         public static class Proxy implements IStrategyManagerService {
             private IBinder mRemote;
 
