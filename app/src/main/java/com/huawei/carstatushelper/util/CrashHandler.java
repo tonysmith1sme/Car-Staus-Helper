@@ -64,8 +64,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             file.mkdirs();
         }
 
-        String time = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.CHINA).format(new Date(System.currentTimeMillis()));
-        Log.i(TAG, mLogPath + "crash_" + time + ".log");
+        String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CHINA).format(new Date(System.currentTimeMillis()));
+        Log.i(TAG, mLogPath + "crash_" + time + ".txt");
         File logFile = new File(mLogPath, "crash_" + time + ".log");
 
         try {

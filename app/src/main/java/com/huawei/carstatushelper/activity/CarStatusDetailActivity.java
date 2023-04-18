@@ -28,12 +28,12 @@ import android.hardware.bydauto.tyre.BYDAutoTyreDevice;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.bean.CarStatusInfo;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityCarStatusDetailBinding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
+import com.huawei.carstatushelper.util.BydManifest;
 import com.huawei.carstatushelper.util.StringUtil;
 
 import java.text.DecimalFormat;

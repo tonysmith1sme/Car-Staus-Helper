@@ -18,8 +18,8 @@ android {
         applicationId "com.huawei.carstatushelper"
         minSdk 25
         targetSdk 33
-        versionCode 45
-        versionName "V1.4.7"
+        versionCode 46
+        versionName "V1.4.8"
     }
 
     buildTypes {
@@ -64,5 +64,8 @@ dependencies {
     //解除android高版本反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'
     implementation project(path: ':indicator_library')
-    implementation project(path: ':byd_sdk_33')
+
+    //只参与编译，不打包进apk中
+    //https://zhuanlan.zhihu.com/p/110215979 看评论区
+    compileOnly project(path: ':byd_sdk_33')
 }

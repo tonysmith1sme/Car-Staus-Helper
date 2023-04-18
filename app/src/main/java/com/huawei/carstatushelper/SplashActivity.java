@@ -17,10 +17,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.activity.ImageDetailActivity;
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
+import com.huawei.carstatushelper.util.BydManifest;
 import com.socks.library.KLog;
 
 import java.util.HashMap;

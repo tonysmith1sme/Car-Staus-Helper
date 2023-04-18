@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem3Binding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
+import com.huawei.carstatushelper.util.BydManifest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

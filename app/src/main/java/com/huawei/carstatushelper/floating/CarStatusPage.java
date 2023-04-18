@@ -19,10 +19,10 @@ import android.widget.TextView;
 import androidx.annotation.Keep;
 import androidx.core.content.ContextCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem1Binding;
 import com.huawei.carstatushelper.util.BydApi29Helper;
+import com.huawei.carstatushelper.util.BydManifest;
 import com.huawei.carstatushelper.view.DialogEngineSpeedView;
 
 import java.text.DecimalFormat;

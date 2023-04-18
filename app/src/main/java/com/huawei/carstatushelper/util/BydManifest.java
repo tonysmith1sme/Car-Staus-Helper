@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.huawei.byd_sdk_33;
+package com.huawei.carstatushelper.util;
 
 import androidx.annotation.Keep;
 

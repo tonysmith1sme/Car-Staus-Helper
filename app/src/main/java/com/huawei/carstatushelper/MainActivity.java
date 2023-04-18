@@ -48,7 +48,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
@@ -59,6 +58,7 @@ import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
 import com.huawei.carstatushelper.service.FloatingService;
 import com.huawei.carstatushelper.util.BydApi29Helper;
+import com.huawei.carstatushelper.util.BydManifest;
 import com.huawei.carstatushelper.util.PermissionUtils;
 import com.huawei.carstatushelper.util.StringUtil;
 import com.huawei.carstatushelper.view.CarSpeedView;
@@ -294,6 +294,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         loadCurrentTripData();
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
         boolean need = PermissionUtils.needRequestPermission(this, SplashActivity.BYD_PERMISSIONS);
         if (need) {
             Toast.makeText(this, "车辆权限不足，无法获取车辆数据", Toast.LENGTH_SHORT).show();
@@ -301,10 +306,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         initDevice();
         initAutoData();
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }
     }
 
     private void loadCurrentTripData() {

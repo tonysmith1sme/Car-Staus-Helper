@@ -27,13 +27,13 @@ import android.speech.tts.TextToSpeech;
 import androidx.annotation.Keep;
 import androidx.core.content.ContextCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.MainActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.floating.RadarDistanceHelper;
 import com.huawei.carstatushelper.service.FloatingService;
 import com.huawei.carstatushelper.util.AutoBootHelper;
 import com.huawei.carstatushelper.util.BydApi29Helper;
+import com.huawei.carstatushelper.util.BydManifest;
 import com.huawei.carstatushelper.util.NotificationHelper;
 import com.huawei.carstatushelper.util.SmartRemindUtil;
 import com.huawei.carstatushelper.util.Utils;

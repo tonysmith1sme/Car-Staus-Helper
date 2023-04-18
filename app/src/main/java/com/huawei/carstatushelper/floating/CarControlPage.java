@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.huawei.byd_sdk_33.BydManifest;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
 import com.huawei.carstatushelper.databinding.LayoutFloatingViewpagerItem2Binding;
+import com.huawei.carstatushelper.util.BydManifest;
 
 public class CarControlPage implements IPage, View.OnClickListener {
     private final Context context;
