@@ -37,7 +37,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -108,11 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private EnginePowerView enginePowerEpv;
 
-    private View temperaturePlusBtn;
-    private View temperatureSubBtn;
-    private View windLevelPlusBtn;
-    private View windLevelSubBtn;
-
     private TextView currentGearboxLevelTv;
     private TextView currentWindLevelTv;
     private TextView currentTemperatureTv;
@@ -169,8 +163,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView chargingPowerTv;
     private TextView chargingRestTimeTv;
     private TextView gearboxCodeTv;
-    private Button defrostModeBtn;
-    private Button ventilateModeBtn;
     private TextView waterTemperatureTv;
     private TextView instantElecConTv;
     private TextView instantFuelConTv;
@@ -264,18 +256,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 外接充电总量
      */
     private TextView externalChargingPowerTv;
-    private Button acControlModeBtn;
-    /**
-     * 重置本次行程数据
-     */
-    private ImageView resetCurrentMileageBtn;
-    /**
-     * 暂停行程
-     */
-    private ImageView pauseCurrentMileageBtn;
-    private Button acOnOffBtn;
-    private Button acCycleModeBtn;
-    private Button acCompressorBtn;
     private TextView controlModeStatusTv;
     private TextView acOnOffStatusTv;
     private TextView compressorStatusTv;
@@ -289,8 +269,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTitle(getString(R.string.app_name) + BuildConfig.VERSION_NAME);
 
         loadContentView();
-
-        initBtnListener();
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         loadCurrentTripData();
@@ -355,62 +333,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initBtnListener() {
-        if (temperaturePlusBtn != null) {
-            temperaturePlusBtn.setOnClickListener(this);
-        }
-        if (temperatureSubBtn != null) {
-            temperatureSubBtn.setOnClickListener(this);
-        }
-        if (windLevelPlusBtn != null) {
-            windLevelPlusBtn.setOnClickListener(this);
-        }
-        if (windLevelSubBtn != null) {
-            windLevelSubBtn.setOnClickListener(this);
-        }
-        if (defrostModeBtn != null) {
-            defrostModeBtn.setOnClickListener(this);
-        }
-        if (ventilateModeBtn != null) {
-            ventilateModeBtn.setOnClickListener(this);
-        }
-        if (energyFeedbackBtn != null) {
-            energyFeedbackBtn.setOnClickListener(this);
-        }
-        if (acControlModeBtn != null) {
-            acControlModeBtn.setOnClickListener(this);
-        }
-        if (resetCurrentMileageBtn != null) {
-            resetCurrentMileageBtn.setOnClickListener(this);
-        }
-        if (pauseCurrentMileageBtn != null) {
-            pauseCurrentMileageBtn.setOnClickListener(this);
-        }
-        if (acOnOffBtn != null) {
-            acOnOffBtn.setOnClickListener(this);
-        }
-        if (acCycleModeBtn != null) {
-            acCycleModeBtn.setOnClickListener(this);
-        }
-        if (acCompressorBtn != null) {
-            acCompressorBtn.setOnClickListener(this);
-        }
-    }
-
     private void loadContentView() {
         int orientation = getResources().getConfiguration().orientation;
         View rootView;
         if (isInMultiWindowMode()) {
             ActivityMainLandMultiBinding binding = ActivityMainLandMultiBinding.inflate(getLayoutInflater());
+            binding.setVariable(BR.listener, this);
             rootView = binding.getRoot();
             initMainLandMultiView(binding);
         } else {
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 ActivityMainLandBinding binding = ActivityMainLandBinding.inflate(getLayoutInflater());
+                binding.setVariable(BR.listener, this);
                 rootView = binding.getRoot();
                 initMainLandView(binding);
             } else {
                 ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+                binding.setVariable(BR.listener,this);
                 rootView = binding.getRoot();
                 initMainView(binding);
             }
@@ -511,20 +450,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
 
-        resetCurrentMileageBtn = binding.resetCurrentMileageBtn;
-        pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
-
-        acControlModeBtn = binding.acControlModeBtn;//手动、自动
-        acOnOffBtn = binding.acOnOffBtn;//关、开
-        acCompressorBtn = binding.acCompressorBtn;//A/C
-        defrostModeBtn = binding.defrostModeBtn;//除霜
-        acCycleModeBtn = binding.acCycleModeBtn;//内/外循环
-        ventilateModeBtn = binding.ventilateModeBtn;//通风
-        temperatureSubBtn = binding.temperatureSubBtn;//温度-
-        temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
-        windLevelSubBtn = binding.windLevelSubBtn;//风量-
-        windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
-
         controlModeStatusTv = binding.controlModeStatusTv;
         acOnOffStatusTv = binding.acOnOffStatusTv;
         compressorStatusTv = binding.compressorStatusTv;
@@ -592,23 +517,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentComprehensiveElecCostTv = binding.currentComprehensiveElecCostTv;
         currentComprehensiveFuelCostTv = binding.currentComprehensiveFuelCostTv;
 
-        resetCurrentMileageBtn = binding.resetCurrentMileageBtn;
-        pauseCurrentMileageBtn = binding.pauseCurrentMileageBtn;
-
         energyFeedbackBtn = binding.energyFeedbackBtn;
 
         externalChargingPowerTv = binding.externalChargingPowerTv;
-
-        acControlModeBtn = binding.acControlModeBtn;//手动、自动
-        acOnOffBtn = binding.acOnOffBtn;//关、开
-        acCompressorBtn = binding.acCompressorBtn;//A/C
-        defrostModeBtn = binding.defrostModeBtn;//除霜
-        acCycleModeBtn = binding.acCycleModeBtn;//内/外循环
-        ventilateModeBtn = binding.ventilateModeBtn;//通风
-        temperatureSubBtn = binding.temperatureSubBtn;//温度-
-        temperaturePlusBtn = binding.temperaturePlusBtn;//温度+
-        windLevelSubBtn = binding.windLevelSubBtn;//风量-
-        windLevelPlusBtn = binding.windLevelPlusBtn;//风量+
 
         controlModeStatusTv = binding.controlModeStatusTv;
         acOnOffStatusTv = binding.acOnOffStatusTv;
@@ -620,7 +531,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initMainLandMultiView(ActivityMainLandMultiBinding binding) {
         engineSpeedEsv = binding.engineSpeedEsv;
-        enginePowerEpv = binding.enginePowerEpv;
+        frontMotorSpeedMsv = binding.motorSpeedMsv;
         carSpeedCsv = binding.carSpeedCsv;
 
         youMengPb = binding.youMengPb;
@@ -628,9 +539,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shaChePb = binding.shaChePb;
         shaCheTv = binding.shaCheTv;
 
+        fuelPercentPb = binding.fuelPercentPb;
         fuelPbTv = binding.fuelPbTv;//油量百分比
         fuelMileageTv = binding.fuelMileageTv;//油续航
 
+        elecPercentPb = binding.elecPercentPb;
         elecPbTv = binding.elecPbTv;//电百分比
         powerMileageTv = binding.powerMileageTv;//电续航
     }
@@ -1085,16 +998,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentTravelYuanCostTv.setText(format.format(yuan));
             }
             //本次行程平均电耗(kwh/100km)
-            if (currentTravelElecCostTv != null && ev_mileage != 0) {
-                currentTravelElecCostTv.setText(format.format(elec_cost * 100 / ev_mileage));
-            } else {
-                currentTravelElecCostTv.setText("0");
+            if (currentTravelElecCostTv != null) {
+                if (ev_mileage != 0) {
+                    currentTravelElecCostTv.setText(format.format(elec_cost * 100 / ev_mileage));
+                } else {
+                    currentTravelElecCostTv.setText("0");
+                }
             }
             //本次行程平均油耗
-            if (currentTravelFuelCostTv != null && hev_mileage != 0) {
-                currentTravelFuelCostTv.setText(format.format(fuel_cost * 100 / hev_mileage));
-            } else {
-                currentTravelFuelCostTv.setText("0");
+            if (currentTravelFuelCostTv != null) {
+                if (hev_mileage != 0) {
+                    currentTravelFuelCostTv.setText(format.format(fuel_cost * 100 / hev_mileage));
+                } else {
+                    currentTravelFuelCostTv.setText("0");
+                }
             }
             //本次行程花费的钱相当于多少电
             double valueKwh = yuan / init_latest_electric_price;//多少kwh

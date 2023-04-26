@@ -54,7 +54,8 @@
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_SET" />
     -->
     <uses-permission android:name="android.permission.BYDAUTO_ADAS_GET" />
-    <uses-permission android:name="android.permission.BYDAUTO_SENSOR_GET"/>
+    <uses-permission android:name="android.permission.BYDAUTO_SENSOR_GET" />
+    <uses-permission android:name="android.permission.BYDAUTO_COLLISION_GET" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -71,7 +72,16 @@
         android:theme="@style/Theme.MyApplication2"
         tools:targetApi="31">
         <activity
-            android:name=".FuelConsumptionStatisticsActivity"
+            android:name=".test.CollisionDeviceTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".test.InstrumentTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".test.AdasTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FuelConsumptionStatisticsActivity"
             android:exported="false" />
 
         <service
@@ -81,28 +91,6 @@
 
         <activity
             android:name=".activity.CarStatusDetailActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".test.TestActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
-        <activity
-            android:name=".activity.AgreementActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

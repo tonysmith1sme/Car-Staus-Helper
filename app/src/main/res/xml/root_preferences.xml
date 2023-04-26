@@ -33,11 +33,11 @@
         <SwitchPreference
             android:key="enable_floating"
             android:title="启用浮窗" />
+        -->
         <SwitchPreference
             android:defaultValue="false"
             android:key="radar_floating_boot_auto_show_enable"
             android:title="开机显示" />
-        -->
         <SwitchPreference
             android:key="auto_show_engine_speed_floating"
             android:title="自动显示" />

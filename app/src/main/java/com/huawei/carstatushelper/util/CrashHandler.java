@@ -66,7 +66,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
         String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CHINA).format(new Date(System.currentTimeMillis()));
         Log.i(TAG, mLogPath + "crash_" + time + ".txt");
-        File logFile = new File(mLogPath, "crash_" + time + ".log");
+        File logFile = new File(mLogPath, "crash_" + time + ".txt");
 
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(logFile)));

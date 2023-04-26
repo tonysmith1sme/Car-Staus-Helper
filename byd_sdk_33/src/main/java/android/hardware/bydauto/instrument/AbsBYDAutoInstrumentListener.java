@@ -557,7 +557,6 @@ public abstract class AbsBYDAutoInstrumentListener implements IBYDAutoListener {
         }
     }
 
-
     public void onError(int errCode, String errMessage) {
         throw new RuntimeException("Stub!");
     }

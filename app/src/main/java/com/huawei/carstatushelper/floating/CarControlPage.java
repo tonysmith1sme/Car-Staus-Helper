@@ -162,6 +162,32 @@ public class CarControlPage implements IPage, View.OnClickListener {
             } else if (state == BYDAutoAcDevice.AC_VENTILATION_STATE_ON) {
                 acDevice.setAcVentilationState(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_VENTILATION_STATE_OFF);
             }
+        } else if (viewId == R.id.temperature_plus_btn) {
+            int temprature = acDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
+            if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MAX) {
+                return;
+            }
+            acDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature + 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+        } else if (viewId == R.id.temperature_sub_btn) {
+            int temprature = acDevice.getTemprature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN);
+            if (temprature == BYDAutoAcDevice.AC_TEMP_IN_CELSIUS_MIN) {
+                return;
+            }
+            acDevice.setAcTemperature(BYDAutoAcDevice.AC_TEMPERATURE_MAIN, temprature - 1, BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, BYDAutoAcDevice.AC_TEMPERATURE_UNIT_OC);
+        } else if (viewId == R.id.wind_level_plus_btn) {
+            int acWindLevel = acDevice.getAcWindLevel();
+            if (acWindLevel == BYDAutoAcDevice.AC_WINDLEVEL_7) {
+                return;
+            }
+            acDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel + 1);
+        } else if (viewId == R.id.wind_level_sub_btn) {
+            int acWindLevel = acDevice.getAcWindLevel();
+            if (acWindLevel - 1 == BYDAutoAcDevice.AC_WINDLEVEL_0) {
+                acDevice.stopRearAc(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                int ret = acDevice.stop(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY);
+                return;
+            }
+            acDevice.setAcWindLevel(BYDAutoAcDevice.AC_CTRL_SOURCE_UI_KEY, acWindLevel - 1);
         }
     }
 
