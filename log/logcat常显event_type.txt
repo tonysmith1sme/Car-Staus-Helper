@@ -1,0 +1,34 @@
+常显log设备：
+BYDAutoSafetyBeltDevice：
+com.byd.negativescreen
+
+BYDAutoStatisticDevice：
+com.huawei.carstatushelper
+com.byd.negativescreen
+com.android.voicereminder
+
+BYDAutoTyreDevice：
+com.huawei.carstatushelper
+
+BYDAutoChargingDevice：
+com.huawei.carstatushelper
+com.byd.smarttravel
+
+43a00028-->BYDAutoStatisticDevice-->STATISTIC_ESTIMATE_SOC_V1
+44600010-->BYDAutoStatisticDevice-->STATISTIC_LOWEST_BATTERY_VOLTAGE
+44700028-->BYDAutoStatisticDevice-->STATISTIC_REMAINING_BATTERY_POWER-->直译为“剩余电量”
+99000128-->BYDAutoTyreDevice-->device_type: 1016, event_type =99000128, value = 252-->左前胎压
+99000130-->BYDAutoTyreDevice-->device_type: 1016, event_type =99000130, value = 247
+99000124-->BYDAutoTyreDevice-->device_type: 1016, event_type =99000124, value = 245
+44a00020-->STATISTIC_INSTANTANEOUS_CURRENT-->device_type: 1014, event_type =44a00020, value = 34949-->电流
+44600030-->STATISTIC_HIGHEST_BATTERY_VOLTAGE-->device_type: 1014, event_type =44600030, value = 3441
+4a503040-->INSTRUMENT_DD_OUT_TEMP-->device_type: 1007, event_type =4a503040, value = 24
+12d0003f-->SAFETY_BELT_COMMAND_AREA_DEPUTY-->device_type: 1042, event_type =12d0003f, value = 1
+
+44500020-->BYDAutoChargingDevice-->device_type: 1009, event_type =44500020, value = 16 -->充满电剩余分钟？->CHARGING_FULL_REST_MINUTE
+44400008-->BYDAutoChargingDevice-->device_type: 1009, event_type =44400008, value = 412-->充电电压->CHARGING_CHARGE_BATTERY_VOLT
+44400018-->CHARGING_CHARGE_CURRENT-->device_type: 1009, event_type =44400018, value = -26.899994-->充电电流
+34400020-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400020, value = 0.0->CHARGING_VTOV_DISCHARGE_QUANTITY
+34400018-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400018, value = 2->CHARGING_BATTERRY_DEVICE_STATE
+34400032-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400032, value = 1->CHARGING_GUN_CONNECT_STATE
+550000d-->BYDAutoChargingDevice-->device_type: 1009, event_type =550000d, value = 0->CHARGING_CHARGER_CONNECT_STATE

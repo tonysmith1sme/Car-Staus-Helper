@@ -11,6 +11,7 @@ import com.huawei.carstatushelper.BuildConfig;
 import com.huawei.carstatushelper.databinding.ActivityAboutBinding;
 import com.huawei.carstatushelper.test.AdasTestActivity;
 import com.huawei.carstatushelper.test.BigDataTestActivity;
+import com.huawei.carstatushelper.test.CarStatusDetailActivity;
 import com.huawei.carstatushelper.test.CollisionDeviceTestActivity;
 import com.huawei.carstatushelper.test.InstrumentTestActivity;
 import com.huawei.carstatushelper.test.ReflectTestActivity;

@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="data"
+            type="com.huawei.carstatushelper.DataHolder" />
+
+        <variable
             name="listener"
             type="android.view.View.OnClickListener" />
     </data>
@@ -59,7 +63,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="0" />
+                            android:text="@{data.shaChe}"
+                            tools:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -100,7 +105,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="0" />
+                            android:text="@{data.youMeng}"
+                            tools:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -344,7 +350,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="26" />
+                        android:text="@{data.currentTemperature}"
+                        tools:text="26" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -386,7 +393,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="0"
+                        android:text="@{data.currentWindLevel}"
                         tools:text="1" />
 
                     <Button
@@ -438,12 +445,13 @@
                         android:id="@+id/total_mileage_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.totalMileage}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM" />
+                        android:text="公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -453,19 +461,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="里程1：" />
+                        android:text="里程一：" />
 
                     <TextView
                         android:id="@+id/custom_mileage1_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@{data.customMileage1}"
                         tools:text="1000" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM" />
+                        android:text="公里" />
 
                 </LinearLayout>
 
@@ -476,19 +484,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="里程2：" />
+                        android:text="里程二：" />
 
                     <TextView
                         android:id="@+id/custom_mileage2_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@{data.customMileage2}"
                         tools:text="1000" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM" />
+                        android:text="公里" />
 
                 </LinearLayout>
 
@@ -505,13 +513,13 @@
                         android:id="@+id/total_ev_mileage_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@{data.totalEvMileage}"
                         tools:text="9999" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM" />
+                        android:text="公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -528,13 +536,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:text="0"
+                        android:text="@{data.totalHevMileage}"
                         tools:text="9999" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM" />
+                        android:text="公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -552,7 +560,9 @@
                         android:id="@+id/fuel_percent_pb"
                         style="@android:style/Widget.ProgressBar.Horizontal"
                         android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="@{data.fuelPercent}" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -568,7 +578,8 @@
                                 android:id="@+id/fuel_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0" />
+                                android:text="@{data.fuelPb}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -584,13 +595,13 @@
                                 android:id="@+id/fuel_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="@{data.fuelMileage}"
                                 tools:text="9999" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="KM" />
+                                android:text="公里" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -611,7 +622,9 @@
                         android:id="@+id/elec_percent_pb"
                         style="@android:style/Widget.ProgressBar.Horizontal"
                         android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="@{data.elecPercent}" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -627,7 +640,8 @@
                                 android:id="@+id/elec_pb_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0" />
+                                android:text="@{data.elecPb}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -644,13 +658,13 @@
                                 android:id="@+id/power_mileage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="@{data.powerMileage}"
                                 tools:text="9999" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="KM" />
+                                android:text="公里" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -695,12 +709,13 @@
                             android:id="@+id/current_travel_mileage_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:text="@{data.currentTravelMileage}"
+                            tools:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KM" />
+                            android:text="公里" />
 
                     </LinearLayout>
 
@@ -718,7 +733,7 @@
                             android:id="@+id/current_travel_energy_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0KWH+0L" />
+                            android:text="0度+0升" />
 
                     </LinearLayout>
 
@@ -736,12 +751,13 @@
                             android:id="@+id/current_travel_yuan_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:text="@{data.currentTravelYuanCost}"
+                            tools:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="¥" />
+                            android:text="元" />
 
                     </LinearLayout>
 
@@ -760,13 +776,13 @@
                             android:id="@+id/current_travel_elec_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@{data.currentTravelElecCost}"
                             tools:text="12.333" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KWH/100KM" />
+                            android:text="度/百公里" />
 
                     </LinearLayout>
 
@@ -785,12 +801,13 @@
                             android:id="@+id/current_travel_fuel_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0" />
+                            android:text="@{data.currentTravelFuelCost}"
+                            tools:text="0" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="L/100KM" />
+                            android:text="升/百公里" />
 
                     </LinearLayout>
 
@@ -808,13 +825,13 @@
                             android:id="@+id/current_comprehensive_elec_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@{data.currentComprehensiveElecCost}"
                             tools:text="13.222" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KWH/100KM" />
+                            android:text="度/百公里" />
 
                     </LinearLayout>
 
@@ -833,13 +850,13 @@
                             android:id="@+id/current_comprehensive_fuel_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@{data.currentComprehensiveFuelCost}"
                             tools:text="12.223" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="L/100KM" />
+                            android:text="升/百公里" />
 
                     </LinearLayout>
 
@@ -894,7 +911,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="-18dp"
-                        android:layout_marginBottom="-18dp"
+                        android:layout_marginBottom="-10dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/car_model" />
 
@@ -914,7 +931,8 @@
                                 android:id="@+id/tyre_pre_left_front_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="240kPa" />
+                                android:text="@{data.tyrePreLeftFront}"
+                                tools:text="240kPa" />
 
                         </LinearLayout>
                         <!--左后-->
@@ -928,7 +946,8 @@
                                 android:id="@+id/tyre_pre_left_rear_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="240kPa" />
+                                android:text="@{data.tyrePreLeftRear}"
+                                tools:text="240kPa" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -951,7 +970,8 @@
                                 android:id="@+id/tyre_pre_right_front_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="240kPa" />
+                                android:text="@{data.tyrePreRightFront}"
+                                tools:text="240kPa" />
 
                         </LinearLayout>
 
@@ -966,7 +986,8 @@
                                 android:id="@+id/tyre_pre_right_rear_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="240kPa" />
+                                android:text="@{data.tyrePreRightRear}"
+                                tools:text="240kPa" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -1009,12 +1030,13 @@
                                 android:id="@+id/lowest_batter_voltage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0" />
+                                android:text="@{data.lowestBatterVoltage}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="V" />
+                                android:text="伏" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1031,12 +1053,13 @@
                                 android:id="@+id/highest_batter_voltage_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0" />
+                                android:text="@{data.highestBatterVoltage}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="V" />
+                                android:text="伏" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -1063,7 +1086,7 @@
                                 android:id="@+id/lowest_batter_temp_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="@{data.lowestBatterTemp}"
                                 tools:text="65" />
 
                             <TextView
@@ -1086,7 +1109,7 @@
                                 android:id="@+id/highest_batter_temp_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="@{data.highestBatterTemp}"
                                 tools:text="65" />
 
                             <TextView
@@ -1109,7 +1132,7 @@
                                 android:id="@+id/average_batter_temp_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="@{data.averageBatterTemp}"
                                 tools:text="65" />
 
                             <TextView
@@ -1151,12 +1174,13 @@
                         android:id="@+id/last_fuel_con_phm_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.lastFuelConPhm}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="L/100Km" />
+                        android:text="升/百公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1172,12 +1196,13 @@
                         android:id="@+id/last_elec_con_phm_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.lastElecConPhm}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KWH/100Km" />
+                        android:text="度/百公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1193,12 +1218,13 @@
                         android:id="@+id/total_fuel_cost_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.totalFuelCost}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="L" />
+                        android:text="升" />
 
                 </LinearLayout>
 
@@ -1215,12 +1241,13 @@
                         android:id="@+id/total_elec_cost_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.totalElecCost}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KWH" />
+                        android:text="度" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1236,12 +1263,13 @@
                         android:id="@+id/external_charging_power_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.externalChargingPower}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KWH" />
+                        android:text="度" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1258,12 +1286,13 @@
                         android:id="@+id/total_fuel_con_phm_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.totalFuelConPhm}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="L/100Km" />
+                        android:text="升/百公里" />
 
                 </LinearLayout>
 
@@ -1281,12 +1310,13 @@
                         android:id="@+id/total_elec_con_phm_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0" />
+                        android:text="@{data.totalElecConPhm}"
+                        tools:text="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KWH/100KM" />
+                        android:text="度/百公里" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1304,7 +1334,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:onClick="@{listener::onClick}"
-                        android:text="标准" />
+                        android:text="@{data.energyFeedback}"
+                        tools:text="标准" />
                 </LinearLayout>
             </LinearLayout>
 

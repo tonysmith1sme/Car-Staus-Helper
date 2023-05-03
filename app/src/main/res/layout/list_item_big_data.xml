@@ -12,37 +12,72 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="canChannel: " />
+
+        <TextView
             android:id="@+id/can_channel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="canChannel:1" />
+            android:text="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="canDataLen: " />
+
+        <TextView
+            android:id="@+id/can_data_len"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="canId: " />
 
         <TextView
             android:id="@+id/can_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="3BBH" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="canId:3BBH" />
+            android:text="subId: " />
 
         <TextView
             android:id="@+id/sub_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="subId:3BBH" />
+            android:text="3BBH" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/can_data_len"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="canDataLen:8" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="data: " />
 
-    <TextView
-        android:id="@+id/data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="data:00 00 00 00 00 00 00 00" />
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00 00 00 00 00 00 00 00" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="data"
+            type="com.huawei.carstatushelper.DataHolder" />
+
+        <variable
             name="listener"
             type="android.view.View.OnClickListener" />
     </data>
@@ -101,7 +105,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:text="0" />
+                                android:text="@{data.youMeng}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -133,7 +138,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:text="0" />
+                                android:text="@{data.shaChe}"
+                                tools:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -156,7 +162,9 @@
                                 android:id="@+id/fuel_percent_pb"
                                 style="@android:style/Widget.ProgressBar.Horizontal"
                                 android:layout_width="150dp"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:max="100"
+                                android:progress="@{data.fuelPercent}" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -168,7 +176,8 @@
                                     android:id="@+id/fuel_pb_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="0" />
+                                    android:text="@{data.fuelPb}"
+                                    tools:text="0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -180,7 +189,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:text="0" />
+                                    android:text="@{data.fuelMileage}"
+                                    tools:text="0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -205,7 +215,9 @@
                                 android:id="@+id/elec_percent_pb"
                                 style="@android:style/Widget.ProgressBar.Horizontal"
                                 android:layout_width="150dp"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:max="100"
+                                android:progress="@{data.elecPercent}" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -217,7 +229,8 @@
                                     android:id="@+id/elec_pb_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="0" />
+                                    android:text="@{data.elecPb}"
+                                    tools:text="0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -229,7 +242,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:text="0" />
+                                    android:text="@{data.powerMileage}"
+                                    tools:text="0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"

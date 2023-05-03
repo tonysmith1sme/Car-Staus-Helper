@@ -1,7 +1,7 @@
 package com.huawei.carstatushelper.test;
 
-import android.content.pm.PackageManager;
 import android.hardware.bydauto.BYDAutoEventValue;
+import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.adas.AbsBYDAutoADASListener;
 import android.hardware.bydauto.adas.BYDAutoADASDevice;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.huawei.carstatushelper.BR;
 import com.huawei.carstatushelper.R;
@@ -33,6 +31,8 @@ public class AdasTestActivity extends AppCompatActivity implements View.OnClickL
         binding.setVariable(BR.data, dataHolder);
 
         adasDevice = BYDAutoADASDevice.getInstance(this);
+        adasDevice.registerListener(adasListener);
+        initData();
     }
 
     @Override
@@ -45,47 +45,45 @@ public class AdasTestActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         int vId = v.getId();
         switch (vId) {
-            case R.id.request_permission_btn:
-                try {
-                    String[] permission = {"android.permission.BYDAUTO_ADAS_GET", "android.permission.BYDAUTO_ADAS_SET", "android.permission.BYDAUTO_ADAS_COMMON"};
-                    boolean granted = true;
-                    for (String per : permission) {
-                        if (ContextCompat.checkSelfPermission(this, per) != PackageManager.PERMISSION_GRANTED) {
-                            granted = false;
-                            break;
-                        }
-                    }
-                    if (!granted) {
-                        ActivityCompat.requestPermissions(this, permission, 0);
-                        return;
-                    }
-                } catch (Exception e) {
-                    String[] permission = {"android.permission.BYDAUTO_ADAS_GET", "android.permission.BYDAUTO_ADAS_SET",
-//                            "android.permission.BYDAUTO_ADAS_COMMON"
-                    };
-                    boolean granted = true;
-                    for (String per : permission) {
-                        if (ContextCompat.checkSelfPermission(this, per) != PackageManager.PERMISSION_GRANTED) {
-                            granted = false;
-                            break;
-                        }
-                    }
-                    if (!granted) {
-                        ActivityCompat.requestPermissions(this, permission, 0);
-                        return;
-                    }
-                }
-                Toast.makeText(this, "权限授予成功", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.register_btn:
-                adasDevice.registerListener(adasListener);
-                break;
-            case R.id.unregister_btn:
-                adasDevice.unregisterListener(adasListener);
+            case R.id.get_data_btn:
+                initData();
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
+    }
+
+    private void initData(){
+        dataHolder.setHMAState(getFeaturesValue(BYDAutoFeatureIds.ADAS_HMA_STATE));
+        dataHolder.setPCWState(getFeaturesValue(BYDAutoFeatureIds.ADAS_PCW_STATE));
+        dataHolder.setAEBState(getFeaturesValue(BYDAutoFeatureIds.ADAS_AEB_STATE));
+        dataHolder.setESPState(getFeaturesValue(BYDAutoFeatureIds.ADAS_ESP_STATE));
+        dataHolder.setLKSMode(getFeaturesValue(BYDAutoFeatureIds.ADAS_LKS_MODE));
+        dataHolder.setLKSSensitivity(getFeaturesValue(BYDAutoFeatureIds.ADAS_LKS_SENSITIVITY));
+        dataHolder.setLDSWType(getFeaturesValue(BYDAutoFeatureIds.ADAS_LDSW_TYPE));
+        dataHolder.setBSDState(getFeaturesValue(BYDAutoFeatureIds.ADAS_BSD_STATE));
+        dataHolder.setSLAState(getFeaturesValue(BYDAutoFeatureIds.ADAS_SLA_STATE));
+        dataHolder.setAVHState(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVH_STATE));
+        dataHolder.setIboosterState(getFeaturesValue(BYDAutoFeatureIds.ADAS_IBOOSTER_STATE));
+        dataHolder.setTJAState(getFeaturesValue(BYDAutoFeatureIds.ADAS_TJA_ICA_STATE));
+        dataHolder.setLaneOffsetState(getFeaturesValue(BYDAutoFeatureIds.ADAS_LANE_OFFSET_KEY));
+        dataHolder.setESPKeyState(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_ADAS_ESP_KEY));
+        dataHolder.setHDCState(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_HDC_STATE));
+        dataHolder.setBrakeFootSenseState(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_BRAKE_FOOT_SENSE));
+        dataHolder.setCSTState(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_CST_SWITCH));
+        dataHolder.setCSTData(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_CST_ONLINE));
+        dataHolder.setSuspen(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVM_APA_SUSPEND));
+        dataHolder.setInterActiveHint(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVM_APA_INTERACTIVE_HINT));
+        dataHolder.setAutoSearchState(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVM_APA_AUTOSEARCH_STATE));
+        dataHolder.setAbortReason(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVM_APA_ABORT_REASON));
+        dataHolder.setAVMSwitchState(getFeaturesValue(BYDAutoFeatureIds.ADAS_AVM_APA_SWITCH));
+        dataHolder.setHDCKeyState(getFeaturesValue(BYDAutoFeatureIds.ADAS_CMD_ADAS_HDC_KEY));
+        refreshData();
+    }
+
+    private String getFeaturesValue(int event) {
+        return adasDevice.get(adasDevice.getDevicetype(), event) + "";
     }
 
     private void refreshData() {

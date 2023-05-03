@@ -1,18 +1,26 @@
 package com.huawei.carstatushelper.test;
 
+import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.bigdata.AbsBYDAutoBigDataListener;
 import android.hardware.bydauto.bigdata.BYDAutoBigDataDevice;
 import android.hardware.bydauto.power.AbsBYDAutoPowerListener;
 import android.hardware.bydauto.power.BYDAutoPowerDevice;
 import android.os.Bundle;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.byd.CanDataCollect.service.CanDataInfo;
 import com.huawei.carstatushelper.databinding.ActivityBigDataTestBinding;
+import com.huawei.carstatushelper.databinding.ListItemBigDataBinding;
+import com.huawei.carstatushelper.util.StringToHex;
 import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class BigDataTestActivity extends AppCompatActivity {
 
@@ -20,6 +28,7 @@ public class BigDataTestActivity extends AppCompatActivity {
     private BYDAutoBigDataDevice bigDataDevice;
     private int accStatus;
     private RecyclerView mRecyclerView;
+    private ItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +37,8 @@ public class BigDataTestActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mRecyclerView = binding.recyclerView;
-
+        itemAdapter = new ItemAdapter();
+        mRecyclerView.setAdapter(itemAdapter);
 
         powerDevice = BYDAutoPowerDevice.getInstance(this);
         bigDataDevice = BYDAutoBigDataDevice.getInstance(this);
@@ -49,7 +59,7 @@ public class BigDataTestActivity extends AppCompatActivity {
         @Override
         public void onPowerCtlStatusChanged(int event_type, int value) {
             super.onPowerCtlStatusChanged(event_type, value);
-            if (event_type == BYDAutoPowerDevice.ACC_STATUS) {
+            if (event_type == BYDAutoFeatureIds.POWER_ACC_STATUS) {
                 if (value == BYDAutoPowerDevice.POWER_CTL_STATE_ON) {
 
                 } else if (value == BYDAutoPowerDevice.POWER_CTL_STATE_OFF) {
@@ -59,7 +69,7 @@ public class BigDataTestActivity extends AppCompatActivity {
         }
     };
 
-    private AbsBYDAutoBigDataListener bigDataListener = new AbsBYDAutoBigDataListener() {
+    private final AbsBYDAutoBigDataListener bigDataListener = new AbsBYDAutoBigDataListener() {
         @Override
         public void onWholeFrameDataChanged(byte[] data) {
             super.onWholeFrameDataChanged(data);
@@ -73,7 +83,7 @@ public class BigDataTestActivity extends AppCompatActivity {
 //        Log.i(LOG_TAG, "getAccStatus");
         BYDAutoPowerDevice bYDAutoPowerDevice = this.powerDevice;
         if (bYDAutoPowerDevice != null) {
-            this.accStatus = bYDAutoPowerDevice.getPowerCtlStatus(BYDAutoPowerDevice.ACC_STATUS);
+            this.accStatus = bYDAutoPowerDevice.getPowerCtlStatus(BYDAutoFeatureIds.POWER_ACC_STATUS);
         }
     }
 
@@ -98,6 +108,19 @@ public class BigDataTestActivity extends AppCompatActivity {
 //        if (!this.b_event_collect_data_flag) {
 //            event_data_collect();
 //        }
+
+        runOnUiThread(new Runnable() {
+            long lastUpdateTime;
+
+            @Override
+            public void run() {
+                if (System.currentTimeMillis() - lastUpdateTime < 500) {
+                    return;
+                }
+                lastUpdateTime = System.currentTimeMillis();
+                itemAdapter.addData(cdi);
+            }
+        });
     }
 
     public void recv_can(byte[] msg) {
@@ -121,12 +144,58 @@ public class BigDataTestActivity extends AppCompatActivity {
         cdi.candatalen = (byte) (msg.length - index3);
         System.arraycopy(msg, index3, cdi.canBuffer, 0, cdi.candatalen);
 
-        KLog.e( "recv_can: canId = " + Long.toHexString(cdi.canid) + " subId = " + cdi.subid + " canChanel = " + cdi.canChanel + " data = " + Arrays.toString(cdi.canBuffer));
+        KLog.e("recv_can: canId = " + Long.toHexString(cdi.canid) + " subId = " + cdi.subid + " canChanel = " + cdi.canChanel + " data = " + Arrays.toString(cdi.canBuffer));
         recvCanData(cdi);
     }
 
-    public class ItemViewHolder {
-        public ItemViewHolder() {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        ListItemBigDataBinding binding;
+
+        public ItemViewHolder(ListItemBigDataBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
+    public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+        private List<CanDataInfo> dataList;
+
+        public ItemAdapter() {
+            this.dataList = new ArrayList<>();
+        }
+
+        @NonNull
+        @Override
+        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            ListItemBigDataBinding binding = ListItemBigDataBinding.inflate(getLayoutInflater());
+            return new ItemViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+            CanDataInfo canDataInfo = dataList.get(position);
+            int canChanel = canDataInfo.canChanel & 0xff;
+            long canid = canDataInfo.canid;
+            int subid = canDataInfo.subid & 0xff;
+            int len = canDataInfo.candatalen & 0xff;
+            byte[] canBuffer = canDataInfo.canBuffer;
+            String data_hex = StringToHex.bytesToHexString(canBuffer);
+
+            holder.binding.canChannel.setText("" + canChanel);
+            holder.binding.canId.setText("" + canid);
+            holder.binding.subId.setText("" + subid);
+            holder.binding.canDataLen.setText("" + len);
+            holder.binding.data.setText(data_hex);
+        }
+
+        @Override
+        public int getItemCount() {
+            return dataList.size();
+        }
+
+        public void addData(CanDataInfo cdi) {
+            dataList.add(cdi);
+            notifyDataSetChanged();
         }
     }
 }

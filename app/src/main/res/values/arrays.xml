@@ -47,20 +47,28 @@
     </string-array>
     <string-array name="night_mode_entries_names">
         <item>不指定</item>
+        <!--
         <item>跟随系统</item>
         <item>自动</item>
         <item>自动(时间)</item>
+        -->
         <item>始终白天</item>
         <item>始终夜间</item>
+        <!--
         <item>自动(电池)</item>
+        -->
     </string-array>
     <string-array name="night_mode_entry_value">
         <item>-100</item>
+        <!--
         <item>-1</item>
         <item>0</item>
         <item>0</item>
+        -->
         <item>1</item>
         <item>2</item>
+        <!--
         <item>3</item>
+        -->
     </string-array>
 </resources>
