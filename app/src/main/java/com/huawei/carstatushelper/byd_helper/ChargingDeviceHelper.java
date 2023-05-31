@@ -4,6 +4,8 @@ import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 
+import com.socks.library.KLog;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -28,6 +30,7 @@ public class ChargingDeviceHelper {
             Method get = clz.getDeclaredMethod("get", int.class, int.class);
             get.setAccessible(true);
             Object result = get.invoke(device, BYDAutoConstants.BYDAUTO_DEVICE_CHARGING, featuresId);
+            KLog.e("获取充电相关数据：" + featuresId + " --> " + result);
             return result;
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException e) {
@@ -36,16 +39,16 @@ public class ChargingDeviceHelper {
         return 0;
     }
 
-    public int getPower() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_POWER);
+    public Object getPower() {
+        return get(BYDAutoFeatureIds.CHARGING_POWER);
     }
 
-    public int getMinute() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE);
+    public Object getMinute() {
+        return get(BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE);
     }
 
-    public int getHour() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_FULL_REST_HOUR);
+    public Object getHour() {
+        return get(BYDAutoFeatureIds.CHARGING_FULL_REST_HOUR);
     }
 
     /**
@@ -53,8 +56,8 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public int getVoltage() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_CHARGE_BATTERY_VOLT);
+    public Object getVoltage() {
+        return get(BYDAutoFeatureIds.CHARGING_CHARGE_BATTERY_VOLT);
     }
 
     /**
@@ -62,8 +65,8 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public double getCurrent() {
-        return (double) get(BYDAutoFeatureIds.CHARGING_CHARGE_CURRENT);
+    public Object getCurrent() {
+        return get(BYDAutoFeatureIds.CHARGING_CHARGE_CURRENT);
     }
 
     /**
@@ -71,8 +74,8 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public int getBatteryState() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
+    public Object getBatteryState() {
+        return get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
     }
 
     /**
@@ -80,8 +83,8 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public int getGunConnect() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE);
+    public Object getGunConnect() {
+        return get(BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE);
     }
 
     /**
@@ -89,7 +92,7 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public int getChargerConnect() {
-        return (int) get(BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE);
+    public Object getChargerConnect() {
+        return get(BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE);
     }
 }
