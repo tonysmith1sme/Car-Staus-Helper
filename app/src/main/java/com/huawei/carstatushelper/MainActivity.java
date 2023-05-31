@@ -48,6 +48,7 @@ import com.huawei.carstatushelper.activity.AboutActivity;
 import com.huawei.carstatushelper.activity.SettingsActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoAcDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
+import com.huawei.carstatushelper.byd_helper.ChargingDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityMainBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandBinding;
 import com.huawei.carstatushelper.databinding.ActivityMainLandMultiBinding;
@@ -448,12 +449,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
-        @Override
-        public void onChargingPowerChanged(double value) {
-            super.onChargingPowerChanged(value);
-            dataHolder.setChargePower(format.format(value));
-            refreshUI();
-        }
+//        @Override
+//        public void onChargingPowerChanged(double value) {
+//            super.onChargingPowerChanged(value);
+//            dataHolder.setChargePower(format.format(value));
+//            refreshUI();
+//        }
 
         /**
          * 获取充满电剩余时间
@@ -466,6 +467,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onChargingRestTimeChanged(hour, min);
             dataHolder.setChargeRestHour(hour + "");
             dataHolder.setChargeRestMinute(min + "");
+            refreshUI();
+        }
+
+        @Override
+        public void onChargingGunStateChanged(int state) {
+            super.onChargingGunStateChanged(state);
+            dataHolder.setChargeGunConnectState(state + "");
+            refreshUI();
+        }
+
+        @Override
+        public void onChargerStateChanged(int state) {
+            super.onChargerStateChanged(state);
+            dataHolder.setChargerState(state + "");
             refreshUI();
         }
     };
@@ -841,12 +856,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onElecDrivingRangeChanged(int value) {
             super.onElecDrivingRangeChanged(value);
             dataHolder.setPowerMileage(value + "");
+
             BYDAutoStatisticDeviceHelper statisticDeviceHelper = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice);
             dataHolder.setLowestBatterVoltage(format.format(statisticDeviceHelper.getSTATISTIC_LOWEST_BATTERY_VOLTAGE() * 1.0f / 1000));
             dataHolder.setHighestBatterVoltage(format.format(statisticDeviceHelper.getSTATISTIC_HIGHEST_BATTERY_VOLTAGE() * 1.0f / 1000));
             dataHolder.setLowestBatterTemp(String.valueOf(statisticDeviceHelper.getLOWEST_BATTERY_TEMP()));
             dataHolder.setHighestBatterTemp(String.valueOf(statisticDeviceHelper.getHIGHEST_BATTERY_TEMP()));
             dataHolder.setAverageBatterTemp(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
+
+            ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
+            dataHolder.setChargePower(helper.getPower() + "");
+            dataHolder.setChargeVolt(helper.getVoltage() + "");
+            dataHolder.setChargeCurrent(helper.getCurrent() + "");
+            dataHolder.setChargeRestMinute(helper.getMinute() + "");
+            dataHolder.setChargeRestHour(helper.getHour() + "");
+            dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
+            dataHolder.setChargeGunConnectState(helper.getGunConnect() + "");
+            dataHolder.setChargerState(helper.getChargerConnect() + "");
+
             refreshUI();
         }
 

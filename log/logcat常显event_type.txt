@@ -27,7 +27,7 @@ com.byd.smarttravel
 
 44500020-->BYDAutoChargingDevice-->device_type: 1009, event_type =44500020, value = 16 -->充满电剩余分钟？->CHARGING_FULL_REST_MINUTE
 44400008-->BYDAutoChargingDevice-->device_type: 1009, event_type =44400008, value = 412-->充电电压->CHARGING_CHARGE_BATTERY_VOLT
-44400018-->CHARGING_CHARGE_CURRENT-->device_type: 1009, event_type =44400018, value = -26.899994-->充电电流
+44400018-->BYDAutoChargingDevice-->device_type: 1009, event_type =44400018, value = -26.899994-->充电电流-->CHARGING_CHARGE_CURRENT
 34400020-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400020, value = 0.0->CHARGING_VTOV_DISCHARGE_QUANTITY
 34400018-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400018, value = 2->CHARGING_BATTERRY_DEVICE_STATE
 34400032-->BYDAutoChargingDevice-->device_type: 1009, event_type =34400032, value = 1->CHARGING_GUN_CONNECT_STATE

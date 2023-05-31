@@ -6,65 +6,66 @@ public class DataHolder {
     private String chargeCurrent;
     private String chargeGunConnectState;
     private String chargerConnectState;
-    private String chargeRestHour;
-    private String chargeRestMinute;
-    private String currentGearboxLevel;//变速箱挡位
-    private String currentWindLevel;
-    private String currentTemperature;
-    private String energyMode;//能耗模式
-    private String operationMode;//驾驶模式
-    private String totalMileage;
-    private String totalHevMileage;
-    private String totalFuelCost;//累计燃油消耗
-    private String totalElecCost;//累计电量消耗
-    private String lastFuelConPhm;
-    private String lastElecConPhm;
-    private String powerMileage;
-    private String fuelMileage;
-    private String fuelPb;
-    private int fuelPercent;
-    private String elecPb;
-    private int elecPercent;
+    private String chargeRestHour = "0";
+    private String chargeRestMinute = "0";
+    private String chargerState = "0";
+    private String currentGearboxLevel = "P";//变速箱挡位
+    private String currentWindLevel = "0";
+    private String currentTemperature = "26";
+    private String energyMode = "HEV";//能耗模式
+    private String operationMode = "ECO";//驾驶模式
+    private String totalMileage = "25577";
+    private String totalHevMileage = "6561";
+    private String totalFuelCost = "367.5";//累计燃油消耗
+    private String totalElecCost = "2101.8";//累计电量消耗
+    private String lastFuelConPhm = "0";
+    private String lastElecConPhm = "0";
+    private String powerMileage = "0";
+    private String fuelMileage = "0";
+    private String fuelPb = "229";
+    private int fuelPercent = 18;
+    private String elecPb = "93";
+    private int elecPercent = 82;
     private String enginePower;//功率
-    private String totalElecConPhm;
-    private String totalFuelConPhm;
+    private String totalElecConPhm = "0";
+    private String totalFuelConPhm = "0";
     private String text;//vin
-    private String totalEvMileage;
-    private String carSpeed;//车速
-    private String engineSpeed;
-    private String youMeng;
-    private String shaChe;
-    private String gearboxCode;//变速箱名称
-    private String instantElecCon;
-    private String instantFuelCon;
-    private String gearboxType;//变速箱类型
-    private String engineSpeedGb;
-    private String engineSpeedWarning;
-    private String frontMotorSpeed;
-    private String rearMotorSpeed;
-    private String frontMotorTorque;
-    private String rearMotorTorque;
-    private String tyrePreLeftFront;
-    private String tyrePreRightFront;
-    private String tyrePreLeftRear;
-    private String tyrePreRightRear;
+    private String totalEvMileage = "19016";
+    private String carSpeed = "0";//车速
+    private String engineSpeed = "0";
+    private String youMeng = "0";
+    private String shaChe = "0";
+    private String gearboxCode = "DHT30";//变速箱名称
+    private String instantElecCon = "0";
+    private String instantFuelCon = "0";
+    private String gearboxType = "ECVT";//变速箱类型
+    private String engineSpeedGb = "0";
+    private String engineSpeedWarning = "0";
+    private String frontMotorSpeed = "0";
+    private String rearMotorSpeed = "0";
+    private String frontMotorTorque = "0";
+    private String rearMotorTorque = "0";
+    private String tyrePreLeftFront = "260kPa";
+    private String tyrePreRightFront = "240kPa";
+    private String tyrePreLeftRear = "252kPa";
+    private String tyrePreRightRear = "255kPa";
     private String tyrePressure;
-    private String autoType;//车型代号
-    private String currentTravelElecCost;
-    private String currentTravelFuelCost;
-    private String currentTravelMileage;
-    private String currentTravelEnergyCost;
-    private String currentComprehensiveElecCost;
-    private String currentComprehensiveFuelCost;
-    private String currentTravelYuanCost;
-    private String customMileage1;
-    private String customMileage2;
-    private String powerLevel;//电源挡位
-    private String lowestBatterVoltage;
-    private String highestBatterVoltage;
-    private String lowestBatterTemp;
-    private String highestBatterTemp;
-    private String averageBatterTemp;
+    private String autoType = "HA2HE";//车型代号
+    private String currentTravelElecCost = "0";//本次行程平均电耗
+    private String currentTravelFuelCost = "0";//本次行程平均油耗
+    private String currentTravelMileage = "0";//本次行程总里程
+    private String currentTravelEnergyCost = "0";//本次行程能耗
+    private String currentComprehensiveElecCost = "0";//本次行程综合电耗
+    private String currentComprehensiveFuelCost = "0";//本次行程综合油耗
+    private String currentTravelYuanCost = "0";
+    private String customMileage1 = "8400.7";
+    private String customMileage2 = "4402.1";
+    private String powerLevel = "ON";//电源挡位
+    private String lowestBatterVoltage = "3.382";
+    private String highestBatterVoltage = "3.396";
+    private String lowestBatterTemp = "37";
+    private String highestBatterTemp = "39";
+    private String averageBatterTemp = "37";
     private String externalChargingPower;
     private String controlModeStatus;
     private String acOnOffStatus;
@@ -74,7 +75,7 @@ public class DataHolder {
     private String ventilateStatus;
     private String batteryDeviceState;
     private String energyFeedback;
-    private String totalDrivingTime;
+    private String totalDrivingTime = "86.1";
     private String waterTemperature;
 
     private String currentChargingCount;
@@ -86,6 +87,7 @@ public class DataHolder {
 
     private String smallBatteryVoltage;
     private String waterMeterPercent;
+
     public String getChargePower() {
         return chargePower;
     }
@@ -140,6 +142,14 @@ public class DataHolder {
 
     public void setChargeRestMinute(String chargeRestMinute) {
         this.chargeRestMinute = chargeRestMinute;
+    }
+
+    public String getChargerState() {
+        return chargerState;
+    }
+
+    public void setChargerState(String chargerState) {
+        this.chargerState = chargerState;
     }
 
     public String getCurrentGearboxLevel() {
@@ -254,12 +264,28 @@ public class DataHolder {
         this.fuelPb = fuelPb;
     }
 
+    public int getFuelPercent() {
+        return fuelPercent;
+    }
+
+    public void setFuelPercent(int fuelPercent) {
+        this.fuelPercent = fuelPercent;
+    }
+
     public String getElecPb() {
         return elecPb;
     }
 
     public void setElecPb(String elecPb) {
         this.elecPb = elecPb;
+    }
+
+    public int getElecPercent() {
+        return elecPercent;
+    }
+
+    public void setElecPercent(int elecPercent) {
+        this.elecPercent = elecPercent;
     }
 
     public String getEnginePower() {
@@ -444,6 +470,14 @@ public class DataHolder {
 
     public void setTyrePreRightRear(String tyrePreRightRear) {
         this.tyrePreRightRear = tyrePreRightRear;
+    }
+
+    public String getTyrePressure() {
+        return tyrePressure;
+    }
+
+    public void setTyrePressure(String tyrePressure) {
+        this.tyrePressure = tyrePressure;
     }
 
     public String getAutoType() {
@@ -646,22 +680,6 @@ public class DataHolder {
         this.energyFeedback = energyFeedback;
     }
 
-    public int getFuelPercent() {
-        return fuelPercent;
-    }
-
-    public void setFuelPercent(int fuelPercent) {
-        this.fuelPercent = fuelPercent;
-    }
-
-    public int getElecPercent() {
-        return elecPercent;
-    }
-
-    public void setElecPercent(int elecPercent) {
-        this.elecPercent = elecPercent;
-    }
-
     public String getTotalDrivingTime() {
         return totalDrivingTime;
     }
@@ -670,20 +688,20 @@ public class DataHolder {
         this.totalDrivingTime = totalDrivingTime;
     }
 
-    public String getTyrePressure() {
-        return tyrePressure;
-    }
-
-    public void setTyrePressure(String tyrePressure) {
-        this.tyrePressure = tyrePressure;
-    }
-
     public String getWaterTemperature() {
         return waterTemperature;
     }
 
     public void setWaterTemperature(String waterTemperature) {
         this.waterTemperature = waterTemperature;
+    }
+
+    public String getCurrentChargingCount() {
+        return currentChargingCount;
+    }
+
+    public void setCurrentChargingCount(String currentChargingCount) {
+        this.currentChargingCount = currentChargingCount;
     }
 
     public String getSensorTemperature() {
@@ -716,14 +734,6 @@ public class DataHolder {
 
     public void setSensorSlop(String sensorSlop) {
         this.sensorSlop = sensorSlop;
-    }
-
-    public String getCurrentChargingCount() {
-        return currentChargingCount;
-    }
-
-    public void setCurrentChargingCount(String currentChargingCount) {
-        this.currentChargingCount = currentChargingCount;
     }
 
     public String getSmallBatteryVoltage() {

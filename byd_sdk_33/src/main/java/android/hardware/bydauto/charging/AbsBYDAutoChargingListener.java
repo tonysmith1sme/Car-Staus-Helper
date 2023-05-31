@@ -163,7 +163,7 @@ public abstract class AbsBYDAutoChargingListener implements IBYDAutoListener {
     }
 
     private ChargingMessageData parse(Object obj) {
-        return null;
+        throw new RuntimeException("Stub!");
     }
 
     @Keep
