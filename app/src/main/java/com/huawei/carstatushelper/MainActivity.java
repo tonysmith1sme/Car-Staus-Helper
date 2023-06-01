@@ -465,23 +465,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingRestTimeChanged(int hour, int min) {
             super.onChargingRestTimeChanged(hour, min);
-            dataHolder.setChargeRestHour(hour + "");
-            dataHolder.setChargeRestMinute(min + "");
-            refreshUI();
+//            dataHolder.setChargeRestHour(hour + "");
+//            dataHolder.setChargeRestMinute(min + "");
+//            refreshUI();
         }
 
         @Override
         public void onChargingGunStateChanged(int state) {
             super.onChargingGunStateChanged(state);
-            dataHolder.setChargeGunConnectState(state + "");
-            refreshUI();
+//            dataHolder.setChargeGunConnectState(state + "");
+//            refreshUI();
         }
 
         @Override
         public void onChargerStateChanged(int state) {
             super.onChargerStateChanged(state);
-            dataHolder.setChargerState(state + "");
-            refreshUI();
+//            dataHolder.setChargerConnectState(state + "");
+//            refreshUI();
         }
     };
 
@@ -662,6 +662,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            updateEngineSpeedData();
         }
     };
+
+    private void refreshChargingInfo() {
+        ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
+        if (((int) helper.getGunConnect()) == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_NONE) {
+            return;
+        }
+        dataHolder.setChargePower(helper.getPower() + "");
+        dataHolder.setChargeVolt(helper.getVoltage() + "");
+        dataHolder.setChargeCurrent(helper.getCurrent() + "");
+        dataHolder.setChargeRestMinute(helper.getMinute() + "");
+        dataHolder.setChargeRestHour(helper.getHour() + "");
+        dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
+        dataHolder.setChargeGunConnectState(helper.getGunConnect() + "");
+        dataHolder.setChargerConnectState(helper.getChargerConnect() + "");
+
+        refreshUI();
+    }
 
     private final AbsBYDAutoStatisticListener absBYDAutoStatisticListener = new AbsBYDAutoStatisticListener() {
 
@@ -864,15 +881,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dataHolder.setHighestBatterTemp(String.valueOf(statisticDeviceHelper.getHIGHEST_BATTERY_TEMP()));
             dataHolder.setAverageBatterTemp(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
 
-            ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
-            dataHolder.setChargePower(helper.getPower() + "");
-            dataHolder.setChargeVolt(helper.getVoltage() + "");
-            dataHolder.setChargeCurrent(helper.getCurrent() + "");
-            dataHolder.setChargeRestMinute(helper.getMinute() + "");
-            dataHolder.setChargeRestHour(helper.getHour() + "");
-            dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
-            dataHolder.setChargeGunConnectState(helper.getGunConnect() + "");
-            dataHolder.setChargerState(helper.getChargerConnect() + "");
+            refreshChargingInfo();
 
             refreshUI();
         }

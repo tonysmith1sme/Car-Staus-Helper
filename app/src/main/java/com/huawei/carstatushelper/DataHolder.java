@@ -1,14 +1,14 @@
 package com.huawei.carstatushelper;
 
 public class DataHolder {
-    private String chargePower;//充电功率
-    private String chargeVolt;
-    private String chargeCurrent;
-    private String chargeGunConnectState;
-    private String chargerConnectState;
+    private String chargePower = "0";//充电功率
+    private String chargeVolt = "0";
+    private String chargeCurrent = "0";
+    private String chargeGunConnectState = "0";
+    private String chargerConnectState = "0";
     private String chargeRestHour = "0";
     private String chargeRestMinute = "0";
-    private String chargerState = "0";
+//    private String chargerState = "0";
     private String currentGearboxLevel = "P";//变速箱挡位
     private String currentWindLevel = "0";
     private String currentTemperature = "26";
@@ -144,13 +144,13 @@ public class DataHolder {
         this.chargeRestMinute = chargeRestMinute;
     }
 
-    public String getChargerState() {
-        return chargerState;
-    }
+//    public String getChargerState() {
+//        return chargerState;
+//    }
 
-    public void setChargerState(String chargerState) {
-        this.chargerState = chargerState;
-    }
+//    public void setChargerState(String chargerState) {
+//        this.chargerState = chargerState;
+//    }
 
     public String getCurrentGearboxLevel() {
         return currentGearboxLevel;

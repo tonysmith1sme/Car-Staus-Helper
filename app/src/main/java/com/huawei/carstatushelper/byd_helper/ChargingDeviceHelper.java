@@ -40,7 +40,8 @@ public class ChargingDeviceHelper {
     }
 
     public Object getPower() {
-        return get(BYDAutoFeatureIds.CHARGING_POWER);
+        return device.getChargingPower();
+//        return get(BYDAutoFeatureIds.CHARGING_POWER);
     }
 
     public Object getMinute() {
@@ -71,6 +72,8 @@ public class ChargingDeviceHelper {
 
     /**
      * 电池状态
+     * public static final int CHARGING_BATTERY_STATE_CHARGING = 1;
+     * 未充电状态下是 15
      *
      * @return
      */
@@ -80,6 +83,8 @@ public class ChargingDeviceHelper {
 
     /**
      * 充电枪连接状态
+     * public static final int CHARGING_GUN_STATE_CONNECTED_DC = 3;
+     * public static final int CHARGING_GUN_STATE_CONNECTED_NONE = 1;
      *
      * @return
      */
@@ -89,6 +94,8 @@ public class ChargingDeviceHelper {
 
     /**
      * 充电机连接状态
+     * public static final int CHARGING_CHARGER_STATE_CONNECTED = 1;
+     * public static final int CHARGING_CHARGER_STATE_NOT_CONNECTED = 0;
      *
      * @return
      */

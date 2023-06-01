@@ -604,6 +604,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@color/purple_200"
+                                android:onClick="@{listener::onClick}"
                                 android:src="@drawable/baseline_restart_alt_black_36"
                                 android:text="重置" />
 
@@ -614,6 +615,7 @@
                                 android:layout_gravity="end"
                                 android:layout_marginTop="8dp"
                                 android:background="@color/purple_200"
+                                android:onClick="@{listener::onClick}"
                                 android:src="@drawable/baseline_pause_circle_outline_black_36"
                                 android:text="暂停" />
                         </LinearLayout>
