@@ -4,11 +4,6 @@ import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.charging.BYDAutoChargingDevice;
 
-import com.socks.library.KLog;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class ChargingDeviceHelper {
     private static ChargingDeviceHelper INSTANCE;
     private BYDAutoChargingDevice device;
@@ -25,18 +20,7 @@ public class ChargingDeviceHelper {
     }
 
     private Object get(int featuresId) {
-        try {
-            Class<?> clz = Class.forName("android.hardware.bydauto.AbsBYDAutoDevice");
-            Method get = clz.getDeclaredMethod("get", int.class, int.class);
-            get.setAccessible(true);
-            Object result = get.invoke(device, BYDAutoConstants.BYDAUTO_DEVICE_CHARGING, featuresId);
-            KLog.e("获取充电相关数据：" + featuresId + " --> " + result);
-            return result;
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
-                 InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return BYDDeviceHelper.get(device, BYDAutoConstants.BYDAUTO_DEVICE_CHARGING, featuresId);
     }
 
     public Object getPower() {
@@ -78,7 +62,14 @@ public class ChargingDeviceHelper {
      * @return
      */
     public Object getBatteryState() {
-        return get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
+        int ret = (int) get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
+        if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_CHARGING) {
+            return "充电中";
+        }
+        if (ret == 15) {
+            return "放电中";
+        }
+        return "type:" + ret;
     }
 
     /**
@@ -88,8 +79,15 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public Object getGunConnect() {
-        return get(BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE);
+    public String getGunConnect() {
+        int ret = (int) get(BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE);
+        if (ret == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_NONE) {
+            return "未连接";
+        }
+        if (ret == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_DC) {
+            return "直流已连接";
+        }
+        return "type:" + ret;
     }
 
     /**
@@ -99,7 +97,11 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public Object getChargerConnect() {
-        return get(BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE);
+    public String getChargerConnect() {
+        int ret = (int) get(BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE);
+        if (ret == BYDAutoChargingDevice.CHARGING_CHARGER_STATE_CONNECTED) {
+            return "已连接";
+        }
+        return "未连接";
     }
 }

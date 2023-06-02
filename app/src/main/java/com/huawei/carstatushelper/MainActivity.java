@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.hardware.bydauto.BYDAutoEventValue;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.ac.AbsBYDAutoAcListener;
 import android.hardware.bydauto.ac.BYDAutoAcDevice;
@@ -297,16 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (statisticDevice == null) {
             return;
         }
-        statisticDevice.unregisterListener(absBYDAutoStatisticListener);
-        bodyworkDevice.unregisterListener(absBYDAutoBodyworkListener);
-        speedDevice.unregisterListener(absBYDAutoSpeedListener);
-        energyDevice.unregisterListener(absBYDAutoEnergyListener);
-        bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
-        gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
-        chargingDevice.unregisterListener(absBYDAutoChargingListener);
-        tyreDevice.unregisterListener(absBYDAutoTyreListener);
-        settingDevice.unregisterListener(absBYDAutoSettingListener);
-        instrumentDevice.unregisterListener(instrumentListener);
+        unregisterDevice();
     }
 
     @Override
@@ -332,6 +324,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingDevice = BYDAutoSettingDevice.getInstance(this);
         instrumentDevice = BYDAutoInstrumentDevice.getInstance(this);
 
+        registerDevice();
+    }
+
+    private void registerDevice() {
         statisticDevice.registerListener(absBYDAutoStatisticListener);
         bodyworkDevice.registerListener(absBYDAutoBodyworkListener);
         speedDevice.registerListener(absBYDAutoSpeedListener);
@@ -342,6 +338,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tyreDevice.registerListener(absBYDAutoTyreListener);
         settingDevice.registerListener(absBYDAutoSettingListener);
         instrumentDevice.registerListener(instrumentListener);
+    }
+
+    private void unregisterDevice() {
+        statisticDevice.unregisterListener(absBYDAutoStatisticListener);
+        bodyworkDevice.unregisterListener(absBYDAutoBodyworkListener);
+        speedDevice.unregisterListener(absBYDAutoSpeedListener);
+        energyDevice.unregisterListener(absBYDAutoEnergyListener);
+        bydAutoAcDevice.unregisterListener(absBYDAutoAcListener);
+        gearboxDevice.unregisterListener(absBYDAutoGearboxListener);
+        chargingDevice.unregisterListener(absBYDAutoChargingListener);
+        tyreDevice.unregisterListener(absBYDAutoTyreListener);
+        settingDevice.unregisterListener(absBYDAutoSettingListener);
+        instrumentDevice.unregisterListener(instrumentListener);
     }
 
     private final AbsBYDAutoSettingListener absBYDAutoSettingListener = new AbsBYDAutoSettingListener() {
@@ -449,12 +458,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          *
          * @param value
          */
-//        @Override
-//        public void onChargingPowerChanged(double value) {
-//            super.onChargingPowerChanged(value);
+        @Override
+        public void onChargingPowerChanged(double value) {
+            super.onChargingPowerChanged(value);
+            KLog.e("充电功率变化监听: " + value);
 //            dataHolder.setChargePower(format.format(value));
 //            refreshUI();
-//        }
+        }
 
         /**
          * 获取充满电剩余时间
@@ -465,6 +475,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingRestTimeChanged(int hour, int min) {
             super.onChargingRestTimeChanged(hour, min);
+            KLog.e("获取充满电剩余时间:" + hour + " " + min);
 //            dataHolder.setChargeRestHour(hour + "");
 //            dataHolder.setChargeRestMinute(min + "");
 //            refreshUI();
@@ -473,6 +484,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingGunStateChanged(int state) {
             super.onChargingGunStateChanged(state);
+            KLog.e("充电枪连接状态：" + state);
 //            dataHolder.setChargeGunConnectState(state + "");
 //            refreshUI();
         }
@@ -480,8 +492,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargerStateChanged(int state) {
             super.onChargerStateChanged(state);
+            KLog.e("充电机状态：" + state);
 //            dataHolder.setChargerConnectState(state + "");
 //            refreshUI();
+        }
+
+        @Override
+        public void onChargerWorkStateChanged(int state) {
+            super.onChargerWorkStateChanged(state);
+            KLog.e("充电机工作状态：" + state);
+
+        }
+
+        @Override
+        public void onBatteryManagementDeviceStateChanged(int state) {
+            super.onBatteryManagementDeviceStateChanged(state);
+            KLog.e("电池管理模块状态：" + state);
+
+        }
+
+        @Override
+        public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
+            super.onDataEventChanged(eventType, eventValue);
+//            refreshChargingInfo();
+
+            ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
+
+            if (eventType == BYDAutoFeatureIds.CHARGING_POWER) {
+                dataHolder.setChargePower("[" + eventValue.floatValue + "," + eventValue.doubleValue + "]");
+            } else if (eventType == BYDAutoFeatureIds.CHARGING_CHARGE_POWER_DD) {
+                dataHolder.setChargePower("[" + eventValue.floatValue + "," + eventValue.doubleValue + "]");
+            }
+
+            if (eventType == BYDAutoFeatureIds.CHARGING_CHARGE_BATTERY_VOLT) {
+                dataHolder.setChargeVolt(helper.getVoltage() + "");
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_CHARGE_CURRENT) {
+                Object current = helper.getCurrent();
+                KLog.e();
+                int intValue = eventValue.intValue;
+                float floatValue = eventValue.floatValue;
+                double doubleValue = eventValue.doubleValue;
+                KLog.e("充电电流：" + intValue + " " + floatValue + " " + doubleValue);
+                dataHolder.setChargeCurrent("[" + intValue + "," + floatValue + "," + doubleValue + "]");
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE) {
+                dataHolder.setChargeRestMinute(helper.getMinute() + "");
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_FULL_REST_HOUR) {
+                dataHolder.setChargeRestHour(helper.getHour() + "");
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE) {
+                dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE) {
+                dataHolder.setChargeGunConnectState(helper.getGunConnect());
+            }
+            if (eventType == BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE) {
+                dataHolder.setChargerConnectState(helper.getChargerConnect());
+            }
+            refreshUI();
         }
     };
 
@@ -663,22 +733,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    private void refreshChargingInfo() {
-        ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
-        if (((int) helper.getGunConnect()) == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_NONE) {
-            return;
-        }
-        dataHolder.setChargePower(helper.getPower() + "");
-        dataHolder.setChargeVolt(helper.getVoltage() + "");
-        dataHolder.setChargeCurrent(helper.getCurrent() + "");
-        dataHolder.setChargeRestMinute(helper.getMinute() + "");
-        dataHolder.setChargeRestHour(helper.getHour() + "");
-        dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
-        dataHolder.setChargeGunConnectState(helper.getGunConnect() + "");
-        dataHolder.setChargerConnectState(helper.getChargerConnect() + "");
-
-        refreshUI();
-    }
+//    private void refreshChargingInfo() {
+//        ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
+//        if (TextUtils.equals("未连接", helper.getGunConnect())) {
+//            return;
+//        }
+//        dataHolder.setChargePower(helper.getPower() + "");
+//        dataHolder.setChargeVolt(helper.getVoltage() + "");
+//        dataHolder.setChargeCurrent(helper.getCurrent() + "");
+//        dataHolder.setChargeRestMinute(helper.getMinute() + "");
+//        dataHolder.setChargeRestHour(helper.getHour() + "");
+//        dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
+//        dataHolder.setChargeGunConnectState(helper.getGunConnect());
+//        dataHolder.setChargerConnectState(helper.getChargerConnect());
+//
+//        refreshUI();
+//    }
 
     private final AbsBYDAutoStatisticListener absBYDAutoStatisticListener = new AbsBYDAutoStatisticListener() {
 
@@ -881,7 +951,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dataHolder.setHighestBatterTemp(String.valueOf(statisticDeviceHelper.getHIGHEST_BATTERY_TEMP()));
             dataHolder.setAverageBatterTemp(String.valueOf(statisticDeviceHelper.getAVERAGE_BATTERY_TEMP()));
 
-            refreshChargingInfo();
+//            refreshChargingInfo();
 
             refreshUI();
         }
