@@ -8,10 +8,10 @@ public class DataHolder {
     private String chargerConnectState = "0";
     private String chargeRestHour = "0";
     private String chargeRestMinute = "0";
-//    private String chargerState = "0";
+    //    private String chargerState = "0";
     private String currentGearboxLevel = "P";//变速箱挡位
     private String currentWindLevel = "0";
-    private String currentTemperature = "26";
+    private String currentTemperature = "0";
     private String energyMode = "HEV";//能耗模式
     private String operationMode = "ECO";//驾驶模式
     private String totalMileage = "25577";
@@ -45,10 +45,10 @@ public class DataHolder {
     private String rearMotorSpeed = "0";
     private String frontMotorTorque = "0";
     private String rearMotorTorque = "0";
-    private String tyrePreLeftFront = "260kPa";
-    private String tyrePreRightFront = "240kPa";
-    private String tyrePreLeftRear = "252kPa";
-    private String tyrePreRightRear = "255kPa";
+    private String tyrePreLeftFront = "250kPa";
+    private String tyrePreRightFront = "250kPa";
+    private String tyrePreLeftRear = "250kPa";
+    private String tyrePreRightRear = "250kPa";
     private String tyrePressure;
     private String autoType = "HA2HE";//车型代号
     private String currentTravelElecCost = "0";//本次行程平均电耗
@@ -58,14 +58,14 @@ public class DataHolder {
     private String currentComprehensiveElecCost = "0";//本次行程综合电耗
     private String currentComprehensiveFuelCost = "0";//本次行程综合油耗
     private String currentTravelYuanCost = "0";
-    private String customMileage1 = "8400.7";
-    private String customMileage2 = "4402.1";
+    private String customMileage1 = "0";
+    private String customMileage2 = "0";
     private String powerLevel = "ON";//电源挡位
-    private String lowestBatterVoltage = "3.382";
-    private String highestBatterVoltage = "3.396";
-    private String lowestBatterTemp = "37";
-    private String highestBatterTemp = "39";
-    private String averageBatterTemp = "37";
+    private String lowestBatterVoltage = "0";
+    private String highestBatterVoltage = "0";
+    private String lowestBatterTemp = "0";
+    private String highestBatterTemp = "0";
+    private String averageBatterTemp = "0";
     private String externalChargingPower;
     private String controlModeStatus;
     private String acOnOffStatus;
@@ -73,9 +73,9 @@ public class DataHolder {
     private String defrostModeStatus;
     private String cycleModeStatus;
     private String ventilateStatus;
-    private String batteryDeviceState;
+    private String batteryDeviceState = "放电中";
     private String energyFeedback;
-    private String totalDrivingTime = "86.1";
+    private String totalDrivingTime = "0";
     private String waterTemperature;
 
     private String currentChargingCount;

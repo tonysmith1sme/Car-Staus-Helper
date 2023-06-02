@@ -465,7 +465,8 @@
                                     android:id="@+id/current_travel_energy_cost_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="0度+0升" />
+                                    android:text="@{data.currentTravelEnergyCost}"
+                                    tools:text="0度+0升" />
 
                             </LinearLayout>
 

@@ -29,11 +29,13 @@ public class ChargingDeviceHelper {
     }
 
     public Object getMinute() {
-        return get(BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE);
+        int data = (int) get(BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE);
+        return data > 60 ? 0 : data;
     }
 
     public Object getHour() {
-        return get(BYDAutoFeatureIds.CHARGING_FULL_REST_HOUR);
+        int data = (int) get(BYDAutoFeatureIds.CHARGING_FULL_REST_HOUR);
+        return data > 24 ? 0 : data;
     }
 
     /**
@@ -57,6 +59,7 @@ public class ChargingDeviceHelper {
     /**
      * 电池状态
      * public static final int CHARGING_BATTERY_STATE_CHARGING = 1;
+     * public static final int CHARGING_BATTERY_STATE_CHARG_FINISH = 2;
      * 未充电状态下是 15
      *
      * @return
@@ -65,6 +68,9 @@ public class ChargingDeviceHelper {
         int ret = (int) get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
         if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_CHARGING) {
             return "充电中";
+        }
+        if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_CHARG_FINISH) {
+            return "充电结束";
         }
         if (ret == 15) {
             return "放电中";

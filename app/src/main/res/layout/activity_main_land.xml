@@ -733,7 +733,8 @@
                             android:id="@+id/current_travel_energy_cost_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0度+0升" />
+                            android:text="@{data.currentTravelEnergyCost}"
+                            tools:text="0度+0升" />
 
                     </LinearLayout>
 
@@ -1280,7 +1281,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="平均油耗：" />
+                        android:text="累计平均油耗：" />
 
                     <TextView
                         android:id="@+id/total_fuel_con_phm_tv"
@@ -1304,7 +1305,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="平均电耗：" />
+                        android:text="累计平均电耗：" />
 
                     <TextView
                         android:id="@+id/total_elec_con_phm_tv"

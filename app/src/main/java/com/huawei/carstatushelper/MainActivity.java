@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingPowerChanged(double value) {
             super.onChargingPowerChanged(value);
-            KLog.e("充电功率变化监听: " + value);
+//            KLog.e("充电功率变化监听: " + value);
 //            dataHolder.setChargePower(format.format(value));
 //            refreshUI();
         }
@@ -528,13 +528,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dataHolder.setChargeVolt(helper.getVoltage() + "");
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_CHARGE_CURRENT) {
-                Object current = helper.getCurrent();
-                KLog.e();
-                int intValue = eventValue.intValue;
-                float floatValue = eventValue.floatValue;
-                double doubleValue = eventValue.doubleValue;
-                KLog.e("充电电流：" + intValue + " " + floatValue + " " + doubleValue);
-                dataHolder.setChargeCurrent("[" + intValue + "," + floatValue + "," + doubleValue + "]");
+//                Object current = helper.getCurrent();
+//                KLog.e();
+//                int intValue = eventValue.intValue;
+//                float floatValue = eventValue.floatValue;
+//                double doubleValue = eventValue.doubleValue;
+//                KLog.e("充电电流：" + intValue + " " + floatValue + " " + doubleValue);
+                dataHolder.setChargeCurrent(format.format(Math.abs(eventValue.doubleValue)));
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE) {
                 dataHolder.setChargeRestMinute(helper.getMinute() + "");
@@ -803,7 +803,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //本次行程油耗
             double fuel_cost = totalFuelConValue - init_totalFuelConValue;
             //本次行程能耗(电耗+油耗)
-            String cost = format.format(elec_cost) + "KWH+" + format.format(fuel_cost) + "L";
+            String cost = format.format(elec_cost) + "度+" + format.format(fuel_cost) + "升";
 //            if (currentTravelEnergyCostTv != null) {
 //                currentTravelEnergyCostTv.setText(cost);
 //            }
@@ -966,7 +966,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (value >= 2046) {
                 dataHolder.setFuelMileage("--");
             } else {
-                dataHolder.setText(value + "");
+                dataHolder.setFuelMileage(value + "");
             }
             refreshUI();
         }
@@ -1339,7 +1339,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String elec_listener_and_cacu = format.format(totalElecConPHM == 0 ? totalElecConPHMValue : totalElecConPHM);
         String fuel_listener_and_cacu = format.format(totalFuelConPHM == 0 ? totalFuelConPHMValue : totalFuelConPHM);
 
+        //累计平均电耗
         dataHolder.setTotalElecConPhm(elec_listener_and_cacu);
+        //累计平均油耗
         dataHolder.setTotalFuelConPhm(fuel_listener_and_cacu);
         refreshUI();
     }
@@ -1463,6 +1465,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onExternalChargingPowerChanged(value);
             dataHolder.setExternalChargingPower(MainActivity.format.format(value));
             refreshUI();
+        }
+
+        @Override
+        public void onWheelTemperatureChanged(int position, int value) {
+            super.onWheelTemperatureChanged(position, value);
+            KLog.e("轮胎温度:" + position + " " + value);
+        }
+
+        @Override
+        public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
+            super.onDataEventChanged(eventType, eventValue);
+            KLog.e("");
+            //充电完成回调
+            //public static final int INSTRUMENT_EXTERNAL_CHARGING_POWER = 1246789648;//0x4a508010
+            //2023-06-02 12:58:03.596 30919-30919 BYDAutoInstrumentDevice com.byd.negativescreen               D  postEvent device_type: 1007, event_type =4a508010, value = 2327.8
         }
     };
 }
