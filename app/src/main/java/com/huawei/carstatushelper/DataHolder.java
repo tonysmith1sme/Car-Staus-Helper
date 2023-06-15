@@ -2,35 +2,35 @@ package com.huawei.carstatushelper;
 
 public class DataHolder {
     private String chargePower = "0";//充电功率
-    private String chargeVolt = "0";
-    private String chargeCurrent = "0";
-    private String chargeGunConnectState = "0";
-    private String chargerConnectState = "0";
+    private String chargeVolt = "410";
+    private String chargeCurrent = "39.3";
+    private String chargeGunConnectState = "未连接";
+    private String chargerConnectState = "未连接";
     private String chargeRestHour = "0";
-    private String chargeRestMinute = "0";
+    private String chargeRestMinute = "28";
     //    private String chargerState = "0";
     private String currentGearboxLevel = "P";//变速箱挡位
     private String currentWindLevel = "0";
-    private String currentTemperature = "0";
+    private String currentTemperature = "26";
     private String energyMode = "HEV";//能耗模式
     private String operationMode = "ECO";//驾驶模式
-    private String totalMileage = "25577";
-    private String totalHevMileage = "6561";
+    private String totalMileage = "26158";
+    private String totalHevMileage = "6690";
     private String totalFuelCost = "367.5";//累计燃油消耗
-    private String totalElecCost = "2101.8";//累计电量消耗
-    private String lastFuelConPhm = "0";
-    private String lastElecConPhm = "0";
-    private String powerMileage = "0";
-    private String fuelMileage = "0";
-    private String fuelPb = "229";
-    private int fuelPercent = 18;
-    private String elecPb = "93";
-    private int elecPercent = 82;
+    private String totalElecCost = "2152.1";//累计电量消耗
+    private String lastFuelConPhm = "3.6";//最近50公里油耗
+    private String lastElecConPhm = "0";//最近50公里电耗
+    private String powerMileage = "73";
+    private String fuelMileage = "1100";
+    private String fuelPb = "99";
+    private int fuelPercent = 99;
+    private String elecPb = "69";
+    private int elecPercent = 69;
     private String enginePower;//功率
-    private String totalElecConPhm = "0";
-    private String totalFuelConPhm = "0";
+    private String totalElecConPhm = "7.6";//累计平均电耗
+    private String totalFuelConPhm = "1.4";//累计平均油耗
     private String text;//vin
-    private String totalEvMileage = "19016";
+    private String totalEvMileage = "19468";
     private String carSpeed = "0";//车速
     private String engineSpeed = "0";
     private String youMeng = "0";
@@ -45,28 +45,28 @@ public class DataHolder {
     private String rearMotorSpeed = "0";
     private String frontMotorTorque = "0";
     private String rearMotorTorque = "0";
-    private String tyrePreLeftFront = "250kPa";
-    private String tyrePreRightFront = "250kPa";
-    private String tyrePreLeftRear = "250kPa";
-    private String tyrePreRightRear = "250kPa";
+    private String tyrePreLeftFront = "240kPa";
+    private String tyrePreRightFront = "245kPa";
+    private String tyrePreLeftRear = "240kPa";
+    private String tyrePreRightRear = "240kPa";
     private String tyrePressure;
     private String autoType = "HA2HE";//车型代号
-    private String currentTravelElecCost = "0";//本次行程平均电耗
-    private String currentTravelFuelCost = "0";//本次行程平均油耗
-    private String currentTravelMileage = "0";//本次行程总里程
-    private String currentTravelEnergyCost = "0";//本次行程能耗
-    private String currentComprehensiveElecCost = "0";//本次行程综合电耗
-    private String currentComprehensiveFuelCost = "0";//本次行程综合油耗
-    private String currentTravelYuanCost = "0";
-    private String customMileage1 = "0";
-    private String customMileage2 = "0";
+    private String currentTravelElecCost = "0.0";//本次行程平均电耗
+    private String currentTravelFuelCost = "6.667";//本次行程平均油耗
+    private String currentTravelMileage = "4";//本次行程总里程
+    private String currentTravelEnergyCost = "0.0度+0.2升";//本次行程能耗
+    private String currentComprehensiveElecCost = "30.003";//本次行程综合电耗
+    private String currentComprehensiveFuelCost = "5.0";//本次行程综合油耗
+    private String currentTravelYuanCost = "1.416";
+    private String customMileage1 = "8981.6";
+    private String customMileage2 = "4982.9";
     private String powerLevel = "ON";//电源挡位
-    private String lowestBatterVoltage = "0";
-    private String highestBatterVoltage = "0";
-    private String lowestBatterTemp = "0";
-    private String highestBatterTemp = "0";
-    private String averageBatterTemp = "0";
-    private String externalChargingPower;
+    private String lowestBatterVoltage = "3.415";
+    private String highestBatterVoltage = "3.431";
+    private String lowestBatterTemp = "36";
+    private String highestBatterTemp = "37";
+    private String averageBatterTemp = "36";
+    private String externalChargingPower = "2341.1";
     private String controlModeStatus;
     private String acOnOffStatus;
     private String compressorStatus;
@@ -74,7 +74,7 @@ public class DataHolder {
     private String cycleModeStatus;
     private String ventilateStatus;
     private String batteryDeviceState = "放电中";
-    private String energyFeedback;
+    private String energyFeedback = "标准";
     private String totalDrivingTime = "0";
     private String waterTemperature;
 

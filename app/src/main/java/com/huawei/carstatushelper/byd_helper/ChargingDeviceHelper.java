@@ -58,6 +58,7 @@ public class ChargingDeviceHelper {
 
     /**
      * 电池状态
+     * public static final int CHARGING_BATTERY_STATE_READY = 0;
      * public static final int CHARGING_BATTERY_STATE_CHARGING = 1;
      * public static final int CHARGING_BATTERY_STATE_CHARG_FINISH = 2;
      * 未充电状态下是 15
@@ -72,6 +73,9 @@ public class ChargingDeviceHelper {
         if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_CHARG_FINISH) {
             return "充电结束";
         }
+        if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_READY) {
+            return "就绪";
+        }
         if (ret == 15) {
             return "放电中";
         }
@@ -82,6 +86,7 @@ public class ChargingDeviceHelper {
      * 充电枪连接状态
      * public static final int CHARGING_GUN_STATE_CONNECTED_DC = 3;
      * public static final int CHARGING_GUN_STATE_CONNECTED_NONE = 1;
+     * public static final int CHARGING_GUN_STATE_CONNECTED_AC = 2;
      *
      * @return
      */
@@ -92,6 +97,9 @@ public class ChargingDeviceHelper {
         }
         if (ret == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_DC) {
             return "直流已连接";
+        }
+        if (ret == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_AC) {
+            return "交流已连接";
         }
         return "type:" + ret;
     }

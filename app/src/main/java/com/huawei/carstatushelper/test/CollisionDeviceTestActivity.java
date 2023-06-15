@@ -1,5 +1,6 @@
 package com.huawei.carstatushelper.test;
 
+import android.hardware.bydauto.BYDAutoEventValue;
 import android.hardware.bydauto.collision.AbsBYDAutoCollisionListener;
 import android.hardware.bydauto.collision.BYDAutoCollisionDevice;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.carstatushelper.BR;
 import com.huawei.carstatushelper.databinding.ActivityCollisionDeviceTestBinding;
 import com.huawei.carstatushelper.util.StringToHex;
+import com.socks.library.KLog;
+
+import java.util.Arrays;
 
 public class CollisionDeviceTestActivity extends AppCompatActivity {
 
@@ -44,6 +48,13 @@ public class CollisionDeviceTestActivity extends AppCompatActivity {
             super.onCollisionSignalStateChanged(collisionInfo);
             String hex = StringToHex.bytesToHex(collisionInfo);
             binding.setVariable(BR.data, hex);
+        }
+
+        @Override
+        public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
+            super.onDataEventChanged(eventType, eventValue);
+            String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
+            KLog.e("onDataEventChanged 碰撞信息" + eventType + " ,data = [" + builder + "]");
         }
     };
 }

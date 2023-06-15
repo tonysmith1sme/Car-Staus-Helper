@@ -2107,8 +2107,14 @@ public class BYDAutoFeatureIds {
     public static final int SET_DR_CHARGER_PORT = 1196425228;//0x4750000c
     public static final int SET_DR_CHARGER_PORT_2nd = 1669;//0x685
     public static final int SET_DR_CHARGER_PORT_SET = 1311768630;//0x4e300036
+    /**
+     * 能量回馈强度：标准-1，较大-2
+     */
     public static final int SET_DR_ENERGY_FB = 873463842;//0x34100022
     public static final int SET_DR_ENERGY_FB_SET = 1311768613;//0x4e300025
+    /**
+     * SOC值设置
+     */
     public static final int SET_DR_SOC_TARGET = 873463848;//0x34100028
     public static final int SET_DR_SOC_TARGET_SET = 1311768632;//0x4e300038
     public static final int SET_DR_ST_ASSIS = 616562704;//0x24c00010

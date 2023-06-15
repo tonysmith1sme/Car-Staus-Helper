@@ -13,16 +13,14 @@ import android.hardware.IBYDAutoListenerIdsMap;
 
 import androidx.annotation.Keep;
 
-import java.util.ArrayList;
-
 @Keep
 public abstract class AbsBYDAutoDevice implements IBYDAutoDevice {
-    private static final boolean DEBUG = false;
-    private static String TAG = "AbsBYDAutoDevice";
-    private final ArrayList<IBYDAutoListener> mAutoListener = new ArrayList<>();
-    private Context mContext;
-    private BYDAutoDeviceManager mDeviceManager;
-    private IBYDAutoListenerMap mIBYDAutoListenerMap;
+//    private static final boolean DEBUG = false;
+//    private static String TAG = "AbsBYDAutoDevice";
+//    private final ArrayList<IBYDAutoListener> mAutoListener = new ArrayList<>();
+//    private Context mContext;
+//    private BYDAutoDeviceManager mDeviceManager;
+//    private IBYDAutoListenerMap mIBYDAutoListenerMap;
 
 //    public abstract int getDevicetype();
 
@@ -66,9 +64,9 @@ public abstract class AbsBYDAutoDevice implements IBYDAutoDevice {
         throw new RuntimeException("Stub!");
     }
 
-    private void postEventValue(IBYDAutoEvent event, IBYDAutoListener l) {
-        throw new RuntimeException("Stub!");
-    }
+//    private void postEventValue(IBYDAutoEvent event, IBYDAutoListener l) {
+//        throw new RuntimeException("Stub!");
+//    }
 
     @Override // android.hardware.IBYDAutoDevice
     public void registerListener(IBYDAutoListener l) {

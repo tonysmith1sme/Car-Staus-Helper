@@ -15,6 +15,8 @@ import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityAdasTestBinding;
 import com.socks.library.KLog;
 
+import java.util.Arrays;
+
 public class AdasTestActivity extends AppCompatActivity implements View.OnClickListener {
     private BYDAutoADASDevice adasDevice;
     private com.huawei.carstatushelper.databinding.ActivityAdasTestBinding binding;
@@ -288,6 +290,8 @@ public class AdasTestActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
+            String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
+            KLog.e("onDataEventChanged adas信息" + eventType + " ,data = [" + builder + "]");
         }
     };
 }
