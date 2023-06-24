@@ -847,7 +847,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onTotalFuelConChanged(double value) {
             super.onTotalFuelConChanged(value);
-            dataHolder.setTotalFuelConPhm(format.format(value));
+            dataHolder.setTotalFuelCost(format.format(value));
             refreshUI();
         }
 

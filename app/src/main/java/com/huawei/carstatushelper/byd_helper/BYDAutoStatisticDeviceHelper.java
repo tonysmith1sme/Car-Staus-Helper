@@ -34,27 +34,29 @@ public class BYDAutoStatisticDeviceHelper {
         return result;
     }
 
-    public int getSTATISTIC_HIGHEST_BATTERY_VOLTAGE(){
+    public int getSTATISTIC_HIGHEST_BATTERY_VOLTAGE() {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_HIGHEST_BATTERY_VOLTAGE);
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public int getSTATISTIC_LOWEST_BATTERY_VOLTAGE(){
+    public int getSTATISTIC_LOWEST_BATTERY_VOLTAGE() {
         int result = 0;
         try {
             result = get(BYDAutoFeatureIds.STATISTIC_LOWEST_BATTERY_VOLTAGE);
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
         return result;
@@ -69,10 +71,15 @@ public class BYDAutoStatisticDeviceHelper {
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result - BATTERY_TEMP_OFFSET;
+        return getRealBatteryTemp(result);
+    }
+
+    private int getRealBatteryTemp(int result){
+        return ((result - BATTERY_TEMP_OFFSET) < 0) ? result : (result - BATTERY_TEMP_OFFSET);
     }
 
     public int getESTIMATE_SOC_V1() {
@@ -82,7 +89,8 @@ public class BYDAutoStatisticDeviceHelper {
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
         return result;
@@ -95,10 +103,11 @@ public class BYDAutoStatisticDeviceHelper {
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result - BATTERY_TEMP_OFFSET;
+        return getRealBatteryTemp(result);
     }
 
     public int getHIGHEST_BATTERY_TEMP() {
@@ -108,10 +117,11 @@ public class BYDAutoStatisticDeviceHelper {
             if (result == INVALID_DATA || result == INVALID_DATA_1) {
                 return 0;
             }
-        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | ClassNotFoundException | InvocationTargetException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        return result - BATTERY_TEMP_OFFSET;
+        return getRealBatteryTemp(result);
     }
 
     /**
@@ -140,7 +150,8 @@ public class BYDAutoStatisticDeviceHelper {
             } else {
                 result = ((int) invoke);
             }
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
         return result;
@@ -153,7 +164,8 @@ public class BYDAutoStatisticDeviceHelper {
             Method getHEVMileageValue = clz.getDeclaredMethod("getHEVMileageValue");
             getHEVMileageValue.setAccessible(true);
             result = (int) getHEVMileageValue.invoke(device);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
+                 InvocationTargetException e) {
             e.printStackTrace();
         }
         //适配dm车型无getHEVMileageValue接口的情况
@@ -176,7 +188,8 @@ public class BYDAutoStatisticDeviceHelper {
             Method getTravelTime = clz.getDeclaredMethod("getTravelTime", int.class);
             getTravelTime.setAccessible(true);
             result = (double) getTravelTime.invoke(device, target);
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
         return result;
@@ -189,7 +202,8 @@ public class BYDAutoStatisticDeviceHelper {
             method.setAccessible(true);
             Object invoke = method.invoke(device);
             return (int) invoke;
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
             KLog.e();
         }
@@ -204,7 +218,8 @@ public class BYDAutoStatisticDeviceHelper {
                 method.setAccessible(true);
                 Object invoke = method.invoke(device);
                 return (double) invoke;
-            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                     NoSuchMethodException e) {
                 e.printStackTrace();
                 KLog.e();
             }
@@ -219,7 +234,8 @@ public class BYDAutoStatisticDeviceHelper {
             method.setAccessible(true);
             Object invoke = method.invoke(device);
             return (double) invoke;
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
             KLog.e();
         }
