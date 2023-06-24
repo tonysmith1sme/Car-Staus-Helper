@@ -8,7 +8,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoRearViewMirrorListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDRearViewMirrorListener";
 
     public void onAutoExternalRearMirrorStateChanged(int state) {

@@ -20,7 +20,7 @@ public final class BYDAutoCollisionDevice extends AbsBYDAutoDevice {
     static final String COLLISION_GET_PERM = "android.permission.BYDAUTO_COLLISION_GET";
     static final String COLLISION_SET_PERM = "android.permission.BYDAUTO_COLLISION_SET";
     public static final int COLLISION_SIGNAL = 2;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final int NORMAL_SIGNAL = 1;
     protected static final String TAG = "BYDAutoCollisionDevice";
     private static int mDeviceType = 1015;

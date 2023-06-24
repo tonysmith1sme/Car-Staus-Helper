@@ -8,7 +8,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoADASListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoADASListener";
 
     public void onFeatureChanged(String feature, int ifHas) {

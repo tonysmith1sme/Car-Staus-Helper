@@ -8,7 +8,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoBigDataListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoBigDataListener";
 
     public void onNeedRendRegisterTable(int value) {

@@ -13,7 +13,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoBodyworkListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoBodyworkListener";
 
     public void onWindowStateChanged(int area, int state) {

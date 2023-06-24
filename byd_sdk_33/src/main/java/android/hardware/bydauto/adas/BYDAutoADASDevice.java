@@ -64,7 +64,7 @@ public class BYDAutoADASDevice extends AbsBYDAutoDevice {
     protected static final int CST_SWITCH_OFF_SET = 2;
     protected static final int CST_SWITCH_ON_SET = 1;
     public static final int CURRENT_STEP_NUMBER_OVER_THRESHOLD = 14;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final int DEVICE_HAS_THE_FEATURE = 1;
     public static final int DEVICE_NOT_HAS_THE_FEATURE = 0;
     public static final int DEVICE_THE_FEATURE_LINK_ERROR = 65535;

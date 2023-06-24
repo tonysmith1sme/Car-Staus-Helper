@@ -12,7 +12,7 @@ public final class BYDAutoBigDataDevice extends AbsBYDAutoDevice {
     public static final int BIGDATA_COMMAND_SUCCESS = 0;
     public static final int BIGDATA_COMMAND_TIMEOUT = -2147482646;
     static final String BIGDATA_GET_PERM = "android.permission.BYDAUTO_BIGDATA_GET";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "BYDAutoBigDataDevice";
     private static int mDeviceType = 1061;
     private static BYDAutoBigDataDevice mInstance = null;

@@ -9,7 +9,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoSensorListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoSensorListener";
 
     public void onTemperatureSensorValueChanged(double value) {

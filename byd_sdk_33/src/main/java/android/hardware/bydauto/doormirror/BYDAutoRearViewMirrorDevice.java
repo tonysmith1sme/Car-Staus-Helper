@@ -6,7 +6,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public final class BYDAutoRearViewMirrorDevice extends AbsBYDAutoDevice {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final int REAR_VIEW_MIRROR_ANTIGLARE_STATE_INVALID = 0;
     public static final int REAR_VIEW_MIRROR_ANTIGLARE_STATE_MILD = 1;
     public static final int REAR_VIEW_MIRROR_ANTIGLARE_STATE_MODERATE = 2;

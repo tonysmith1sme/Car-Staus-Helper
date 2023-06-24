@@ -133,7 +133,7 @@ public class BYDAutoChargingDevice extends AbsBYDAutoDevice {
     public static final int CHARGING_WORK_STATE_READY = 1;
     public static final int CHARGING_WORK_STATE_START = 2;
     public static final int CHARGING_WORK_STATE_TERMINATE = 4;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final int DEVICE_HAS_THE_FEATURE = 1;
     public static final int DEVICE_NOT_HAS_THE_FEATURE = 0;
     public static final int DEVICE_THE_FEATURE_LINK_ERROR = 65535;

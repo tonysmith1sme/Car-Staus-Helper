@@ -13,7 +13,7 @@ import androidx.annotation.Keep;
 
 @Keep
 public abstract class AbsBYDAutoInstrumentListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoInstrumentListener";
 
     public void onMalfunctionInfoChanged(int typeName, int hasMalfunction) {

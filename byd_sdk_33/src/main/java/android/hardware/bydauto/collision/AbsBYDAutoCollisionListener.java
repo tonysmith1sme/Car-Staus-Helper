@@ -9,7 +9,7 @@ import androidx.annotation.Keep;
 /* loaded from: classes.dex */
 @Keep
 public abstract class AbsBYDAutoCollisionListener implements IBYDAutoListener {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     protected static final String TAG = "AbsBYDAutoCollisionListener";
 
     public void onCollisionSignalStateChanged(byte[] collisionInfo) {

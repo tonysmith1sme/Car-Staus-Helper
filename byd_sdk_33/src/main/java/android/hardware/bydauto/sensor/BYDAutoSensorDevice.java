@@ -11,7 +11,7 @@ public final class BYDAutoSensorDevice extends AbsBYDAutoDevice {
     public static final int AUTO_SLOPE_MIN = -60;
     public static final int AX_223 = 1;
     public static final int AX_OFFSET_223 = 2;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final int G_SENSOR_OR_ANGLE_MAX = 359;
     public static final int G_SENSOR_OR_ANGLE_MIN = 0;
     public static final double HUMIDITY_MAX = 100.0d;

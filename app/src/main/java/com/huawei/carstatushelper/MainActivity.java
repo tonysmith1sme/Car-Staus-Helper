@@ -75,7 +75,6 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final DecimalFormat format = new DecimalFormat("##0.0##");
-
     private BYDAutoEngineDevice engineDevice;
     private BYDAutoSpeedDevice speedDevice;
     private BYDAutoStatisticDevice statisticDevice;
