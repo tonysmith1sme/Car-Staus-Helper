@@ -546,7 +546,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dataHolder.setChargeRestHour(helper.getHour() + "");
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE) {
-                dataHolder.setBatteryDeviceState(helper.getBatteryState() + "");
+                dataHolder.setBatteryDeviceState(helper.getBatteryDeviceState());
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE) {
                 dataHolder.setChargeGunConnectState(helper.getGunConnect());
@@ -1278,6 +1278,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //获取空调内外循环
         absBYDAutoAcListener.onAcCycleModeChanged(bydAutoAcDevice.getAcCycleMode());
+
+        //初始化charging data
+        ChargingDeviceHelper helper = ChargingDeviceHelper.getInstance(chargingDevice);
+        dataHolder.setBatteryDeviceState(helper.getBatteryDeviceState());
+        dataHolder.setChargeGunConnectState(helper.getGunConnect());
+        dataHolder.setChargerConnectState(helper.getChargerConnect());
+        refreshUI();
     }
 
     private void updateEnginePower() {

@@ -65,7 +65,8 @@ public class ChargingDeviceHelper {
      *
      * @return
      */
-    public Object getBatteryState() {
+    public String getBatteryDeviceState() {
+//        int ret = device.getBatteryManagementDeviceState();
         int ret = (int) get(BYDAutoFeatureIds.CHARGING_BATTERRY_DEVICE_STATE);
         if (ret == BYDAutoChargingDevice.CHARGING_BATTERY_STATE_CHARGING) {
             return "充电中";
@@ -91,6 +92,7 @@ public class ChargingDeviceHelper {
      * @return
      */
     public String getGunConnect() {
+//        int ret = device.getChargingGunState();
         int ret = (int) get(BYDAutoFeatureIds.CHARGING_GUN_CONNECT_STATE);
         if (ret == BYDAutoChargingDevice.CHARGING_GUN_STATE_CONNECTED_NONE) {
             return "未连接";
@@ -112,6 +114,7 @@ public class ChargingDeviceHelper {
      * @return
      */
     public String getChargerConnect() {
+//        int ret = device.getChargerState();
         int ret = (int) get(BYDAutoFeatureIds.CHARGING_CHARGER_CONNECT_STATE);
         if (ret == BYDAutoChargingDevice.CHARGING_CHARGER_STATE_CONNECTED) {
             return "已连接";
