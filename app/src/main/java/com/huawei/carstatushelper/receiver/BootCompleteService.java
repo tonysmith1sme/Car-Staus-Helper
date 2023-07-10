@@ -27,7 +27,9 @@ import android.speech.tts.TextToSpeech;
 import androidx.annotation.Keep;
 import androidx.core.content.ContextCompat;
 
+import com.huawei.carstatushelper.App;
 import com.huawei.carstatushelper.MainActivity;
+import com.huawei.carstatushelper.SplashActivity;
 import com.huawei.carstatushelper.byd_helper.BYDAutoStatisticDeviceHelper;
 import com.huawei.carstatushelper.floating.RadarDistanceHelper;
 import com.huawei.carstatushelper.service.FloatingService;
@@ -101,6 +103,10 @@ public class BootCompleteService extends Service {
 
         if (preferences.getBoolean("radar_floating_boot_auto_show_enable", false)) {
             startService(new Intent(this, FloatingService.class));
+        }
+
+        if (preferences.getBoolean("mainactivity_boot_auto_show_enable", false)) {
+            startActivity(new Intent(this, SplashActivity.class));
         }
     }
 
@@ -428,6 +434,13 @@ public class BootCompleteService extends Service {
                 //            updateRadarFloatingTriggerType();
                 if (radarFloatingTriggerType == TYPE_DISTANCE_150_CM) {
                     if (shouldShowRadarDistance()) {
+                        //应用在前台
+                        if (App.getInstance().getActivityCount() != 0) {
+                            boolean enable = preferences.getBoolean("foreground_app_not_show_radar_distance_enable", false);
+                            if (enable) {
+                                return;
+                            }
+                        }
                         if (!radarDistanceShowing) {
                             radarDistanceHelper.showRadarFloating();
                             radarDistanceShowing = true;

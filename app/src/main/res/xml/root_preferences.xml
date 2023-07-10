@@ -6,6 +6,11 @@
             android:title="跳过引导页" />
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:key="mainactivity_boot_auto_show_enable"
+            android:title="开机自动启动主界面" />
+
+        <SwitchPreference
             android:defaultValue="@bool/default_map_place_holder_enable_value"
             android:key="map_place_holder_enable"
             android:title="地图浮窗占位" />
@@ -64,6 +69,10 @@
             android:inputType="number"
             android:key="radar_floating_trigger_type"
             android:title="触发方式（0，1，2，3）" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="foreground_app_not_show_radar_distance_enable"
+            android:title="应用在前台不显示雷达浮窗" />
         <!--
         <SwitchPreference
             android:key="speak_radar_distance_enable"
