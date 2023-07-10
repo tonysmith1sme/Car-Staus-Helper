@@ -1297,9 +1297,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String KEY_PAUSE_CURRENT_MILEAGE_DATA = "key_pause_current_mileage_data";
 
+    /**
+     * @param addr home,company
+     */
+    void navFun(String addr) {
+        //2.4.4 导航到家（公司）（map9.5.5以上版本支持）
+        try {
+            Intent i1 = new Intent();
+            i1.setData(Uri.parse("baidumap://map/navi/common?addr=" + addr + "&coord_type=bd09ll&src=andr.baidu.openAPIdemo"));
+            startActivity(i1);
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int vId = v.getId();
+        if (vId == R.id.nav_home_btn) {
+            navFun("home");
+            return;
+        }
+        if (vId == R.id.nav_company_btn) {
+            navFun("home");
+            return;
+        }
         if (vId == R.id.ac_compressor_btn) {
             int acCompressorMode = bydAutoAcDevice.getAcCompressorMode();
             if (acCompressorMode == BYDAutoAcDevice.AC_COMPRESSOR_OFF) {
