@@ -1,6 +1,8 @@
 //testFun: 开始 generate at 2023年4月29日 08:07:37
 package android.hardware.bydauto;
 
+import android.os.SystemProperties;
+
 import androidx.annotation.Keep;
 
 @Keep
@@ -2458,7 +2460,7 @@ public class BYDAutoFeatureIds {
     public static final int STATISTIC_TOTAL_FUEL_CON_PHM_YUN = 1032867883;//0x3d90502b
     public static final int STATISTIC_TOTAL_MILEAGE = 1246765072;//0x4a502010
     public static final int STATISTIC_TOTAL_MILEAGE_ACCURACY = 1033543716;//0x3d9aa024
-    public static final int STATISTIC_WATER_TEMPERATURE = 1984;//0x7c0
+    public static final int STATISTIC_WATER_TEMPERATURE = (BYDAutoFeatureIds.isCanFD || BYDAutoFeatureIds.isToyota) ? 1984 : 1033199672;//0x7c0
     public static final int TEST_APK_INSTALL_RESULT = 1841299494;//0x6dc00026
     public static final int TEST_APK_INSTALL_RESULT_SET = 1844449296;//0x6df01010
     public static final int TEST_AUDIO_AVAS_SET = -1442840316;//0xaa000104
@@ -2630,7 +2632,10 @@ public class BYDAutoFeatureIds {
     public static final int YUN_SEAT_VENTILATING_HEATING_SET = -1442840252;//0xaa000144
     public static final int YUN_SEND_CMD = -1728053242;//0x99000006
     public static final int YUN_SENT_MONITOR_TABLE_SET = -1442840541;//0xaa000023
-    public static boolean isCanFD = true;
-    public static boolean isToyota = false;
+
+    public static boolean isCanFD = SystemProperties.get("ro.car.protocol", "").equals("CANFD");
+
+    public static boolean isToyota = SystemProperties.get("ro.car.protocol", "").equals("TOYOTA");
+
 }
 //testFun: 结束

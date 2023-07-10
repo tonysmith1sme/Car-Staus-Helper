@@ -688,6 +688,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEngineSpeedChanged(int value) {
             super.onEngineSpeedChanged(value);
+            BYDAutoStatisticDeviceHelper helper = BYDAutoStatisticDeviceHelper.getInstance(statisticDevice);
+            int waterTemperature = helper.getWaterTemperature();
+            dataHolder.setWaterTemperature(waterTemperature + "");
+            refreshUI();
         }
 
         @Override
