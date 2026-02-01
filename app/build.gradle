@@ -68,4 +68,9 @@ dependencies {
     //只参与编译，不打包进apk中
     //https://zhuanlan.zhihu.com/p/110215979 看评论区
     compileOnly project(path: ':byd_sdk_33')
+
+    // Testing dependencies
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
