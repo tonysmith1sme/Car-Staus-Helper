@@ -19,7 +19,8 @@ import com.huawei.carstatushelper.byd_helper.BYDAutoBodyworkDeviceHelper;
 import com.huawei.carstatushelper.byd_helper.BYDAutoSettingDeviceHelper;
 import com.huawei.carstatushelper.databinding.ActivityReflectTestBinding;
 import com.huawei.carstatushelper.util.ReflectHelper;
-import com.socks.library.KLog;
+
+import timber.log.Timber;
 
 public class ReflectTestActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -96,21 +97,21 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void onActiveChanged(int state) {
             super.onActiveChanged(state);
-            KLog.e();
+            Timber.e("onActiveChanged");
             onActiveChangeTv.setText(String.valueOf(state));
         }
 
         @Override
         public void onLKSModeChanged(int mode) {
             super.onLKSModeChanged(mode);
-            KLog.e();
+            Timber.e("onLKSModeChanged");
             onLksModeChangedTv.setText(String.valueOf(mode));
         }
 
         @Override
         public void onLKSSensitivityChanged(int sensitivity) {
             super.onLKSSensitivityChanged(sensitivity);
-            KLog.e();
+            Timber.e("onLKSSensitivityChanged");
             onLksSensitivityChangedTv.setText(String.valueOf(sensitivity));
 
         }
@@ -118,7 +119,7 @@ public class ReflectTestActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void onLaneOffsetStateChanged(int state) {
             super.onLaneOffsetStateChanged(state);
-            KLog.e();
+            Timber.e("onLaneOffsetStateChanged");
             onLaneOffsetStateChangedTv.setText(String.valueOf(state));
 
         }

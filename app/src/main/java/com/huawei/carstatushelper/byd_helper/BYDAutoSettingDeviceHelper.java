@@ -3,10 +3,10 @@ package com.huawei.carstatushelper.byd_helper;
 import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.setting.BYDAutoSettingDevice;
 
-import com.socks.library.KLog;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 public class BYDAutoSettingDeviceHelper {
     private static BYDAutoSettingDeviceHelper INSTANCE;
@@ -66,7 +66,7 @@ public class BYDAutoSettingDeviceHelper {
             return (int) invoke;
         } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
-            KLog.e();
+            Timber.e(e);
         }
         return 0;
     }
@@ -80,7 +80,7 @@ public class BYDAutoSettingDeviceHelper {
             return (int) invoke;
         } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
-            KLog.e();
+            Timber.e(e);
         }
         return 0;
     }

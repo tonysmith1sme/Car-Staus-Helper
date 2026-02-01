@@ -21,7 +21,7 @@ import com.huawei.carstatushelper.activity.ImageDetailActivity;
 import com.huawei.carstatushelper.databinding.ActivitySplashBinding;
 import com.huawei.carstatushelper.receiver.BootCompleteService;
 import com.huawei.carstatushelper.util.BydManifest;
-import com.socks.library.KLog;
+import timber.log.Timber;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +69,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         tts = new TextToSpeech(SplashActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                KLog.e("onInit = " + i);
+                Timber.e("onInit = %d", i);
             }
         });
         if (!preferences.getBoolean("has_read_disclaimers", false)) {

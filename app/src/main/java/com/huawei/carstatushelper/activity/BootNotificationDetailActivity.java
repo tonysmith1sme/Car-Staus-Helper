@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.SplashActivity;
-import com.socks.library.KLog;
+import timber.log.Timber;
 
 public class BootNotificationDetailActivity extends BackEnableBaseActivity {
 
@@ -21,7 +21,8 @@ public class BootNotificationDetailActivity extends BackEnableBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        KLog.e();
+        Timber.e("onCreate");
+
         setContentView(R.layout.activity_boot_notification_detail);
         findViewById(R.id.start_app_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +46,9 @@ public class BootNotificationDetailActivity extends BackEnableBaseActivity {
 
     @Override
     public void onBackPressed() {
-        KLog.e();
+        // 4. 替换 KLog.e()
+        Timber.e("onBackPressed");
+
         startActivity(new Intent(this, SplashActivity.class));
         finish();
     }

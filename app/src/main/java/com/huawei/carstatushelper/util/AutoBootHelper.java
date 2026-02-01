@@ -3,10 +3,10 @@ package com.huawei.carstatushelper.util;
 import android.content.Context;
 import android.content.Intent;
 
-import com.socks.library.KLog;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 /**
  * 必须权限
@@ -20,10 +20,10 @@ public class AutoBootHelper {
             Method startForegroundService = clz.getDeclaredMethod("startForegroundService", Intent.class);
             startForegroundService.setAccessible(true);
             startForegroundService.invoke(context, intent);
-            KLog.e("startForegroundService success");
+            Timber.e("startForegroundService success");
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-            KLog.e("startForegroundService failed, error: " + e);
+            Timber.e(e, "startForegroundService failed");
         }
     }
 }

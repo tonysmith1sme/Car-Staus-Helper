@@ -16,11 +16,12 @@ import com.byd.CanDataCollect.service.CanDataInfo;
 import com.huawei.carstatushelper.databinding.ActivityBigDataTestBinding;
 import com.huawei.carstatushelper.databinding.ListItemBigDataBinding;
 import com.huawei.carstatushelper.util.StringToHex;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class BigDataTestActivity extends AppCompatActivity {
 
@@ -144,7 +145,7 @@ public class BigDataTestActivity extends AppCompatActivity {
         cdi.candatalen = (byte) (msg.length - index3);
         System.arraycopy(msg, index3, cdi.canBuffer, 0, cdi.candatalen);
 
-        KLog.e("recv_can: canId = " + Long.toHexString(cdi.canid) + " subId = " + cdi.subid + " canChanel = " + cdi.canChanel + " data = " + Arrays.toString(cdi.canBuffer));
+        Timber.e("recv_can: canId = %s subId = %s canChanel = %s data = %s", Long.toHexString(cdi.canid), cdi.subid, cdi.canChanel, Arrays.toString(cdi.canBuffer));
         recvCanData(cdi);
     }
 

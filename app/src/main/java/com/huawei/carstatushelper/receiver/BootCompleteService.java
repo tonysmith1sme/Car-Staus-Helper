@@ -39,7 +39,7 @@ import com.huawei.carstatushelper.util.BydManifest;
 import com.huawei.carstatushelper.util.NotificationHelper;
 import com.huawei.carstatushelper.util.SmartRemindUtil;
 import com.huawei.carstatushelper.util.Utils;
-import com.socks.library.KLog;
+import timber.log.Timber;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,7 +90,7 @@ public class BootCompleteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        KLog.e();
+        Timber.e("onCreate");
         NotificationHelper.showNotification(this);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -128,7 +128,7 @@ public class BootCompleteService extends Service {
                 object.put("totalElecConValue", totalElecConValue);
                 object.put("totalFuelConValue", totalFuelConValue);
                 String json = object.toString();
-                KLog.e("初始化行程数据：" + json);
+                Timber.e("初始化行程数据：%s", json);
                 if (preferences.getBoolean(MainActivity.KEY_PAUSE_CURRENT_MILEAGE_DATA, false)) {
                     preferences.edit().putBoolean(MainActivity.KEY_PAUSE_CURRENT_MILEAGE_DATA, false).apply();
                     return;
@@ -143,25 +143,25 @@ public class BootCompleteService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
-        KLog.e();
+        Timber.e("onStartCommand");
         if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_COMMON) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice == null) {
                 panoramaDevice = BYDAutoPanoramaDevice.getInstance(this);
-                KLog.e("panoramaDevice 初始化成功");
+                Timber.e("panoramaDevice 初始化成功");
             } else {
-                KLog.e("panoramaDevice 已启动");
+                Timber.e("panoramaDevice 已启动");
             }
         } else {
-            KLog.e("BYDAUTO_PANORAMA_COMMON 未授权");
+            Timber.e("BYDAUTO_PANORAMA_COMMON 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_PANORAMA_GET) == PackageManager.PERMISSION_GRANTED) {
             if (panoramaDevice != null) {
                 panoramaDevice.registerListener(panoramaListener);
             } else {
-                KLog.e("panoramaDevice == null");
+                Timber.e("panoramaDevice == null");
             }
         } else {
-            KLog.e("BYDAUTO_PANORAMA_GET 未授权");
+            Timber.e("BYDAUTO_PANORAMA_GET 未授权");
         }
         if (ContextCompat.checkSelfPermission(this, BydManifest.permission.BYDAUTO_GEARBOX_GET) == PackageManager.PERMISSION_GRANTED) {
             if (gearboxDevice == null) {
@@ -224,7 +224,7 @@ public class BootCompleteService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        KLog.e();
+        Timber.e("onDestroy");
         if (panoramaDevice != null) {
             panoramaDevice.unregisterListener(panoramaListener);
         }
@@ -264,7 +264,7 @@ public class BootCompleteService extends Service {
         @Override
         public void onGearboxAutoModeTypeChanged(int level) {
             super.onGearboxAutoModeTypeChanged(level);
-            KLog.e("gearbox auto mode type = " + level);
+            Timber.e("gearbox auto mode type = %d", level);
             updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_GEARBOX_R) {
                 if (level == BYDAutoGearboxDevice.GEARBOX_AUTO_MODE_R) {
@@ -319,7 +319,7 @@ public class BootCompleteService extends Service {
                                         }
                                     }).show();
                         } catch (Exception e) {
-                            KLog.e(e);
+                            Timber.e(e);
                         }
                     } else {
                         preferences.edit()
@@ -367,7 +367,7 @@ public class BootCompleteService extends Service {
         @Override
         public void onPanoWorkStateChanged(int mode) {
             super.onPanoWorkStateChanged(mode);
-            KLog.e("onPanoWorkStateChanged：" + mode);
+            Timber.e("onPanoWorkStateChanged：%d", mode);
             updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_PANO_WORK_STATE) {
                 if (mode == BYDAutoPanoramaDevice.PANORAMA_WORK_ON) {
@@ -385,7 +385,7 @@ public class BootCompleteService extends Service {
         @Override
         public void onPanOutputStateChanged(int mode) {
             super.onPanOutputStateChanged(mode);
-            KLog.e("onPanOutputStateChanged = " + mode);
+            Timber.e("onPanOutputStateChanged = %d", mode);
             updateRadarFloatingTriggerType();
             if (radarFloatingTriggerType == TYPE_PANO_OUTPUT_STATE) {
                 //关闭显示
@@ -426,7 +426,7 @@ public class BootCompleteService extends Service {
          */
         @Keep
         public void onRadarObstacleDistanceChanged(int area, int value) {
-            KLog.e("radar distance ,area = " + area + " value = " + value);
+            Timber.e("radar distance ,area = %d value = %d", area, value);
             if (radarDevice != null) {
                 int[] distance = BydApi29Helper.getAllRadarDistance(radarDevice);
                 System.arraycopy(distance, 0, mRadarDistanceArr, 0, distance.length);

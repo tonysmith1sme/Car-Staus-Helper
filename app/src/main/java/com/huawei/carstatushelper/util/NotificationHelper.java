@@ -9,11 +9,12 @@ import android.content.Context;
 import android.os.Build;
 
 import com.huawei.carstatushelper.R;
-import com.socks.library.KLog;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 public class NotificationHelper {
     public static void showNotification(Service context) {
@@ -47,10 +48,10 @@ public class NotificationHelper {
             method.setAccessible(true);
             method.invoke(manager, instance);
 //            System.out.println();
-            KLog.e("createNotificationChannel success");
+            Timber.e("createNotificationChannel success");
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
-            KLog.e("createNotificationChannel failed, error: " + e);
+            Timber.e(e, "createNotificationChannel failed");
         }
     }
 
@@ -60,11 +61,11 @@ public class NotificationHelper {
             Constructor<?> constructor = clz.getDeclaredConstructor(Context.class, String.class);
             constructor.setAccessible(true);
             Object obj = constructor.newInstance(context, channelId);
-            KLog.e("newNotificationBuilder success");
+            Timber.e("newNotificationBuilder success");
             return (Notification.Builder) obj;
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
-            KLog.e("newNotificationBuilder failed, error: " + e);
+            Timber.e(e, "newNotificationBuilder failed");
         }
         return new Notification.Builder(context);
     }

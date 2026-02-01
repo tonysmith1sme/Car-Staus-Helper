@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.carstatushelper.BR;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityAdasTestBinding;
-import com.socks.library.KLog;
 
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 public class AdasTestActivity extends AppCompatActivity implements View.OnClickListener {
     private BYDAutoADASDevice adasDevice;
@@ -96,7 +97,7 @@ public class AdasTestActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onFeatureChanged(String feature, int ifHas) {
             super.onFeatureChanged(feature, ifHas);
-            KLog.e("onFeatureChanged, feature = " + feature + " ,ifHas = " + ifHas);
+            Timber.e("onFeatureChanged, feature = %s ,ifHas = %d", feature, ifHas);
         }
 
         @Override
@@ -284,14 +285,14 @@ public class AdasTestActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onError(int errCode, String errMessage) {
             super.onError(errCode, errMessage);
-            KLog.e("error = " + errCode + " errMessage = " + errMessage);
+            Timber.e("error = %d errMessage = %s", errCode, errMessage);
         }
 
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
             String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
-            KLog.e("onDataEventChanged adas信息" + eventType + " ,data = [" + builder + "]");
+            Timber.e("onDataEventChanged adas信息%d ,data = [%s]", eventType, builder);
         }
     };
 }

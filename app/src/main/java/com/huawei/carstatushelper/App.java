@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.huawei.carstatushelper.util.CrashHandler;
 
 import me.weishu.reflection.Reflection;
+import timber.log.Timber;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
     private static App mTestActivityLifecycleApplcation;
@@ -29,6 +30,11 @@ public class App extends Application implements Application.ActivityLifecycleCal
     public void onCreate() {
         super.onCreate();
         mTestActivityLifecycleApplcation = this;
+
+        // BuildConfig.DEBUG 会自动根据当前的构建类型（Debug/Release）判断
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
 
         CrashHandler.getInstance().init(this);
 

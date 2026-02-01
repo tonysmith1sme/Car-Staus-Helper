@@ -3,15 +3,18 @@ package com.huawei.carstatushelper.util;
 import android.app.ActivityManager;
 import android.content.Context;
 
-import com.socks.library.KLog;
-
 import java.util.Iterator;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class Utils {
     public static boolean isBackground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService("activity");
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
         Iterator var3 = appProcesses.iterator();
 
         ActivityManager.RunningAppProcessInfo appProcess;
@@ -24,12 +27,10 @@ public class Utils {
         } while (!appProcess.processName.equals(context.getPackageName()));
 
         if (appProcess.importance == 100) {
-//            TTLog.i("前台", new Object[]{appProcess.processName});
-            KLog.e("前台", new Object[]{appProcess.processName});
+            Timber.e("前台: %s", appProcess.processName);
             return false;
         } else {
-//            TTLog.i("后台", new Object[]{appProcess.processName});
-            KLog.e("后台", new Object[]{appProcess.processName});
+            Timber.e("后台: %s", appProcess.processName);
             return true;
         }
     }

@@ -65,7 +65,7 @@ import com.huawei.carstatushelper.view.EnginePowerView;
 import com.huawei.carstatushelper.view.EngineSpeedView;
 import com.huawei.carstatushelper.view.MotorSpeedView;
 import com.huawei.carstatushelper.view.RearMotorSpeedView;
-import com.socks.library.KLog;
+import timber.log.Timber;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
-            KLog.e("onDataEventChanged 轮胎信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
+            Timber.e("onDataEventChanged 轮胎信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
         }
     };
 
@@ -462,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingPowerChanged(double value) {
             super.onChargingPowerChanged(value);
-//            KLog.e("充电功率变化监听: " + value);
+//            Timber.e("充电功率变化监听: " + value);
 //            dataHolder.setChargePower(format.format(value));
 //            refreshUI();
         }
@@ -476,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingRestTimeChanged(int hour, int min) {
             super.onChargingRestTimeChanged(hour, min);
-            KLog.e("获取充满电剩余时间:" + hour + " " + min);
+            Timber.e("获取充满电剩余时间:" + hour + " " + min);
 //            dataHolder.setChargeRestHour(hour + "");
 //            dataHolder.setChargeRestMinute(min + "");
 //            refreshUI();
@@ -485,7 +485,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargingGunStateChanged(int state) {
             super.onChargingGunStateChanged(state);
-            KLog.e("充电枪连接状态：" + state);
+            Timber.e("充电枪连接状态：" + state);
 //            dataHolder.setChargeGunConnectState(state + "");
 //            refreshUI();
         }
@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargerStateChanged(int state) {
             super.onChargerStateChanged(state);
-            KLog.e("充电机状态：" + state);
+            Timber.e("充电机状态：" + state);
 //            dataHolder.setChargerConnectState(state + "");
 //            refreshUI();
         }
@@ -501,21 +501,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onChargerWorkStateChanged(int state) {
             super.onChargerWorkStateChanged(state);
-            KLog.e("充电机工作状态：" + state);
+            Timber.e("充电机工作状态：" + state);
 
         }
 
         @Override
         public void onBatteryManagementDeviceStateChanged(int state) {
             super.onBatteryManagementDeviceStateChanged(state);
-            KLog.e("电池管理模块状态：" + state);
+            Timber.e("电池管理模块状态：" + state);
 
         }
 
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
-            KLog.e("onDataEventChanged 充电信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
+            Timber.e("onDataEventChanged 充电信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
 
 //            refreshChargingInfo();
 
@@ -532,11 +532,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_CHARGE_CURRENT) {
 //                Object current = helper.getCurrent();
-//                KLog.e();
+//                Timber.e("debug");
 //                int intValue = eventValue.intValue;
 //                float floatValue = eventValue.floatValue;
 //                double doubleValue = eventValue.doubleValue;
-//                KLog.e("充电电流：" + intValue + " " + floatValue + " " + doubleValue);
+//                Timber.e("充电电流：" + intValue + " " + floatValue + " " + doubleValue);
                 dataHolder.setChargeCurrent(format.format(Math.abs(eventValue.doubleValue)));
             }
             if (eventType == BYDAutoFeatureIds.CHARGING_FULL_REST_MINUTE) {
@@ -712,7 +712,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
-            KLog.e("onDataEventChanged 引擎信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
+            Timber.e("onDataEventChanged 引擎信息：" + eventType + " " + eventValue.intValue + " " + eventValue.floatValue + " " + eventValue.doubleValue);
             updateEngineSpeedData();
         }
     };
@@ -984,7 +984,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Keep
         @Override
         public void onHEVMileageValueChanged(int value) {
-            KLog.e("onHEVMileageValueChanged = " + value);
+            Timber.e("onHEVMileageValueChanged = " + value);
             dataHolder.setTotalHevMileage(value + "");
             refreshUI();
         }
@@ -1449,14 +1449,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onWheelTemperatureChanged(int position, int value) {
             super.onWheelTemperatureChanged(position, value);
-            KLog.e("轮胎温度:" + position + " " + value);
+            Timber.e("轮胎温度:" + position + " " + value);
         }
 
         @Override
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
             String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
-            KLog.e("onDataEventChanged 仪表信息" + eventType + " ,data = [" + builder + "]");
+            Timber.e("onDataEventChanged 仪表信息" + eventType + " ,data = [" + builder + "]");
 
             //充电完成回调
             //public static final int INSTRUMENT_EXTERNAL_CHARGING_POWER = 1246789648;//0x4a508010

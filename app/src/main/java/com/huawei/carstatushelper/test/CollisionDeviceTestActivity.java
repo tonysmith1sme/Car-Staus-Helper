@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.carstatushelper.BR;
 import com.huawei.carstatushelper.databinding.ActivityCollisionDeviceTestBinding;
 import com.huawei.carstatushelper.util.StringToHex;
-import com.socks.library.KLog;
 
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 public class CollisionDeviceTestActivity extends AppCompatActivity {
 
@@ -54,7 +55,7 @@ public class CollisionDeviceTestActivity extends AppCompatActivity {
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
             String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
-            KLog.e("onDataEventChanged 碰撞信息" + eventType + " ,data = [" + builder + "]");
+            Timber.e("onDataEventChanged 碰撞信息%d ,data = [%s]", eventType, builder);
         }
     };
 }

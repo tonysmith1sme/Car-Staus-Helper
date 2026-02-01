@@ -15,11 +15,12 @@ import android.widget.TextView;
 
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.util.DpUtil;
-import com.socks.library.KLog;
 import com.ziwenl.floatingwindowdemo.utils.FloatingWindowHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class RadarDistanceHelper {
     private final Context context;
@@ -53,7 +54,9 @@ public class RadarDistanceHelper {
         if (!isRadarDistanceEnable()) {
             return;
         }
-        KLog.e();
+
+        Timber.e("showRadarFloating");
+
         if (!Settings.canDrawOverlays(context)) {
 //            KLog.e("无浮窗权限");
             return;
@@ -86,6 +89,7 @@ public class RadarDistanceHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Timber.e(e);
         }
 
         //横屏 x = 280,y = 110,width = 311dp,height = 500dp
@@ -142,6 +146,7 @@ public class RadarDistanceHelper {
                 text_color_int = Color.parseColor(text_color);
             } catch (Exception e) {
                 e.printStackTrace();
+                Timber.e(e); // 增加异常打印
             }
         }
         int text_bg_color_int = 0;
@@ -149,6 +154,7 @@ public class RadarDistanceHelper {
             text_bg_color_int = Color.parseColor(text_bg_color);
         } catch (Exception e) {
             e.printStackTrace();
+            Timber.e(e); // 增加异常打印
         }
         for (TextView textView : textViewList) {
             if (text_size != 0) {
@@ -167,7 +173,9 @@ public class RadarDistanceHelper {
         if (!isRadarDistanceEnable()) {
             return;
         }
-        KLog.e();
+
+        Timber.e("hideRadarFloating");
+
         if (rootView == null) {
 //            KLog.e("未显示浮窗");
             return;

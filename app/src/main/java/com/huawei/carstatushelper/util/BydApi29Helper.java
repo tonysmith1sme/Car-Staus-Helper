@@ -5,10 +5,10 @@ import android.hardware.bydauto.bodywork.BYDAutoBodyworkDevice;
 import android.hardware.bydauto.engine.BYDAutoEngineDevice;
 import android.hardware.bydauto.radar.BYDAutoRadarDevice;
 
-import com.socks.library.KLog;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 public class BydApi29Helper {
 
@@ -54,7 +54,7 @@ public class BydApi29Helper {
                 return (int[]) invoke;
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
-                KLog.e();
+                Timber.e(e);
             }
         }
         return new int[9];
@@ -68,7 +68,7 @@ public class BydApi29Helper {
                 Method get = clz.getDeclaredMethod("get", int.class, int.class);
                 get.setAccessible(true);
                 result = (int) get.invoke(engineDevice, BYDAutoConstants.BYDAUTO_DEVICE_ENGINE, featuresId);
-//                KLog.e();
+//                Timber.e("get result: %d", result);
             } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -86,7 +86,7 @@ public class BydApi29Helper {
             Method get = clzParent.getDeclaredMethod("get", int.class, int.class);
             get.setAccessible(true);
             Object ret = get.invoke(obj, 1, 2);
-            KLog.e();
+            Timber.e("testReflectInvoke success");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

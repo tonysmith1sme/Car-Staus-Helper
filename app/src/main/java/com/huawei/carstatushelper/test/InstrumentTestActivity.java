@@ -16,9 +16,10 @@ import com.huawei.carstatushelper.BR;
 import com.huawei.carstatushelper.R;
 import com.huawei.carstatushelper.databinding.ActivityInstrumentTestBinding;
 import com.huawei.carstatushelper.util.BydManifest;
-import com.socks.library.KLog;
 
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 public class InstrumentTestActivity extends AppCompatActivity implements View.OnClickListener {
     private BYDAutoInstrumentDevice instrumentDevice;
@@ -1019,7 +1020,7 @@ public class InstrumentTestActivity extends AppCompatActivity implements View.On
         public void onDataEventChanged(int eventType, BYDAutoEventValue eventValue) {
             super.onDataEventChanged(eventType, eventValue);
             String builder = eventValue.intValue + "," + eventValue.floatValue + "," + eventValue.doubleValue + "," + Arrays.toString(eventValue.intArrayValue) + "," + Arrays.toString(eventValue.floatArrayValue) + "," + Arrays.toString(eventValue.bufferDataValue);
-            KLog.e("onDataEventChanged 仪表信息" + eventType + " ,data = [" + builder + "]");
+            Timber.e("onDataEventChanged 仪表信息%d ,data = [%s]", eventType, builder);
         }
     };
 }

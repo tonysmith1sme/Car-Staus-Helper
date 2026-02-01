@@ -4,10 +4,10 @@ import android.hardware.bydauto.BYDAutoConstants;
 import android.hardware.bydauto.BYDAutoFeatureIds;
 import android.hardware.bydauto.statistic.BYDAutoStatisticDevice;
 
-import com.socks.library.KLog;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 public class BYDAutoStatisticDeviceHelper {
     private static BYDAutoStatisticDeviceHelper INSTANCE;
@@ -126,8 +126,8 @@ public class BYDAutoStatisticDeviceHelper {
 
     /**
      * @param status 0-->里程1;
-     *               1-->里程2;
-     *               2-->总里程
+     * 1-->里程2;
+     * 2-->总里程
      * @return
      */
     public double getMileageNumber(int status) {
@@ -177,8 +177,8 @@ public class BYDAutoStatisticDeviceHelper {
 
     /**
      * @param target 1，总行程时间 BYDAutoFeatureIds.STATISTIC_DRIVING_TIME
-     *               2，里程1行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
-     *               3，里程2行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
+     * 2，里程1行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE1_DRIVE_TIME
+     * 3，里程2行驶时间 BYDAutoFeatureIds.STATISTIC_MILEAGE2_DRIVE_TIME
      * @return
      */
     public double getTravelTime(int target) {
@@ -205,7 +205,7 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
                  NoSuchMethodException e) {
             e.printStackTrace();
-            KLog.e();
+            Timber.e(e);
         }
         return 0;
     }
@@ -221,7 +221,7 @@ public class BYDAutoStatisticDeviceHelper {
             } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
                      NoSuchMethodException e) {
                 e.printStackTrace();
-                KLog.e();
+                Timber.e(e);
             }
         }
         return 0;
@@ -237,7 +237,7 @@ public class BYDAutoStatisticDeviceHelper {
         } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
                  NoSuchMethodException e) {
             e.printStackTrace();
-            KLog.e();
+            Timber.e(e);
         }
         return 0;
     }
